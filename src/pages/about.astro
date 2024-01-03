@@ -1,0 +1,114 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+import ContactCTA from '../components/ContactCTA.astro';
+import Hero from '../components/Hero.astro';
+---
+
+<BaseLayout title="Sobre | Isaac D'Césares" description="Sobre Isaac D'Césares">
+	<div class="stack gap-20">
+		<main class="wrapper about">
+			<Hero
+				title="Sobre"
+				tagline="Obrigado por passar por aqui! Leia abaixo para saber mais sobre mim e minha trajetória."
+			>
+				<img
+					width="1553"
+					height="873"
+					src="/assets/at-work.jpg"
+					alt="Isaac em uma palestra"
+				/>
+			</Hero>
+
+			<section>
+				<h2 class="section-title">Background</h2>
+				<div class="content">
+					<p>
+						Atuando na interseção entre a tecnologia e a educação, meu objetivo é contribuir para a evolução do ensino e da aprendizagem de forma humana e responsável. Sou Mestrando em Computação pela <a href="https://www.ufrj.br/">Universidade Federal do Rio de Janeiro</a>, com especialização em Inovação em Engenharia de Software. Além disso, detenho certificações como Educador Inovador concedidas pelo Google e Microsoft.
+					</p>
+					<p>
+						Com sólida formação adquirida na Universidade de Stanford e na Fundação Dom Cabral, além de mais de uma década de experiência, atuo como Coordenador de Tecnologias na Educação. Procuro integrar a tecnologia e a inovação para aprimorar os processos de ensino e aprendizagem. Tenho o compromisso de explorar novas ferramentas e recursos educacionais, buscando sempre oportunidades para crescimento e desenvolvimento.
+					</p>
+					<p>
+						No meu histórico profissional, tive a oportunidade de trabalhar com mais de 1.300 alunos em cursos de tecnologias digitais e orientar mais de 1.000 professores em programas de educação continuada. Participei ativamente no planejamento, criação e edição de múltiplos projetos educacionais que se concretizaram em ações significativas para os seus participantes. Por meio de projetos de pesquisa acadêmica até a análise de dados institucionais, busco constantemente aplicar e aprimorar minha experiência técnica e teórica. Em meio a tecnologias emergentes e inovações, procuro estar atualizado, conduzindo discussões e experiências relacionadas à STEAM e IA, e coordenando grupos de pesquisa focados em tecnologias educacionais.
+					</p>
+					<p style="color:var(--link-color)">
+						<strong>O meu papel não se limita a acompanhar a transformação digital, mas a ser um agente ativo e comprometido com a inovação na educação.</strong>
+					</p>
+				</div>				
+			</section>
+			<!--<section>
+				<h2 class="section-title">Education</h2>
+				<div class="content">
+					<p>Corporis voluptates tenetur laudantium.</p>
+				</div>
+			</section>
+			<section>
+				<h2 class="section-title">Skills</h2>
+				<div class="content">
+					
+				</div>
+			</section>-->
+		</main>
+
+		<ContactCTA />
+	</div>
+</BaseLayout>
+
+<style>
+	.about {
+		display: flex;
+		flex-direction: column;
+		gap: 3.5rem;
+	}
+
+	img {
+		margin-top: 1.5rem;
+		border-radius: 1.5rem;
+		box-shadow: var(--shadow-md);
+	}
+
+	section {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		color: var(--gray-200);
+	}
+
+	.section-title {
+		grid-column-start: 1;
+		font-size: var(--text-xl);
+		color: var(--gray-0);
+	}
+
+	.content {
+		grid-column: 2 / 4;
+	}
+
+	.content :global(a) {
+		text-decoration: 1px solid underline transparent;
+		text-underline-offset: 0.25em;
+		transition: text-decoration-color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: currentColor;
+	}
+
+	@media (min-width: 50em) {
+		.about {
+			display: grid;
+			grid-template-columns: 1fr 60% 1fr;
+		}
+
+		.about > :global(:first-child) {
+			grid-column-start: 2;
+		}
+
+		section {
+			display: contents;
+			font-size: var(--text-lg);
+		}
+	}
+</style>
