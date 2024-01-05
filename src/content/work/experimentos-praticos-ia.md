@@ -9,6 +9,7 @@ tags:
   - No Code
   - Experimentos
 ---
+<a href="https://github.com/idcesares/Experimentos-de-IA" target="_blank" class="button-post">Leia no GitHub</a>
 
 > Às vezes, a inteligência artificial pode parecer algo intangível ou complexo demais para entender, aprender e aplicar. Mas, com o conjunto de experimentos práticos que se seguem, acompanharemos várias implementações divertidas e lúdicas feitas por uma comunidade ativa de desenvolvedores. Venha se aventurar neste mundo de possibilidades e descubra até onde a IA pode nos levar! **Tudo isso sem precisar saber programar** 😉.
 
