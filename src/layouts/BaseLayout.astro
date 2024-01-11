@@ -15,8 +15,16 @@ interface Props {
 const { title, description } = Astro.props;
 ---
 
-<html lang="en">
+<html lang="pt-br">
 	<head>
+		<!-- Google tag (gtag.js) -->
+		<script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-0XZV7NBH4E"></script>
+		<script type="text/partytown">
+			window.dataLayer = window.dataLayer || [];
+			function gtag(){dataLayer.push(arguments);}
+			gtag('js', new Date());
+			gtag('config', 'G-0XZV7NBH4E');
+		</script>
 		<MainHead title={title} description={description} />
 	</head>
 	<body>
