@@ -1,5 +1,5 @@
 ---
-title: Desenvolvendo meu website pessoal o Framework Astro
+title: Desenvolvendo meu website pessoal com o Framework Astro
 publishDate: 2024-01-13 13:30:00
 img: /assets/blog_imgs/astro.webp
 img_alt: Logotipo do Framework Astro.
