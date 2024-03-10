@@ -13,4 +13,6 @@ tags:
 
 >Nessa aula inaugural do Descomplica, conversamos sobre como a inteligência artificial pode nos ajudar a ser até 40% mais produtivos. Vamos ouvir um pouco mais sobre esse assunto?
 
-<iframe width="560" height="315" src="https://www.youtube.com/embed/5SXH8tLOSqg?si=ww9z_Jog3rJVza6H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+<div class="video-container">
+    <iframe width="560" height="315" src="https://www.youtube.com/embed/5SXH8tLOSqg?si=ww9z_Jog3rJVza6H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>

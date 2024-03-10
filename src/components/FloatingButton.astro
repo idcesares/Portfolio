@@ -1,0 +1,32 @@
+---
+// Ensure the Icon component is correctly imported from your project structure.
+import Icon from './Icon.astro';
+import WhatsAppIcon from './WhatsAppIcon.astro';
+---
+
+<a href="https://api.whatsapp.com/send?phone=5521983291513" class="float" target="_blank">
+    <WhatsAppIcon style="my-float"/>
+</a>
+
+<style>
+    .float {
+	position: fixed;
+	width: 60px;
+	height: 60px;
+	bottom: 40px;
+	right: 40px;
+	background-color: #25d366;
+	color: #FFF;
+	border-radius: 50px;
+	text-align: center;
+	font-size: 30px;
+	box-shadow: 2px 2px 3px #999;
+	z-index: 100;
+    }
+
+    /* Adjust the .my-float class if necessary to correctly position the icon within the button.
+       This might need adjustments depending on how your Icon component renders the icon. */
+    .my-float {
+	margin-top: 16px;
+    }
+</style>
