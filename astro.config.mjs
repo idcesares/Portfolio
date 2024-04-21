@@ -5,6 +5,8 @@ import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
 import embeds from 'astro-embed/integration';
 
+import react from "@astrojs/react";
+
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
@@ -14,15 +16,9 @@ export default defineConfig({
     }
   }),
   site: 'https://dcesares.dev',
-  integrations: [
-    sitemap(),
-    partytown({
-			config: {
-			  forward: ["dataLayer.push"],
-			},
-		}),
-    embeds(),
-    mdx()
-
-  ]
+  integrations: [sitemap(), partytown({
+    config: {
+      forward: ["dataLayer.push"]
+    }
+  }), embeds(), mdx(), react()]
 });
