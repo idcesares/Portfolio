@@ -6,103 +6,95 @@ import Hero from '../components/Hero.astro';
 ---
 
 <BaseLayout title="Sobre | Isaac D'Césares" description="Sobre Isaac D'Césares">
-	<div class="stack gap-20">
-		<main class="wrapper about">
-			<Hero
-				title="Sobre"
-				tagline="Obrigado por passar por aqui! Leia abaixo para saber mais sobre mim e minha trajetória."
-			>
-				<img
-					width="auto"
-					src="/assets/at-work.jpg"
-					alt="Isaac em uma palestra"
-				/>
-			</Hero>
+    <div class="stack gap-20">
+        <main class="wrapper about">
+            <Hero
+                title="Sobre"
+                tagline="Obrigado por passar por aqui! Leia abaixo para saber mais sobre mim e minha trajetória."
+            >
+                <img
+                    width="auto"
+                    src="/assets/at-work.jpg"
+                    alt="Isaac em uma palestra"
+                />
+            </Hero>
 
-			<section>
-				<h2 class="section-title">Background</h2>
-				<div class="content">
-					<p>Mestrando em Computação pela Universidade Federal do Rio de Janeiro, especializado em Inovação e Engenharia de Software. Com certificações como Educador Inovador pelo Google e Microsoft e instrutor CISCO, possuo formação em Educação Inovadora pela Universidade de Stanford, Transformação Digital pela Fundação Dom Cabral e Ciência de Dados pela FGV. Atualmente, sou Coordenador de Tecnologias na Educação no Departamento Nacional do Sesc e professor no Ensino Superior, focado em computação e métodos científicos.</p>
+            <section>
+                <h2 class="section-title">Background</h2>
+                <div class="content">
+                    <p>Olá! Sou Isaac D'Césares, um apaixonado por inovação e tecnologia aplicada à educação. Atualmente, sou mestrando em Computação pela Universidade Federal do Rio de Janeiro, especializado em Inovação e Engenharia de Software. Minha formação acadêmica inclui um MBA em Inovação em Engenharia de Software pela UFRJ, além de especializações em Educação Inovadora pela Universidade de Stanford e Transformação Digital pela Fundação Dom Cabral.</p>
 
-					<p>Tenho uma trajetória marcada pelo trabalho com milhares de estudantes e professores, desenvolvendo e implementando projetos educacionais significativos e pesquisas em tecnologias emergentes e inovações. Meu compromisso é integrar tecnologia e inovação para aprimorar processos de ensino e aprendizagem, sempre com foco em oportunidades de crescimento e desenvolvimento.</p>
+                    <p>Minha carreira é marcada pela dedicação ao desenvolvimento e implementação de projetos educacionais impactantes. Trabalhei com milhares de estudantes e professores, promovendo o uso de tecnologias emergentes e inovações pedagógicas. Como Coordenador de Tecnologias na Educação no Departamento Nacional do Sesc, lidero iniciativas de transformação digital que visam capacitar educadores e alunos com as melhores ferramentas e métodos disponíveis.</p>
 
-					<p style="color:var(--link-color)">
-						<strong>Estou dedicado a ser um agente ativo na transformação digital, impulsionando a inovação para garantir que educadores e estudantes tenham acesso às melhores ferramentas e métodos para uma educação transformadora.</strong>
-					</p>
-				</div>				
-			</section>
-			<!--<section>
-				<h2 class="section-title">Education</h2>
-				<div class="content">
-					<p>Corporis voluptates tenetur laudantium.</p>
-				</div>
-			</section>
-			<section>
-				<h2 class="section-title">Skills</h2>
-				<div class="content">
-					
-				</div>
-			</section>-->
-		</main>
+                    <p>Possuo certificações renomadas, como Educador Inovador pelo Google e Microsoft, e sou instrutor certificado CISCO. Além disso, minha atuação como professor no Ensino Superior, na Descomplica Faculdade Digital, me permite compartilhar meu conhecimento em computação e métodos científicos, ajudando a formar a próxima geração de profissionais da tecnologia.</p>
 
-		<ContactCTA />
-	</div>
+                    <p>Estou comprometido com a criação de soluções que integram tecnologia e inovação para melhorar a educação, sempre buscando oportunidades de crescimento pessoal e profissional. Acredito que a tecnologia deve servir como uma ferramenta empoderadora, e não uma força opressora, em nosso caminho para um futuro mais conectado e inclusivo.</p>
+
+                    <p style="color:var(--link-color)">
+                        <strong>Estou dedicado a ser um agente ativo na transformação digital, impulsionando a inovação para garantir que educadores e estudantes tenham acesso às melhores ferramentas e métodos para uma educação transformadora.</strong>
+                    </p>
+                </div>               
+            </section>
+        </main>
+
+        <ContactCTA />
+    </div>
 </BaseLayout>
 
 <style>
-	.about {
-		display: flex;
-		flex-direction: column;
-		gap: 3.5rem;
-	}
+    .about {
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
+    }
 
-	img {
-		margin-top: 1.5rem;
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-md);
-	}
+    img {
+        margin-top: 1.5rem;
+        border-radius: 1.5rem;
+        box-shadow: var(--shadow-md);
+    }
 
-	section {
-		display: flex;
-		flex-direction: column;
-		gap: 0.5rem;
-		color: var(--gray-200);
-	}
+    section {
+        display: flex;
+        flex-direction: column;
+        gap: 0.5rem;
+        color: var(--gray-200);
+    }
 
-	.section-title {
-		grid-column-start: 1;
-		font-size: var(--text-xl);
-		color: var(--gray-0);
-	}
+    .section-title {
+        grid-column-start: 1;
+        font-size: var(--text-xl);
+        color: var(--gray-0);
+    }
 
-	.content {
-		grid-column: 2 / 4;
-	}
+    .content {
+        grid-column: 2 / 4;
+    }
 
-	.content :global(a) {
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--theme-transition);
-	}
+    .content :global(a) {
+        text-decoration: 1px solid underline transparent;
+        text-underline-offset: 0.25em;
+        transition: text-decoration-color var(--theme-transition);
+    }
 
-	.content :global(a:hover),
-	.content :global(a:focus) {
-		text-decoration-color: currentColor;
-	}
+    .content :global(a:hover),
+    .content :global(a:focus) {
+        text-decoration-color: currentColor;
+    }
 
-	@media (min-width: 50em) {
-		.about {
-			display: grid;
-			grid-template-columns: 1fr 60% 1fr;
-		}
+    @media (min-width: 50em) {
+        .about {
+            display: grid;
+            grid-template-columns: 1fr 60% 1fr;
+        }
 
-		.about > :global(:first-child) {
-			grid-column-start: 2;
-		}
+        .about > :global(:first-child) {
+            grid-column-start: 2;
+        }
 
-		section {
-			display: contents;
-			font-size: var(--text-lg);
-		}
-	}
+        section {
+            display: contents;
+            font-size: var(--text-lg);
+        }
+    }
 </style>
