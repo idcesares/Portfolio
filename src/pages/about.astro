@@ -22,7 +22,6 @@ import Hero from '../components/Hero.astro';
                 <h2 class="section-title">Perfil Profissional</h2>
                 <div class="content">
                     <p>Sou Isaac D'Césares, Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc e mestrando em Computação pela UFRJ. Minha paixão está na interseção entre tecnologia, inovação e educação, buscando constantemente formas de transformar e melhorar os processos de ensino e aprendizagem.</p>
-
                     <p>Com uma sólida formação acadêmica e profissional, incluindo um MBA em Inovação em Engenharia de Software (UFRJ), especializações em Educação Inovadora (Stanford) e Transformação Digital (FDC), além de certificações como Educador Inovador pelo Google e Microsoft, estou equipado para liderar iniciativas de vanguarda no campo da tecnologia educacional.</p>
                 </div>
             </section>
@@ -86,9 +85,14 @@ import Hero from '../components/Hero.astro';
     }
 
     img {
-        margin-top: 1.5rem;
+        max-width: 100%;
+        height: auto;
+        max-height: 400px;
+        width: auto;
+        margin: 1.5rem auto;
         border-radius: 1.5rem;
         box-shadow: var(--shadow-md);
+        display: block;
     }
 
     section {
