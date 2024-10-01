@@ -222,6 +222,19 @@ h5 {
 	padding-inline: 1.5rem;
 }
 
+.content {
+	max-width: 100%; /* Ensure content does not exceed the width of the wrapper */
+	width: 100%;
+	margin-inline: auto;
+	padding: 0 1.5rem; /* Add padding to prevent text from touching the edges */
+	box-sizing: border-box; /* Include padding in the element's total width and height */
+}
+
+@media (min-width: 50em) {
+	.content {
+		padding: 0 2rem; /* Adjust padding for larger screens */
+	}
+}
 .stack {
 	display: flex;
 	flex-direction: column;
