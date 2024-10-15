@@ -157,19 +157,19 @@ h5 {
 }
 
 h1 {
-	font-size: var(--text-5xl);
-}
-
-h2 {
-	font-size: var(--text-4xl);
-}
-
-h3 {
 	font-size: var(--text-3xl);
 }
 
-h4 {
+h2 {
 	font-size: var(--text-2xl);
+}
+
+h3 {
+	font-size: var(--text-1xl);
+}
+
+h4 {
+	font-size: var(--text-xl);
 }
 
 h5 {
