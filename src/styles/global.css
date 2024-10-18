@@ -217,7 +217,7 @@ h5 {
 
 .wrapper {
 	width: 100%;
-	max-width: 83rem;
+	max-width: 90rem;
 	margin-inline: auto;
 	padding-inline: 1.5rem;
 }
@@ -226,7 +226,7 @@ h5 {
 	max-width: 100%; /* Ensure content does not exceed the width of the wrapper */
 	width: 100%;
 	margin-inline: auto;
-	padding: 0 1.5rem; /* Add padding to prevent text from touching the edges */
+	padding: 0 .5rem; /* Add padding to prevent text from touching the edges */
 	box-sizing: border-box; /* Include padding in the element's total width and height */
 }
 
