@@ -10,7 +10,7 @@ tags:
   - Claude AI
 ---
 
-# Do Zero à Nuvem: Criando um Encoder/Decoder Base64 com Claude em Tempo Recorde
+## Do Zero à Nuvem: Criando um Encoder/Decoder Base64 com Claude em Tempo Recorde
 
 Recentemente, ao preparar uma aula sobre codificação, percebi que precisava de uma ferramenta prática para demonstrar o processo de codificação e decodificação em Base64. Em vez de usar soluções prontas, decidi criar meu próprio aplicativo. Foi nesse momento que o Claude, uma IA que acaba de chegar ao Brasil, entrou em cena e me ajudou a transformar essa ideia em realidade de forma surpreendentemente rápida.
 

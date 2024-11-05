@@ -11,9 +11,10 @@ import FloatingButton from '../components/FloatingButton.astro';
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
 }
 
-const { title, description } = Astro.props;
+const { title, description, image } = Astro.props;
 ---
 
 <html lang="pt-br">
@@ -27,7 +28,7 @@ const { title, description } = Astro.props;
 			gtag('config', 'G-0XZV7NBH4E');
 		</script>
 		<link rel="sitemap" href="/sitemap-index.xml" />
-		<MainHead title={title} description={description} />
+		<MainHead title={title} description={description} image={image}/>
 	</head>
 	<body>
 		<div class="stack backgrounds">

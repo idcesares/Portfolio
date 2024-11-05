@@ -12,7 +12,7 @@ tags:
   - Claude
 ---
 
-# Prompts que vão potencializar o seu estudo!
+## Prompts que vão potencializar o seu estudo!
 
 Você já deve ter ouvido por aí que o segredo para aproveitar o melhor das ferramentas de Inteligência Artificial está em saber como "fazer as perguntas certas". E quer saber? É exatamente isso. Neste post, vou te mostrar como criar prompts que realmente vão colocar a IA para trabalhar a seu favor, especialmente no que diz respeito ao aprendizado e à otimização dos estudos. Está pronto? Vamos nessa.
 

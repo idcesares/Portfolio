@@ -1,15 +1,18 @@
 ---
 import '../styles/global.css';
 import SpeedInsights from '@vercel/speed-insights/astro';
+import { SEO } from "astro-seo";
 
 interface Props {
 	title?: string | undefined;
 	description?: string | undefined;
+	image?: string | undefined;
 }
 
 const {
 	title = "Isaac D'Césares: Inovação e Tecnologia",
 	description = 'Transformando a interseção entre Tecnologia e Educação através de soluções éticas e inovadoras.',
+	image = '/assets/favicon.svg',
 } = Astro.props;
 ---
 
@@ -28,6 +31,17 @@ const {
 	rel="stylesheet"
 />
 <SpeedInsights />
+<SEO
+      title={title}
+      description={description}
+      openGraph={{
+        basic: {
+		  title: title,
+          type: "website",
+          image: image,
+        }
+      }}
+	/>
 <script is:inline>
 	// This code is inlined in the head to make dark mode instant & blocking.
 	const getThemePreference = () => {

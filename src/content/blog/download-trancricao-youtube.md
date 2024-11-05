@@ -10,7 +10,7 @@ tags:
   - Transcrição
 ---
 
-# Como Fazer Download de Transcrições de Vídeos do YouTube
+## Como Fazer Download de Transcrições de Vídeos do YouTube
 
 Em um mundo imerso em vídeos online, a transcrição de conteúdo audiovisual é uma ferramenta poderosa para acessibilidade, SEO e análise de dados. No entanto, nem sempre é fácil obter essas transcrições, especialmente de vídeos do YouTube. Neste artigo, vou mostrar como você pode baixar transcrições de vídeos do YouTube usando Python de uma forma simples e eficiente. A ideia é que esse processo também possa ser automatizado para os mais diversos fins, inclusive para análise de dados e sumarização de conteúdo utilizando técnicas de Inteligência Artificial.
 
