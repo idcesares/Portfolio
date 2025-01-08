@@ -1,0 +1,79 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import Grid from '../components/Grid.astro';
+
+const deals = [
+  {
+    title: 'Desconto Exclusivo no Perplexity Pro',
+    description: 'Garanta benefícios incríveis ao se inscrever no Perplexity Pro usando o código de referência exclusivo "HEUYI5O6". Melhore sua experiência com ferramentas avançadas de IA.',
+    link: 'https://www.perplexity.ai/pro?referral_code=HEUYI5O6',
+  },
+  {
+    title: 'Cadastro VIP no Beacons',
+    description: 'Crie sua página personalizada e alcance seu público de forma profissional com o Beacons. Use o código exclusivo "idcesares" e desbloqueie recursos premium.',
+    link: 'https://beacons.ai/signup?c=idcesares',
+  },
+];
+---
+
+<BaseLayout title="Ofertas e Cupons | Isaac D'Césares" description="Explore ofertas exclusivas, cupons de desconto e códigos de indicação para aproveitar o melhor das ferramentas digitais e plataformas inovadoras.">
+    <div class="stack gap-20">
+        <main class="wrapper stack gap-8">
+            <Hero
+                title="Ofertas e Cupons"
+                tagline="Descubra vantagens imperdíveis e aproveite o melhor das plataformas tecnológicas!"
+                align="start"
+            />
+            <Grid variant="offset">
+                {
+                    deals.map((deal) => (
+                        <li class="deal-item">
+                            <h3>{deal.title}</h3>
+                            <p>{deal.description}</p>
+                            <a href={deal.link} class="deal-button" target="_blank" rel="noopener">Ver Oferta</a>
+                        </li>
+                    ))
+                }
+            </Grid>
+        </main>
+    </div>
+</BaseLayout>
+
+<style>
+    .deal-item {
+        padding: 1.5rem;
+        background: var(--accent-regular);
+        border-radius: 1rem;
+        box-shadow: var(--shadow-md);
+        text-align: left;
+        color: var(--accent-text-over);
+    }
+
+    .deal-item h3 {
+        font-size: var(--text-lg);
+        margin-bottom: 0.5rem;
+    }
+
+    .deal-item p {
+        font-size: var(--text-md);
+        margin-bottom: 1rem;
+    }
+
+    .deal-button {
+        display: inline-block;
+        background: var(--accent-light);
+        color: var(--gray-0);
+        padding: 0.75rem 1.5rem;
+        border-radius: 0.5rem;
+        text-align: center;
+        font-weight: bold;
+        text-decoration: none;
+        box-shadow: var(--shadow-sm);
+        transition: background 0.3s ease;
+    }
+
+    .deal-button:hover {
+        background: var(--accent-regular);
+    }
+</style>
