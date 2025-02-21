@@ -1,0 +1,17 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import Hero from '../components/Hero.astro';
+import SearchField from '../components/SearchField.astro';
+---
+
+<BaseLayout title="Pesquisa | Isaac D'Césares" description="Página de pesquisa">
+    <div class="stack gap-20">
+        <main class="wrapper search">
+            <Hero
+                title="Pesquisa"
+                tagline="Digite sua consulta para encontrar resultados..."
+            />
+            <SearchField />
+        </main>
+    </div>
+</BaseLayout>

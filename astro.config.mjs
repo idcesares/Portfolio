@@ -6,6 +6,7 @@ import mdx from '@astrojs/mdx';
 import embeds from 'astro-embed/integration';
 import react from "@astrojs/react";
 import tailwind from '@astrojs/tailwind';
+import pagefind from "astro-pagefind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -15,10 +16,13 @@ export default defineConfig({
       enabled: true
     }
   }),
+  build: {
+    format: "file",
+  },
   site: 'https://dcesares.dev',
   integrations: [sitemap(), partytown({
     config: {
       forward: ["dataLayer.push"]
     }
-  }), embeds(), mdx(), react(), tailwind()]
+  }), embeds(), mdx(), react(), tailwind(), pagefind()]
 });
