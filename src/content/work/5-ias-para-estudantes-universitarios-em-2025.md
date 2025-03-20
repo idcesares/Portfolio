@@ -32,7 +32,7 @@ Agora, vamos ao que interessa!  O Professor Isaac apresentou **5 ferramentas de 
 
 ### 1. Perplexity:  A IA para Pesquisa Inteligente 🔍
 
-[Perplexity](https://www.perplexity.ai/)
+**[Perplexity](https://www.perplexity.ai/)**
 
 Cansado de passar horas no Google e ainda ter dúvidas sobre a veracidade das informações? O **Perplexity** é a solução!  Essa IA funciona como um **mecanismo de busca turbinado**, que não só responde às suas perguntas, mas também **cita as fontes**!  Durante a live, o Professor Isaac demonstrou o poder do Perplexity com a pergunta:
 
@@ -46,7 +46,7 @@ O resultado? Uma resposta **completa, concisa e com fontes confiáveis**,  como 
 
 ### 2. Consensus:  Domine a Pesquisa Acadêmica com IA 🧑‍🎓
 
-[Consensus AI-powered Academic Search Engine](https://consensus.app/)
+**[Consensus AI-powered Academic Search Engine](https://consensus.app/)**
 
 Para quem busca **profundidade e rigor científico**, o **Consensus** é a IA ideal.  Essa ferramenta é um **motor de busca acadêmico** que te ajuda a encontrar respostas baseadas em **artigos científicos revisados por pares**.  O Professor Isaac exemplificou a busca com uma pergunta simples, mas que demonstra o poder da ferramenta:
 
@@ -60,7 +60,7 @@ O Consensus não só responde à pergunta, mas apresenta um **consenso científi
 
 ### 3. Notion AI:  Seu Planner de Estudos Inteligente e Personalizado 🗓️
 
-[Meet the new Notion AI](https://www.notion.com/product/ai)
+**[Meet the new Notion AI](https://www.notion.com/product/ai)
 
 Organização é a chave para o sucesso na faculdade, e o **Notion AI** é o seu canivete suíço da organização!  O Notion já é conhecido como um **espaço de trabalho completo**, onde você pode criar notas, listas de tarefas, projetos e muito mais.  Com a **inteligência artificial integrada**, o Notion se torna um **planner de estudos superpoderoso e personalizado**.  O Professor Isaac demonstrou como criar um plano de estudos em segundos:
 
@@ -74,7 +74,7 @@ Em instantes, o Notion AI gerou uma **tabela completa com um plano de estudos de
 
 ### 4. v0:  A IA que Codifica por Você (e te Ensina!) 💻
 
-[v0 by Vercel](https://v0.dev/)
+**[v0 by Vercel](https://v0.dev/)
 
 Para os futuros programadores e entusiastas de tecnologia, o **v0** é uma ferramenta fascinante!  Essa IA da Vercel te ajuda a **criar interfaces de usuário (UI) a partir de prompts de texto**.  Na live, o Professor Isaac desafiou o v0 a criar uma calculadora básica:
 
@@ -88,7 +88,7 @@ O resultado foi impressionante: o v0 **gerou o código da calculadora em segundo
 
 ### 5. Notebook LM:  Sua Biblioteca Inteligente e Interativa 📚
 
-[Notebook LM](https://notebooklm.google.com/)
+**[Notebook LM](https://notebooklm.google.com/)
 
 Imagine ter uma **IA que lê e compreende seus materiais de estudo** e te ajuda a **extrair o máximo de conhecimento deles**.  Essa é a proposta do **Notebook LM**!  Essa ferramenta do Google Labs te permite **carregar documentos, PDFs, artigos e outros materiais de estudo** e **interagir com a IA para fazer perguntas, criar guias de estudo, resumos e muito mais**.  Durante a live, o Professor Isaac demonstrou o Notebook LM na prática, carregando o paper do Bitcoin:
 
@@ -106,13 +106,13 @@ E aí, calouro?  Animado para colocar a IA para trabalhar nos seus estudos?  O P
 
 **"Vamos resolver um problema universitário ao vivo? Manda aí a sua mensagem no chat com um desafio que você tem/observa e vamos escolher um deles."**
 
-Infelizmente, o tempo da live foi curto para resolvermos um problema ao vivo, mas o desafio continua!  **Pense em um problema ou dificuldade que você enfrenta na faculdade** e **experimente usar uma das IAs apresentadas para te ajudar a encontrar soluções**.  Compartilhe seus resultados e descobertas!
+Infelizmente, o tempo da live foi curto para resolvermos um problema ao vivo, mas o desafio continua!  **Pense em um problema ou dificuldade que você enfrenta na faculdade** e **experimente usar uma das IAs apresentadas para te ajudar a encontrar soluções**. Compartilhe seus resultados e descobertas!
 
 **✨  Continue Aprendendo!**  Não se esqueça de **se inscrever no canal** da Descomplica Faculdade Digital e seguir e professor nas redes sociais **@idcesares** para não perder nenhum conteúdo e **ativar as notificações** para ficar por dentro das próximas lives e novidades!  E para aprofundar ainda mais seus conhecimentos, acesse o **[Prompts que vão potencializar o seu estudo!](https://www.dcesares.dev/blog/prompts-para-potencializar-estudo)**.
 
 **A Inteligência Artificial é uma ferramenta poderosa que pode transformar a sua experiência na faculdade.  Use-a com sabedoria, ética e criatividade, e prepare-se para um futuro de aprendizado e inovação!**
 
-Assista à live completa [aqui](https://www.youtube.com/watch?v=q4E5oi0qAb4)!
+Assista à live completa **[aqui](https://www.youtube.com/watch?v=q4E5oi0qAb4)!
 
 <div class="video-container">
     <iframe width="560" height="315" src="https://www.youtube.com/embed/q4E5oi0qAb4?si=ww9z_Jog3rJVza6H" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>

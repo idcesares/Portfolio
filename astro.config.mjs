@@ -24,5 +24,11 @@ export default defineConfig({
     config: {
       forward: ["dataLayer.push"]
     }
-  }), embeds(), mdx(), react(), tailwind(), pagefind()]
+  }), embeds(), mdx(), react(), tailwind(), pagefind()],
+  markdown: {
+    shikiConfig: {
+      theme: 'dracula',
+      wrap: true,
+    },
+  }
 });
