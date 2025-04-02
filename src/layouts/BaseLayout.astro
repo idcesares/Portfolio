@@ -1,8 +1,4 @@
 ---
-// Learn about using Astro layouts:
-// https://docs.astro.build/en/core-concepts/layouts/
-
-// Component Imports
 import MainHead from '../components/MainHead.astro';
 import Nav from '../components/Nav.astro';
 import Footer from '../components/Footer.astro';
@@ -18,7 +14,6 @@ const { title, description, image } = Astro.props;
 
 <html lang="pt-br">
 	<head>
-		<!-- Google tag (gtag.js) -->
 		<script type="text/partytown" async src="https://www.googletagmanager.com/gtag/js?id=G-0XZV7NBH4E"></script>
 		<script type="text/partytown">
 			window.dataLayer = window.dataLayer || [];
@@ -37,7 +32,6 @@ const { title, description, image } = Astro.props;
 		</div>
 
 		<script>
-			// Add “loaded” class once the document has completely loaded.
 			addEventListener('load', () => document.documentElement.classList.add('loaded'));
 		</script>
 
@@ -64,8 +58,6 @@ const { title, description, image } = Astro.props;
 				--bg-blend-mode: lighten;
 			}
 
-			/* These backgrounds are displayed below the fold, so we lazy load them
-			   once the `.loaded` class has been set.  */
 			:root.loaded {
 				--bg-image-subtle-1: url('/assets/backgrounds/bg-subtle-1-light-800w.jpg');
 				--bg-image-subtle-2: url('/assets/backgrounds/bg-subtle-2-light-800w.jpg');
@@ -116,7 +108,6 @@ const { title, description, image } = Astro.props;
 					/*base*/ normal;
 			}
 			@media (forced-colors: active) {
-				/* Deactivate custom backgrounds for high contrast users. */
 				.backgrounds {
 					background: none;
 					background-blend-mode: none;
