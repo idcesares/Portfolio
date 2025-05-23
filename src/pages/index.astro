@@ -14,6 +14,9 @@ import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
 import PostPreview from '../components/PostPreview.astro';
 
+import { Image } from 'astro:assets';
+import Portrait from '../assets/portrait.webp';
+
 
 const projects = (await getCollection('work'))
 	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
@@ -41,11 +44,11 @@ const posts = (await getCollection('blog'))
 					</div>
 				</Hero>
 
-				<img
+				<Image 
+					class="portrait"
 					alt="Isaac D'Césares profile picture"
-					width="400"
-					height="400"
-					src="/assets/portrait.jpg"
+					src={Portrait}
+					loading="lazy"
 				/>
 			</header>
 

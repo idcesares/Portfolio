@@ -9,14 +9,14 @@ importers:
   .:
     dependencies:
       '@astrojs/mdx':
-        specifier: ^4.2.6
-        version: 4.2.6(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+        specifier: ^4.3.0
+        version: 4.3.0(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       '@astrojs/partytown':
         specifier: ^2.1.4
         version: 2.1.4
       '@astrojs/react':
-        specifier: ^4.2.7
-        version: 4.2.7(@types/node@22.15.21)(@types/react-dom@18.3.7(@types/react@18.3.21))(@types/react@18.3.21)(jiti@2.4.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(yaml@2.8.0)
+        specifier: ^4.3.0
+        version: 4.3.0(@types/node@22.15.21)(@types/react-dom@18.3.7(@types/react@18.3.22))(@types/react@18.3.22)(jiti@2.4.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(yaml@2.8.0)
       '@astrojs/rss':
         specifier: ^4.0.11
         version: 4.0.11
@@ -25,10 +25,10 @@ importers:
         version: 3.4.0
       '@astrojs/tailwind':
         specifier: ^6.0.2
-        version: 6.0.2(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(tailwindcss@3.4.17)
+        version: 6.0.2(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(tailwindcss@3.4.17)
       '@astrojs/vercel':
         specifier: ^8.1.4
-        version: 8.1.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(react@18.3.1)(rollup@4.41.0)
+        version: 8.1.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(react@18.3.1)(rollup@4.41.0)
       '@heroui/button':
         specifier: ^2.2.19
         version: 2.2.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -37,13 +37,13 @@ importers:
         version: 2.2.14(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/react':
         specifier: ^2.7.8
-        version: 2.7.8(@types/react@18.3.21)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)
+        version: 2.7.8(@types/react@18.3.22)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)
       '@types/react':
-        specifier: ^18.3.21
-        version: 18.3.21
+        specifier: ^18.3.22
+        version: 18.3.22
       '@types/react-dom':
         specifier: ^18.3.7
-        version: 18.3.7(@types/react@18.3.21)
+        version: 18.3.7(@types/react@18.3.22)
       '@vercel/analytics':
         specifier: ^1.5.0
         version: 1.5.0(react@18.3.1)
@@ -51,14 +51,14 @@ importers:
         specifier: ^1.2.0
         version: 1.2.0(react@18.3.1)
       astro:
-        specifier: ^5.7.13
-        version: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+        specifier: ^5.8.0
+        version: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       astro-embed:
         specifier: ^0.7.4
-        version: 0.7.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+        version: 0.7.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       astro-pagefind:
         specifier: ^1.8.3
-        version: 1.8.3(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+        version: 1.8.3(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       astro-seo:
         specifier: ^0.8.4
         version: 0.8.4(typescript@5.7.2)
@@ -135,25 +135,25 @@ packages:
       prettier-plugin-astro:
         optional: true
 
-  '@astrojs/markdown-remark@6.3.1':
-    resolution: {integrity: sha512-c5F5gGrkczUaTVgmMW9g1YMJGzOtRvjjhw6IfGuxarM6ct09MpwysP10US729dy07gg8y+ofVifezvP3BNsWZg==}
+  '@astrojs/markdown-remark@6.3.2':
+    resolution: {integrity: sha512-bO35JbWpVvyKRl7cmSJD822e8YA8ThR/YbUsciWNA7yTcqpIAL2hJDToWP5KcZBWxGT6IOdOkHSXARSNZc4l/Q==}
 
-  '@astrojs/mdx@4.2.6':
-    resolution: {integrity: sha512-0i/GmOm6d0qq1/SCfcUgY/IjDc/bS0i42u7h85TkPFBmlFOcBZfkYhR5iyz6hZLwidvJOEq5yGfzt9B1Azku4w==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
+  '@astrojs/mdx@4.3.0':
+    resolution: {integrity: sha512-OGX2KvPeBzjSSKhkCqrUoDMyzFcjKt5nTE5SFw3RdoLf0nrhyCXBQcCyclzWy1+P+XpOamn+p+hm1EhpCRyPxw==}
+    engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
       astro: ^5.0.0
 
   '@astrojs/partytown@2.1.4':
     resolution: {integrity: sha512-loUrAu0cGYFDC6dHVRiomdsBJ41VjDYXPA+B3Br51V5hENFgDSOLju86OIj1TvBACcsB22UQV7BlppODDG5gig==}
 
-  '@astrojs/prism@3.2.0':
-    resolution: {integrity: sha512-GilTHKGCW6HMq7y3BUv9Ac7GMe/MO9gi9GW62GzKtth0SwukCu/qp2wLiGpEujhY+VVhaG9v7kv/5vFzvf4NYw==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
+  '@astrojs/prism@3.3.0':
+    resolution: {integrity: sha512-q8VwfU/fDZNoDOf+r7jUnMC2//H2l0TuQ6FkGJL8vD8nw/q5KiL3DS1KKBI3QhI9UQhpJ5dc7AtqfbXWuOgLCQ==}
+    engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
 
-  '@astrojs/react@4.2.7':
-    resolution: {integrity: sha512-/wM90noT/6QyJEOGdDmDbq2D9qZooKTJNG1M8olmsW5ns6bJ7uxG5fzkYxcpA3WUTD6Dj6NtpEqchvb5h8Fa+g==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
+  '@astrojs/react@4.3.0':
+    resolution: {integrity: sha512-N02aj52Iezn69qHyx5+XvPqgsPMEnel9mI5JMbGiRMTzzLMuNaxRVoQTaq2024Dpr7BLsxCjqMkNvelqMDhaHA==}
+    engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
     peerDependencies:
       '@types/react': ^17.0.50 || ^18.0.21 || ^19.0.0
       '@types/react-dom': ^17.0.17 || ^18.0.6 || ^19.0.0
@@ -172,9 +172,9 @@ packages:
       astro: ^3.0.0 || ^4.0.0 || ^5.0.0
       tailwindcss: ^3.0.24
 
-  '@astrojs/telemetry@3.2.1':
-    resolution: {integrity: sha512-SSVM820Jqc6wjsn7qYfV9qfeQvePtVc1nSofhyap7l0/iakUKywj3hfy3UJAOV4sGV4Q/u450RD4AaCaFvNPlg==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0}
+  '@astrojs/telemetry@3.3.0':
+    resolution: {integrity: sha512-UFBgfeldP06qu6khs/yY+q1cDAaArM2/7AEIqQ9Cuvf7B1hNLq0xDrZkct+QoIGyjq56y8IaE2I3CTvG99mlhQ==}
+    engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0}
 
   '@astrojs/vercel@8.1.4':
     resolution: {integrity: sha512-mJAbaXwLBVsk+5JNwzKIrpvIQ4llW/gS9ut5Rot5x6D+9DYSqfZ6PRIT0YvyzgUackahYAQdH/MZWeqVrcmwuA==}
@@ -1825,6 +1825,9 @@ packages:
     peerDependencies:
       react: ^16.8.0 || ^17.0.0-rc.1 || ^18.0.0 || ^19.0.0-rc.1
 
+  '@rolldown/pluginutils@1.0.0-beta.9':
+    resolution: {integrity: sha512-e9MeMtVWo186sgvFFJOPGy7/d2j2mZhLJIdVW0C/xDluuOvymEATqz6zKsP0ZmXGzQtqlyjz5sC1sYQUoJG98w==}
+
   '@rollup/pluginutils@5.1.4':
     resolution: {integrity: sha512-USm05zrsFxYLPdWWq+K3STlWiT/3ELn3RcV5hJMghpeAIhxfsUIg6mt12CBJBInWMV4VneoV7SfGv8xIwo2qNQ==}
     engines: {node: '>=14.0.0'}
@@ -2029,8 +2032,8 @@ packages:
     peerDependencies:
       '@types/react': ^18.0.0
 
-  '@types/react@18.3.21':
-    resolution: {integrity: sha512-gXLBtmlcRJeT09/sI4PxVwyrku6SaNUj/6cMubjE6T6XdY1fDmBL7r0nX0jbSZPU/Xr0KuwLLZh6aOYY5d91Xw==}
+  '@types/react@18.3.22':
+    resolution: {integrity: sha512-vUhG0YmQZ7kL/tmKLrD3g5zXbXXreZXB3pmROW8bg3CnLnpjkRVwUlLne7Ufa2r9yJ8+/6B73RzhAek5TBKh2Q==}
 
   '@types/sax@1.2.7':
     resolution: {integrity: sha512-rO73L89PJxeYM3s3pPPjiPgVVcymqU490g0YO5n5By0k2Erzj6tay/4lr1CHAAU4JyOWd1rpQ8bCf6cZfHU96A==}
@@ -2104,8 +2107,8 @@ packages:
       vue-router:
         optional: true
 
-  '@vitejs/plugin-react@4.4.1':
-    resolution: {integrity: sha512-IpEm5ZmeXAP/osiBXVVP5KjFMzbWOonMs0NaQQl+xYnUAcq4oHUBsF2+p4MgKWG4YMmFYJU8A6sxRPuowllm6w==}
+  '@vitejs/plugin-react@4.5.0':
+    resolution: {integrity: sha512-JuLWaEqypaJmOJPLWwO335Ig6jSgC1FTONCWAxnqcQthLTK/Yc9aH6hr9z/87xciejbQcnP3GnA1FWUSWeXaeg==}
     engines: {node: ^14.18.0 || >=16.0.0}
     peerDependencies:
       vite: ^4.2.0 || ^5.0.0 || ^6.0.0
@@ -2227,9 +2230,9 @@ packages:
   astro-seo@0.8.4:
     resolution: {integrity: sha512-Ou1vzQSXAxa0K8rtNtXNvSpYqOGEgMhh0immMxJeXmbVZac3UKCNWAoXWyOQDFYsZvBugCRSg0N1phBqPMVgCw==}
 
-  astro@5.7.13:
-    resolution: {integrity: sha512-cRGq2llKOhV3XMcYwQpfBIUcssN6HEK5CRbcMxAfd9OcFhvWE7KUy50zLioAZVVl3AqgUTJoNTlmZfD2eG0G1w==}
-    engines: {node: ^18.17.1 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
+  astro@5.8.0:
+    resolution: {integrity: sha512-G57ELkdIntDiSrucA5lQaRtBOjquaZ9b9NIwoz2f471ZuuJcynLjWgItgBzlrz5UMY4WqnFbVWUCKlJb7nt9bA==}
+    engines: {node: 18.20.8 || ^20.3.0 || >=22.0.0, npm: '>=9.6.5', pnpm: '>=7.1.0'}
     hasBin: true
 
   async-sema@3.1.1:
@@ -2518,8 +2521,8 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
-  electron-to-chromium@1.5.155:
-    resolution: {integrity: sha512-ps5KcGGmwL8VaeJlvlDlu4fORQpv3+GIcF5I3f9tUKUlJ/wsysh6HU8P5L1XWRYeXfA0oJd4PyM8ds8zTFf6Ng==}
+  electron-to-chromium@1.5.157:
+    resolution: {integrity: sha512-/0ybgsQd1muo8QlnuTpKwtl0oX5YMlUGbm8xyqgDU00motRkKFFbUJySAQBWcY79rVqNLWIWa87BGVGClwAB2w==}
 
   emmet@2.4.11:
     resolution: {integrity: sha512-23QPJB3moh/U9sT4rQzGgeyyGIrcM+GH5uVYg2C6wZIxAIJq7Ng3QLT79tl8FUwDXhyq9SusfknOrofAKqvgyQ==}
@@ -4079,8 +4082,8 @@ packages:
     resolution: {integrity: sha512-AyeEbWOu/TAXdxlV9wmGcR0+yh2j3vYPGOECcIj2S7MkrLyC7ne+oye2BKTItt0ii2PHk4cDy+95+LshzbXnGg==}
     engines: {node: '>=12.20'}
 
-  yocto-spinner@0.2.2:
-    resolution: {integrity: sha512-21rPcM3e4vCpOXThiFRByX8amU5By1R0wNS8Oex+DP3YgC8xdU0vEJ/K8cbPLiIJVosSSysgcFof6s6MSD5/Vw==}
+  yocto-spinner@0.2.3:
+    resolution: {integrity: sha512-sqBChb33loEnkoXte1bLg45bEBsOP9N1kzQh5JZNKj/0rik4zAPTNSAVPj3uQAdc6slYJ0Ksc403G2XgxsJQFQ==}
     engines: {node: '>=18.19'}
 
   yoctocolors@2.1.1:
@@ -4098,8 +4101,8 @@ packages:
       typescript: ^4.9.4 || ^5.0.2
       zod: ^3
 
-  zod@3.25.11:
-    resolution: {integrity: sha512-dA9s9Vv8QgIa9w6iYc5GLeoGm07RoLr+Mr6sFhZwPASExm3AVaZpyh2szBrImysAlipi0I30Z5d9B27w9oTzdw==}
+  zod@3.25.23:
+    resolution: {integrity: sha512-Od2bdMosahjSrSgJtakrwjMDb1zM1A3VIHCPGveZt/3/wlrTWBya2lmEh2OYe4OIu8mPTmmr0gnLHIWQXdtWBg==}
 
   zwitch@2.0.4:
     resolution: {integrity: sha512-bXE4cR/kVZhKZX/RjPEflHaKVhUVl85noU3v6b8apfQEc1x4A+zBxjZ4lN8LqGd6WZ3dl98pY4o717VFmoPp+A==}
@@ -4113,38 +4116,38 @@ snapshots:
       '@jridgewell/gen-mapping': 0.3.8
       '@jridgewell/trace-mapping': 0.3.25
 
-  '@astro-community/astro-embed-integration@0.7.2(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
+  '@astro-community/astro-embed-integration@0.7.2(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
     dependencies:
       '@astro-community/astro-embed-link-preview': 0.2.2
-      '@astro-community/astro-embed-twitter': 0.5.8(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
-      '@astro-community/astro-embed-vimeo': 0.3.10(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
-      '@astro-community/astro-embed-youtube': 0.5.6(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-twitter': 0.5.8(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-vimeo': 0.3.10(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-youtube': 0.5.6(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       '@types/unist': 2.0.11
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
-      astro-auto-import: 0.4.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro-auto-import: 0.4.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       unist-util-select: 4.0.3
 
   '@astro-community/astro-embed-link-preview@0.2.2':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
 
-  '@astro-community/astro-embed-twitter@0.5.8(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
+  '@astro-community/astro-embed-twitter@0.5.8(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
 
   '@astro-community/astro-embed-utils@0.1.3':
     dependencies:
       linkedom: 0.14.26
 
-  '@astro-community/astro-embed-vimeo@0.3.10(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
+  '@astro-community/astro-embed-vimeo@0.3.10(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
     dependencies:
       '@astro-community/astro-embed-utils': 0.1.3
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
 
-  '@astro-community/astro-embed-youtube@0.5.6(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
+  '@astro-community/astro-embed-youtube@0.5.6(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
     dependencies:
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       lite-youtube-embed: 0.3.3
 
   '@astrojs/check@0.5.10(typescript@5.7.2)':
@@ -4186,10 +4189,10 @@ snapshots:
     transitivePeerDependencies:
       - typescript
 
-  '@astrojs/markdown-remark@6.3.1':
+  '@astrojs/markdown-remark@6.3.2':
     dependencies:
       '@astrojs/internal-helpers': 0.6.1
-      '@astrojs/prism': 3.2.0
+      '@astrojs/prism': 3.3.0
       github-slugger: 2.0.0
       hast-util-from-html: 2.0.3
       hast-util-to-text: 4.0.2
@@ -4212,12 +4215,12 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/mdx@4.2.6(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
+  '@astrojs/mdx@4.3.0(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))':
     dependencies:
-      '@astrojs/markdown-remark': 6.3.1
+      '@astrojs/markdown-remark': 6.3.2
       '@mdx-js/mdx': 3.1.0(acorn@8.14.1)
       acorn: 8.14.1
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       es-module-lexer: 1.7.0
       estree-util-visit: 2.0.0
       hast-util-to-html: 9.0.5
@@ -4236,15 +4239,15 @@ snapshots:
       '@qwik.dev/partytown': 0.11.1
       mrmime: 2.0.1
 
-  '@astrojs/prism@3.2.0':
+  '@astrojs/prism@3.3.0':
     dependencies:
       prismjs: 1.30.0
 
-  '@astrojs/react@4.2.7(@types/node@22.15.21)(@types/react-dom@18.3.7(@types/react@18.3.21))(@types/react@18.3.21)(jiti@2.4.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(yaml@2.8.0)':
+  '@astrojs/react@4.3.0(@types/node@22.15.21)(@types/react-dom@18.3.7(@types/react@18.3.22))(@types/react@18.3.22)(jiti@2.4.2)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(yaml@2.8.0)':
     dependencies:
-      '@types/react': 18.3.21
-      '@types/react-dom': 18.3.7(@types/react@18.3.21)
-      '@vitejs/plugin-react': 4.4.1(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0))
+      '@types/react': 18.3.22
+      '@types/react-dom': 18.3.7(@types/react@18.3.22)
+      '@vitejs/plugin-react': 4.5.0(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0))
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
       ultrahtml: 1.6.0
@@ -4272,11 +4275,11 @@ snapshots:
     dependencies:
       sitemap: 8.0.0
       stream-replace-string: 2.0.0
-      zod: 3.25.11
+      zod: 3.25.23
 
-  '@astrojs/tailwind@6.0.2(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(tailwindcss@3.4.17)':
+  '@astrojs/tailwind@6.0.2(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(tailwindcss@3.4.17)':
     dependencies:
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       autoprefixer: 10.4.21(postcss@8.5.3)
       postcss: 8.5.3
       postcss-load-config: 4.0.2(postcss@8.5.3)
@@ -4284,7 +4287,7 @@ snapshots:
     transitivePeerDependencies:
       - ts-node
 
-  '@astrojs/telemetry@3.2.1':
+  '@astrojs/telemetry@3.3.0':
     dependencies:
       ci-info: 4.2.0
       debug: 4.4.1
@@ -4296,14 +4299,14 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@astrojs/vercel@8.1.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(react@18.3.1)(rollup@4.41.0)':
+  '@astrojs/vercel@8.1.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))(react@18.3.1)(rollup@4.41.0)':
     dependencies:
       '@astrojs/internal-helpers': 0.6.1
       '@vercel/analytics': 1.5.0(react@18.3.1)
       '@vercel/edge': 1.2.1
       '@vercel/nft': 0.29.3(rollup@4.41.0)
       '@vercel/routing-utils': 5.0.4
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       esbuild: 0.25.4
       tinyglobby: 0.2.13
     transitivePeerDependencies:
@@ -4625,12 +4628,12 @@ snapshots:
       - '@heroui/theme'
       - framer-motion
 
-  '@heroui/autocomplete@2.3.20(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.21)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@heroui/autocomplete@2.3.20(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.22)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@heroui/aria-utils': 2.2.16(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/button': 2.2.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/form': 2.1.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@heroui/input': 2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/input': 2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.22)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/listbox': 2.3.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/popover': 2.3.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/react-utils': 2.1.10(react@18.3.1)
@@ -4942,7 +4945,7 @@ snapshots:
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
 
-  '@heroui/input@2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@heroui/input@2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.22)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@heroui/form': 2.1.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/react-utils': 2.1.10(react@18.3.1)
@@ -4960,7 +4963,7 @@ snapshots:
       '@react-types/textfield': 3.12.1(react@18.3.1)
       react: 18.3.1
       react-dom: 18.3.1(react@18.3.1)
-      react-textarea-autosize: 8.5.9(@types/react@18.3.21)(react@18.3.1)
+      react-textarea-autosize: 8.5.9(@types/react@18.3.22)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -5185,11 +5188,11 @@ snapshots:
       '@heroui/shared-utils': 2.1.9
       react: 18.3.1
 
-  '@heroui/react@2.7.8(@types/react@18.3.21)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)':
+  '@heroui/react@2.7.8(@types/react@18.3.22)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)(tailwindcss@3.4.17)':
     dependencies:
       '@heroui/accordion': 2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/alert': 2.2.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@heroui/autocomplete': 2.3.20(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.21)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/autocomplete': 2.3.20(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.22)(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/avatar': 2.2.15(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/badge': 2.2.12(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/breadcrumbs': 2.2.15(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -5207,7 +5210,7 @@ snapshots:
       '@heroui/form': 2.1.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/framer-utils': 2.1.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/image': 2.2.12(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@heroui/input': 2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.21)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@heroui/input': 2.4.19(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(@types/react@18.3.22)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/input-otp': 2.1.18(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/kbd': 2.2.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@heroui/link': 2.2.16(@heroui/system@2.4.15(@heroui/theme@2.4.15(tailwindcss@3.4.17))(framer-motion@11.18.2(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(react-dom@18.3.1(react@18.3.1))(react@18.3.1))(@heroui/theme@2.4.15(tailwindcss@3.4.17))(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -6912,6 +6915,8 @@ snapshots:
       '@react-types/shared': 3.29.1(react@18.3.1)
       react: 18.3.1
 
+  '@rolldown/pluginutils@1.0.0-beta.9': {}
+
   '@rollup/pluginutils@5.1.4(rollup@4.41.0)':
     dependencies:
       '@types/estree': 1.0.7
@@ -7094,11 +7099,11 @@ snapshots:
 
   '@types/prop-types@15.7.14': {}
 
-  '@types/react-dom@18.3.7(@types/react@18.3.21)':
+  '@types/react-dom@18.3.7(@types/react@18.3.22)':
     dependencies:
-      '@types/react': 18.3.21
+      '@types/react': 18.3.22
 
-  '@types/react@18.3.21':
+  '@types/react@18.3.22':
     dependencies:
       '@types/prop-types': 15.7.14
       csstype: 3.1.3
@@ -7149,11 +7154,12 @@ snapshots:
     optionalDependencies:
       react: 18.3.1
 
-  '@vitejs/plugin-react@4.4.1(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0))':
+  '@vitejs/plugin-react@4.5.0(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0))':
     dependencies:
       '@babel/core': 7.27.1
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.27.1)
       '@babel/plugin-transform-react-jsx-source': 7.27.1(@babel/core@7.27.1)
+      '@rolldown/pluginutils': 1.0.0-beta.9
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
       vite: 6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0)
@@ -7270,25 +7276,25 @@ snapshots:
 
   astring@1.9.0: {}
 
-  astro-auto-import@0.4.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
+  astro-auto-import@0.4.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
     dependencies:
       '@types/node': 18.19.103
       acorn: 8.14.1
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
 
-  astro-embed@0.7.4(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
+  astro-embed@0.7.4(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
     dependencies:
-      '@astro-community/astro-embed-integration': 0.7.2(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-integration': 0.7.2(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
       '@astro-community/astro-embed-link-preview': 0.2.2
-      '@astro-community/astro-embed-twitter': 0.5.8(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
-      '@astro-community/astro-embed-vimeo': 0.3.10(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
-      '@astro-community/astro-embed-youtube': 0.5.6(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      '@astro-community/astro-embed-twitter': 0.5.8(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-vimeo': 0.3.10(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      '@astro-community/astro-embed-youtube': 0.5.6(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0))
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
 
-  astro-pagefind@1.8.3(astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
+  astro-pagefind@1.8.3(astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)):
     dependencies:
       '@pagefind/default-ui': 1.3.0
-      astro: 5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
+      astro: 5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0)
       pagefind: 1.3.0
       sirv: 3.0.1
 
@@ -7300,12 +7306,12 @@ snapshots:
       - prettier-plugin-astro
       - typescript
 
-  astro@5.7.13(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0):
+  astro@5.8.0(@types/node@22.15.21)(jiti@2.4.2)(rollup@4.41.0)(typescript@5.7.2)(yaml@2.8.0):
     dependencies:
       '@astrojs/compiler': 2.12.0
       '@astrojs/internal-helpers': 0.6.1
-      '@astrojs/markdown-remark': 6.3.1
-      '@astrojs/telemetry': 3.2.1
+      '@astrojs/markdown-remark': 6.3.2
+      '@astrojs/telemetry': 3.3.0
       '@capsizecss/unpack': 2.4.0
       '@oslojs/encoding': 1.1.0
       '@rollup/pluginutils': 5.1.4(rollup@4.41.0)
@@ -7332,6 +7338,7 @@ snapshots:
       github-slugger: 2.0.0
       html-escaper: 3.0.3
       http-cache-semantics: 4.2.0
+      import-meta-resolve: 4.1.0
       js-yaml: 4.1.0
       kleur: 4.1.5
       magic-string: 0.30.17
@@ -7358,10 +7365,10 @@ snapshots:
       vitefu: 1.0.6(vite@6.3.5(@types/node@22.15.21)(jiti@2.4.2)(yaml@2.8.0))
       xxhash-wasm: 1.1.0
       yargs-parser: 21.1.1
-      yocto-spinner: 0.2.2
-      zod: 3.25.11
-      zod-to-json-schema: 3.24.5(zod@3.25.11)
-      zod-to-ts: 1.2.0(typescript@5.7.2)(zod@3.25.11)
+      yocto-spinner: 0.2.3
+      zod: 3.25.23
+      zod-to-json-schema: 3.24.5(zod@3.25.23)
+      zod-to-ts: 1.2.0(typescript@5.7.2)(zod@3.25.23)
     optionalDependencies:
       sharp: 0.33.5
     transitivePeerDependencies:
@@ -7457,7 +7464,7 @@ snapshots:
   browserslist@4.24.5:
     dependencies:
       caniuse-lite: 1.0.30001718
-      electron-to-chromium: 1.5.155
+      electron-to-chromium: 1.5.157
       node-releases: 2.0.19
       update-browserslist-db: 1.1.3(browserslist@4.24.5)
 
@@ -7650,7 +7657,7 @@ snapshots:
 
   eastasianwidth@0.2.0: {}
 
-  electron-to-chromium@1.5.155: {}
+  electron-to-chromium@1.5.157: {}
 
   emmet@2.4.11:
     dependencies:
@@ -8824,12 +8831,12 @@ snapshots:
 
   react-refresh@0.17.0: {}
 
-  react-textarea-autosize@8.5.9(@types/react@18.3.21)(react@18.3.1):
+  react-textarea-autosize@8.5.9(@types/react@18.3.22)(react@18.3.1):
     dependencies:
       '@babel/runtime': 7.27.1
       react: 18.3.1
-      use-composed-ref: 1.4.0(@types/react@18.3.21)(react@18.3.1)
-      use-latest: 1.3.0(@types/react@18.3.21)(react@18.3.1)
+      use-composed-ref: 1.4.0(@types/react@18.3.22)(react@18.3.1)
+      use-latest: 1.3.0(@types/react@18.3.22)(react@18.3.1)
     transitivePeerDependencies:
       - '@types/react'
 
@@ -9387,24 +9394,24 @@ snapshots:
       punycode: 2.3.1
     optional: true
 
-  use-composed-ref@1.4.0(@types/react@18.3.21)(react@18.3.1):
+  use-composed-ref@1.4.0(@types/react@18.3.22)(react@18.3.1):
     dependencies:
       react: 18.3.1
     optionalDependencies:
-      '@types/react': 18.3.21
+      '@types/react': 18.3.22
 
-  use-isomorphic-layout-effect@1.2.1(@types/react@18.3.21)(react@18.3.1):
+  use-isomorphic-layout-effect@1.2.1(@types/react@18.3.22)(react@18.3.1):
     dependencies:
       react: 18.3.1
     optionalDependencies:
-      '@types/react': 18.3.21
+      '@types/react': 18.3.22
 
-  use-latest@1.3.0(@types/react@18.3.21)(react@18.3.1):
+  use-latest@1.3.0(@types/react@18.3.22)(react@18.3.1):
     dependencies:
       react: 18.3.1
-      use-isomorphic-layout-effect: 1.2.1(@types/react@18.3.21)(react@18.3.1)
+      use-isomorphic-layout-effect: 1.2.1(@types/react@18.3.22)(react@18.3.1)
     optionalDependencies:
-      '@types/react': 18.3.21
+      '@types/react': 18.3.22
 
   use-sync-external-store@1.5.0(react@18.3.1):
     dependencies:
@@ -9632,21 +9639,21 @@ snapshots:
 
   yocto-queue@1.2.1: {}
 
-  yocto-spinner@0.2.2:
+  yocto-spinner@0.2.3:
     dependencies:
       yoctocolors: 2.1.1
 
   yoctocolors@2.1.1: {}
 
-  zod-to-json-schema@3.24.5(zod@3.25.11):
+  zod-to-json-schema@3.24.5(zod@3.25.23):
     dependencies:
-      zod: 3.25.11
+      zod: 3.25.23
 
-  zod-to-ts@1.2.0(typescript@5.7.2)(zod@3.25.11):
+  zod-to-ts@1.2.0(typescript@5.7.2)(zod@3.25.23):
     dependencies:
       typescript: 5.7.2
-      zod: 3.25.11
+      zod: 3.25.23
 
-  zod@3.25.11: {}
+  zod@3.25.23: {}
 
   zwitch@2.0.4: {}
