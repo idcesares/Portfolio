@@ -6,7 +6,6 @@ import mdx from '@astrojs/mdx';
 import embeds from 'astro-embed/integration';
 import react from "@astrojs/react";
 import tailwind from '@astrojs/tailwind';
-import pagefind from "astro-pagefind";
 
 // https://astro.build/config
 export default defineConfig({
@@ -24,7 +23,7 @@ export default defineConfig({
     config: {
       forward: ["dataLayer.push"]
     }
-  }), embeds(), mdx(), react(), tailwind(), pagefind()],
+  }), embeds(), mdx(), react(), tailwind()],
   markdown: {
     shikiConfig: {
       theme: 'dracula',
