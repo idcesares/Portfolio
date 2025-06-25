@@ -1,0 +1,231 @@
+---
+import Icon from './Icon.astro';
+
+interface Props {
+  placeholder?: string;
+}
+
+const { placeholder = "Search posts and projects..." } = Astro.props;
+---
+
+<div class="search-container">
+  <div class="search-box">
+    <Icon icon="magnifying-glass" class:list="search-icon" />
+    <input
+      type="text"
+      id="search-input"
+      placeholder={placeholder}
+      class="search-input"
+    />
+    <button type="button" class="search-clear" id="search-clear">
+      <span class="sr-only">Clear search</span>
+      ×
+    </button>
+  </div>
+  <div id="search-results" class="search-results hidden"></div>
+</div>
+
+<style>
+  .search-container {
+    position: relative;
+    max-width: 600px;
+    margin: 0 auto;
+    width: 100%;
+  }
+
+  .search-box {
+    position: relative;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-icon {
+    position: absolute;
+    left: 0.625rem;
+    z-index: 1;
+    color: var(--gray-500);
+    pointer-events: none;
+    font-size: 1rem;
+  }
+
+  .search-input {
+    width: 100%;
+    padding: 0.625rem 2.25rem 0.625rem 2.25rem;
+    border: 1px solid var(--gray-800);
+    border-radius: 0.5rem;
+    background: var(--gray-999);
+    color: var(--gray-200);
+    font-size: var(--text-sm);
+    transition: border-color 0.2s ease;
+  }
+
+  .search-input:focus {
+    outline: none;
+    border-color: var(--accent-regular);
+    box-shadow: 0 0 0 2px var(--accent-regular-alpha);
+  }
+
+  .search-input::placeholder {
+    color: var(--gray-500);
+  }
+
+  .search-clear {
+    position: absolute;
+    right: 0.5rem;
+    background: none;
+    border: none;
+    color: var(--gray-400);
+    font-size: 1rem;
+    cursor: pointer;
+    padding: 0.125rem;
+    border-radius: 0.25rem;
+    transition: color 0.2s ease;
+  }
+
+  .search-clear:hover {
+    color: var(--gray-200);
+  }
+
+  .search-results {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--gray-999);
+    border: 1px solid var(--gray-800);
+    border-top: none;
+    border-radius: 0 0 0.5rem 0.5rem;
+    max-height: 350px;
+    overflow-y: auto;
+    z-index: 100;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  .search-results.hidden {
+    display: none;
+  }
+
+  :global(.search-result-item) {
+    display: block;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid var(--gray-800);
+    cursor: pointer;
+    text-decoration: none;
+    color: inherit;
+    transition: background-color 0.2s ease;
+  }
+
+  :global(.search-result-item:hover) {
+    background: var(--gray-800);
+  }
+
+  :global(.search-result-item:last-child) {
+    border-bottom: none;
+  }
+
+  :global(.search-result-title) {
+    font-weight: 600;
+    color: var(--gray-0);
+    margin-bottom: 0.25rem;
+    font-size: var(--text-base);
+  }
+
+  :global(.search-result-description) {
+    font-size: var(--text-sm);
+    color: var(--gray-300);
+    line-height: 1.4;
+  }
+
+  :global(.search-result-type) {
+    font-size: var(--text-xs);
+    color: var(--accent-regular);
+    text-transform: uppercase;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    margin-bottom: 0.25rem;
+  }
+
+  :global(.search-no-results) {
+    padding: 1rem;
+    text-align: center;
+    color: var(--gray-400);
+    font-style: italic;
+  }
+
+  /* Light theme adjustments */
+  :global([data-theme="light"]) .search-input {
+    background: var(--gray-0);
+    color: var(--gray-800);
+    border-color: var(--gray-300);
+  }
+
+  :global([data-theme="light"]) .search-input::placeholder {
+    color: var(--gray-600);
+  }
+
+  :global([data-theme="light"]) .search-icon {
+    color: var(--gray-600);
+  }
+
+  :global([data-theme="light"]) .search-results {
+    background: var(--gray-0);
+    border-color: var(--gray-300);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+
+  :global([data-theme="light"]) :global(.search-result-item) {
+    border-bottom-color: var(--gray-200);
+  }
+
+  :global([data-theme="light"]) :global(.search-result-item:hover) {
+    background: var(--gray-100);
+  }
+
+  :global([data-theme="light"]) :global(.search-result-title) {
+    color: var(--gray-800);
+  }
+
+  :global([data-theme="light"]) :global(.search-result-description) {
+    color: var(--gray-600);
+  }
+
+  /* Desktop adjustments */
+  @media (min-width: 50em) {
+    .search-input {
+      padding: 0.5rem 2rem 0.5rem 2rem;
+      font-size: var(--text-sm);
+    }
+
+    .search-icon {
+      left: 0.5rem;
+      font-size: 0.875rem;
+    }
+
+    .search-clear {
+      right: 0.375rem;
+      font-size: 0.875rem;
+    }
+
+    .search-results {
+      max-height: 300px;
+    }
+
+    :global(.search-result-item) {
+      padding: 0.625rem 0.875rem;
+    }
+
+    :global(.search-result-title) {
+      font-size: var(--text-sm);
+      margin-bottom: 0.125rem;
+    }
+
+    :global(.search-result-description) {
+      font-size: var(--text-xs);
+    }
+
+    :global(.search-result-type) {
+      font-size: 0.625rem;
+      margin-bottom: 0.125rem;
+    }
+  }
+</style>

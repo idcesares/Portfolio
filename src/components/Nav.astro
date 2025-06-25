@@ -1,6 +1,7 @@
 ---
 import Icon from './Icon.astro';
 import ThemeToggle from './ThemeToggle.astro';
+import SearchBox from './SearchBox.astro';
 import type { iconPaths } from './IconPaths';
 
 /** Main menu items */
@@ -8,6 +9,7 @@ const textLinks: { label: string; href: string }[] = [
 	{ label: 'Home', href: '/' },
 	{ label: 'Trabalhos', href: '/work/' },
 	{ label: 'Blog', href: '/blog/' },
+	{ label: 'Busca', href: '/search/' },
 	{ label: 'Sobre', href: '/about/' }];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -25,14 +27,30 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 			<Icon icon="terminal-window" color="var(--accent-regular)" size="1.6em" gradient />
 			Isaac D'Césares
 		</a>
-		<menu-button>
-			<template>
-				<button class="menu-button" aria-expanded="false">
-					<span class="sr-only">Menu</span>
-					<Icon icon="list" />
+		<div class="nav-actions">
+			<button class="search-toggle" id="search-toggle" type="button" aria-label="Open search">
+				<Icon icon="magnifying-glass" />
+			</button>
+			<menu-button>
+				<template>
+					<button class="menu-button" aria-expanded="false">
+						<span class="sr-only">Menu</span>
+						<Icon icon="list" />
+					</button>
+				</template>
+			</menu-button>
+		</div>
+	</div>
+	<div class="search-overlay" id="search-overlay" hidden>
+		<div class="search-overlay-content">
+			<div class="search-modal-header">
+				<h2>Search</h2>
+				<button class="search-close" id="search-close" type="button" aria-label="Close search">
+					<Icon icon="arrow-left" />
 				</button>
-			</template>
-		</menu-button>
+			</div>
+			<SearchBox placeholder="Search posts and projects..." />
+		</div>
 	</div>
 	<noscript>
 		<ul class="nav-items">
@@ -107,6 +125,10 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 				}
 			</div>
 
+			<button class="search-toggle desktop-search-btn" id="search-toggle-desktop" type="button" aria-label="Open search">
+				<Icon icon="magnifying-glass" />
+			</button>
+
 			<div class="theme-toggle">
 				<ThemeToggle />
 			</div>
@@ -149,6 +171,71 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		}
 	}
 	customElements.define('menu-button', MenuButton);
+
+	// Search overlay functionality
+	class SearchToggle {
+		constructor() {
+			this.init();
+		}
+
+		init() {
+			const searchToggle = document.getElementById('search-toggle');
+			const searchToggleDesktop = document.getElementById('search-toggle-desktop');
+			const searchOverlay = document.getElementById('search-overlay');
+			const searchClose = document.getElementById('search-close');
+			const searchInput = document.getElementById('search-input');
+
+			if (!searchOverlay || !searchClose) return;
+
+			const openSearch = () => {
+				searchOverlay.hidden = false;
+				// Focus the input after a small delay to ensure the modal is rendered
+				setTimeout(() => {
+					searchInput?.focus();
+				}, 100);
+			};
+
+			const closeSearch = () => {
+				searchOverlay.hidden = true;
+			};
+
+			// Mobile search toggle
+			if (searchToggle) {
+				searchToggle.addEventListener('click', openSearch);
+			}
+
+			// Desktop search toggle
+			if (searchToggleDesktop) {
+				searchToggleDesktop.addEventListener('click', openSearch);
+			}
+
+			// Close search overlay
+			searchClose.addEventListener('click', closeSearch);
+
+			// Close on escape key
+			document.addEventListener('keydown', (e) => {
+				if (e.key === 'Escape' && !searchOverlay.hidden) {
+					closeSearch();
+				}
+			});
+
+			// Close on overlay background click
+			searchOverlay.addEventListener('click', (e) => {
+				if (e.target === searchOverlay) {
+					closeSearch();
+				}
+			});
+		}
+	}
+
+	// Initialize search toggle when DOM is loaded
+	document.addEventListener('DOMContentLoaded', () => {
+		new SearchToggle();
+	});
+</script>
+
+<script>
+	import '../scripts/search.ts';
 </script>
 
 <style>
@@ -163,9 +250,118 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 	.menu-header {
 		display: flex;
 		justify-content: space-between;
+		align-items: center;
 		gap: 0.5rem;
 		padding: 1.5rem;
 	}
+
+	.nav-actions {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+	}
+
+	.search-toggle {
+		position: relative;
+		display: flex;
+		border: 0;
+		border-radius: 999rem;
+		padding: 0.5rem;
+		font-size: 1.25rem;
+		color: var(--gray-300);
+		background: radial-gradient(var(--gray-900), var(--gray-800) 150%);
+		box-shadow: var(--shadow-md);
+		cursor: pointer;
+		transition: color var(--theme-transition);
+	}
+
+	.search-toggle:hover {
+		color: var(--gray-0);
+	}
+
+	.search-toggle::before {
+		position: absolute;
+		inset: -1px;
+		content: '';
+		background: var(--gradient-stroke);
+		border-radius: 999rem;
+		z-index: -1;
+	}
+
+	.desktop-search-btn {
+		display: none; /* Hidden on mobile */
+	}
+
+	.search-overlay {
+		position: fixed;
+		top: 0;
+		left: 0;
+		right: 0;
+		bottom: 0;
+		background: rgba(0, 0, 0, 0.8);
+		backdrop-filter: blur(4px);
+		z-index: 10000;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		padding: 2rem 1rem;
+		opacity: 1;
+		transition: opacity 0.2s ease;
+	}
+
+	.search-overlay[hidden] {
+		display: none;
+		opacity: 0;
+	}
+
+	.search-overlay-content {
+		width: 100%;
+		max-width: 600px;
+		margin-top: 4rem;
+		background: var(--gray-999);
+		border-radius: 1rem;
+		padding: 1.5rem;
+		box-shadow: var(--shadow-lg);
+		border: 1px solid var(--gray-800);
+		transform: translateY(0);
+		transition: transform 0.2s ease;
+	}
+
+	.search-modal-header {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-bottom: 1.5rem;
+	}
+
+	.search-modal-header h2 {
+		margin: 0;
+		font-size: var(--text-xl);
+		font-weight: 600;
+		color: var(--gray-0);
+	}
+
+	.search-close {
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		width: 2.5rem;
+		height: 2.5rem;
+		background: none;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		color: var(--gray-300);
+		cursor: pointer;
+		transition: all 0.2s ease;
+	}
+
+	.search-close:hover {
+		background: var(--gray-800);
+		color: var(--gray-0);
+		border-color: var(--gray-700);
+	}
+
+
 
 	.site-title {
 		display: flex;
@@ -286,6 +482,32 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 
 		.menu-header {
 			padding: 0;
+			grid-column: 1;
+			display: flex;
+			justify-content: flex-start;
+			align-items: center;
+		}
+
+		.nav-actions {
+			display: none; /* Hide on desktop, search will be in menu-footer */
+		}
+
+		.search-overlay-content {
+			margin-top: 6rem;
+			max-width: 700px;
+		}
+
+		.search-toggle {
+			font-size: 1.125rem;
+			padding: 0.375rem;
+		}
+
+		.menu-footer .search-toggle {
+			display: flex; /* Show search in menu-footer on desktop */
+		}
+
+		.desktop-search-btn {
+			display: flex; /* Show desktop search button */
 		}
 
 		.site-title {
@@ -338,11 +560,14 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		.menu-footer {
 			--icon-padding: 0.375rem;
 
+			grid-column: 3;
 			justify-self: flex-end;
 			align-items: center;
 			padding: 0;
 			background-color: transparent;
 			box-shadow: none;
+			display: flex;
+			gap: 1rem;
 		}
 
 		.socials {
@@ -361,5 +586,26 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 		.link.active {
 			color: SelectedItem;
 		}
+	}
+
+	/* Light theme adjustments */
+	:global([data-theme="light"]) .search-overlay-content {
+		background: var(--gray-0);
+		border: 1px solid var(--gray-300);
+	}
+
+	:global([data-theme="light"]) .search-modal-header h2 {
+		color: var(--gray-800);
+	}
+
+	:global([data-theme="light"]) .search-close {
+		border-color: var(--gray-300);
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .search-close:hover {
+		background: var(--gray-100);
+		color: var(--gray-800);
+		border-color: var(--gray-400);
 	}
 </style>
