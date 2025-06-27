@@ -9,7 +9,6 @@ const textLinks: { label: string; href: string }[] = [
 	{ label: 'Home', href: '/' },
 	{ label: 'Trabalhos', href: '/work/' },
 	{ label: 'Blog', href: '/blog/' },
-	{ label: 'Busca', href: '/search/' },
 	{ label: 'Sobre', href: '/about/' }];
 
 /** Icon links to social media — edit these with links to your profiles! */
@@ -44,12 +43,12 @@ const iconLinks: { label: string; href: string; icon: keyof typeof iconPaths }[]
 	<div class="search-overlay" id="search-overlay" hidden>
 		<div class="search-overlay-content">
 			<div class="search-modal-header">
-				<h2>Search</h2>
+				<h2>Busca</h2>
 				<button class="search-close" id="search-close" type="button" aria-label="Close search">
 					<Icon icon="arrow-left" />
 				</button>
 			</div>
-			<SearchBox placeholder="Search posts and projects..." />
+			<SearchBox placeholder="Pesquise posts e projetos..." />
 		</div>
 	</div>
 	<noscript>
