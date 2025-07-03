@@ -1,0 +1,563 @@
+---
+interface Props {
+	variant?: 'blog' | 'work';
+	tags: string[];
+	onTagFilter?: (tag: string) => void;
+	onSortChange?: (sort: string) => void;
+	onSearchChange?: (search: string) => void;
+	onReset?: () => void;
+	activeTag?: string;
+	activeSortOption?: string;
+}
+
+const { 
+	variant = 'blog', 
+	tags, 
+	activeTag = '', 
+	activeSortOption = 'newest' 
+} = Astro.props;
+
+const sortOptions = [
+	{ value: 'newest', label: 'Mais recentes' },
+	{ value: 'oldest', label: 'Mais antigos' },
+	{ value: 'alphabetical', label: 'Alfabética (A-Z)' }
+];
+
+// Select only the most common/important tags for the dropdown
+const topTags = tags.slice(0, 8); // Limit to top 8 tags
+---
+
+<div class="filter-container">
+	<!-- Main Filter Bar -->
+	<div class="main-filter-bar">
+		<div class="search-section">
+			<input 
+				type="text" 
+				id="local-search" 
+				placeholder={variant === 'blog' ? 'Buscar posts...' : 'Buscar projetos...'}
+				class="local-search-input"
+			/>
+		</div>
+
+		<div class="quick-filters">
+			<select id="sort-select" class="sort-select">
+				{sortOptions.map((option) => (
+					<option 
+						value={option.value} 
+						selected={activeSortOption === option.value}
+					>
+						{option.label}
+					</option>
+				))}
+			</select>
+
+			<button id="advanced-toggle" class="advanced-toggle" title="Filtros avançados">
+				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+					<path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
+				</svg>
+			</button>
+		</div>
+	</div>
+
+	<!-- Advanced Filters (Collapsible) -->
+	<div class="advanced-filters" id="advanced-filters">
+		<div class="advanced-content">
+			<div class="filter-group">
+				<label for="category-select" class="filter-label">Categoria:</label>
+				<select id="category-select" class="category-select">
+					<option value="">Todas as categorias</option>
+					{topTags.map((tag) => (
+						<option value={tag}>{tag}</option>
+					))}
+				</select>
+			</div>
+			
+			<div class="filter-actions">
+				<button id="reset-filters" class="reset-button">
+					Limpar filtros
+				</button>
+			</div>
+		</div>
+	</div>
+
+	<!-- Results Count -->
+	<div class="results-info">
+		<span id="results-text">Mostrando todos os resultados</span>
+	</div>
+</div>
+
+<style>
+	.filter-container {
+		background: var(--gray-999);
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		padding: 1rem;
+		margin-bottom: 2rem;
+		display: flex;
+		flex-direction: column;
+		gap: 1rem;
+	}
+
+	/* Main Filter Bar */
+	.main-filter-bar {
+		display: flex;
+		gap: 1rem;
+		align-items: center;
+		flex-wrap: wrap;
+	}
+
+	.search-section {
+		flex: 1;
+		min-width: 200px;
+	}
+
+	.local-search-input {
+		width: 100%;
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		background: var(--gray-800);
+		color: var(--gray-200);
+		font-size: var(--text-sm);
+		transition: border-color 0.2s ease;
+	}
+
+	.local-search-input:focus {
+		outline: none;
+		border-color: var(--accent-regular);
+		box-shadow: 0 0 0 2px var(--accent-regular-alpha);
+	}
+
+	.local-search-input::placeholder {
+		color: var(--gray-500);
+	}
+
+	.quick-filters {
+		display: flex;
+		gap: 0.5rem;
+		align-items: center;
+	}
+
+	.sort-select {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		background: var(--gray-800);
+		color: var(--gray-200);
+		font-size: var(--text-sm);
+		cursor: pointer;
+		min-width: 140px;
+	}
+
+	.sort-select:focus {
+		outline: none;
+		border-color: var(--accent-regular);
+		box-shadow: 0 0 0 2px var(--accent-regular-alpha);
+	}
+
+	.advanced-toggle {
+		padding: 0.5rem;
+		border: 1px solid var(--gray-700);
+		border-radius: 0.5rem;
+		background: transparent;
+		color: var(--gray-400);
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.advanced-toggle:hover {
+		background: var(--gray-800);
+		border-color: var(--gray-600);
+		color: var(--gray-200);
+	}
+
+	.advanced-toggle.active {
+		background: var(--accent-regular);
+		border-color: var(--accent-regular);
+		color: var(--gray-0);
+	}
+
+	/* Advanced Filters */
+	.advanced-filters {
+		max-height: 0;
+		overflow: hidden;
+		transition: max-height 0.3s ease, padding 0.3s ease;
+		border-top: 1px solid transparent;
+	}
+
+	.advanced-filters.expanded {
+		max-height: 200px;
+		padding-top: 1rem;
+		border-top-color: var(--gray-800);
+	}
+
+	.advanced-content {
+		display: flex;
+		gap: 1rem;
+		align-items: end;
+		flex-wrap: wrap;
+	}
+
+	.filter-group {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+		min-width: 150px;
+	}
+
+	.filter-label {
+		font-size: var(--text-xs);
+		color: var(--gray-400);
+		font-weight: 500;
+	}
+
+	.category-select {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		background: var(--gray-800);
+		color: var(--gray-200);
+		font-size: var(--text-sm);
+		cursor: pointer;
+	}
+
+	.category-select:focus {
+		outline: none;
+		border-color: var(--accent-regular);
+		box-shadow: 0 0 0 2px var(--accent-regular-alpha);
+	}
+
+	.filter-actions {
+		display: flex;
+		align-items: end;
+	}
+
+	.reset-button {
+		padding: 0.5rem 0.75rem;
+		border: 1px solid var(--gray-700);
+		border-radius: 0.5rem;
+		background: transparent;
+		color: var(--gray-400);
+		font-size: var(--text-sm);
+		cursor: pointer;
+		transition: all 0.2s ease;
+		white-space: nowrap;
+	}
+
+	.reset-button:hover {
+		background: var(--gray-800);
+		border-color: var(--gray-600);
+		color: var(--gray-200);
+	}
+
+	/* Results Info */
+	.results-info {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		margin-top: 0.5rem;
+		padding-top: 0.5rem;
+		border-top: 1px solid var(--gray-800);
+	}
+
+	#results-text {
+		font-size: var(--text-xs);
+		color: var(--gray-400);
+		font-style: italic;
+	}
+
+	/* Light theme adjustments */
+	:global([data-theme="light"]) .filter-container {
+		background: var(--gray-0);
+		border-color: var(--gray-300);
+	}
+
+	:global([data-theme="light"]) .local-search-input,
+	:global([data-theme="light"]) .sort-select,
+	:global([data-theme="light"]) .category-select {
+		background: var(--gray-100);
+		color: var(--gray-800);
+		border-color: var(--gray-300);
+	}
+
+	:global([data-theme="light"]) .local-search-input::placeholder {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .filter-label {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .advanced-toggle {
+		color: var(--gray-600);
+		border-color: var(--gray-400);
+	}
+
+	:global([data-theme="light"]) .advanced-toggle:hover {
+		background: var(--gray-100);
+		border-color: var(--gray-500);
+		color: var(--gray-800);
+	}
+
+	:global([data-theme="light"]) .reset-button {
+		color: var(--gray-600);
+		border-color: var(--gray-400);
+	}
+
+	:global([data-theme="light"]) .reset-button:hover {
+		background: var(--gray-100);
+		border-color: var(--gray-500);
+		color: var(--gray-800);
+	}
+
+	:global([data-theme="light"]) .results-info {
+		border-top-color: var(--gray-300);
+	}
+
+	:global([data-theme="light"]) #results-text {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .advanced-filters.expanded {
+		border-top-color: var(--gray-300);
+	}
+
+	/* Responsive adjustments */
+	@media (max-width: 50em) {
+		.main-filter-bar {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.search-section {
+			min-width: auto;
+		}
+
+		.quick-filters {
+			justify-content: space-between;
+		}
+
+		.sort-select {
+			flex: 1;
+		}
+
+		.advanced-content {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.filter-group {
+			min-width: auto;
+		}
+	}
+</style>
+
+<script>
+	class FilterManager {
+		private currentTag: string = '';
+		private currentSort: string = 'newest';
+		private currentSearch: string = '';
+		private allItems: NodeListOf<Element>;
+		private variant: string;
+		private advancedExpanded: boolean = false;
+
+		constructor() {
+			this.variant = document.querySelector('.filter-container')?.closest('[data-page-type]')?.getAttribute('data-page-type') || 'blog';
+			this.allItems = document.querySelectorAll('[data-filterable-item]');
+			this.setupEventListeners();
+			this.updateResultsCount();
+		}
+
+		setupEventListeners() {
+			// Advanced toggle
+			const advancedToggle = document.getElementById('advanced-toggle');
+			if (advancedToggle) {
+				advancedToggle.addEventListener('click', () => {
+					this.toggleAdvancedFilters();
+				});
+			}
+
+			// Category filtering
+			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+			if (categorySelect) {
+				categorySelect.addEventListener('change', (e) => {
+					const target = e.target as HTMLSelectElement;
+					this.filterByTag(target.value);
+				});
+			}
+
+			// Sort change
+			const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+			if (sortSelect) {
+				sortSelect.addEventListener('change', (e) => {
+					const target = e.target as HTMLSelectElement;
+					this.sortItems(target.value);
+				});
+			}
+
+			// Local search
+			const searchInput = document.getElementById('local-search') as HTMLInputElement;
+			if (searchInput) {
+				searchInput.addEventListener('input', (e) => {
+					const target = e.target as HTMLInputElement;
+					this.searchItems(target.value);
+				});
+			}
+
+			// Reset filters
+			const resetButton = document.getElementById('reset-filters');
+			if (resetButton) {
+				resetButton.addEventListener('click', () => {
+					this.resetFilters();
+				});
+			}
+		}
+
+		toggleAdvancedFilters() {
+			const advancedFilters = document.getElementById('advanced-filters');
+			const advancedToggle = document.getElementById('advanced-toggle');
+			
+			if (!advancedFilters || !advancedToggle) return;
+
+			this.advancedExpanded = !this.advancedExpanded;
+			
+			if (this.advancedExpanded) {
+				advancedFilters.classList.add('expanded');
+				advancedToggle.classList.add('active');
+			} else {
+				advancedFilters.classList.remove('expanded');
+				advancedToggle.classList.remove('active');
+			}
+		}
+
+		filterByTag(tag: string) {
+			this.currentTag = tag;
+			
+			// Update category select
+			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+			if (categorySelect) {
+				categorySelect.value = tag;
+			}
+
+			this.applyFilters();
+		}
+
+		sortItems(sortType: string) {
+			this.currentSort = sortType;
+			const container = document.querySelector('.grid');
+			if (!container) return;
+
+			const items = Array.from(this.allItems);
+			
+			items.sort((a, b) => {
+				const aDate = a.getAttribute('data-publish-date');
+				const aTitle = a.getAttribute('data-title') || '';
+				const bDate = b.getAttribute('data-publish-date');
+				const bTitle = b.getAttribute('data-title') || '';
+
+				switch (sortType) {
+					case 'oldest':
+						return new Date(aDate || '').getTime() - new Date(bDate || '').getTime();
+					case 'alphabetical':
+						return aTitle.localeCompare(bTitle);
+					case 'newest':
+					default:
+						return new Date(bDate || '').getTime() - new Date(aDate || '').getTime();
+				}
+			});
+
+			// Reorder DOM elements
+			items.forEach(item => {
+				container.appendChild(item);
+			});
+
+			this.applyFilters();
+		}
+
+		searchItems(searchTerm: string) {
+			this.currentSearch = searchTerm.toLowerCase();
+			this.applyFilters();
+		}
+
+		applyFilters() {
+			let visibleCount = 0;
+
+			this.allItems.forEach(item => {
+				const itemTags = item.getAttribute('data-tags')?.toLowerCase() || '';
+				const itemTitle = item.getAttribute('data-title')?.toLowerCase() || '';
+				const itemDescription = item.getAttribute('data-description')?.toLowerCase() || '';
+
+				// Check tag filter
+				const tagMatch = !this.currentTag || itemTags.includes(this.currentTag.toLowerCase());
+
+				// Check search filter
+				const searchMatch = !this.currentSearch || 
+					itemTitle.includes(this.currentSearch) || 
+					itemDescription.includes(this.currentSearch) ||
+					itemTags.includes(this.currentSearch);
+
+				const shouldShow = tagMatch && searchMatch;
+
+				if (shouldShow) {
+					(item as HTMLElement).style.display = '';
+					visibleCount++;
+				} else {
+					(item as HTMLElement).style.display = 'none';
+				}
+			});
+
+			this.updateResultsCount(visibleCount);
+		}
+
+		updateResultsCount(count?: number) {
+			const resultsText = document.getElementById('results-text');
+			if (!resultsText) return;
+
+			const total = this.allItems.length;
+			const visible = count !== undefined ? count : total;
+
+			if (visible === total) {
+				resultsText.textContent = `${total} ${this.variant === 'blog' ? 'posts' : 'projetos'}`;
+			} else {
+				resultsText.textContent = `${visible} de ${total} ${this.variant === 'blog' ? 'posts' : 'projetos'}`;
+			}
+		}
+
+		resetFilters() {
+			this.currentTag = '';
+			this.currentSort = 'newest';
+			this.currentSearch = '';
+
+			// Reset UI
+			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
+			if (categorySelect) {
+				categorySelect.value = '';
+			}
+
+			const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
+			if (sortSelect) {
+				sortSelect.value = 'newest';
+			}
+
+			const searchInput = document.getElementById('local-search') as HTMLInputElement;
+			if (searchInput) {
+				searchInput.value = '';
+			}
+
+			// Resort to newest first
+			this.sortItems('newest');
+		}
+	}
+
+	// Initialize when DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			new FilterManager();
+		});
+	} else {
+		new FilterManager();
+	}
+</script>

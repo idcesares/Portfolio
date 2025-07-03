@@ -2,38 +2,67 @@
 import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-
 import ContactCTA from '../components/ContactCTA.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
+import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
 import Hero from '../components/Hero.astro';
-import Grid from '../components/Grid.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
+import FilterBar from '../components/FilterBar.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 
 const projects = (await getCollection('work')).sort(
 	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
+
+// Extract all unique tags from projects
+const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sort();
 ---
 
 <BaseLayout
 	title="Trabalho | Isaac D'Césares"
 	description="Conheça os projetos mais recentes de Isaac D'Césares"
 >
-	<div class="stack gap-20">
+	<div class="stack gap-20" data-page-type="work">
 		<main class="wrapper stack gap-8">
 			<Hero
 				title="Meus trabalhos"
 				tagline="Veja abaixo meus projetos mais recentes para ter uma ideia da minha linha de trabalho e experiência."
 				align="start"
 			/>
-			<Grid variant="offset">
-				{
-					projects.map((project) => (
-						<li>
-							<PortfolioPreview project={project} />
-						</li>
-					))
-				}
-			</Grid>
+			
+			<div class="content-section">
+				<FilterBar variant="work" tags={allTags} />
+				
+				<div class="view-controls">
+					<ViewToggle currentView="default" />
+				</div>
+				
+				<GridEnhanced variant="offset">
+					{projects.map((project) => (
+						<PortfolioPreviewEnhanced project={project} variant="default" />
+					))}
+				</GridEnhanced>
+			</div>
 		</main>
 		<ContactCTA />
 	</div>
 </BaseLayout>
+
+<style>
+	.content-section {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.view-controls {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	@media (max-width: 50em) {
+		.view-controls {
+			justify-content: flex-start;
+		}
+	}
+</style>

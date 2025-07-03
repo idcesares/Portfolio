@@ -2,38 +2,67 @@
 import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-
 import ContactCTA from '../components/ContactCTA.astro';
 import Hero from '../components/Hero.astro';
-import Grid from '../components/Grid.astro';
-import PostPreview from '../components/PostPreview.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
+import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
+import FilterBar from '../components/FilterBar.astro';
+import ViewToggle from '../components/ViewToggle.astro';
 
 const posts = (await getCollection('blog')).sort(
 	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
 );
+
+// Extract all unique tags from posts
+const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 ---
 
 <BaseLayout
 	title="Blog | Isaac D'Césares"
 	description="Conheça as postagens mais recentes de Isaac D'Césares"
 >
-	<div class="stack gap-20">
+	<div class="stack gap-20" data-page-type="blog">
 		<main class="wrapper stack gap-8">
 			<Hero
 				title="Blog"
 				tagline="Veja abaixo minhas postagens mais recentes!"
 				align="start"
 			/>
-			<Grid variant="offset">
-				{
-					posts.map((post) => (
-						<li>
-							<PostPreview post={post} />
-						</li>
-					))
-				}
-			</Grid>
+			
+			<div class="content-section">
+				<FilterBar variant="blog" tags={allTags} />
+				
+				<div class="view-controls">
+					<ViewToggle currentView="default" />
+				</div>
+				
+				<GridEnhanced variant="offset">
+					{posts.map((post) => (
+						<PostPreviewEnhanced post={post} variant="default" />
+					))}
+				</GridEnhanced>
+			</div>
 		</main>
 		<ContactCTA />
 	</div>
 </BaseLayout>
+
+<style>
+	.content-section {
+		display: flex;
+		flex-direction: column;
+		gap: 1.5rem;
+	}
+
+	.view-controls {
+		display: flex;
+		justify-content: flex-end;
+		align-items: center;
+	}
+
+	@media (max-width: 50em) {
+		.view-controls {
+			justify-content: flex-start;
+		}
+	}
+</style>

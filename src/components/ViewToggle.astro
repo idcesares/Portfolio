@@ -1,0 +1,234 @@
+---
+interface Props {
+	currentView?: 'default' | 'compact' | 'list';
+}
+
+const { currentView = 'default' } = Astro.props;
+---
+
+<div class="view-toggle">
+	<span class="view-label">Visualização:</span>
+	<div class="toggle-buttons">
+		<button 
+			class:list={['view-button', { active: currentView === 'default' }]}
+			data-view="default"
+			title="Visualização em cards grandes"
+		>
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+				<rect x="1" y="1" width="6" height="6" rx="1"/>
+				<rect x="9" y="1" width="6" height="6" rx="1"/>
+				<rect x="1" y="9" width="6" height="6" rx="1"/>
+				<rect x="9" y="9" width="6" height="6" rx="1"/>
+			</svg>
+		</button>
+		<button 
+			class:list={['view-button', { active: currentView === 'compact' }]}
+			data-view="compact"
+			title="Visualização compacta"
+		>
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+				<rect x="1" y="1" width="4" height="4" rx="0.5"/>
+				<rect x="6" y="1" width="4" height="4" rx="0.5"/>
+				<rect x="11" y="1" width="4" height="4" rx="0.5"/>
+				<rect x="1" y="6" width="4" height="4" rx="0.5"/>
+				<rect x="6" y="6" width="4" height="4" rx="0.5"/>
+				<rect x="11" y="6" width="4" height="4" rx="0.5"/>
+				<rect x="1" y="11" width="4" height="4" rx="0.5"/>
+				<rect x="6" y="11" width="4" height="4" rx="0.5"/>
+				<rect x="11" y="11" width="4" height="4" rx="0.5"/>
+			</svg>
+		</button>
+		<button 
+			class:list={['view-button', { active: currentView === 'list' }]}
+			data-view="list"
+			title="Visualização em lista"
+		>
+			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
+				<rect x="1" y="2" width="14" height="2" rx="1"/>
+				<rect x="1" y="7" width="14" height="2" rx="1"/>
+				<rect x="1" y="12" width="14" height="2" rx="1"/>
+			</svg>
+		</button>
+	</div>
+</div>
+
+<style>
+	.view-toggle {
+		display: flex;
+		align-items: center;
+		gap: 1rem;
+		margin-bottom: 1rem;
+	}
+
+	.view-label {
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		font-weight: 500;
+	}
+
+	.toggle-buttons {
+		display: flex;
+		gap: 0.25rem;
+		border: 1px solid var(--gray-800);
+		border-radius: 0.5rem;
+		padding: 0.25rem;
+		background: var(--gray-900);
+	}
+
+	.view-button {
+		padding: 0.5rem;
+		border: none;
+		background: transparent;
+		color: var(--gray-400);
+		border-radius: 0.25rem;
+		cursor: pointer;
+		transition: all 0.2s ease;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+	}
+
+	.view-button:hover {
+		background: var(--gray-800);
+		color: var(--gray-200);
+	}
+
+	.view-button.active {
+		background: var(--accent-regular);
+		color: var(--gray-0);
+	}
+
+	.view-button svg {
+		width: 16px;
+		height: 16px;
+	}
+
+	/* Light theme adjustments */
+	:global([data-theme="light"]) .view-label {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .toggle-buttons {
+		border-color: var(--gray-300);
+		background: var(--gray-100);
+	}
+
+	:global([data-theme="light"]) .view-button {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .view-button:hover {
+		background: var(--gray-200);
+		color: var(--gray-800);
+	}
+
+	:global([data-theme="light"]) .view-button.active {
+		color: var(--gray-0);
+	}
+
+	/* Mobile responsive */
+	@media (max-width: 50em) {
+		.view-toggle {
+			flex-direction: column;
+			align-items: flex-start;
+			gap: 0.5rem;
+		}
+	}
+</style>
+
+<script>
+	class ViewToggle {
+		private currentView: string = 'default';
+		private gridContainer: Element | null = null;
+		private items: NodeListOf<Element> | null = null;
+
+		constructor() {
+			this.setupEventListeners();
+			this.initializeView();
+		}
+
+		setupEventListeners() {
+			document.querySelectorAll('.view-button').forEach(button => {
+				button.addEventListener('click', (e) => {
+					const target = e.currentTarget as HTMLElement;
+					const view = target.getAttribute('data-view') || 'default';
+					this.changeView(view);
+				});
+			});
+		}
+
+		initializeView() {
+			// Get references to grid and items
+			this.gridContainer = document.querySelector('.grid');
+			this.items = document.querySelectorAll('[data-filterable-item]');
+			
+			// Check if there's a saved preference
+			const savedView = localStorage.getItem('preferred-view');
+			if (savedView && ['default', 'compact', 'list'].includes(savedView)) {
+				this.changeView(savedView);
+			}
+		}
+
+		changeView(view: string) {
+			this.currentView = view;
+			
+			// Update active button
+			document.querySelectorAll('.view-button').forEach(btn => {
+				btn.classList.remove('active');
+				if (btn.getAttribute('data-view') === view) {
+					btn.classList.add('active');
+				}
+			});
+
+			// Update grid layout
+			if (this.gridContainer) {
+				this.gridContainer.className = 'grid';
+				
+				switch (view) {
+					case 'compact':
+						this.gridContainer.classList.add('compact');
+						break;
+					case 'list':
+						this.gridContainer.classList.add('list');
+						break;
+					case 'default':
+					default:
+						this.gridContainer.classList.add('offset');
+						break;
+				}
+			}
+
+			// Update item variants
+			if (this.items) {
+				this.items.forEach(item => {
+					// Remove existing variant classes
+					item.classList.remove('default', 'compact');
+					
+					// Add new variant class
+					if (view === 'compact' || view === 'list') {
+						item.classList.add('compact');
+					} else {
+						item.classList.add('default');
+					}
+				});
+			}
+
+			// Save preference
+			localStorage.setItem('preferred-view', view);
+
+			// Trigger a custom event for other components that might need to know
+			document.dispatchEvent(new CustomEvent('viewChanged', { 
+				detail: { view } 
+			}));
+		}
+	}
+
+	// Initialize when DOM is ready
+	if (document.readyState === 'loading') {
+		document.addEventListener('DOMContentLoaded', () => {
+			new ViewToggle();
+		});
+	} else {
+		new ViewToggle();
+	}
+</script>

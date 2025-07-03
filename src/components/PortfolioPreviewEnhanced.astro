@@ -1,0 +1,261 @@
+---
+import type { CollectionEntry } from 'astro:content';
+
+interface Props {
+	project: CollectionEntry<'work'>;
+	variant?: 'default' | 'compact';
+}
+
+const { project, variant = 'default' } = Astro.props;
+const { data, id } = project;
+
+// Format date for display
+const publishDate = new Date(data.publishDate);
+const formattedDate = publishDate.toLocaleDateString('pt-BR', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric'
+});
+---
+
+<li 
+	class:list={['project-item', variant]}
+	data-filterable-item
+	data-tags={data.tags.join(', ')}
+	data-title={data.title}
+	data-description={data.description}
+	data-publish-date={data.publishDate.toISOString()}
+>
+	<a class="card" href={`/work/${id}`}>
+		{variant === 'compact' ? (
+			<>
+				<div class="content">
+					<div class="meta">
+						<time class="date">{formattedDate}</time>
+						<div class="tags">
+							{data.tags.slice(0, 2).map((tag) => (
+								<span class="tag">{tag}</span>
+							))}
+							{data.tags.length > 2 && (
+								<span class="tag-more">+{data.tags.length - 2}</span>
+							)}
+						</div>
+					</div>
+					<h3 class="title">{data.title}</h3>
+					<p class="description">{data.description}</p>
+				</div>
+				<div class="image-container">
+					<img src={data.img} alt={data.img_alt || ''} loading="lazy" decoding="async" />
+				</div>
+			</>
+		) : (
+			<>
+				<span class="title">{data.title}</span>
+				<img src={data.img} alt={data.img_alt || ''} loading="lazy" decoding="async" />
+			</>
+		)}
+	</a>
+</li>
+
+<style>
+	.project-item {
+		list-style: none;
+	}
+
+	/* Default (original) style */
+	.project-item.default .card {
+		display: grid;
+		grid-template: auto 1fr / auto 1fr;
+		height: 11rem;
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		overflow: hidden;
+		box-shadow: var(--shadow-sm);
+		text-decoration: none;
+		font-family: var(--font-brand);
+		font-size: var(--text-lg);
+		font-weight: 500;
+		transition: box-shadow var(--theme-transition);
+	}
+
+	.project-item.default .card:hover {
+		box-shadow: var(--shadow-md);
+	}
+
+	.project-item.default .title {
+		grid-area: 1 / 1 / 2 / 2;
+		z-index: 1;
+		margin: 0.5rem;
+		padding: 0.5rem 1rem;
+		background: var(--gray-999);
+		color: var(--gray-200);
+		border-radius: 0.375rem;
+	}
+
+	.project-item.default img {
+		grid-area: 1 / 1 / 3 / 3;
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Compact style */
+	.project-item.compact .card {
+		display: grid;
+		grid-template-columns: 1fr auto;
+		gap: 1rem;
+		padding: 1rem;
+		background: var(--gray-999);
+		border: 1px solid var(--gray-800);
+		border-radius: 0.75rem;
+		text-decoration: none;
+		color: inherit;
+		transition: all 0.2s ease;
+		min-height: 120px;
+	}
+
+	.project-item.compact .card:hover {
+		background: var(--gray-900);
+		border-color: var(--gray-700);
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.project-item.compact .content {
+		display: flex;
+		flex-direction: column;
+		gap: 0.5rem;
+		min-width: 0; /* Allows text to truncate */
+	}
+
+	.project-item.compact .meta {
+		display: flex;
+		flex-direction: column;
+		gap: 0.25rem;
+	}
+
+	.project-item.compact .date {
+		font-size: var(--text-xs);
+		color: var(--gray-400);
+		font-weight: 400;
+	}
+
+	.project-item.compact .tags {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.25rem;
+	}
+
+	.project-item.compact .tag {
+		font-size: 0.65rem;
+		padding: 0.125rem 0.375rem;
+		background: var(--accent-regular);
+		color: var(--gray-0);
+		border-radius: 0.75rem;
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.025em;
+	}
+
+	.project-item.compact .tag-more {
+		font-size: 0.65rem;
+		padding: 0.125rem 0.375rem;
+		background: var(--gray-700);
+		color: var(--gray-300);
+		border-radius: 0.75rem;
+		font-weight: 500;
+	}
+
+	.project-item.compact .title {
+		font-size: var(--text-base);
+		font-weight: 600;
+		color: var(--gray-0);
+		line-height: 1.3;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.project-item.compact .description {
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+		line-height: 1.4;
+		margin: 0;
+		display: -webkit-box;
+		-webkit-line-clamp: 2;
+		-webkit-box-orient: vertical;
+		overflow: hidden;
+	}
+
+	.project-item.compact .image-container {
+		width: 100px;
+		height: 80px;
+		flex-shrink: 0;
+		border-radius: 0.5rem;
+		overflow: hidden;
+	}
+
+	.project-item.compact img {
+		width: 100%;
+		height: 100%;
+		object-fit: cover;
+	}
+
+	/* Light theme adjustments */
+	:global([data-theme="light"]) .project-item.compact .card {
+		background: var(--gray-0);
+		border-color: var(--gray-300);
+	}
+
+	:global([data-theme="light"]) .project-item.compact .card:hover {
+		background: var(--gray-50);
+		border-color: var(--gray-400);
+	}
+
+	:global([data-theme="light"]) .project-item.compact .date {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .project-item.compact .title {
+		color: var(--gray-800);
+	}
+
+	:global([data-theme="light"]) .project-item.compact .description {
+		color: var(--gray-600);
+	}
+
+	:global([data-theme="light"]) .project-item.compact .tag-more {
+		background: var(--gray-200);
+		color: var(--gray-700);
+	}
+
+	/* Responsive adjustments */
+	@media (min-width: 50em) {
+		.project-item.default .card {
+			height: 22rem;
+			border-radius: 1.5rem;
+		}
+
+		.project-item.default .title {
+			border-radius: 0.9375rem;
+		}
+
+		.project-item.compact .card {
+			min-height: 100px;
+		}
+
+		.project-item.compact .image-container {
+			width: 120px;
+			height: 90px;
+		}
+
+		.project-item.compact .meta {
+			flex-direction: row;
+			justify-content: space-between;
+			align-items: center;
+		}
+	}
+</style>
