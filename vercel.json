@@ -3,11 +3,6 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "installCommand": "pnpm install",
-  "functions": {
-    "app/server/entry.mjs": {
-      "maxDuration": 10
-    }
-  },
   "headers": [
     {
       "source": "/search-data.json",
