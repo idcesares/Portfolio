@@ -14,8 +14,9 @@ import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
 import PostPreview from '../components/PostPreview.astro';
 
-import { Image } from 'astro:assets';
 import Portrait from '../assets/portrait.webp';
+
+import { University } from '@lucide/astro';
 
 
 const projects = (await getCollection('work'))
@@ -39,16 +40,20 @@ const posts = (await getCollection('blog'))
 				>
 					<div class="roles">
 						<Pill><Icon icon="code" size="1.33em" /> Desenvolvedor</Pill>
-						<Pill><Icon icon="microphone-stage" size="1.33em" /> Palestrante</Pill>
+						<Pill><University /> Educador</Pill>
 						<Pill><Icon icon="pencil-line" size="1.33em" /> Pesquisador</Pill>
 					</div>
+					
 				</Hero>
 
 				<img
 					class="portrait"
 					alt="Isaac D'Césares profile picture"
 					src={Portrait.src}
-					loading="lazy"
+					loading="eager"
+					width="400"
+					height="300"
+					decoding="async"
 				/>
 			</header>
 
@@ -75,7 +80,7 @@ const posts = (await getCollection('blog'))
 				</div>
 
 				<div class="cta">
-					<CallToAction href="/work/">
+					<CallToAction href="/blog/">
 						Ver todas
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
@@ -107,6 +112,34 @@ const posts = (await getCollection('blog'))
 						Ver todos
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
+				</div>
+			</section>
+		</main>
+
+		<main class="wrapper stack gap-20 lg:gap-48">
+			<section class="section with-background bg-variant">
+				<header class="section-header stack gap-2 lg:gap-4">
+					<h3>Impacto e Alcance</h3>
+					<p>Alguns números que demonstram o impacto do meu trabalho em tecnologia educacional.</p>
+				</header>
+
+				<div class="stats-grid">
+					<div class="stat-card">
+						<div class="stat-number">2000+</div>
+						<div class="stat-label">Educadores Impactados</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number">50+</div>
+						<div class="stat-label">Projetos Desenvolvidos</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number">10+</div>
+						<div class="stat-label">Instituições Parceiras</div>
+					</div>
+					<div class="stat-card">
+						<div class="stat-number">10+</div>
+						<div class="stat-label">Anos de Experiência</div>
+					</div>
 				</div>
 			</section>
 		</main>
@@ -256,6 +289,63 @@ const posts = (await getCollection('blog'))
 		.mention-card {
 			border-radius: 1.5rem;
 			height: 9.5rem;
+		}
+	}
+
+	.stats-grid {
+		display: grid;
+		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+		gap: 2rem;
+		margin-top: 2rem;
+	}
+
+	.stat-card {
+		text-align: center;
+		padding: 2rem 1rem;
+		background: var(--gray-999);
+		border: 1px solid var(--gray-800);
+		border-radius: 1rem;
+		box-shadow: var(--shadow-sm);
+		transition: transform 0.2s ease, box-shadow 0.2s ease;
+	}
+
+	.stat-card:hover {
+		transform: translateY(-2px);
+		box-shadow: var(--shadow-md);
+	}
+
+	.stat-number {
+		font-size: var(--text-4xl);
+		font-weight: 700;
+		color: var(--accent-regular);
+		line-height: 1;
+		margin-bottom: 0.5rem;
+	}
+
+	.stat-label {
+		font-size: var(--text-sm);
+		color: var(--gray-300);
+		font-weight: 500;
+		text-transform: uppercase;
+		letter-spacing: 0.05em;
+	}
+
+	@media (min-width: 50em) {
+		.stats-grid {
+			grid-template-columns: repeat(4, 1fr);
+			gap: 3rem;
+		}
+
+		.stat-card {
+			padding: 3rem 2rem;
+		}
+
+		.stat-number {
+			font-size: var(--text-5xl);
+		}
+
+		.stat-label {
+			font-size: var(--text-base);
 		}
 	}
 </style>
