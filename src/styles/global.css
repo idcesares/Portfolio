@@ -316,3 +316,52 @@ h5 {
 		gap: 12rem;
 	}
 }
+/* Make code blocks scroll nicely and look tidy */
+pre {
+  position: relative;
+  margin: 1.25rem 0;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  white-space: pre-wrap;
+  word-break: break-word;
+}
+
+/* Keep code lines padded */
+pre [data-line] {
+  padding: 0 1rem;
+}
+
+/* Optional: highlighted lines (from `{1,3}` meta) */
+pre [data-highlighted-line] {
+  background: color-mix(in oklab, Canvas 92%, transparent);
+}
+
+/* Line numbers (enabled via `showLineNumbers` meta) */
+code[data-line-numbers] {
+  counter-reset: line;
+}
+code[data-line-numbers] > [data-line]::before {
+  counter-increment: line;
+  content: counter(line);
+  display: inline-block;
+  width: 2ch;
+  margin-right: 1rem;
+  text-align: right;
+  opacity: 0.6;
+}
+
+/* Light/Dark: honor the theme data the plugin applies via Shiki variables */
+code[data-theme*=" "],
+code[data-theme*=" "] span {
+  color: var(--shiki-light);
+  background-color: var(--shiki-light-bg);
+}
+@media (prefers-color-scheme: dark) {
+  code[data-theme*=" "],
+  code[data-theme*=" "] span {
+    color: var(--shiki-dark);
+    background-color: var(--shiki-dark-bg);
+  }
+}
+

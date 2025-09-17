@@ -61,7 +61,7 @@ Antes de mergulhar nos templates, entenda **por que** cada peça funciona:
 ### 1. Hierarquia de informação
 **Primeiras palavras = máxima atenção**. Modelos processam sequencialmente. Coloque o mais importante primeiro.
 
-```
+```md
 ❌ "Em um ambiente corporativo moderno, uma pessoa..."
 ✅ "Executiva confiante em escritório moderno..."
 ```
@@ -69,7 +69,7 @@ Antes de mergulhar nos templates, entenda **por que** cada peça funciona:
 ### 2. Densidade semântica otimizada
 **Cada palavra deve agregar valor**. Evite redundâncias que "diluem" o foco.
 
-```
+```md
 ❌ "Escritório corporativo muito moderno e contemporâneo"
 ✅ "Escritório contemporâneo, design minimalista"
 ```
@@ -94,7 +94,7 @@ Antes de mergulhar nos templates, entenda **por que** cada peça funciona:
 
 Use este formato em qualquer chat. Ajuste só os colchetes:
 
-```
+```md
 Quero uma imagem de [SUJEITO] fazendo [AÇÃO] em [CENÁRIO].
 Composição: [TIPO DE ENQUADRAMENTO].
 Luz: [TIPO DE LUZ]. Estética: [ESTILO/REFERÊNCIAS].
@@ -115,7 +115,7 @@ Tamanho/forma: [16:9 | 1:1 | retrato 3:4].
 
 **Objetivo**: foto com aparência profissional e calor humano.
 
-```
+```md
 Quero um retrato editorial de [pessoa, idade, tom de pele], meio corpo, olhando para a câmera, expressão suave.
 Composição: regra dos terços, lente simulada 50mm.
 Luz: lateral suave de janela. Estética: realista e natural.
@@ -130,7 +130,7 @@ Tamanho/forma: 3:4.
 
 **Objetivo**: packshot (foto isolada de produto) para e‑commerce/blog.
 
-```
+```md
 Gere uma foto de produto: [nome do produto] em cyclorama branco (fundo infinito curvo).
 Composição: ângulo levemente acima do nível dos olhos, espaço negativo ao redor.
 Luz: softbox a 45°, sombra suave no chão.
@@ -145,7 +145,7 @@ Tamanho/forma: 3:2. Adicione reflexo suave controlado.
 
 **Objetivo**: explicar um conceito com clareza visual.
 
-```
+```md
 Crie uma ilustração flat explicando o ciclo da água em 4 etapas.
 Composição: grid modular, ícones consistentes, numeração 1–4.
 Estética: vetorial, minimalista, alto contraste e legibilidade.
@@ -160,7 +160,7 @@ Tamanho/forma: 16:9.
 
 **Objetivo**: visual hero para site/apresentação.
 
-```
+```md
 Gere uma ilustração 3D isométrica de estação de trabalho minimalista: notebook aberto, gráficos na tela, luminária, planta pequena.
 Composição: isométrica estável, equilíbrio entre objetos.
 Luz: global suave. Estética: clean tech, materiais foscos.
@@ -175,7 +175,7 @@ Tamanho/forma: 1:1.
 
 **Objetivo**: capa de post com impacto.
 
-```
+```md
 Gere uma paisagem cinematográfica de cânion ao pôr do sol.
 Composição: ultrawide, horizonte baixo, sensação de escala épica.
 Luz: contraluz recortando o relevo, neblina leve.
@@ -190,7 +190,7 @@ Tamanho/forma: 21:9.
 
 **Objetivo**: apresentar conceitos de UX/UI de forma atrativa.
 
-```
+```md
 Mockup clean de app mobile exibindo dashboard financeiro.
 Composição: smartphone em ângulo 3/4, tela ocupando 70% do frame.
 Luz: ambiente neutro, reflexos sutis na tela.
@@ -204,7 +204,7 @@ Tamanho/forma: 4:5.
 
 **Objetivo**: representar ideias complexas visualmente.
 
-```
+```md
 Ilustração conceitual representando "transformação digital": formas geométricas fluidas conectadas por linhas luminosas.
 Composição: diagonal dinâmica, movimento ascendente.
 Estética: gradientes suaves, semi-transparências.
@@ -217,7 +217,7 @@ Tamanho/forma: 16:9.
 
 **Objetivo**: gerar conexão emocional, humanizar marcas.
 
-```
+```md
 Cena lifestyle: pessoa jovem trabalhando em café acolhedor, laptop aberto, xícara ao lado.
 Composição: over-the-shoulder, profundidade de campo rasa.
 Luz: natural de janela, atmosfera acolhedora.
@@ -235,7 +235,7 @@ Tamanho/forma: 3:2.
 
 Quando não souber como estruturar, use este meta-prompt:
 
-```
+```md
 Atue como especialista em prompt engineering para geração de imagens.
 Preciso criar uma imagem para [DESCREVA SEU OBJETIVO/CONTEXTO].
 Gere um prompt otimizado seguindo as melhores práticas:
@@ -255,7 +255,7 @@ Formato final deve ser direto e executável.
 
 ### Conditional prompting (ramificação)
 
-```
+```md
 Gere 2 versões da mesma cena:
 Versão A: [especificações para mood mais sério]
 Versão B: [especificações para mood mais descontraído]
@@ -305,7 +305,7 @@ Varie apenas: expressão, paleta, iluminação.
 ### Marketing Digital & Redes Sociais
 
 **Post de feed Instagram (engajamento)**
-```
+```md
 Flat lay organizado com produtos [CATEGORIA] em fundo marble branco.
 Composição: grid assimétrico, espaço negativo estratégico.
 Luz: natural difusa, sem sombras duras.
@@ -314,7 +314,7 @@ Evite: text overlays, logos. Formato: 1:1.
 ```
 
 **Stories/Reels thumb (parar scroll)**
-```
+```md
 Close-up expressivo de [PESSOA/OBJETO] com background desfocado vibrante.
 Composição: regra dos terços, espaço superior para texto.
 Luz: soft ring light simulado. Paleta: high contrast.
@@ -324,7 +324,7 @@ Evite: elementos competindo atenção. Formato: 9:16.
 ### E-commerce & Produto
 
 **Hero image produto (conversão)**
-```
+```md
 [PRODUTO] em ambiente lifestyle contextual, uso natural.
 Composição: produto ocupando 60% do frame, contexto de uso claro.
 Luz: natural + fill light sutil. Estética aspiracional.
@@ -335,7 +335,7 @@ Evite: distrações, competição visual. Formato: 3:2.
 ### Educação & Conteúdo
 
 **Thumbnail YouTube educativo**
-```
+```md
 Split screen: [CONCEITO ANTES] vs [CONCEITO DEPOIS].
 Composição: divisão vertical clara, seta de transformação.
 Cores: alto contraste, legibilidade mobile.
@@ -345,7 +345,7 @@ Typography space reserved. Formato: 16:9.
 ### Corporativo & B2B
 
 **LinkedIn post visual (autoridade)**
-```
+```md
 Professional scene: [SITUAÇÃO BUSINESS] em ambiente moderno.
 Composição: pessoas em interação natural, hierarquia clara.
 Luz: corporate lighting, confiável. Diversidade intencional.
@@ -389,7 +389,7 @@ Paleta: azul corporativo + neutros. Formato: 4:5.
 
 ### Script de depuração sistemática
 
-```
+```md
 1. "O que exatamente não funcionou nesta imagem?"
 2. "Qual era minha intenção original?"  
 3. "Que elemento específico posso ajustar?"
@@ -598,7 +598,7 @@ Solução: Brand visual DNA
 **🔥 "Cliente/chefe não gosta, mas não sabe explicar por quê"**
 
 Solução: Teste de preferência estruturado
-```
+```md
 Gere 3 versões da mesma imagem:
 A) Mood mais conservador/tradicional
 B) Mood equilibrado/neutro  
@@ -624,7 +624,7 @@ Apresente como "direções possíveis" e colete feedback específico.
 
 **Retrato Editorial**
 
-```
+```md
 Retrato editorial de [pessoa], meio corpo. Composição: regra dos terços; lente 50mm simulada.
 Luz: lateral suave de janela. Estética: realista, calor humano.
 Paleta: âmbar/terracota. Fundo minimalista.
@@ -633,7 +633,7 @@ Evite: texto, logotipos, distorção de mãos. Formato 3:4.
 
 **Produto Clean**
 
-```
+```md
 Foto de [produto] em fundo cyclorama branco. Ângulo levemente alto.
 Luz: softbox 45°, sombra suave controlada. Estética: clean premium.
 Evite: marcas reais, texto. Formato 3:2.
@@ -641,7 +641,7 @@ Evite: marcas reais, texto. Formato 3:2.
 
 **Infográfico Flat**
 
-```
+```md
 Ilustração flat explicando [tema] em [n] etapas, ícones consistentes, grid modular.
 Paleta acessível [cores]. Deixe espaços para textos.
 Evite: texto renderizado agora. Formato 16:9.
@@ -649,14 +649,14 @@ Evite: texto renderizado agora. Formato 16:9.
 
 **Hero 3D Isométrico**
 
-```
+```md
 Ilustração 3D isométrica de [tema], materiais foscos, luz global suave.
 Paleta: azul-acinzentada. Sem texto. Formato 1:1.
 ```
 
 **Paisagem Cinematográfica**
 
-```
+```md
 Paisagem cinematográfica de [lugar] ao [momento do dia].
 Composição: ultrawide; horizonte baixo. Luz: [tipo]. Paleta: [cores].
 Evite: pessoas, texto. Formato 21:9.

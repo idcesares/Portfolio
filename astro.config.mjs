@@ -5,6 +5,8 @@ import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
 import embeds from 'astro-embed/integration';
 import react from "@astrojs/react";
+import rehypePrettyCode from 'rehype-pretty-code';
+import { transformerCopyButton } from '@rehype-pretty/transformers';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -31,10 +33,23 @@ export default defineConfig({
   }), embeds(), mdx(), react()],
 
   markdown: {
-    shikiConfig: {
-      theme: 'dracula',
-      wrap: true,
-    },
+    syntaxHighlight: false,
+    rehypePlugins: [
+      [
+        rehypePrettyCode,
+        {
+          theme: 'dracula',
+          keepBackground: true,
+          wrap: true,
+          transformers: [
+            transformerCopyButton({
+              visibility: 'hover',
+              feedbackDuration: 2000,
+            }),
+          ],
+        },
+      ],
+    ],
   },
 
   vite: {
