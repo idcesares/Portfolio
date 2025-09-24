@@ -1,259 +1,315 @@
-# Isaac D'Césares Portfolio Website
+# Portfolio Isaac D'Césares
 
-**Researcher, Educator & Educational Technology Coordinator at Sesc National Department**
+**Pesquisador, Educador e Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc**
 
 [![Website](https://img.shields.io/badge/Website-dcesares.dev-blue?style=for-the-badge)](https://dcesares.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-isaacdcesares-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/isaacdcesares)
 [![GitHub](https://img.shields.io/badge/GitHub-idcesares-181717?style=for-the-badge&logo=github)](https://github.com/idcesares)
 
-## About Me
+## Sobre Mim
 
-I'm Isaac D'Césares, Educational Technology Coordinator at Sesc National Department and Master's candidate in Computer Science at UFRJ. My passion lies at the intersection of technology, innovation, and education, constantly seeking ways to transform and improve teaching and learning processes.
+Sou Isaac D'Césares, Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc e mestrando em Computação pela UFRJ. Minha paixão está na interseção entre tecnologia, inovação e educação, buscando constantemente formas de transformar e melhorar os processos de ensino e aprendizagem.
 
-With solid academic and professional training, including an MBA in Software Engineering Innovation (UFRJ), specializations in Innovative Education (Stanford) and Digital Transformation (FDC), plus certifications as an Innovative Educator by Google and Microsoft, I'm equipped to lead cutting-edge initiatives in educational technology.
+Com uma sólida formação acadêmica e profissional, incluindo MBA em Inovação em Engenharia de Software (UFRJ), especializações em Educação Inovadora (Stanford) e Transformação Digital (FDC), além de certificações como Educador Inovador pelo Google e Microsoft, estou equipado para liderar iniciativas de vanguarda no campo da tecnologia educacional.
 
-### Professional Impact
-- 🎓 **2000+ educators** trained in educational technology programs
-- 👥 **1700+ students** impacted through Technology Culture and Social Entrepreneurship programs
-- 🌐 **600,000+ platform access** on educational platforms I've implemented
-- 🏗️ **50+ projects** developed across educational innovation
-- 🤝 **10+ partner institutions** in collaborative initiatives
-- 📈 **10+ years** of experience in educational technology
+### Impacto Profissional
+- 🎓 **2000+ educadores** capacitados em programas de tecnologia educacional
+- 👥 **1700+ estudantes** impactados através de programas de Cultura Tecnológica e Empreendedorismo Social
+- 🌐 **600.000+ acessos** em plataformas educacionais que implementei
+- 🏗️ **50+ projetos** desenvolvidos em inovação educacional
+- 🤝 **10+ instituições parceiras** em iniciativas colaborativas
+- 📈 **10+ anos** de experiência em tecnologia educacional
 
-## Portfolio Features
+## Características do Portfolio
 
-### 🚀 Professional Showcase
-- **Research & Publications**: Academic work on AI in education, blockchain applications, and educational technology
-- **Live Sessions & Talks**: Educational content on AI for university students, digital security, and technological innovation
-- **Project Portfolio**: Comprehensive overview of educational technology initiatives and developments
-- **Professional Timeline**: Journey from developer to educational technology leader
+### 🚀 Showcase Profissional
+- **Pesquisa e Publicações**: Trabalhos acadêmicos sobre IA na educação, aplicações de blockchain e tecnologia educacional
+- **Lives e Palestras**: Conteúdo educacional sobre IA para estudantes universitários, segurança digital e inovação tecnológica
+- **Portfolio de Projetos**: Visão abrangente das iniciativas e desenvolvimentos em tecnologia educacional
+- **Trajetória Profissional**: Jornada de desenvolvedor a líder em tecnologia educacional
 
-### 📚 Educational Content
-- **Blog Articles**: In-depth analysis of educational technology trends and AI applications
-- **AI Tools for Students**: Curated guides for using artificial intelligence in academic environments
-- **Digital Security**: Resources for families and educators on safe technology use
-- **Technology Integration**: Strategies for implementing technology in educational settings
+### 📚 Conteúdo Educacional
+- **Artigos do Blog**: Análises aprofundadas sobre tendências em tecnologia educacional e aplicações de IA
+- **Ferramentas de IA para Estudantes**: Guias selecionados para uso de inteligência artificial em ambientes acadêmicos
+- **Segurança Digital**: Recursos para famílias e educadores sobre uso seguro da tecnologia
+- **Integração Tecnológica**: Estratégias para implementação de tecnologia em ambientes educacionais
 
-### 🔬 Research Areas
-- **Artificial Intelligence in Education**: Personalized learning and adaptive systems
-- **Blockchain Technology**: Decentralized education and LearnChain project development
-- **Educational Data Science**: Analytics for improving learning outcomes
-- **Maker Education**: Technology labs and hands-on learning environments
-- **Digital Literacy**: Critical thinking and responsible technology use
+### 🔬 Áreas de Pesquisa
+- **Inteligência Artificial na Educação**: Aprendizagem personalizada e sistemas adaptativos
+- **Tecnologia Blockchain**: Educação descentralizada e desenvolvimento do projeto LearnChain
+- **Ciência de Dados Educacionais**: Analytics para melhoria dos resultados de aprendizagem
+- **Educação Maker**: Laboratórios de tecnologia e ambientes de aprendizagem prática
+- **Letramento Digital**: Pensamento crítico e uso responsável da tecnologia
 
-## Tech Stack & Architecture
+## Stack Tecnológico e Arquitetura
 
-### 🏗️ Core Technologies
-- **[Astro.js](https://astro.build/)** - Modern static site generator with island architecture
-- **[React](https://react.dev/)** - Component-based UI development for interactive elements
-- **[Tailwind CSS](https://tailwindcss.com/)** - Utility-first CSS framework for responsive design
-- **[HeroUI](https://heroui.com/)** - Modern React component library for enhanced UX
-- **[TypeScript](https://www.typescriptlang.org/)** - Type-safe JavaScript for robust development
+### 🏗️ Tecnologias Principais
+- **[Astro.js](https://astro.build/)** - Gerador de site moderno com arquitetura de ilhas
+- **[React](https://react.dev/)** - Desenvolvimento de UI baseado em componentes para elementos interativos
+- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS utility-first para design responsivo
+- **[HeroUI](https://heroui.com/)** - Biblioteca moderna de componentes React para UX aprimorada
+- **[TypeScript](https://www.typescriptlang.org/)** - JavaScript com tipagem segura para desenvolvimento robusto
 
-### 🎨 Design & UX
-- **Modern UI/UX**: Clean, professional design reflecting educational technology expertise
-- **Responsive Design**: Optimized for all devices and screen sizes
-- **Dark/Light Themes**: User preference-based theme switching
-- **Interactive Components**: Engaging user interface with smooth transitions
-- **Accessibility**: WCAG compliant design for inclusive user experience
+### 🎨 Design e UX
+- **UI/UX Moderna**: Design limpo e profissional refletindo expertise em tecnologia educacional
+- **Design Responsivo**: Otimizado para todos os dispositivos e tamanhos de tela
+- **Temas Claro/Escuro**: Alternância de tema baseada na preferência do usuário
+- **Componentes Interativos**: Interface de usuário envolvente com transições suaves
+- **Acessibilidade**: Design compatível com WCAG para experiência de usuário inclusiva
 
-### ⚡ Performance & Features
-- **SSR + SSG**: Server-side rendering with static generation for optimal performance
-- **SEO Optimized**: Comprehensive meta tags, structured data, and sitemap
-- **Content Management**: Markdown-based content with frontmatter for easy updates
-- **Search Functionality**: Full-text search across articles and projects using Fuse.js
-- **Analytics Integration**: Vercel Analytics and Speed Insights for performance monitoring
+### ⚡ Performance e Funcionalidades
+- **SSR + SSG**: Renderização server-side com geração estática para performance otimizada
+- **SEO Otimizado**: Meta tags abrangentes, dados estruturados e sitemap
+- **Gerenciamento de Conteúdo**: Conteúdo baseado em Markdown com frontmatter para atualizações fáceis
+- **Funcionalidade de Busca**: Busca em texto completo em artigos e projetos usando Fuse.js
+- **Integração de Analytics**: Vercel Analytics e Speed Insights para monitoramento de performance
 
-### 🔧 Advanced Integrations
-- **Content Collections**: Astro's type-safe content management system
-- **MDX Support**: Enhanced markdown with React component integration
-- **RSS Feed**: Automated feed generation for blog content
-- **Sitemap Generation**: Automatic sitemap creation for SEO
-- **Image Optimization**: Optimized loading and responsive images
+### 🔧 Integrações Avançadas
+- **Content Collections**: Sistema de gerenciamento de conteúdo type-safe do Astro
+- **Suporte MDX**: Markdown aprimorado com integração de componentes React
+- **Feed RSS**: Geração automatizada de feed para conteúdo do blog
+- **Geração de Sitemap**: Criação automática de sitemap para SEO
+- **Otimização de Imagens**: Carregamento otimizado e imagens responsivas
 
-### 🌐 Deployment & Infrastructure
-- **Vercel Platform**: Edge deployment with global CDN
-- **Git-based Workflow**: Continuous deployment from GitHub
-- **Performance Monitoring**: Real-time analytics and speed insights
-- **Domain Management**: Custom domain with SSL certificate
+### 🌐 Deploy e Infraestrutura
+- **Plataforma Vercel**: Deploy edge com CDN global
+- **Workflow baseado em Git**: Deploy contínuo a partir do GitHub
+- **Monitoramento de Performance**: Analytics e insights de velocidade em tempo real
+- **Gerenciamento de Domínio**: Domínio personalizado com certificado SSL
 
-## Development & Local Setup
+## Desenvolvimento e Configuração Local
 
-### Prerequisites
-- **Node.js** (version 18 or higher)
-- **pnpm** (preferred) or npm package manager
-- **Git** for version control
+### Pré-requisitos
+- **Node.js** (versão 18 ou superior)
+- **pnpm** (preferível) ou npm como gerenciador de pacotes
+- **Git** para controle de versão
 
-### Installation Steps
+### Passos para Instalação
 
-1. **Clone the repository**
+1. **Clone o repositório**
    ```bash
    git clone https://github.com/idcesares/Portfolio.git
    cd Portfolio
    ```
 
-2. **Install dependencies**
+2. **Instale as dependências**
    ```bash
    pnpm install
-   # or
+   # ou
    npm install
    ```
 
-3. **Start development server**
+3. **Inicie o servidor de desenvolvimento**
    ```bash
    pnpm dev
-   # or
+   # ou
    npm run dev
    ```
 
-4. **View the website**
-   Open [http://localhost:4321](http://localhost:4321) in your browser
+4. **Visualize o website**
+   Abra [http://localhost:4321](http://localhost:4321) no seu navegador
 
-### Available Scripts
+### Scripts Disponíveis
 
 ```bash
-pnpm dev        # Start development server
-pnpm build      # Build for production
-pnpm preview    # Preview production build
-pnpm astro      # Run Astro CLI commands
+pnpm dev        # Inicia servidor de desenvolvimento
+pnpm build      # Build para produção
+pnpm preview    # Preview do build de produção
+pnpm astro      # Executa comandos CLI do Astro
 ```
 
-### Project Structure
+### Estrutura do Projeto
 
 ```
 Portfolio/
 ├── src/
-│   ├── components/          # Reusable UI components
-│   │   ├── Hero.astro      # Homepage hero section
-│   │   ├── Nav.astro       # Navigation component
-│   │   ├── Skills.astro    # Skills showcase
+│   ├── components/          # Componentes UI reutilizáveis
+│   │   ├── Hero.astro      # Seção hero da homepage
+│   │   ├── Nav.astro       # Componente de navegação
+│   │   ├── Skills.astro    # Showcase de habilidades
+│   │   ├── FilterBar.astro # Barra de filtros para busca
 │   │   └── ...
-│   ├── content/            # Content collections
-│   │   ├── blog/           # Blog articles (Markdown)
-│   │   └── work/           # Portfolio projects (Markdown)
-│   ├── layouts/            # Page layouts
+│   ├── content/            # Collections de conteúdo
+│   │   ├── blog/           # Artigos do blog (Markdown/MDX)
+│   │   └── work/           # Projetos do portfolio (Markdown/MDX)
+│   ├── layouts/            # Layouts de página
 │   │   └── BaseLayout.astro
-│   ├── pages/              # Route pages
+│   ├── pages/              # Páginas de rota
 │   │   ├── index.astro     # Homepage
-│   │   ├── about.astro     # About page
-│   │   ├── blog.astro      # Blog listing
-│   │   └── work.astro      # Portfolio listing
-│   ├── styles/             # Global styles
-│   └── utils/              # Utility functions
-├── public/                 # Static assets
-│   ├── assets/             # Images and media
-│   └── favicon.svg
-├── astro.config.mjs        # Astro configuration
-├── tailwind.config.cjs     # Tailwind CSS config
+│   │   ├── about.astro     # Página sobre
+│   │   ├── blog.astro      # Listagem do blog
+│   │   ├── work.astro      # Listagem do portfolio
+│   │   ├── deals.astro     # Página de ofertas
+│   │   └── search-data.json.ts  # API endpoint para busca
+│   ├── styles/             # Estilos globais
+│   └── utils/              # Funções utilitárias
+├── public/                 # Assets estáticos
+│   ├── assets/             # Imagens e mídia
+│   │   ├── blog_imgs/      # Imagens dos posts do blog
+│   │   └── backgrounds/    # Imagens de fundo responsivas
+│   ├── favicon.svg
+│   ├── search-fallback.js  # Fallback de busca (cache 24h)
+│   └── llms.txt           # Instruções para LLMs
+├── astro.config.mjs        # Configuração do Astro
+├── tailwind.config.cjs     # Configuração do Tailwind CSS
+├── vercel.json             # Configuração de deploy e headers CORS
 └── package.json
 ```
 
-## Content Management
+## Gerenciamento de Conteúdo
 
-### Adding Blog Posts
-Create a new `.md` file in `src/content/blog/` with frontmatter:
-
-```markdown
----
-title: "Your Post Title"
-publishDate: 2025-01-15 10:00:00
-description: "Brief description of your post"
-tags: ["AI", "Education", "Technology"]
----
-
-Your content here...
-```
-
-### Adding Portfolio Projects
-Create a new `.md` file in `src/content/work/` with frontmatter:
+### Adicionando Posts do Blog
+Crie um novo arquivo `.md` ou `.mdx` em `src/content/blog/` com frontmatter:
 
 ```markdown
 ---
-title: "Project Title"
+title: "Título do Seu Post"
 publishDate: 2025-01-15 10:00:00
-img: "/path/to/image.jpg"
-img_alt: "Image description"
-description: "Project description"
-tags: ["React", "AI", "Education"]
+description: "Breve descrição do seu post"
+tags: ["IA", "Educação", "Tecnologia"]
+img: "/assets/blog_imgs/nome-da-imagem.webp"
+img_alt: "Descrição da imagem"
 ---
 
-Project details...
+Seu conteúdo aqui...
 ```
 
-## Professional Background
+### Adicionando Projetos do Portfolio
+Crie um novo arquivo `.md` ou `.mdx` em `src/content/work/` com frontmatter:
 
-### Current Role
-**Educational Technology Coordinator** at Sesc National Department
-- Leading digital transformation initiatives across educational institutions
-- Developing AI-powered educational platforms with 600,000+ user access
-- Coordinating technology integration programs for 2000+ educators
+```markdown
+---
+title: "Título do Projeto"
+publishDate: 2025-01-15 10:00:00
+img: "/assets/blog_imgs/projeto-imagem.webp"
+img_alt: "Descrição da imagem"
+description: "Descrição do projeto"
+tags: ["React", "IA", "Educação"]
+---
 
-### Academic Pursuits
-**Master's in Computer Science** at UFRJ (Federal University of Rio de Janeiro)
-- Research focus: AI applications in educational technology
-- Thesis: Blockchain and decentralized learning systems (LearnChain project)
+Detalhes do projeto...
+```
 
-### Expertise Areas
-- **AI in Education**: Personalized learning systems and adaptive technologies
-- **Educational Innovation**: Maker spaces, robotics labs, and STEM programs
-- **Research & Development**: Academic publications and technology assessment
-- **Professional Training**: Educator development and digital literacy programs
+### Schema das Collections
+Ambas as collections (`blog` e `work`) seguem o mesmo schema definido em `src/content.config.ts`:
+- **title**: Título obrigatório
+- **description**: Descrição para SEO
+- **publishDate**: Data de publicação
+- **tags**: Array de tags para categorização
+- **img**: Caminho para imagem (obrigatório)
+- **img_alt**: Texto alternativo para a imagem
 
-### Key Projects & Initiatives
+## Contexto Profissional
 
-#### LearnChain - Decentralized Education Platform
-Blockchain-based platform for educational content sharing and monetization, developed in collaboration with UFRJ's Greco Group.
+### Função Atual
+**Coordenador de Tecnologia Educacional** no Departamento Nacional do Sesc
+- Liderança de iniciativas de transformação digital em instituições educacionais
+- Desenvolvimento de plataformas educacionais com IA e 600.000+ acessos de usuários
+- Coordenação de programas de integração tecnológica para 2000+ educadores
 
-#### AI for University Students Program
-Educational initiatives helping students leverage AI tools for academic success, reaching thousands of students across institutions.
+### Formação Acadêmica
+**Mestrado em Computação** na UFRJ (Universidade Federal do Rio de Janeiro)
+- Foco de pesquisa: Aplicações de IA em tecnologia educacional
+- Dissertação: Blockchain e sistemas de aprendizagem descentralizada (projeto LearnChain)
 
-#### Digital Security for Families
-Comprehensive programs teaching digital literacy and online safety to families and educators.
+**Formação Complementar**
+- MBA em Inovação em Engenharia de Software (UFRJ)
+- Especialização em Educação Inovadora (Stanford)
+- Especialização em Transformação Digital (FDC)
+- Certificação como Educador Inovador (Google e Microsoft)
 
-#### Sesc Educational Technology Architecture
-Three-tier system integrating educational management, adaptive learning platforms, and physical-digital materials.
+### Áreas de Expertise
+- **IA na Educação**: Sistemas de aprendizagem personalizada e tecnologias adaptativas
+- **Inovação Educacional**: Espaços maker, laboratórios de robótica e programas STEM
+- **Pesquisa e Desenvolvimento**: Publicações acadêmicas e avaliação de tecnologias
+- **Formação Profissional**: Desenvolvimento de educadores e programas de letramento digital
 
-## Contributing
+### Projetos e Iniciativas Principais
 
-Contributions are welcome! This portfolio serves as both a personal showcase and a resource for the educational technology community.
+#### LearnChain - Plataforma de Educação Descentralizada
+Plataforma baseada em blockchain para compartilhamento e monetização de conteúdo educacional, desenvolvida em colaboração com o Grupo Greco da UFRJ.
 
-### Ways to Contribute
-1. **Suggest improvements** to educational content or technical implementation
-2. **Report issues** or bugs you encounter
-3. **Share insights** on educational technology trends
-4. **Collaborate** on research or educational initiatives
+#### Programa IA para Estudantes Universitários
+Iniciativas educacionais ajudando estudantes a aproveitar ferramentas de IA para sucesso acadêmico, alcançando milhares de estudantes em diversas instituições.
 
-### Contribution Process
-1. Fork the repository
-2. Create a feature branch: `git checkout -b feature/your-feature-name`
-3. Make your changes and commit: `git commit -m 'Add meaningful description'`
-4. Push to your branch: `git push origin feature/your-feature-name`
-5. Submit a pull request
+#### Segurança Digital para Famílias
+Programas abrangentes ensinando letramento digital e segurança online para famílias e educadores.
 
-## License & Usage
+#### Arquitetura de Tecnologia Educacional do Sesc
+Sistema de três camadas integrando gestão educacional, plataformas de aprendizagem adaptativa e materiais físico-digitais.
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## Funcionalidades Avançadas
 
-### Educational Use
-Feel free to use this portfolio as inspiration for your own educational technology projects or academic portfolios. Attribution is appreciated but not required.
+### Sistema de Busca
+- **Endpoint de Dados**: `/search-data.json` gera dados estruturados para busca
+- **Busca Client-Side**: Implementação com Fuse.js para busca em tempo real
+- **Filtros**: Por tags, termos de busca e ordenação (mais recente/antigo/alfabético)
+- **Cache**: Endpoint cached por 5 minutos via configuração Vercel
 
-## Connect & Collaborate
+### Otimizações de Performance
+- **Lazy Loading**: Imagens carregadas sob demanda
+- **WebP/AVIF**: Formatos de imagem otimizados
+- **Bundle Splitting**: Código dividido para carregamento eficiente
+- **Tailwind Purging**: CSS otimizado automaticamente
 
-I'm always open to new partnerships, research opportunities, and projects that align with my vision of transformative and technologically advanced education.
+### SEO e Analytics
+- **Meta Tags**: Configuração abrangente via astro-seo
+- **JSON-LD**: Dados estruturados para mecanismos de busca
+- **Sitemap**: Geração automática
+- **RSS Feed**: Feed automatizado para conteúdo do blog
+- **Vercel Analytics**: Monitoramento de performance e Core Web Vitals
 
-### Professional Contact
+## Contribuições
+
+Contribuições são bem-vindas! Este portfolio serve tanto como showcase pessoal quanto como recurso para a comunidade de tecnologia educacional.
+
+### Formas de Contribuir
+1. **Sugerir melhorias** no conteúdo educacional ou implementação técnica
+2. **Reportar problemas** ou bugs encontrados
+3. **Compartilhar insights** sobre tendências em tecnologia educacional
+4. **Colaborar** em pesquisas ou iniciativas educacionais
+
+### Processo de Contribuição
+1. Faça um fork do repositório
+2. Crie uma branch de feature: `git checkout -b feature/nome-da-sua-feature`
+3. Faça suas mudanças e commit: `git commit -m 'Adiciona descrição significativa'`
+4. Push para sua branch: `git push origin feature/nome-da-sua-feature`
+5. Submeta um pull request
+
+## Licença e Uso
+
+Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
+
+### Uso Educacional
+Sinta-se livre para usar este portfolio como inspiração para seus próprios projetos de tecnologia educacional ou portfolios acadêmicos. Atribuição é apreciada, mas não obrigatória.
+
+## Conecte-se e Colabore
+
+Estou sempre aberto a novas parcerias, oportunidades de pesquisa e projetos que se alinhem com minha visão de educação transformadora e tecnologicamente avançada.
+
+### Contato Profissional
 - **Email**: [isaac.dcesares@gmail.com](mailto:isaac.dcesares@gmail.com)
 - **LinkedIn**: [Isaac D'Césares](https://www.linkedin.com/in/isaacdcesares)
 - **GitHub**: [@idcesares](https://github.com/idcesares)
 - **Website**: [dcesares.dev](https://dcesares.dev)
 
-### Areas of Interest for Collaboration
-- AI and machine learning in educational contexts
-- Blockchain applications for education and research
-- Educational technology research and development
-- Digital literacy and responsible technology use
-- STEM education and maker pedagogy
+### Áreas de Interesse para Colaboração
+- IA e machine learning em contextos educacionais
+- Aplicações de blockchain para educação e pesquisa
+- Pesquisa e desenvolvimento em tecnologia educacional
+- Letramento digital e uso responsável da tecnologia
+- Educação STEM e pedagogia maker
+
+### Recursos Adicionais
+- **Feed RSS**: [dcesares.dev/rss.xml](https://dcesares.dev/rss.xml)
+- **Sitemap**: [dcesares.dev/sitemap-0.xml](https://dcesares.dev/sitemap-0.xml)
+- **Dados de Busca**: [dcesares.dev/search-data.json](https://dcesares.dev/search-data.json)
+- **Instruções para LLMs**: [dcesares.dev/llms.txt](https://dcesares.dev/llms.txt)
 
 ---
 
-*"Technology should empower, not oppress. My mission is to be a catalyst for digital transformation in education, fostering continuous learning and technological adaptability."* - Isaac D'Césares
+*"A tecnologia deve empoderar, não oprimir. Minha missão é ser um catalisador da transformação digital na educação, fomentando aprendizagem contínua e adaptabilidade tecnológica."* - Isaac D'Césares
+
+---
+
+**Última atualização**: Setembro 2025 | **Versão do site**: Astro 5 + SSR | **Status**: Em desenvolvimento ativo

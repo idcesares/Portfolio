@@ -1,0 +1,293 @@
+# llms-full.txt — Isaac D'Césares Portfolio
+
+**Base URL:** https://dcesares.dev  
+**Idiomas:** Português (pt-BR), termos técnicos em inglês  
+**Descrição:** Portfólio profissional completo de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Especializado em IA na educação, blockchain educacional e inovação tecnológica.
+
+---
+
+## Mapa de Conteúdo Expandido
+
+```
+dcesares.dev/
+├── / (Home)
+│   ├── Apresentação profissional
+│   ├── Destaques de projetos (últimos 4)
+│   ├── Posts recentes do blog (últimos 4)
+│   └── Skills e competências
+├── /work/ (Portfolio de Trabalhos)
+│   ├── /work/blockchain-educacional-learnchain/
+│   ├── /work/sesc-tecnologia-educacional/
+│   ├── /work/ai-university-students/
+│   └── /work/digital-security-families/
+├── /blog/ (Artigos e Conteúdo)
+│   ├── /blog/voce-realmente-precisa-de-antivirus-em-2025/
+│   ├── /blog/astro-static-site-generator/
+│   ├── /blog/ai-prompting-directories/
+│   └── [outros artigos sobre IA, educação, tecnologia]
+├── /about/ (Sobre)
+│   ├── Perfil profissional detalhado
+│   ├── Experiência e realizações
+│   ├── Áreas de especialização
+│   └── Visão e objetivos
+├── /deals/ (Ofertas e Códigos)
+│   ├── Convites exclusivos para plataformas de IA
+│   └── Códigos de desconto para ferramentas
+├── /search-data.json (API)
+│   └── Dados estruturados para busca
+└── /rss.xml (Feed RSS)
+    └── Artigos do blog em formato RSS
+```
+
+---
+
+## FAQ (Perguntas Frequentes)
+
+**P: Qual é a formação acadêmica de Isaac D'Césares?**  
+**R:** Mestrando em Computação pela UFRJ, MBA em Inovação em Engenharia de Software (UFRJ), especializações em Educação Inovadora (Stanford) e Transformação Digital (FDC). Certificações como Educador Inovador pelo Google e Microsoft.
+
+**P: O que é o projeto LearnChain?**  
+**R:** Plataforma blockchain de educação descentralizada para compartilhamento e monetização de conteúdo educacional, desenvolvida em colaboração com o Grupo Greco da UFRJ.
+
+**P: Quantas pessoas Isaac já impactou profissionalmente?**  
+**R:** Mais de 2000 educadores capacitados, 1700+ estudantes impactados através de programas educacionais, 600.000+ acessos em plataformas implementadas.
+
+**P: Quais são as principais áreas de pesquisa?**  
+**R:** IA aplicada à educação, blockchain educacional, ciência de dados educacionais, metodologias ativas, educação maker e letramento digital.
+
+**P: Como posso colaborar ou me conectar?**  
+**R:** Contato principal via isaac.dcesares@gmail.com, LinkedIn (/in/isaacdcesares), ou GitHub (@idcesares). Aberto a parcerias em pesquisa e projetos educacionais inovadores.
+
+**P: O conteúdo do site pode ser usado comercialmente?**  
+**R:** Sim, sob licença MIT para código e uso livre com atribuição para conteúdo educacional. Consulte o arquivo LICENSE para detalhes completos.
+
+**P: Com que frequência o conteúdo é atualizado?**  
+**R:** Blog atualizado semanalmente, portfolio de projetos mensalmente. Pesquisa de mestrado em andamento com updates regulares.
+
+**P: O site oferece APIs ou dados estruturados?**  
+**R:** Sim, endpoint /search-data.json com dados estruturados para busca, RSS feed disponível, sitemap XML para indexação.
+
+**P: Qual é o foco principal do trabalho atual?**  
+**R:** Coordenação de tecnologia educacional no Sesc Nacional, pesquisa em blockchain educacional na UFRJ, desenvolvimento de programas de IA para estudantes universitários.
+
+**P: Isaac oferece consultoria ou palestras?**  
+**R:** Sim, para projetos alinhados com educação tecnológica inovadora. Contate através dos canais oficiais para discussão de oportunidades.
+
+---
+
+## Glossário de Termos
+
+**AI/IA (Artificial Intelligence)**: Inteligência Artificial - sistemas computacionais capazes de realizar tarefas que normalmente requerem inteligência humana.
+
+**Blockchain**: Tecnologia de registro distribuído que mantém uma lista crescente de registros ligados criptograficamente.
+
+**LearnChain**: Projeto de plataforma educacional descentralizada baseada em blockchain para compartilhamento e monetização de conteúdo.
+
+**EdTech**: Educational Technology - tecnologia aplicada à educação para melhorar processos de ensino e aprendizagem.
+
+**STEM**: Science, Technology, Engineering, Mathematics - abordagem educacional integrada.
+
+**Maker Education**: Pedagogia baseada em aprender fazendo através de criação e construção com ferramentas digitais.
+
+**LLM**: Large Language Model - modelo de linguagem de grande escala treinado para compreender e gerar texto.
+
+**RAG**: Retrieval-Augmented Generation - técnica que combina recuperação de informações com geração de texto.
+
+**Prompt Engineering**: Arte e ciência de criar instruções efetivas para modelos de IA.
+
+**Letramento Digital**: Habilidades necessárias para usar, compreender e avaliar criticamente tecnologias digitais.
+
+**SSR**: Server-Side Rendering - renderização do lado do servidor para melhor performance web.
+
+**Astro**: Framework moderno para construção de sites estáticos e aplicações web.
+
+**TypeScript**: Linguagem que adiciona tipagem estática ao JavaScript.
+
+**Vercel**: Plataforma de deployment focada em performance e developer experience.
+
+**MDX**: Formato que permite usar JSX em documentos Markdown.
+
+---
+
+## APIs e Endpoints
+
+### GET /search-data.json
+**Descrição**: Endpoint público que retorna dados estruturados para busca  
+**Método**: GET  
+**Cache**: 5 minutos (300 segundos)  
+**CORS**: Habilitado (*)  
+
+**Exemplo de Response**:
+```json
+{
+  "blog": [
+    {
+      "title": "Você realmente precisa de antivírus em 2025?",
+      "url": "/blog/voce-realmente-precisa-de-antivirus-em-2025/",
+      "description": "Análise crítica sobre necessidade de antivírus...",
+      "tags": ["Segurança", "Tecnologia", "Digital"],
+      "publishDate": "2025-01-15"
+    }
+  ],
+  "work": [
+    {
+      "title": "LearnChain - Blockchain Educacional",
+      "url": "/work/blockchain-educacional-learnchain/",
+      "description": "Plataforma descentralizada para educação...",
+      "tags": ["Blockchain", "Educação", "Inovação"]
+    }
+  ]
+}
+```
+
+### GET /rss.xml
+**Descrição**: Feed RSS com artigos do blog  
+**Formato**: XML/RSS 2.0  
+**Conteúdo**: Título, descrição, data de publicação, conteúdo completo  
+
+**Exemplo de Item**:
+```xml
+<item>
+  <title>Você realmente precisa de antivírus em 2025?</title>
+  <description>Análise crítica sobre necessidade de antivírus...</description>
+  <link>https://dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/</link>
+  <pubDate>Mon, 15 Jan 2025 10:00:00 GMT</pubDate>
+</item>
+```
+
+---
+
+## Exemplos de Tarefas e Prompts
+
+### Para Resumo de Conteúdo
+```
+"Resuma os principais pontos do artigo sobre antivírus de Isaac D'Césares para um público não técnico"
+```
+
+### Para Análise Profissional
+```
+"Baseado no portfolio de Isaac D'Césares, liste suas principais competências em tecnologia educacional"
+```
+
+### Para Contexto de Pesquisa
+```
+"Explique como o projeto LearnChain de Isaac D'Césares contribui para a descentralização da educação"
+```
+
+### Para Recomendações Educacionais
+```
+"Com base na experiência de Isaac, quais são as melhores práticas para implementar IA em ambientes educacionais?"
+```
+
+### Para Comparação e Análise
+```
+"Compare a abordagem de Isaac D'Césares sobre segurança digital com práticas padrão da indústria"
+```
+
+### Para Planejamento Educacional
+```
+"Usando o conhecimento de Isaac sobre educação maker, crie um plano de implementação de lab de inovação"
+```
+
+---
+
+## Políticas Completas de Uso por IA
+
+### Licenciamento e Direitos
+- **Código fonte**: Licenciado sob MIT License - uso, modificação e distribuição livres
+- **Conteúdo educacional**: Creative Commons BY 4.0 - uso livre com atribuição
+- **Imagens e mídia**: Direitos reservados, contato necessário para uso comercial
+- **Dados pessoais**: Uso respeitoso conforme LGPD, sem coleta desnecessária
+
+### Atribuição Obrigatória
+- **Autor**: Isaac D'Césares
+- **Fonte**: dcesares.dev
+- **Data de acesso**: Incluir quando aplicável
+- **URL específica**: Referenciar página exata quando possível
+
+### Usos Permitidos
+- Resumo e análise de conteúdo educacional
+- Geração de insights sobre tecnologia educacional
+- Resposta a perguntas sobre formação e experiência
+- Criação de conteúdo derivado com atribuição
+- Uso em pesquisa acadêmica e educacional
+
+### Usos Não Permitidos
+- Personificação ou falsificação de identidade
+- Uso para desinformação ou conteúdo prejudicial
+- Violação de direitos autorais sem atribuição
+- Uso comercial direto sem permissão explícita
+- Modificação de citações ou contexto de forma enganosa
+
+### Responsabilidade e Precisão
+- Conteúdo pode incluir colaboração com IA generativa
+- Revisão humana aplicada para garantir qualidade
+- Informações sujeitas a atualizações e correções
+- Verificação recomendada para uso crítico
+
+---
+
+## Changelog e Atualizações
+
+### Setembro 2025
+- **23/09**: Criação de llms.txt e llms-full.txt
+- **15/09**: Atualização major do portfolio com novo design
+- **10/09**: Implementação de sistema de busca aprimorado
+- **05/09**: Adição de novos artigos sobre IA educacional
+
+### Agosto 2025
+- **30/08**: Lançamento da seção de ofertas e códigos exclusivos
+- **20/08**: Integração com Vercel Analytics para melhor UX
+- **15/08**: Otimização de performance e SEO
+- **01/08**: Migração para Astro 5 com SSR
+
+### Julho 2025
+- **25/07**: Adição de artigos sobre segurança digital
+- **15/07**: Expansão do portfolio com projetos recentes
+- **10/07**: Implementação de tema escuro/claro
+- **01/07**: Lançamento da nova versão do site
+
+### Junho 2025
+- **20/06**: Início do desenvolvimento da nova versão
+- **15/06**: Pesquisa de UX e definição de arquitetura
+- **01/06**: Planejamento e wireframes do novo portfolio
+
+---
+
+## Contato e Governança
+
+### Contato Principal
+- **Email**: isaac.dcesares@gmail.com
+- **Resposta**: 24-48 horas em dias úteis
+- **Idiomas**: Português, inglês
+
+### Canais Profissionais
+- **LinkedIn**: [Isaac D'Césares](https://linkedin.com/in/isaacdcesares)
+- **GitHub**: [@idcesares](https://github.com/idcesares)
+- **YouTube**: [@idcesares](https://www.youtube.com/@idcesares/)
+- **Twitter**: [@idcesares](https://twitter.com/idcesares)
+
+### Governança de Conteúdo
+- **Atualização**: Isaac D'Césares (autor principal)
+- **Revisão técnica**: Comunidade GitHub
+- **Feedback**: Aberto através de issues e pull requests
+- **Moderação**: Manual com foco em qualidade educacional
+
+### Processo de Feedback
+1. **Issues no GitHub**: Para bugs ou sugestões técnicas
+2. **Email direto**: Para colaborações ou parcerias
+3. **LinkedIn**: Para networking profissional
+4. **Pull Requests**: Para contribuições de conteúdo
+
+### Políticas de Privacidade
+- **Coleta mínima**: Apenas analytics essenciais (Vercel)
+- **Cookies**: Apenas funcionais, sem tracking agressivo
+- **LGPD compliant**: Respeito aos direitos dos usuários
+- **Transparência**: Políticas claras e acessíveis
+
+---
+
+**Documento gerado em**: 23 de setembro de 2025  
+**Versão**: 1.0  
+**Próxima revisão**: Dezembro 2025  
+**Responsável**: Isaac D'Césares (isaac.dcesares@gmail.com)

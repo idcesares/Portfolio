@@ -1,4 +1,68 @@
-User-agent: *
-Allow: /
+# llms.txt — Isaac D'Césares Portfolio
 
-Sitemap: https://dcesares.dev/sitemap-0.xml
+**Base URL:** https://dcesares.dev  
+**Idiomas:** Português (pt-BR), termos técnicos em inglês  
+**Descrição:** Portfólio profissional de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Foco em pesquisa, desenvolvimento e aplicações de IA na educação.
+
+## Navegação Essencial
+
+| Seção | URL | Descrição |
+|-------|-----|-----------|
+| Início | / | Visão geral - apresentação profissional e destaques |
+| Trabalhos | /work/ | Portfolio de projetos em tecnologia educacional |
+| Blog | /blog/ | Artigos sobre IA, educação e tecnologia |
+| Sobre | /about/ | Trajetória profissional e formação acadêmica |
+| Ofertas | /deals/ | Links e códigos exclusivos para ferramentas |
+
+## Conteúdos Canônicos
+
+- https://dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/ - Análise de segurança digital
+- https://dcesares.dev/work/ - Projetos em blockchain educacional (LearnChain)
+- https://dcesares.dev/about/ - Perfil profissional completo
+- https://dcesares.dev/blog/ - Artigos sobre IA aplicada à educação
+- https://dcesares.dev/search-data.json - Dados estruturados para busca
+
+## O que LLMs podem fazer aqui
+
+- Resumir artigos sobre tecnologia educacional e IA
+- Responder perguntas sobre projetos de pesquisa em blockchain e educação
+- Fornecer informações sobre formação e experiência profissional
+- Explicar conceitos de tecnologia educacional e inovação
+- Sugerir recursos e ferramentas baseados no conteúdo do portfolio
+
+## Políticas para uso por LLMs (resumo)
+
+- **Licença**: Código sob MIT License, conteúdo educacional de uso livre com atribuição
+- **Atribuição**: Isaac D'Césares, dcesares.dev
+- **Uso comercial**: Permitido com atribuição adequada
+- **Modificações**: Encorajadas para fins educacionais
+- **Responsabilidade**: Conteúdo colaborativo com IA, revisão humana aplicada
+- **Política completa**: Consulte LICENSE no repositório GitHub
+
+## Dados dinâmicos
+
+- **Frequência de atualização**: Semanal (blog), mensal (projetos)
+- **Última atualização**: Setembro 2025
+- **Changelog**: Disponível no repositório GitHub
+- **Conteúdo em desenvolvimento**: Pesquisa de mestrado em andamento
+
+## Metadados
+
+- **Sitemap**: https://dcesares.dev/sitemap-0.xml
+- **RSS**: https://dcesares.dev/rss.xml
+- **Contato principal**: isaac.dcesares@gmail.com
+- **GitHub**: https://github.com/idcesares
+- **LinkedIn**: https://linkedin.com/in/isaacdcesares
+
+## Como citar
+
+D'Césares, Isaac. *[Título do conteúdo]*. Isaac D'Césares Portfolio, [data de acesso]. Disponível em: https://dcesares.dev/[url-específica]
+
+## Exemplos de prompts sugeridos
+
+- "Explique os principais projetos de Isaac D'Césares em tecnologia educacional"
+- "Resuma a abordagem de Isaac sobre IA na educação para gestores escolares"
+- "Quais são as certificações e especializações de Isaac em inovação educacional?"
+- "Descreva o projeto LearnChain e suas aplicações em blockchain educacional"
+
+_Gerado em: 23 de setembro de 2025_
