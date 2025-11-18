@@ -6,14 +6,12 @@ interface Props {
 	onSortChange?: (sort: string) => void;
 	onSearchChange?: (search: string) => void;
 	onReset?: () => void;
-	activeTag?: string;
 	activeSortOption?: string;
 }
 
 const { 
 	variant = 'blog', 
 	tags, 
-	activeTag = '', 
 	activeSortOption = 'newest' 
 } = Astro.props;
 
@@ -358,7 +356,6 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 <script>
 	class FilterManager {
 		private currentTag: string = '';
-		private currentSort: string = 'newest';
 		private currentSearch: string = '';
 		private allItems: NodeListOf<Element>;
 		private variant: string;
@@ -446,7 +443,6 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 		}
 
 		sortItems(sortType: string) {
-			this.currentSort = sortType;
 			const container = document.querySelector('.grid');
 			if (!container) return;
 
@@ -526,12 +522,9 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 			}
 		}
 
-		resetFilters() {
-			this.currentTag = '';
-			this.currentSort = 'newest';
-			this.currentSearch = '';
-
-			// Reset UI
+	resetFilters() {
+		this.currentTag = '';
+		this.currentSearch = '';			// Reset UI
 			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
 			if (categorySelect) {
 				categorySelect.value = '';

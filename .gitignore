@@ -25,3 +25,8 @@ pnpm-debug.log*
 
 # vercel build output
 .vercel
+
+# Docker
+.docker/
+docker-compose.override.yml
+*.log

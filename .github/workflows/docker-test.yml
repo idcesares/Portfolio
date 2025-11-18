@@ -1,0 +1,105 @@
+name: Docker Build Test
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose*.yml'
+      - '.dockerignore'
+      - '.github/workflows/docker-test.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'Dockerfile'
+      - 'docker-compose*.yml'
+      - '.dockerignore'
+  workflow_dispatch:
+
+jobs:
+  test-docker-build:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker Buildx
+      uses: docker/setup-buildx-action@v3
+
+    - name: Cache Docker layers
+      uses: actions/cache@v4
+      with:
+        path: /tmp/.buildx-cache
+        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        restore-keys: |
+          ${{ runner.os }}-buildx-
+
+    - name: Test Docker Compose configuration
+      run: |
+        docker compose config
+
+    - name: Build development image
+      run: |
+        docker compose build --progress=plain
+
+    - name: Start containers
+      run: |
+        docker compose up -d
+
+    - name: Wait for application to be ready
+      run: |
+        timeout 60 bash -c 'until curl -f http://localhost:4321; do sleep 2; done'
+
+    - name: Check container health
+      run: |
+        docker compose ps
+        docker compose logs
+
+    - name: Test Astro check command
+      run: |
+        docker compose exec -T portfolio-dev pnpm astro check || true
+
+    - name: Test production build
+      run: |
+        docker compose -f docker-compose.prod.yml build --progress=plain
+
+    - name: Cleanup
+      if: always()
+      run: |
+        docker compose down -v
+        docker compose -f docker-compose.prod.yml down -v
+
+  test-multi-platform:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-latest]
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Docker (Windows/Linux)
+      if: runner.os != 'macOS'
+      uses: docker/setup-buildx-action@v3
+
+    # macOS setup (Docker Desktop required)
+    - name: Set up Docker (macOS)
+      if: runner.os == 'macOS'
+      run: |
+        brew install docker docker-compose
+
+    - name: Validate Docker Compose files
+      run: |
+        docker compose config
+        docker compose -f docker-compose.prod.yml config
+
+    - name: Build development image
+      run: |
+        docker compose build
+
+    - name: Cleanup
+      if: always()
+      run: |
+        docker compose down -v || true

@@ -138,7 +138,6 @@ const { currentView = 'default' } = Astro.props;
 
 <script>
 	class ViewToggle {
-		private currentView: string = 'default';
 		private gridContainer: Element | null = null;
 		private items: NodeListOf<Element> | null = null;
 
@@ -170,8 +169,6 @@ const { currentView = 'default' } = Astro.props;
 		}
 
 		changeView(view: string) {
-			this.currentView = view;
-			
 			// Update active button
 			document.querySelectorAll('.view-button').forEach(btn => {
 				btn.classList.remove('active');

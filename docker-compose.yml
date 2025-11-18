@@ -1,0 +1,46 @@
+version: '3.8'
+
+services:
+  # Development service - hot reload enabled
+  portfolio-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: development
+    container_name: dcesares-portfolio-dev
+    ports:
+      - "4321:4321"
+    volumes:
+      # Mount source code for hot reload
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./astro.config.mjs:/app/astro.config.mjs
+      - ./tailwind.config.cjs:/app/tailwind.config.cjs
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./vercel.json:/app/vercel.json
+      # Mount content collections
+      - ./src/content:/app/src/content
+      - ./src/content.config.ts:/app/src/content.config.ts
+      # Prevent node_modules from being mounted (use container's version)
+      - /app/node_modules
+      - /app/.astro
+    environment:
+      - NODE_ENV=development
+      - HOST=0.0.0.0
+      - PORT=4321
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4321"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  portfolio-network:
+    driver: bridge
+
+volumes:
+  node_modules:

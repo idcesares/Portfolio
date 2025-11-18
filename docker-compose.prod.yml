@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  # Production preview service - tests SSR build
+  portfolio-preview:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: production
+    container_name: dcesares-portfolio-preview
+    ports:
+      - "4321:4321"
+    environment:
+      - NODE_ENV=production
+      - HOST=0.0.0.0
+      - PORT=4321
+    restart: unless-stopped
+    networks:
+      - portfolio-network
+    healthcheck:
+      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4321"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+networks:
+  portfolio-network:
+    driver: bridge

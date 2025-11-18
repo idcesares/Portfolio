@@ -30,6 +30,30 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 
 ## Ambiente e Pré-requisitos
 
+### Opção 1: Docker (Recomendado - Machine Agnostic)
+
+**Versões**:
+- Docker Desktop (qualquer versão recente)
+- Docker Compose (incluído no Docker Desktop)
+
+**Setup Rápido**:
+```bash
+# Windows PowerShell
+.\docker.ps1 up
+
+# Linux/macOS ou terminal padrão
+docker-compose up -d
+```
+
+**Documentação**:
+- Ver [docker/QUICKSTART.md](./docker/QUICKSTART.md) para início rápido
+- Ver [docker/GUIDE.md](./docker/GUIDE.md) para guia completo
+- Ver [docker/TROUBLESHOOTING.md](./docker/TROUBLESHOOTING.md) para problemas
+
+**Dev Container**: VSCode Dev Containers configurado (`.devcontainer/devcontainer.json`)
+
+### Opção 2: Instalação Local
+
 **Versões**:
 - Node.js >= 18.x
 - pnpm >= 8.x (package manager obrigatório)
@@ -39,9 +63,37 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 - Não há secrets críticos (analytics são públicos)
 - Vercel injeta automaticamente `VERCEL_URL` em production
 
-**Dev Container**: Não configurado (desenvolvimento local padrão)
-
 ## Comandos Essenciais
+
+### Com Docker
+
+**Comandos PowerShell (Windows)**:
+```powershell
+.\docker.ps1 up       # Iniciar desenvolvimento
+.\docker.ps1 down     # Parar containers
+.\docker.ps1 logs     # Ver logs
+.\docker.ps1 check    # Validar código
+.\docker.ps1 shell    # Acessar shell do container
+```
+
+**Comandos Make (Linux/macOS/Windows com make)**:
+```bash
+make up       # Iniciar desenvolvimento
+make down     # Parar containers
+make logs     # Ver logs
+make check    # Validar código
+make shell    # Acessar shell do container
+```
+
+**Docker Compose direto**:
+```bash
+docker-compose up -d          # Iniciar
+docker-compose down           # Parar
+docker-compose logs -f        # Ver logs
+docker-compose exec portfolio-dev sh  # Shell
+```
+
+### Instalação Local (sem Docker)
 
 **Instalação**:
 ```bash

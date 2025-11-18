@@ -79,12 +79,29 @@ Com uma sólida formação acadêmica e profissional, incluindo MBA em Inovaçã
 
 ## Desenvolvimento e Configuração Local
 
-### Pré-requisitos
+### 🐳 Opção 1: Docker (Recomendado - Machine Agnostic)
+
+**Início Rápido com Docker**:
+```bash
+# Windows PowerShell
+.\docker.ps1 up
+
+# Linux/macOS ou Terminal padrão
+docker-compose up -d
+```
+
+Acesse: **http://localhost:4321**
+
+**Documentação Completa**: Ver **[DOCKER.md](./DOCKER.md)** ou pasta **[`docker/`](./docker/)**
+
+### 💻 Opção 2: Instalação Local
+
+**Pré-requisitos**:
 - **Node.js** (versão 18 ou superior)
 - **pnpm** (preferível) ou npm como gerenciador de pacotes
 - **Git** para controle de versão
 
-### Passos para Instalação
+**Passos para Instalação**:
 
 1. **Clone o repositório**
    ```bash

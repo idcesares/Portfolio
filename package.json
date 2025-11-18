@@ -10,9 +10,9 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/mdx": "^4.3.8",
+    "@astrojs/mdx": "^4.3.10",
     "@astrojs/partytown": "^2.1.4",
-    "@astrojs/react": "^4.4.0",
+    "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.13",
     "@astrojs/sitemap": "^3.6.0",
     "@astrojs/vercel": "^8.2.11",
@@ -21,12 +21,12 @@
     "@heroui/react": "^2.8.5",
     "@lucide/astro": "^0.525.0",
     "@rehype-pretty/transformers": "^0.13.2",
-    "@tailwindcss/vite": "^4.1.16",
-    "@types/react": "^19.2.2",
-    "@types/react-dom": "^19.2.2",
+    "@tailwindcss/vite": "^4.1.17",
+    "@types/react": "^19.2.4",
+    "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
-    "astro": "^5.15.1",
+    "astro": "^5.15.5",
     "astro-embed": "^0.9.1",
     "astro-seo": "^0.8.4",
     "framer-motion": "^12.23.24",
@@ -36,8 +36,8 @@
     "react-dom": "^19.2.0",
     "rehype-pretty-code": "^0.14.1",
     "sanitize-html": "^2.17.0",
-    "shiki": "^3.13.0",
-    "tailwindcss": "^4.1.16"
+    "shiki": "^3.15.0",
+    "tailwindcss": "^4.1.17"
   },
   "pnpm": {
     "ignoredBuiltDependencies": [
