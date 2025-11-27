@@ -2,7 +2,7 @@
 # Supports both development and production builds
 
 # Base stage - shared dependencies
-FROM node:18-alpine AS base
+FROM node:24-alpine AS base
 
 # Install pnpm globally
 RUN corepack enable && corepack prepare pnpm@latest --activate
@@ -41,7 +41,7 @@ COPY . .
 RUN pnpm build
 
 # Production stage - lightweight runtime
-FROM node:18-alpine AS production
+FROM node:24-alpine AS production
 
 # Install pnpm
 RUN corepack enable && corepack prepare pnpm@latest --activate
