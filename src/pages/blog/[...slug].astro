@@ -8,6 +8,7 @@ import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
 import { render } from 'astro:content';
+import { AUTHOR_PROFILE_PATH, getBlogPostingStructuredData } from '../../utils/seo';
 
 interface Props {
 	entry: CollectionEntry<'blog'>;
@@ -25,9 +26,26 @@ export const prerender = true;
 
 const { entry } = Astro.props;
 const { Content } = await render(entry);
+
+const site = Astro.site ?? new URL('https://dcesares.dev');
+const structuredData = getBlogPostingStructuredData(entry, site);
+const article = {
+        publishedTime: entry.data.publishDate.toISOString(),
+        authors: [new URL(AUTHOR_PROFILE_PATH, site).toString()],
+        section: 'Blog',
+        tags: entry.data.tags,
+};
 ---
 
-<BaseLayout title={entry.data.title} description={entry.data.description}, image={entry.data.img}>
+<BaseLayout
+        title={entry.data.title}
+        description={entry.data.description}
+        image={entry.data.img}
+        imageAlt={entry.data.img_alt}
+        ogType="article"
+        article={article}
+        structuredData={structuredData}
+>
 	<div class="stack gap-20">
 		<div class="stack gap-15">
 			<header>

@@ -2,9 +2,17 @@
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import Hero from '../components/Hero.astro';
+import { getSiteStructuredData } from '../utils/seo';
+
+const site = Astro.site ?? new URL('https://dcesares.dev');
+const structuredData = getSiteStructuredData(site);
 ---
 
-<BaseLayout title="Sobre | Isaac D'Césares" description="Sobre Isaac D'Césares - Coordenador de Tecnologia Educacional e Pesquisador">
+<BaseLayout
+    title="Sobre | Isaac D'Césares"
+    description="Sobre Isaac D'Césares - Coordenador de Tecnologia Educacional e Pesquisador"
+    structuredData={structuredData}
+>
     <div class="stack gap-20">
         <main class="wrapper about">
             <Hero

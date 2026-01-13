@@ -19,4 +19,4 @@ Allow: /
 User-agent: Baiduspider
 Allow: /
 
-Sitemap: https://dcesares.dev/sitemap-0.xml
+Sitemap: https://dcesares.dev/sitemap-index.xml

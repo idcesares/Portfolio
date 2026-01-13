@@ -1,50 +1,21 @@
 # GitHub Copilot Instructions for Portfolio Website
 
-## Architecture Overview
+## Contexto rápido
 
-This is a **Portuguese educational technology portfolio** built with Astro 5 in SSR mode, deployed on Vercel. The site combines content collections for blog/work with interactive search and filtering.
+- Stack: Astro 5 SSR (Vercel adapter), deployed on Vercel. Tailwind v4 + HeroUI + custom CSS vars (ex.: `var(--gray-0)`, `var(--shadow-md)`, `var(--gradient-accent-orange)`). Site em português (`lang="pt-br"`), datas em `pt-BR`.
+- Conteúdo: Collections `blog/` e `work/` com schema idêntico (title, description, publishDate, tags[], img, img_alt?) definido em `src/content.config.ts`. Use `getCollection('blog' | 'work')` tipado como `CollectionEntry<'blog' | 'work'>`.
+- Variantes: Componentes como `PostPreviewEnhanced.astro` e `PortfolioPreviewEnhanced.astro` aceitam `variant?: 'default' | 'compact'` via `class:list={['base-class', variant]}`.
+- Busca/filters: Endpoint `/search-data.json` em `src/pages/search-data.json.ts` gera dados para Fuse.js; headers/CORS e cache 5 min também definidos em `vercel.json`. `FilterBar.astro` usa `data-filterable-item` + filtros por tags, termo e sort (newest/oldest/alphabetical). `public/search-fallback.js` é cacheado por 24h.
+- Páginas/rotas: Páginas em kebab-case. Rotas dinâmicas `[...slug].astro` precisam de `getStaticPaths()` e `prerender = true`. Slugs sempre lowercase-hyphenated.
 
-### Key Technical Patterns
+## Padrões e guardrails
 
-**Content System**: Two collections (`blog/`, `work/`) with identical schemas (title, description, publishDate, tags, img, img_alt) defined in `src/content.config.ts`. Use `getCollection('blog')` and type as `CollectionEntry<'blog'>`.
+- TypeScript estrito; sempre declarar `interface Props { }` em componentes. Manter naming PascalCase para componentes. Evitar adicionar deps novas; preferir utilitários existentes.
+- Frontmatter obrigatório: `title`, `description`, `publishDate` (coerção para Date), `tags[]`, `img`, `img_alt?`. Imagens em `public/assets/blog_imgs/` com caminhos absolutos (`/assets/...`); usar `loading="lazy"` e `decoding="async"` (exceto heróis críticos).
+- Styling: Priorizar utilities Tailwind e classes utilitárias (`stack` para colunas com gap). Não quebrar identidade visual; manter gradientes existentes.
+- Performance/SEO: Vercel Analytics + Speed Insights ativos. Manter RSS em `/rss.xml` e sitemap automático. Partytown para GTM.
 
-**Component Variants**: Components like `PostPreviewEnhanced.astro` and `PortfolioPreviewEnhanced.astro` support `variant?: 'default' | 'compact'` props for different display modes. Use `class:list={['base-class', variant]}` pattern.
+## Fluxo de desenvolvimento
 
-**Search Architecture**: `/search-data.json` endpoint (via `src/pages/search-data.json.ts`) generates searchable data consumed by client-side Fuse.js. The endpoint has custom CORS headers and 5-minute caching defined in `vercel.json`.
-
-## Critical Conventions
-
-**File Naming**: 
-- Components: PascalCase (e.g., `PostPreview.astro`)
-- Pages: kebab-case (e.g., `about.astro`) 
-- Content slugs: lowercase-hyphenated
-- Dynamic routes: `[...slug].astro` with `getStaticPaths()` and `prerender = true`
-
-**Styling**: Tailwind v4 + HeroUI components + CSS custom properties in global.css. Use `var(--gray-0)`, `var(--shadow-md)`, `var(--gradient-accent-orange)` etc. The `stack` utility class creates vertical layouts with consistent gaps.
-
-**TypeScript Patterns**: Strict config with explicit interfaces. Components use `interface Props { }` pattern. Content collections are fully typed via Zod schemas.
-
-## Content Management
-
-**Frontmatter**: All content requires title, description, publishDate, tags[], img, img_alt?. Date formats auto-coerce to Date objects.
-
-**Images**: Store in `public/assets/blog_imgs/` and reference as `/assets/blog_imgs/filename.ext`. Use `loading="lazy" decoding="async"` for performance.
-
-**MDX Support**: Available via `@astrojs/mdx` with rehype-pretty-code for syntax highlighting. Code blocks use Dracula theme with copy buttons on hover.
-
-## Development Workflow
-
-**Commands**:
-- `pnpm dev` - Development server with hot reload
-- `pnpm build` - Vercel SSR build to `dist/`
-- `pnpm astro check` - TypeScript + content validation
-
-**Performance**: Vercel Analytics enabled, Partytown for GTM, `public/search-fallback.js` cached 24h. Images auto-optimized via Astro's image service.
-
-**Filtering UI**: `FilterBar.astro` with `data-filterable-item` attributes on list items. Client-side JS filters by tags, search terms, and sort options (newest/oldest/alphabetical).
-
-## Integration Points
-
-**External Services**: Google Analytics (via Partytown), Vercel Analytics/Speed Insights, RSS feed at `/rss.xml`, sitemap auto-generated.
-
-**Brazilian Localization**: `lang="pt-br"`, date formatting uses `pt-BR` locale, content is primarily Portuguese with English tech terms.
+- Comandos principais: `pnpm dev`, `pnpm build`, `pnpm astro check`. Usar pnpm sempre. Build local no Windows pode falhar em symlink do `.vercel/output`; ok usar Docker/WSL.
+- Antes de PR: rodar `pnpm astro check`; builds devem passar. Evitar assets > 5MB; sem segredos no repositório.

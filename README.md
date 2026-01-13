@@ -135,6 +135,17 @@ pnpm preview    # Preview do build de produção
 pnpm astro      # Executa comandos CLI do Astro
 ```
 
+### Observação (Windows + Vercel Adapter)
+Em Windows, o build com `@astrojs/vercel` pode falhar com `EPERM: operation not permitted, symlink`
+ao gerar `.vercel/output`. Isso acontece porque a criação de symlinks exige permissões elevadas
+ou o **Developer Mode** habilitado. Soluções comuns:
+- habilitar Developer Mode no Windows;
+- rodar o terminal/VS Code como Administrador; ou
+- executar o build em WSL/Docker/Linux.
+
+Se você usa o deploy automático da Vercel via Git, o build em produção ocorre em Linux e esse
+erro local pode ser ignorado.
+
 ### Estrutura do Projeto
 
 ```

@@ -12,7 +12,8 @@
         "dbaeumer.vscode-eslint",
         "esbenp.prettier-vscode",
         "unifiedjs.vscode-mdx",
-        "GitHub.copilot"
+        "GitHub.copilot",
+        "GitHub.copilot-chat"
       ],
       "settings": {
         "terminal.integrated.defaultProfile.linux": "bash",
@@ -38,6 +39,8 @@
   },
   
   "postCreateCommand": "pnpm install",
+  "postAttachCommand": "pnpm dev --host 0.0.0.0",
   
-  "remoteUser": "node"
+  "remoteUser": "node",
+  "updateRemoteUserUID": true
 }

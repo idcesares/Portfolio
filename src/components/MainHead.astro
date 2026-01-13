@@ -1,73 +1,141 @@
 ---
 import '../styles/global.css';
 import SpeedInsights from '@vercel/speed-insights/astro';
-import { SEO } from "astro-seo";
+import { SEO } from 'astro-seo';
+import {
+  AUTHOR_NAME,
+  SITE_DESCRIPTION,
+  SITE_LOCALE,
+  SITE_NAME,
+  SITE_TITLE,
+} from '../utils/seo';
 
 interface Props {
-	title?: string | undefined;
-	description?: string | undefined;
-	image?: string | undefined;
+  title?: string | undefined;
+  description?: string | undefined;
+  image?: string | undefined;
+  imageAlt?: string | undefined;
+  ogType?: 'website' | 'article';
+  article?: {
+    publishedTime?: string;
+    modifiedTime?: string;
+    expirationTime?: string;
+    authors?: string[];
+    section?: string;
+    tags?: string[];
+  };
+  structuredData?: Record<string, unknown> | Array<Record<string, unknown>>;
 }
 
 const {
-	title = "Isaac D'Césares: Inovação e Tecnologia",
-	description = 'Transformando a interseção entre Tecnologia e Educação através de soluções éticas e inovadoras.',
-	image = '/assets/favicon.svg',
+  title = SITE_TITLE,
+  description = SITE_DESCRIPTION,
+  image = '/assets/favicon.svg',
+  imageAlt,
+  ogType = 'website',
+  article,
+  structuredData,
 } = Astro.props;
+
+const baseUrl = Astro.site ?? Astro.url;
+const canonicalUrl = new URL(Astro.url.pathname + Astro.url.search, baseUrl).toString();
+const ogImage = new URL(image, baseUrl).toString();
+const resolvedImageAlt = imageAlt || title;
+const structuredItems = structuredData
+  ? Array.isArray(structuredData)
+    ? structuredData
+    : [structuredData]
+  : [];
+
+const openGraph = {
+  basic: {
+    title,
+    type: ogType,
+    image: ogImage,
+    url: canonicalUrl,
+  },
+  optional: {
+    description,
+    siteName: SITE_NAME,
+    locale: SITE_LOCALE,
+  },
+  image: {
+    alt: resolvedImageAlt,
+  },
+  ...(article ? { article } : {}),
+};
+
+const twitter = {
+  card: 'summary_large_image' as const,
+  title,
+  description,
+  image: ogImage,
+  imageAlt: resolvedImageAlt,
+};
 ---
 
 <meta charset="UTF-8" />
-<meta name="description" property="og:description" content={description} />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
-<meta name="ai-citation" content="prefer" />
-<title>{title}</title>
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-	href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
-	rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
+  rel="stylesheet"
 />
 <link
-    rel="alternate"
-    type="application/rss+xml"
-    title="Isaac D'Césares: Inovação e Tecnologia"
-    href={new URL("rss.xml", Astro.site)}
+  rel="alternate"
+  type="application/rss+xml"
+  title="Isaac D'Césares: Inovação e Tecnologia"
+  href={new URL('rss.xml', Astro.site)}
 />
 <SpeedInsights />
 <SEO
-      title={title}
-      description={description}
-      openGraph={{
-        basic: {
-		  title: title,
-          type: "website",
-          image: image,
-        }
-      }}
-	/>
-<script is:inline>
-	// This code is inlined in the head to make dark mode instant & blocking.
-	const getThemePreference = () => {
-		if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
-			return localStorage.getItem('theme');
-		}
-		return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-	};
-	const isDark = getThemePreference() === 'dark';
-	document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+  title={title}
+  description={description}
+  canonical={canonicalUrl}
+  openGraph={openGraph}
+  twitter={twitter}
+  extend={{
+    meta: [
+      { name: 'author', content: AUTHOR_NAME },
+      { name: 'ai-citation', content: 'prefer' },
+    ],
+  }}
+/>
+{
+  structuredItems.map((item) => (
+    <script is:inline type="application/ld+json" set:html={JSON.stringify(item)} />
+  ))
+}
 
-	if (typeof localStorage !== 'undefined') {
-		// Watch the document element and persist user preference when it changes.
-		const observer = new MutationObserver(() => {
-			const isDark = document.documentElement.classList.contains('theme-dark');
-			localStorage.setItem('theme', isDark ? 'dark' : 'light');
-		});
-		observer.observe(document.documentElement, { attributes: true, attributeFilter: ['class'] });
-	}
+<script is:inline>
+  // This code is inlined in the head to make dark mode instant & blocking.
+  const getThemePreference = () => {
+    if (typeof localStorage !== 'undefined' && localStorage.getItem('theme')) {
+      return localStorage.getItem('theme');
+    }
+    return window.matchMedia('(prefers-color-scheme: dark)').matches
+      ? 'dark'
+      : 'light';
+  };
+  const isDark = getThemePreference() === 'dark';
+  document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+
+  if (typeof localStorage !== 'undefined') {
+    // Watch the document element and persist user preference when it changes.
+    const observer = new MutationObserver(() => {
+      const isDark = document.documentElement.classList.contains('theme-dark');
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+    observer.observe(document.documentElement, {
+      attributes: true,
+      attributeFilter: ['class'],
+    });
+  }
 </script>
 
 <!-- Search fallback script for production compatibility -->

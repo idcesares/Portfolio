@@ -12,18 +12,31 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 
 ```
 ├── src/
+│   ├── assets/             # Imagens importadas via Astro (ex: portrait.webp)
 │   ├── components/          # Componentes Astro reutilizáveis (PascalCase)
 │   ├── content/            # Collections (blog/, work/) com schemas Zod
 │   ├── layouts/            # Layouts base (BaseLayout.astro)
 │   ├── pages/              # Rotas e API endpoints (kebab-case)
 │   ├── styles/             # CSS global com custom properties
-│   └── utils/              # Utilitários TypeScript
+│   ├── utils/              # Utilitários TypeScript
+│   ├── content.config.ts   # Schema das collections
+│   └── env.d.ts
 ├── public/
 │   ├── assets/             # Imagens estáticas otimizadas
 │   │   ├── blog_imgs/      # Imagens de posts do blog
 │   │   └── backgrounds/    # Backgrounds responsivos
+│   ├── favicon.svg
+│   ├── llms.txt            # Instruções para LLMs
+│   ├── llms-full.txt       # Instruções completas para LLMs
+│   ├── robots.txt
 │   └── search-fallback.js  # Fallback de busca (cache 24h)
+├── docs/                   # Documentação extra (ex: content-factory/)
+├── docker/                 # Docs e scripts Docker
 ├── astro.config.mjs        # Configuração Astro + integrações
+├── docker-compose.yml      # Compose dev
+├── docker-compose.prod.yml # Compose preview de produção
+├── Dockerfile              # Imagem dev/prod
+├── tailwind.config.cjs     # Tailwind + HeroUI
 ├── vercel.json             # Deploy config + headers CORS
 └── tsconfig.json           # TypeScript strict mode
 ```
@@ -72,6 +85,10 @@ docker-compose up -d
 .\docker.ps1 up       # Iniciar desenvolvimento
 .\docker.ps1 down     # Parar containers
 .\docker.ps1 logs     # Ver logs
+.\docker.ps1 build    # Rebuild da imagem
+.\docker.ps1 restart  # Reiniciar containers
+.\docker.ps1 clean    # Limpar containers/volumes
+.\docker.ps1 prod     # Preview de produção
 .\docker.ps1 check    # Validar código
 .\docker.ps1 shell    # Acessar shell do container
 ```
@@ -81,6 +98,10 @@ docker-compose up -d
 make up       # Iniciar desenvolvimento
 make down     # Parar containers
 make logs     # Ver logs
+make build    # Rebuild da imagem
+make restart  # Reiniciar containers
+make clean    # Limpar containers/volumes
+make prod     # Preview de produção
 make check    # Validar código
 make shell    # Acessar shell do container
 ```
@@ -155,7 +176,7 @@ pnpm astro check && pnpm build
 **Performance Gates**:
 - Vercel Analytics monitora Core Web Vitals
 - Images lazy loading obrigatório
-- Search endpoint cached (5min) via `vercel.json`
+- Search endpoint cached (5min) via `vercel.json` + headers no endpoint
 
 ## Segurança, Dados e Segredos
 
@@ -220,8 +241,8 @@ pnpm preview               # Testar build SSR localmente
 - ✅ **SOLUÇÃO**: Sempre validar com `pnpm astro check` antes do commit
 
 **Caching**:
-- `/search-data.json` cached por 5min (definido em `vercel.json`)
-- Build time cache pode causar stale content - limpar `.astro/` se necessário
+- `/search-data.json` cached por 5min (definido em `vercel.json` e no endpoint; manter em sync)
+- Build time cache pode causar stale content - limpar `.astro/` se necessário   
 
 **Images**:
 - ❌ **ERRO**: Referencias relativas em markdown (ex: `./image.jpg`)
@@ -231,6 +252,11 @@ pnpm preview               # Testar build SSR localmente
 **Dynamic Routes**:
 - Sempre implementar `getStaticPaths()` com `prerender = true`
 - Slugs devem seguir padrão `lowercase-hyphenated`
+
+**Windows + Vercel Adapter**:
+- `pnpm build` pode falhar com `EPERM: operation not permitted, symlink` ao gerar `.vercel/output`
+- Solução: habilitar Developer Mode, rodar terminal como Admin ou usar WSL/Docker/Linux
+- Se o deploy é via Git na Vercel, o build em produção ocorre em Linux e o erro local pode ser ignorado
 
 ## Content Management
 
@@ -242,7 +268,7 @@ description: "Descrição SEO (150-160 chars)"
 publishDate: 2025-01-15
 tags: ["ai", "educacao", "inovacao"]
 img: "/assets/blog_imgs/nome-otimizado.webp"
-img_alt: "Alt text descritivo"
+img_alt: "Alt text descritivo" # opcional, mas recomendado
 ```
 
 **Work Portfolio** (`src/content/work/`):
@@ -259,7 +285,7 @@ img_alt: "Alt text descritivo"
 
 **Core Web Vitals**: Monitorados via Vercel Analytics + Speed Insights.
 
-**Image Optimization**: Astro Image Service otimiza automaticamente. Preferir WebP/AVIF.
+**Image Optimization**: Imagens são servidas de `public/` ou importadas de `src/assets/`; preferir WebP/AVIF e usar `loading="lazy"` + `decoding="async"` (exceto hero).
 
 **Bundle Size**: Tailwind purged automaticamente, componentes tree-shaken.
 
@@ -273,14 +299,14 @@ img_alt: "Alt text descritivo"
 
 **Vercel Integration**:
 - Deploy automático via Git push
-- Edge Functions para SSR
+- Vercel Functions (SSR via adapter)
 - Analytics + Speed Insights habilitados
 - Custom headers para CORS (search endpoint)
 
 **Build Process**:
 1. `pnpm install` (ignoredBuiltDependencies: esbuild)
 2. `pnpm build` (output: server, format: file)
-3. Deploy para Edge Runtime
+3. Deploy para Vercel (SSR)
 
 **Environment**:
 - Production: https://dcesares.dev
@@ -300,4 +326,4 @@ img_alt: "Alt text descritivo"
 - Manter sincronizado com `README.md` 
 - PRs que alteram workflow devem atualizar seções relevantes
 
-_Atualizado em: 23/09/2025 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._
+_Atualizado em: 11/01/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._

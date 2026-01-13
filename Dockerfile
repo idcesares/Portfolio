@@ -2,10 +2,10 @@
 # Supports both development and production builds
 
 # Base stage - shared dependencies
-FROM node:24-alpine AS base
+FROM node:22-alpine AS base
 
-# Install pnpm globally
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm (pinned for reproducibility)
+RUN corepack enable && corepack prepare pnpm@10.20.0 --activate
 
 # Set working directory
 WORKDIR /app
@@ -41,12 +41,14 @@ COPY . .
 RUN pnpm build
 
 # Production stage - lightweight runtime
-FROM node:24-alpine AS production
+FROM node:22-alpine AS production
 
-# Install pnpm
-RUN corepack enable && corepack prepare pnpm@latest --activate
+# Install pnpm (pinned for reproducibility)
+RUN corepack enable && corepack prepare pnpm@10.20.0 --activate
 
 WORKDIR /app
+
+ENV NODE_ENV=production
 
 # Copy package files
 COPY package.json pnpm-lock.yaml ./
@@ -55,8 +57,11 @@ COPY package.json pnpm-lock.yaml ./
 RUN pnpm install --prod --frozen-lockfile
 
 # Copy built application from builder
-COPY --from=builder /app/dist ./dist
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=node:node /app/dist ./dist
+COPY --from=builder --chown=node:node /app/public ./public
+
+# Drop privileges
+USER node
 
 # Expose preview server port
 EXPOSE 4321

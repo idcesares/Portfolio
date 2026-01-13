@@ -18,9 +18,6 @@ services:
       - ./tailwind.config.cjs:/app/tailwind.config.cjs
       - ./tsconfig.json:/app/tsconfig.json
       - ./vercel.json:/app/vercel.json
-      # Mount content collections
-      - ./src/content:/app/src/content
-      - ./src/content.config.ts:/app/src/content.config.ts
       # Prevent node_modules from being mounted (use container's version)
       - /app/node_modules
       - /app/.astro
@@ -32,7 +29,7 @@ services:
     networks:
       - portfolio-network
     healthcheck:
-      test: ["CMD", "wget", "--quiet", "--tries=1", "--spider", "http://localhost:4321"]
+      test: ["CMD", "node", "-e", "fetch('http://localhost:4321').then(r=>process.exit(r.ok?0:1)).catch(()=>process.exit(1))"]
       interval: 30s
       timeout: 10s
       retries: 3
