@@ -1,7 +1,7 @@
 ---
 title: Inovação na Educação - intencionalidade antes da tecnologia
 publishDate: 2025-08-12 19:00:00
-img: /assets/blog_imgs/inovacao-educacao-sesc-sergipe.jpg
+img: /assets/blog_imgs/inovacao-educacao-sesc-sergipe.webp
 img_alt: Apresentação sobre inovação e tecnologia no encontro com educadores do Sesc Sergipe
 description: Reflexão sobre como a verdadeira inovação na educação nasce da intencionalidade pedagógica, colocando a tecnologia como parceira no processo de aprendizagem, a partir das discussões realizadas com educadores do Sesc Sergipe.
 tags:

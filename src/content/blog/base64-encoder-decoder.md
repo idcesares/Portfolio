@@ -1,7 +1,7 @@
 ---
 title: Como criei um Base64 Encoder/Decoder usando o Claude
 publishDate: 2024-10-01 08:00:00
-img: /assets/blog_imgs/base64print.png
+img: /assets/blog_imgs/base64print.webp
 img_alt: Tela do app Base64 Encoder/Decoder
 description: Artigo sobre como criei um Base64 Encoder/Decoder usando o Claude AI.
 tags:

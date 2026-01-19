@@ -1,7 +1,7 @@
 ---
 title: A Pesquisa Definitiva sobre Aprendizagem - Um Mergulho Profundo na Ciência da Aprendizagem Humana
 publishDate: 2025-03-28 00:00:00
-img: /assets/blog_imgs/learning.png
+img: /assets/blog_imgs/learning.webp
 img_alt: Uma representação artística da aprendizagem humana.
 description: A aprendizagem, um aspecto fundamental da experiência humana, abrange uma interação complexa de processos cognitivos, sistemas de memória e mecanismos neurobiológicos. Este relatório aprofunda-se nas bases científicas de como adquirimos, processamos e retemos conhecimento, indo além de noções simplistas para explorar as estratégias baseadas em evidências que podem otimizar a aprendizagem.
 tags:
