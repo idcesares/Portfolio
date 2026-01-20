@@ -22,7 +22,12 @@ const { href } = Astro.props;
 		border-radius: 999rem;
 		overflow: hidden;
 		background: var(--gradient-accent-orange);
+		background-size: 140% 140%;
+		background-position: 0% 50%;
 		box-shadow: var(--shadow-md);
+		border: 1px solid color-mix(in oklab, var(--accent-dark) 45%, transparent);
+		letter-spacing: 0.01em;
+		transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
 		white-space: nowrap;
 	}
 
@@ -44,7 +49,13 @@ const { href } = Astro.props;
 
 	a:focus::after,
 	a:hover::after {
-		background-color: hsla(var(--gray-999-basis), 0.3);
+		background-color: hsla(var(--gray-999-basis), 0.12);
+	}
+
+	a:hover {
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-md);
+		background-position: 60% 40%;
 	}
 
 	@media (min-width: 50em) {

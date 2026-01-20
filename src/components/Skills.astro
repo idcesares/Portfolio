@@ -23,9 +23,9 @@ import Icon from './Icon.astro';
 <style>
 	.box {
 		border: 1px solid var(--gray-800);
-		border-radius: 0.75rem;
+		border-radius: var(--radius-lg);
 		padding: 1.5rem;
-		background-color: var(--gray-999_40);
+		background-color: color-mix(in oklab, var(--gray-999) 88%, transparent);
 		box-shadow: var(--shadow-sm);
 	}
 
@@ -45,7 +45,7 @@ import Icon from './Icon.astro';
 
 	@media (min-width: 50em) {
 		.box {
-			border-radius: 1.5rem;
+			border-radius: var(--radius-xl);
 			padding: 2.5rem;
 		}
 

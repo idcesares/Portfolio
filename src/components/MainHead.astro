@@ -2,6 +2,7 @@
 import '../styles/global.css';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import { SEO } from 'astro-seo';
+import { ClientRouter } from 'astro:transitions';
 import {
   AUTHOR_NAME,
   SITE_DESCRIPTION,
@@ -83,7 +84,7 @@ const twitter = {
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Public+Sans:ital,wght@0,400;0,700;1,400&family=Rubik:wght@500;600&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
   rel="stylesheet"
 />
 <link
@@ -92,6 +93,7 @@ const twitter = {
   title="Isaac D'Césares: Inovação e Tecnologia"
   href={new URL('rss.xml', Astro.site)}
 />
+<ClientRouter />
 <SpeedInsights />
 <SEO
   title={title}
@@ -122,8 +124,20 @@ const twitter = {
       ? 'dark'
       : 'light';
   };
-  const isDark = getThemePreference() === 'dark';
-  document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+  
+  const applyTheme = () => {
+    const isDark = getThemePreference() === 'dark';
+    document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+  };
+
+  // Apply theme immediately on script load
+  applyTheme();
+
+  // Apply theme to the NEW document BEFORE it swaps in (most reliable method)
+  document.addEventListener('astro:before-swap', (event) => {
+    const isDark = getThemePreference() === 'dark';
+    event.newDocument.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
+  });
 
   if (typeof localStorage !== 'undefined') {
     // Watch the document element and persist user preference when it changes.

@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 ---
 
 <aside>
-	<h2>Vamos criar soluções inovadoras juntos?</h2>
+	<h2>Vamos cocriar soluções humanas e tecnológicas?</h2>
 	<CallToAction href="mailto:isaac.dcesares@gmail.com">
 		Fale comigo
 		<Icon icon="paper-plane-tilt" size="1.2em" />
@@ -20,7 +20,9 @@ import Icon from './Icon.astro';
 		border-top: 1px solid var(--gray-800);
 		border-bottom: 1px solid var(--gray-800);
 		padding: 5rem 1.5rem;
-		background-color: var(--gray-999_40);
+		background:
+			radial-gradient(600px 300px at 15% 0%, rgba(47, 111, 109, 0.12), transparent 60%),
+			color-mix(in oklab, var(--gray-999) 90%, transparent);
 		box-shadow: var(--shadow-sm);
 	}
 
@@ -28,6 +30,7 @@ import Icon from './Icon.astro';
 		font-size: var(--text-xl);
 		text-align: center;
 		max-width: 15ch;
+		letter-spacing: -0.01em;
 	}
 
 	@media (min-width: 50em) {
