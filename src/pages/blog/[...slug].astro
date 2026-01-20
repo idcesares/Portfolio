@@ -7,6 +7,7 @@ import ContactCTA from '../../components/ContactCTA.astro';
 import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
+import ContentImage from '../../components/ContentImage.astro';
 import { render } from 'astro:content';
 import { AUTHOR_PROFILE_PATH, getBlogPostingStructuredData } from '../../utils/seo';
 
@@ -25,7 +26,7 @@ export async function getStaticPaths() {
 export const prerender = true;
 
 const { entry } = Astro.props;
-const { Content } = await render(entry);
+const { Content, remarkPluginFrontmatter } = await render(entry);
 
 const site = Astro.site ?? new URL('https://dcesares.dev');
 const structuredData = getBlogPostingStructuredData(entry, site);
@@ -49,12 +50,16 @@ const article = {
 	<div class="stack gap-20">
 		<div class="stack gap-15">
 			<header>
-				<div class="wrapper stack gap-2">
+				<div class="wrapper stack gap-4">
 					<a class="back-link" href="/blog/"><Icon icon="arrow-left" /> blog</a>
 					<Hero title={entry.data.title} align="start">
-						<div class="details">
-							<div class="tags">
-								{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
+						<div class="post-meta">
+							<div class="meta-row">
+								<div class="tags">
+									{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
+								</div>
+								<span class="meta-divider"></span>
+								<p class="reading-time"><Icon icon="book-open" /> {remarkPluginFrontmatter.minutesRead}</p>
 							</div>
 							<p class="description">{entry.data.description}</p>
 						</div>
@@ -62,11 +67,18 @@ const article = {
 				</div>
 			</header>
 			<main class="wrapper">
-				<div class="stack gap-15 content">
-					{entry.data.img && <img class="image-content" src={entry.data.img} alt={entry.data.img_alt || ''} />}
-					<div class="content">
+				<div class="stack gap-10 content-wrapper">
+					{entry.data.img && (
+						<ContentImage 
+							src={entry.data.img} 
+							alt={entry.data.img_alt || entry.data.title} 
+							priority="hero"
+							width={1200}
+						/>
+					)}
+					<article class="content">
 						<Content />
-					</div>
+					</article>
 				</div>
 			</main>
 		</div>
@@ -80,84 +92,297 @@ const article = {
 		border-bottom: 1px solid var(--gray-800);
 	}
 
-	.image-content {
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-sm);
-		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
-		max-width: 50%;
-		margin: 0 auto;
+	/* Content wrapper for the article */
+	.content-wrapper {
+		max-width: 65ch;
+		margin-inline: auto;
 	}
 
 	.back-link {
 		display: none;
 	}
 
-	.details {
+	.post-meta {
 		display: flex;
 		flex-direction: column;
-		padding: 0.5rem;
-		gap: 1.5rem;
-		justify-content: space-between;
+		gap: 1.25rem;
+		margin-top: 0.5rem;
+	}
+
+	.meta-row {
+		display: flex;
+		flex-wrap: wrap;
 		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.meta-divider {
+		display: none;
 	}
 
 	.tags {
 		display: flex;
+		flex-wrap: wrap;
 		gap: 0.5rem;
 	}
 
 	.description {
 		font-size: var(--text-lg);
-		max-width: 54ch;
+		max-width: 65ch;
+		color: var(--gray-300);
+		line-height: 1.6;
 	}
 
+	.reading-time {
+		display: flex;
+		align-items: center;
+		gap: 0.5rem;
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		white-space: nowrap;
+	}
+
+	/* Article content container */
 	.content {
-		max-width: 100ch;
+		max-width: 65ch; /* Optimal reading width: 60-70 characters */
 		margin-inline: auto;
 	}
 
+	/* Prose typography - vertical rhythm */
 	.content > :global(* + *) {
-		margin-top: 1rem;
+		margin-top: 1.5em; /* Consistent spacing based on font size */
 	}
 
-	.content :global(h1),
-	.content :global(h2),
-	.content :global(h3),
-	.content :global(h4),
-	.content :global(h5) {
-		margin: 1.5rem 0;
+	/* Paragraphs - optimized for reading */
+	.content :global(p) {
+		font-size: var(--text-md);
+		line-height: 1.75; /* Optimal for digital reading */
+		letter-spacing: 0.01em; /* Slight tracking aids readability */
+		color: var(--gray-200);
+		text-wrap: pretty; /* Better line breaks */
 	}
 
-	.content :global(img) {
-		border-radius: 1.5rem;
-		box-shadow: var(--shadow-sm);
-		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
-	}
-
-	.content :global(blockquote) {
-		font-size: var(--text-lg);
-		font-family: var(--font-brand);
-		font-weight: 600;
-		line-height: 1.1;
-		padding-inline-start: 1.5rem;
-		border-inline-start: 0.25rem solid var(--accent-dark);
+	/* Headings - clear hierarchy with breathing room */
+	.content :global(h1) {
+		font-size: var(--text-3xl);
+		line-height: 1.2;
+		margin-top: 3rem;
+		margin-bottom: 1rem;
 		color: var(--gray-0);
 	}
 
-	.back-link,
+	.content :global(h2) {
+		font-size: var(--text-2xl);
+		line-height: 1.25;
+		margin-top: 2.5rem;
+		margin-bottom: 0.875rem;
+		color: var(--gray-0);
+		padding-bottom: 0.5rem;
+		border-bottom: 1px solid var(--gray-800);
+	}
+
+	.content :global(h3) {
+		font-size: var(--text-xl);
+		line-height: 1.3;
+		margin-top: 2rem;
+		margin-bottom: 0.75rem;
+		color: var(--gray-100);
+	}
+
+	.content :global(h4),
+	.content :global(h5),
+	.content :global(h6) {
+		font-size: var(--text-lg);
+		line-height: 1.35;
+		margin-top: 1.75rem;
+		margin-bottom: 0.5rem;
+		color: var(--gray-100);
+	}
+
+	/* First element after heading needs less top margin */
+	.content :global(h1 + *),
+	.content :global(h2 + *),
+	.content :global(h3 + *),
+	.content :global(h4 + *) {
+		margin-top: 0;
+	}
+
+	/* Images in markdown content - responsive and optimized */
+	.content :global(img) {
+		display: block;
+		max-width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+		margin-block: 2rem;
+		margin-inline: auto;
+	}
+
+	/* Full-width images - break out of content container */
+	.content :global(img[data-full-width]),
+	.content :global(.full-width img) {
+		max-width: calc(100% + 4rem);
+		margin-inline: -2rem;
+		border-radius: var(--radius-xl);
+	}
+
+	/* Image figures with captions */
+	.content :global(figure) {
+		margin: 2rem 0;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.content :global(figure img) {
+		margin-block: 0;
+	}
+
+	.content :global(figcaption) {
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		text-align: center;
+		font-style: italic;
+		max-width: 90%;
+		line-height: 1.5;
+	}
+
+	/* Blockquotes - distinctive but readable */
+	.content :global(blockquote) {
+		font-size: var(--text-lg);
+		font-style: italic;
+		line-height: 1.6;
+		padding: 1.25rem 1.5rem;
+		margin-block: 2rem;
+		border-inline-start: 4px solid var(--accent-regular);
+		background: var(--accent-subtle-overlay);
+		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+		color: var(--gray-100);
+	}
+
+	.content :global(blockquote p) {
+		margin: 0;
+		font-size: inherit;
+	}
+
+	/* Lists - proper indentation and spacing */
+	.content :global(ul),
+	.content :global(ol) {
+		padding-inline-start: 1.5rem;
+		margin-block: 1.5rem;
+	}
+
+	.content :global(li) {
+		font-size: var(--text-md);
+		line-height: 1.7;
+		color: var(--gray-200);
+		margin-bottom: 0.5rem;
+	}
+
+	.content :global(li)::marker {
+		color: var(--accent-regular);
+	}
+
+	/* Nested lists */
+	.content :global(li > ul),
+	.content :global(li > ol) {
+		margin-top: 0.5rem;
+		margin-bottom: 0;
+	}
+
+	/* Links in content */
 	.content :global(a) {
+		color: var(--link-color);
+		text-decoration: underline;
+		text-decoration-color: color-mix(in oklab, var(--link-color) 40%, transparent);
+		text-underline-offset: 0.2em;
+		text-decoration-thickness: 1px;
+		transition: text-decoration-color var(--theme-transition), color var(--theme-transition);
+	}
+
+	.content :global(a:hover),
+	.content :global(a:focus) {
+		text-decoration-color: var(--link-color);
+	}
+
+	/* Back link styling */
+	.back-link {
 		text-decoration: 1px solid underline transparent;
 		text-underline-offset: 0.25em;
 		transition: text-decoration-color var(--theme-transition);
 	}
 
 	.back-link:hover,
-	.back-link:focus,
-	.content :global(a:hover),
-	.content :global(a:focus) {
+	.back-link:focus {
 		text-decoration-color: currentColor;
+	}
+
+	/* Code inline */
+	.content :global(code:not(pre code)) {
+		font-family: var(--font-mono);
+		font-size: 0.9em;
+		padding: 0.15em 0.4em;
+		background: var(--gray-900);
+		border: 1px solid var(--gray-800);
+		border-radius: var(--radius-sm);
+		color: var(--gray-100);
+	}
+
+	/* Code blocks */
+	.content :global(pre) {
+		font-size: var(--text-sm);
+		line-height: 1.6;
+		padding: 1.25rem 1.5rem;
+		margin-block: 2rem;
+		border-radius: var(--radius-md);
+		border: 1px solid var(--gray-800);
+		overflow-x: auto;
+	}
+
+	/* Horizontal rule */
+	.content :global(hr) {
+		border: none;
+		height: 1px;
+		background: var(--gray-800);
+		margin-block: 3rem;
+	}
+
+	/* Tables */
+	.content :global(table) {
+		width: 100%;
+		border-collapse: collapse;
+		margin-block: 2rem;
+		font-size: var(--text-sm);
+	}
+
+	.content :global(th),
+	.content :global(td) {
+		padding: 0.75rem 1rem;
+		border: 1px solid var(--gray-800);
+		text-align: left;
+	}
+
+	.content :global(th) {
+		background: var(--gray-900);
+		font-weight: 600;
+		color: var(--gray-100);
+	}
+
+	.content :global(tr:nth-child(even)) {
+		background: var(--gray-900);
+	}
+
+	/* Strong and emphasis */
+	.content :global(strong) {
+		font-weight: 600;
+		color: var(--gray-100);
+	}
+
+	.content :global(em) {
+		font-style: italic;
 	}
 
 	@media (min-width: 50em) {
@@ -166,13 +391,34 @@ const article = {
 			align-self: flex-start;
 		}
 
-		.details {
-			flex-direction: row;
-			gap: 2.5rem;
+		.post-meta {
+			gap: 1.5rem;
+		}
+
+		.meta-row {
+			gap: 1rem;
+		}
+
+		.meta-divider {
+			display: block;
+			width: 4px;
+			height: 4px;
+			border-radius: 50%;
+			background-color: var(--gray-600);
+		}
+
+		/* Enhanced typography for larger screens */
+		.content :global(p) {
+			font-size: var(--text-lg);
+		}
+
+		.content :global(li) {
+			font-size: var(--text-lg);
 		}
 
 		.content :global(blockquote) {
-			font-size: var(--text-2xl);
+			font-size: var(--text-xl);
+			padding: 1.5rem 2rem;
 		}
 	}
 </style>

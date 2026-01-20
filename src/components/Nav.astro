@@ -4,10 +4,10 @@ import ThemeToggle from './ThemeToggle.astro';
 import SearchBox from './SearchBox.astro';
 
 /** Main menu items */
-const textLinks: { label: string; href: string }[] = [
-	{ label: 'Home', href: '/' },
-	{ label: 'Trabalhos', href: '/work/' },
-	{ label: 'Blog', href: '/blog/' },
+const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'viewport' }[] = [
+	{ label: 'Home', href: '/', prefetch: 'load' },
+	{ label: 'Trabalhos', href: '/work/', prefetch: 'load' },
+	{ label: 'Blog', href: '/blog/', prefetch: 'load' },
 	{ label: 'Sobre', href: '/about/' }];
 ---
 
@@ -32,9 +32,9 @@ const textLinks: { label: string; href: string }[] = [
 			</div>
 		</div>
 		<noscript>
-			<ul class="nav-items">
+		<ul class="nav-items">
 				{
-					textLinks.map(({ label, href }) => (
+					textLinks.map(({ label, href, prefetch }) => (
 						<li>
 							<a
 								aria-current={Astro.url.pathname === href}
@@ -47,6 +47,7 @@ const textLinks: { label: string; href: string }[] = [
 									},
 								]}
 								href={href}
+								data-astro-prefetch={prefetch}
 							>
 								{label}
 							</a>
@@ -59,7 +60,7 @@ const textLinks: { label: string; href: string }[] = [
 		<div id="menu-content" hidden>
 			<ul class="nav-items">
 				{
-					textLinks.map(({ label, href }) => (
+					textLinks.map(({ label, href, prefetch }) => (
 						<li>
 							<a
 								aria-current={Astro.url.pathname === href}
@@ -72,6 +73,7 @@ const textLinks: { label: string; href: string }[] = [
 									},
 								]}
 								href={href}
+								data-astro-prefetch={prefetch}
 							>
 								{label}
 							</a>

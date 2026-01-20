@@ -7,6 +7,7 @@ import embeds from 'astro-embed/integration';
 import react from "@astrojs/react";
 import rehypePrettyCode from 'rehype-pretty-code';
 import { transformerCopyButton } from '@rehype-pretty/transformers';
+import { remarkReadingTime } from './remark-reading-time.mjs';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -14,11 +15,29 @@ import tailwindcss from '@tailwindcss/vite';
 export default defineConfig({
   output: 'server',
 
+  // Prefetch configuration for faster navigation
+  prefetch: {
+    prefetchAll: true,
+    defaultStrategy: 'viewport',
+  },
+
   adapter: vercel({
     webAnalytics: {
       enabled: true
-    }
+    },
+    imageService: true,
   }),
+
+  // Enable HTML compression for smaller payloads
+  compressHTML: true,
+
+  // Image optimization settings
+  image: {
+    // Default layout for responsive images
+    layout: 'constrained',
+    // Enable responsive styles for proper image resizing
+    responsiveStyles: true,
+  },
 
   build: {
     format: "file",
@@ -34,6 +53,7 @@ export default defineConfig({
 
   markdown: {
     syntaxHighlight: false,
+    remarkPlugins: [remarkReadingTime],
     rehypePlugins: [
       [
         rehypePrettyCode,
