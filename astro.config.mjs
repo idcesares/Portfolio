@@ -37,6 +37,18 @@ export default defineConfig({
     layout: 'constrained',
     // Enable responsive styles for proper image resizing
     responsiveStyles: true,
+    // Authorize remote image domains for optimization
+    domains: [
+      'i.ytimg.com',
+      'i3.ytimg.com',
+      'img.youtube.com',
+      'i.scdn.co',
+      'github.com',
+      'raw.githubusercontent.com',
+      'www.pe.senac.br',
+    ],
+    // Allow any HTTPS remote images as fallback
+    remotePatterns: [{ protocol: 'https' }],
   },
 
   build: {
