@@ -32,6 +32,19 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 			gtag('js', new Date());
 			gtag('config', 'G-0XZV7NBH4E');
 		</script>
+		<script is:inline>
+			const setLoadedClass = () => document.documentElement.classList.add('loaded');
+
+			if (document.readyState === 'loading') {
+				document.addEventListener(
+					'DOMContentLoaded',
+					() => requestAnimationFrame(setLoadedClass),
+					{ once: true }
+				);
+			} else {
+				requestAnimationFrame(setLoadedClass);
+			}
+		</script>
                 <MainHead
                         title={title}
                         description={description}
@@ -50,8 +63,6 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 		</div>
 
 		<script>
-			addEventListener('load', () => document.documentElement.classList.add('loaded'));
-
 			// Scroll Reveal Animation System
 			function initScrollReveal() {
 				const animatedElements = document.querySelectorAll('[data-animate]');
