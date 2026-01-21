@@ -409,10 +409,15 @@ code[data-theme*=" "] span {
    Scroll Reveal Animation System
    ======================================== */
 
-/* Base state for animated elements - hidden before reveal */
+/* Base state for animated elements - visible by default */
 [data-animate] {
-  opacity: 0;
+  opacity: 1;
   will-change: opacity, transform;
+}
+
+/* Hide only when JavaScript is active */
+.js [data-animate] {
+  opacity: 0;
 }
 
 /* Revealed state */
@@ -576,4 +581,3 @@ code[data-theme*=" "] span {
     animation: none !important;
   }
 }
-
