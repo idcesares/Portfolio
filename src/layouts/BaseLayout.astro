@@ -67,6 +67,21 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 					return;
 				}
 
+				const elementsToObserve = [];
+
+				animatedElements.forEach(el => {
+					const rect = el.getBoundingClientRect();
+					const isInView = rect.top < window.innerHeight && rect.bottom > 0;
+
+					if (isInView) {
+						el.classList.add('is-visible');
+					} else {
+						elementsToObserve.push(el);
+					}
+				});
+
+				if (!elementsToObserve.length) return;
+
 				const observer = new IntersectionObserver(
 					(entries) => {
 						entries.forEach(entry => {
@@ -83,7 +98,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 					}
 				);
 
-				animatedElements.forEach(el => observer.observe(el));
+				elementsToObserve.forEach(el => observer.observe(el));
 			}
 
 			// Run on initial load
