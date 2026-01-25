@@ -4,6 +4,8 @@ import sanitizeHtml from 'sanitize-html';
 import MarkdownIt from 'markdown-it';
 const parser = new MarkdownIt();
 
+export const prerender = true;
+
 export async function GET(context) {
   const blog = await getCollection('blog');
   return rss({

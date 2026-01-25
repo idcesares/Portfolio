@@ -70,9 +70,10 @@ const { currentView = 'default' } = Astro.props;
 		display: flex;
 		gap: 0.25rem;
 		border: 1px solid var(--gray-800);
-		border-radius: 0.5rem;
+		border-radius: 999rem;
 		padding: 0.25rem;
-		background: var(--gray-900);
+		background: color-mix(in oklab, var(--gray-999) 75%, transparent);
+		backdrop-filter: blur(8px);
 	}
 
 	.view-button {
@@ -80,7 +81,7 @@ const { currentView = 'default' } = Astro.props;
 		border: none;
 		background: transparent;
 		color: var(--gray-400);
-		border-radius: 0.25rem;
+		border-radius: 999rem;
 		cursor: pointer;
 		transition: all 0.2s ease;
 		display: flex;
@@ -89,7 +90,7 @@ const { currentView = 'default' } = Astro.props;
 	}
 
 	.view-button:hover {
-		background: var(--gray-800);
+		background: color-mix(in oklab, var(--gray-999) 80%, transparent);
 		color: var(--gray-200);
 	}
 

@@ -1,6 +1,9 @@
 import type { APIRoute } from 'astro';
 import { generateSearchData } from '../utils/searchData';
 
+// Prerender search data at build time since content is static
+export const prerender = true;
+
 export const GET: APIRoute = async () => {
   try {
     const searchData = await generateSearchData();

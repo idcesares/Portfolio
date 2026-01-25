@@ -37,7 +37,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 ├── docker-compose.prod.yml # Compose preview de produção
 ├── Dockerfile              # Imagem dev/prod
 ├── tailwind.config.cjs     # Tailwind + HeroUI
-├── vercel.json             # Deploy config + headers CORS
+├── vercel.json             # Deploy config + security headers + caching
 └── tsconfig.json           # TypeScript strict mode
 ```
 
@@ -283,16 +283,39 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 
 ## Performance e SEO
 
+**Rendering Mode**: Hybrid SSR com páginas estáticas prerendered. Todas as páginas usam `export const prerender = true` para geração estática no build.
+
+**Navigation**: MPA (Multi-Page Application) com prefetch nativo do Astro. View transitions removidas para evitar FOUC.
+
 **Core Web Vitals**: Monitorados via Vercel Analytics + Speed Insights.
 
-**Image Optimization**: Imagens são servidas de `public/` ou importadas de `src/assets/`; preferir WebP/AVIF e usar `loading="lazy"` + `decoding="async"` (exceto hero).
+**Image Optimization**: 
+- Imagens servidas de `public/` ou importadas de `src/assets/`
+- Preferir WebP/AVIF
+- Usar `loading="lazy"` + `decoding="async"` (exceto hero)
+- Vercel Image Service habilitado
+- Responsive images com `layout: 'constrained'`
 
-**Bundle Size**: Tailwind purged automaticamente, componentes tree-shaken.
+**Animations**: 
+- Scroll reveal via `data-animate` attributes (`fade-up`, `scale-up`)
+- CSS-only animations (sem JavaScript view transitions)
+- Respeita `prefers-reduced-motion`
+
+**Bundle Size**: 
+- Tailwind purged automaticamente
+- Componentes tree-shaken
+- Fuse.js em chunk separado (`manualChunks`)
+- Experimental SVGO optimization para SVGs
+
+**Font Loading**: 
+- Non-blocking via `media="print" onload` pattern
+- Preconnect para Google Fonts
+- `font-display: swap` habilitado
 
 **SEO**: 
 - Meta tags via `astro-seo`
 - Sitemap auto-gerado
-- RSS feed em `/rss.xml`
+- RSS feed em `/rss.xml` (prerendered)
 - JSON-LD structured data (quando aplicável)
 
 ## Deploy e CI/CD
@@ -301,11 +324,13 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 - Deploy automático via Git push
 - Vercel Functions (SSR via adapter)
 - Analytics + Speed Insights habilitados
+- Security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, etc.)
+- Immutable cache (1 year) para assets em `/_astro/*`
 - Custom headers para CORS (search endpoint)
 
 **Build Process**:
 1. `pnpm install` (ignoredBuiltDependencies: esbuild)
-2. `pnpm build` (output: server, format: file)
+2. `pnpm build` (output: server, format: file, trailingSlash: never)
 3. Deploy para Vercel (SSR)
 
 **Environment**:
@@ -326,4 +351,4 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 - Manter sincronizado com `README.md` 
 - PRs que alteram workflow devem atualizar seções relevantes
 
-_Atualizado em: 11/01/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._
+_Atualizado em: 25/01/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._

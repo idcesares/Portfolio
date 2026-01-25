@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import Hero from '../components/Hero.astro';
@@ -21,12 +23,13 @@ const structuredData = getSiteStructuredData(site);
             >
                 <img
                     width="auto"
-                    src="/assets/at-work.jpg"
+                    src="/assets/at-work.webp"
                     alt="Isaac D'Césares em uma palestra"
+                    data-animate="scale-up"
                 />
             </Hero>
 
-            <section class="section-card">
+            <section class="section-card" data-animate="fade-up">
                 <h2 class="section-title">Perfil Profissional</h2>
                 <div class="content">
                     <p>Sou Isaac D'Césares, Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc e mestrando em Computação pela UFRJ. Minha paixão está na interseção entre tecnologia, inovação e educação, buscando constantemente formas de transformar e melhorar os processos de ensino e aprendizagem.</p>
@@ -34,7 +37,7 @@ const structuredData = getSiteStructuredData(site);
                 </div>
             </section>
 
-            <section class="section-card">
+            <section class="section-card" data-animate="fade-up">
                 <h2 class="section-title">Experiência e Realizações</h2>
                 <div class="content">
                     <ul>
@@ -47,7 +50,7 @@ const structuredData = getSiteStructuredData(site);
                 </div>
             </section>
 
-            <section class="section-card">
+            <section class="section-card" data-animate="fade-up">
                 <h2 class="section-title">Áreas de Especialização</h2>
                 <div class="content">
                     <ul>
@@ -60,7 +63,7 @@ const structuredData = getSiteStructuredData(site);
                 </div>
             </section>
 
-            <section class="section-card">
+            <section class="section-card" data-animate="fade-up">
                 <h2 class="section-title">Visão e Compromisso</h2>
                 <div class="content">
                     <p>Minha missão é ser um catalisador da transformação digital na educação. Acredito no poder da tecnologia como ferramenta de empoderamento, não de opressão. Estou dedicado a:</p>
@@ -73,7 +76,7 @@ const structuredData = getSiteStructuredData(site);
                 </div>
             </section>
 
-            <section class="section-card">
+            <section class="section-card" data-animate="fade-up">
                 <h2 class="section-title">Convite à Colaboração</h2>
                 <div class="content">
                     <p>Estou sempre aberto a novas parcerias, projetos e oportunidades de pesquisa que alinhem com minha visão de uma educação transformadora e tecnologicamente avançada. Se você compartilha dessa paixão ou busca insights sobre inovação educacional, ficarei feliz em conectar!</p>

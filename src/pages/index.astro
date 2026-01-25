@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -36,16 +38,24 @@ const structuredData = getSiteStructuredData(site);
 <BaseLayout structuredData={structuredData}>
 	<div class="stack gap-20 lg:gap-48">
 		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero">
+			<header class="hero" data-animate="fade-up">
 				<Hero
 					title="Isaac D'Césares"
-					tagline="Pesquisador e desenvolvedor de tecnologias da educação."
+					tagline="Pesquisador e desenvolvedor de Tecnologias da Educação, com foco em Inovação e Transformação Digital."
 					align="start"
 				>
-					<div class="roles">
+					<div class="roles" data-animate-stagger>
 						<Pill><Icon icon="code" size="1.33em" /> Desenvolvedor</Pill>
 						<Pill><University /> Educador</Pill>
 						<Pill><Icon icon="pencil-line" size="1.33em" /> Pesquisador</Pill>
+					</div>
+
+					<div class="hero-actions">
+						<CallToAction href="/work/">
+							Ver projetos
+							<Icon icon="arrow-right" size="1.2em" />
+						</CallToAction>
+						<a class="ghost-link" href="/about/">Sobre mim</a>
 					</div>
 					
 				</Hero>
@@ -58,6 +68,8 @@ const structuredData = getSiteStructuredData(site);
 					width="400"
 					height="300"
 					decoding="async"
+					data-animate="scale-up"
+					data-animate-delay="200"
 				/>
 			</header>
 
@@ -65,17 +77,17 @@ const structuredData = getSiteStructuredData(site);
 		</div>
 
 		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
+			<section class="section with-background with-cta" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>Últimas postagens</h3>
 					<p>Leia alguns dos meus artigos mais recentes sobre tecnologia, educação e desenvolvimento.</p>
 				</header>
 
-				<div class="gallery">
+				<div class="gallery" data-animate-stagger>
 					<Grid variant="offset">
 						{
 							posts.map((post) => (
-								<li>
+								<li data-animate="fade-up">
 									<PostPreview post={post} />
 								</li>
 							))
@@ -93,17 +105,17 @@ const structuredData = getSiteStructuredData(site);
 		</main>
 
 		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta">
+			<section class="section with-background with-cta" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>Últimos trabalhos</h3>
 					<p>Veja alguns dos meus mais recentes trabalhos e publicações.</p>
 				</header>
 
-				<div class="gallery">
+				<div class="gallery" data-animate-stagger>
 					<Grid variant="offset">
 						{
 							projects.map((project) => (
-								<li>
+								<li data-animate="fade-up">
 									<PortfolioPreview project={project} />
 								</li>
 							))
@@ -121,26 +133,26 @@ const structuredData = getSiteStructuredData(site);
 		</main>
 
 		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background bg-variant">
+			<section class="section with-background bg-variant" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>Impacto e Alcance</h3>
 					<p>Alguns números que demonstram o impacto do meu trabalho em tecnologia educacional.</p>
 				</header>
 
-				<div class="stats-grid">
-					<div class="stat-card">
+				<div class="stats-grid" data-animate-stagger>
+					<div class="stat-card" data-animate="scale-up">
 						<div class="stat-number">2000+</div>
 						<div class="stat-label">Educadores Impactados</div>
 					</div>
-					<div class="stat-card">
+					<div class="stat-card" data-animate="scale-up">
 						<div class="stat-number">50+</div>
 						<div class="stat-label">Projetos Desenvolvidos</div>
 					</div>
-					<div class="stat-card">
+					<div class="stat-card" data-animate="scale-up">
 						<div class="stat-number">10+</div>
 						<div class="stat-label">Instituições Parceiras</div>
 					</div>
-					<div class="stat-card">
+					<div class="stat-card" data-animate="scale-up">
 						<div class="stat-number">10+</div>
 						<div class="stat-label">Anos de Experiência</div>
 					</div>
@@ -161,15 +173,46 @@ const structuredData = getSiteStructuredData(site);
 	}
 
 	.roles {
-		display: none;
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.5rem;
 	}
 
 	.hero img {
 		aspect-ratio: 5 / 4;
 		object-fit: cover;
 		object-position: top;
-		border-radius: 1.5rem;
+		border-radius: var(--radius-xl);
 		box-shadow: var(--shadow-md);
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: 0.75rem;
+		align-items: center;
+	}
+
+	.ghost-link {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		padding: 0.75rem 1.5rem;
+		border-radius: 999rem;
+		border: 1px solid var(--gray-800);
+		color: var(--gray-200);
+		text-decoration: none;
+		font-family: var(--font-body);
+		font-weight: 500;
+		transition: all 0.2s ease;
+		background: color-mix(in oklab, var(--gray-999) 80%, transparent);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.ghost-link:hover {
+		color: var(--gray-0);
+		border-color: var(--gray-700);
+		transform: translateY(-1px);
 	}
 
 	@media (min-width: 50em) {
@@ -182,13 +225,12 @@ const structuredData = getSiteStructuredData(site);
 
 		.roles {
 			margin-top: 0.5rem;
-			display: flex;
 			gap: 0.5rem;
 		}
 
 		.hero img {
 			aspect-ratio: 3 / 4;
-			border-radius: 4.5rem;
+			border-radius: 4rem;
 			object-fit: cover;
 		}
 	}
@@ -205,27 +247,25 @@ const structuredData = getSiteStructuredData(site);
 	}
 
 	.with-background::before {
-		--hero-bg: var(--bg-image-subtle-2);
-
 		content: '';
 		position: absolute;
 		pointer-events: none;
 		left: 50%;
 		width: 100vw;
-		aspect-ratio: calc(2.25 / var(--bg-scale));
-		top: 0;
-		transform: translateY(-75%) translateX(-50%);
+		height: 140%;
+		top: -40%;
+		transform: translateX(-50%);
 		background:
-			url('/assets/backgrounds/noise.png') top center/220px repeat,
-			var(--hero-bg) center center / var(--bg-gradient-size) no-repeat,
-			var(--gray-999);
-		background-blend-mode: overlay, normal, normal, normal;
-		mix-blend-mode: var(--bg-blend-mode);
+			radial-gradient(800px 400px at 50% 10%, rgba(47, 111, 109, 0.14), transparent 70%),
+			radial-gradient(600px 300px at 80% 20%, rgba(28, 42, 58, 0.12), transparent 65%);
+		opacity: 0.8;
 		z-index: -1;
 	}
 
 	.with-background.bg-variant::before {
-		--hero-bg: var(--bg-image-subtle-1);
+		background:
+			radial-gradient(800px 400px at 40% 10%, rgba(143, 182, 198, 0.16), transparent 70%),
+			radial-gradient(600px 300px at 70% 20%, rgba(47, 111, 109, 0.12), transparent 65%);
 	}
 
 	.section-header {
@@ -238,6 +278,7 @@ const structuredData = getSiteStructuredData(site);
 
 	.section-header h3 {
 		font-size: var(--text-2xl);
+		letter-spacing: -0.01em;
 	}
 
 	@media (min-width: 50em) {
@@ -301,16 +342,22 @@ const structuredData = getSiteStructuredData(site);
 		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
 		gap: 2rem;
 		margin-top: 2rem;
+		align-items: stretch;
+		grid-auto-rows: 1fr;
 	}
 
 	.stat-card {
 		text-align: center;
 		padding: 2rem 1rem;
-		background: var(--gray-999);
+		background: color-mix(in oklab, var(--gray-999) 88%, transparent);
 		border: 1px solid var(--gray-800);
-		border-radius: 1rem;
+		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
 		transition: transform 0.2s ease, box-shadow 0.2s ease;
+		width: 100%;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
 	}
 
 	.stat-card:hover {
@@ -336,12 +383,14 @@ const structuredData = getSiteStructuredData(site);
 
 	@media (min-width: 50em) {
 		.stats-grid {
+			grid-column: 1 / -1;
 			grid-template-columns: repeat(4, 1fr);
 			gap: 3rem;
 		}
 
 		.stat-card {
 			padding: 3rem 2rem;
+			max-width: none;
 		}
 
 		.stat-number {

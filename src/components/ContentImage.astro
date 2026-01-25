@@ -1,0 +1,133 @@
+---
+/**
+ * ContentImage - Optimized responsive image component for blog/work content
+ * 
+ * Uses Astro's built-in Image component with responsive image best practices:
+ * - Generates srcset for multiple resolutions
+ * - Applies constrained layout (scales down but not up)
+ * - Lazy loading by default
+ * - WebP format for better compression
+ * - Proper aspect ratio to prevent CLS
+ */
+import { Image } from 'astro:assets';
+
+interface Props {
+	src: string | ImageMetadata;
+	alt: string;
+	width?: number;
+	height?: number;
+	class?: string;
+	loading?: 'lazy' | 'eager';
+	/** Use 'hero' for above-the-fold images, 'content' for in-article images */
+	priority?: 'hero' | 'content';
+	/** Caption text to display below the image */
+	caption?: string;
+}
+
+const { 
+	src, 
+	alt, 
+	width = 1200, 
+	height,
+	class: className = '',
+	loading,
+	priority = 'content',
+	caption
+} = Astro.props;
+
+// Hero images should load eagerly with high priority
+const isHero = priority === 'hero';
+const imageLoading = loading ?? (isHero ? 'eager' : 'lazy');
+const fetchPriority = isHero ? 'high' : 'auto';
+
+// Check if src is a string (public folder path) or imported image
+const isExternalOrPublic = typeof src === 'string';
+---
+
+<figure class:list={['content-image', className, { 'content-image--hero': isHero }]}>
+	{isExternalOrPublic ? (
+		<img 
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
+			loading={imageLoading}
+			decoding="async"
+			fetchpriority={fetchPriority}
+			class="content-image__img"
+		/>
+	) : (
+		<Image
+			src={src}
+			alt={alt}
+			width={width}
+			height={height}
+			loading={imageLoading}
+			decoding="async"
+			fetchpriority={fetchPriority}
+			format="webp"
+			quality={85}
+			class="content-image__img"
+		/>
+	)}
+	{caption && <figcaption class="content-image__caption">{caption}</figcaption>}
+</figure>
+
+<style>
+	.content-image {
+		margin: 0;
+		margin-block: 2rem;
+		display: flex;
+		flex-direction: column;
+		align-items: center;
+		gap: 0.75rem;
+	}
+
+	.content-image__img {
+		max-width: 100%;
+		height: auto;
+		border-radius: var(--radius-lg);
+		box-shadow: var(--shadow-sm);
+		background: var(--gradient-subtle);
+		border: 1px solid var(--gray-800);
+		/* Smooth loading transition */
+		opacity: 1;
+		transition: opacity 0.3s ease;
+	}
+
+	.content-image__caption {
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		text-align: center;
+		font-style: italic;
+		max-width: 80%;
+		line-height: 1.5;
+	}
+
+	/* Hero images - full width, prominent */
+	.content-image--hero {
+		margin-block: 2.5rem;
+	}
+
+	.content-image--hero .content-image__img {
+		width: 100%;
+		max-width: 100%;
+		border-radius: var(--radius-xl);
+		box-shadow: var(--shadow-md);
+	}
+
+	/* Responsive adjustments */
+	@media (min-width: 50em) {
+		.content-image {
+			margin-block: 2.5rem;
+		}
+
+		.content-image--hero {
+			margin-block: 3rem;
+		}
+
+		.content-image__caption {
+			max-width: 70%;
+		}
+	}
+</style>

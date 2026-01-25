@@ -28,7 +28,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 <style>
   .search-container {
     position: relative;
-    max-width: 600px;
+    max-width: 640px;
     margin: 0 auto;
     width: 100%;
   }
@@ -37,6 +37,10 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     position: relative;
     display: flex;
     align-items: center;
+    background: var(--gray-999);
+    border: 1px solid var(--gray-800);
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-sm);
   }
 
   .search-icon {
@@ -50,18 +54,17 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 
   .search-input {
     width: 100%;
-    padding: 0.625rem 2.25rem 0.625rem 2.25rem;
-    border: 1px solid var(--gray-800);
-    border-radius: 0.5rem;
-    background: var(--gray-999);
+    padding: 0.75rem 2.5rem 0.75rem 2.5rem;
+    border: 0;
+    border-radius: var(--radius-md);
+    background: transparent;
     color: var(--gray-200);
-    font-size: var(--text-sm);
+    font-size: var(--text-base);
     transition: border-color 0.2s ease;
   }
 
   .search-input:focus {
     outline: none;
-    border-color: var(--accent-regular);
     box-shadow: 0 0 0 2px var(--accent-regular-alpha);
   }
 
@@ -78,7 +81,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     font-size: 1rem;
     cursor: pointer;
     padding: 0.125rem;
-    border-radius: 0.25rem;
+    border-radius: 0.5rem;
     transition: color 0.2s ease;
   }
 
@@ -94,11 +97,11 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     background: var(--gray-999);
     border: 1px solid var(--gray-800);
     border-top: none;
-    border-radius: 0 0 0.5rem 0.5rem;
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
     max-height: 350px;
     overflow-y: auto;
     z-index: 100;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    box-shadow: var(--shadow-md);
   }
 
   .search-results.hidden {
@@ -154,9 +157,8 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 
   /* Light theme adjustments */
   :global([data-theme="light"]) .search-input {
-    background: var(--gray-0);
     color: var(--gray-800);
-    border-color: var(--gray-300);
+    background: transparent;
   }
 
   :global([data-theme="light"]) .search-input::placeholder {
@@ -192,8 +194,8 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
   /* Desktop adjustments */
   @media (min-width: 50em) {
     .search-input {
-      padding: 0.5rem 2rem 0.5rem 2rem;
-      font-size: var(--text-sm);
+      padding: 0.6rem 2rem 0.6rem 2rem;
+      font-size: var(--text-base);
     }
 
     .search-icon {
@@ -379,7 +381,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
           const before = highlightedText.substring(0, start);
           const highlighted = highlightedText.substring(start, end + 1);
           const after = highlightedText.substring(end + 1);
-          highlightedText = `${before}<mark style="background: var(--accent-regular); color: var(--gray-0); padding: 0.1em 0.2em; border-radius: 0.2em;">${highlighted}</mark>${after}`;
+          highlightedText = `${before}<mark style="background: var(--accent-regular); color: var(--accent-text-over); padding: 0.1em 0.2em; border-radius: 0.2em;">${highlighted}</mark>${after}`;
         }
       }
       

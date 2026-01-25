@@ -53,4 +53,4 @@ D'Césares, Isaac. *[Título do conteúdo]*. Isaac D'Césares Portfolio, [data d
 ## Optional
 - [llms-full.txt](https://dcesares.dev/llms-full.txt): versão completa com FAQ, glossário e políticas detalhadas
 
-_Gerado em: 11 de janeiro de 2026_
+_Gerado em: 25 de janeiro de 2026_
