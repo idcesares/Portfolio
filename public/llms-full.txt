@@ -287,7 +287,7 @@ dcesares.dev/
 
 ---
 
-**Documento gerado em**: 11 de janeiro de 2026  
-**Versão**: 1.0
+**Documento gerado em**: 25 de janeiro de 2026  
+**Versão**: 1.1
 **Próxima revisão**: Março 2026  
 **Responsável**: Isaac D'Césares (isaac.dcesares@gmail.com)

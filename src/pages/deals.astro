@@ -1,4 +1,6 @@
 ---
+export const prerender = true;
+
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import Grid from '../components/Grid.astro';
@@ -34,7 +36,7 @@ const deals = [
                 tagline="Descubra vantagens imperdíveis e aproveite o melhor das plataformas tecnológicas!"
                 align="start"
             />
-            <Grid variant="offset">
+            <Grid variant="offset" data-animate="fade-up">
                 {
                     deals.map((deal) => (
                         <li class="deal-item">

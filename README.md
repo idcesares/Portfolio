@@ -58,11 +58,13 @@ Com uma sólida formação acadêmica e profissional, incluindo MBA em Inovaçã
 - **Acessibilidade**: Design compatível com WCAG para experiência de usuário inclusiva
 
 ### ⚡ Performance e Funcionalidades
-- **SSR + SSG**: Renderização server-side com geração estática para performance otimizada
+- **Hybrid SSR + Prerender**: Todas as páginas são prerendered no build para máxima performance
+- **MPA Navigation**: Navegação tradicional com prefetch inteligente (viewport strategy)
 - **SEO Otimizado**: Meta tags abrangentes, dados estruturados e sitemap
 - **Gerenciamento de Conteúdo**: Conteúdo baseado em Markdown com frontmatter para atualizações fáceis
 - **Funcionalidade de Busca**: Busca em texto completo em artigos e projetos usando Fuse.js
 - **Integração de Analytics**: Vercel Analytics e Speed Insights para monitoramento de performance
+- **Scroll Animations**: Animações CSS com `data-animate` attributes (respeitando prefers-reduced-motion)
 
 ### 🔧 Integrações Avançadas
 - **Content Collections**: Sistema de gerenciamento de conteúdo type-safe do Astro
@@ -73,6 +75,8 @@ Com uma sólida formação acadêmica e profissional, incluindo MBA em Inovaçã
 
 ### 🌐 Deploy e Infraestrutura
 - **Plataforma Vercel**: Deploy edge com CDN global
+- **Security Headers**: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
+- **Asset Caching**: Cache immutable (1 ano) para assets otimizados
 - **Workflow baseado em Git**: Deploy contínuo a partir do GitHub
 - **Monitoramento de Performance**: Analytics e insights de velocidade em tempo real
 - **Gerenciamento de Domínio**: Domínio personalizado com certificado SSL
@@ -180,7 +184,7 @@ Portfolio/
 │   └── llms.txt           # Instruções para LLMs
 ├── astro.config.mjs        # Configuração do Astro
 ├── tailwind.config.cjs     # Configuração do Tailwind CSS
-├── vercel.json             # Configuração de deploy e headers CORS
+├── vercel.json             # Configuração de deploy, security headers e caching
 └── package.json
 ```
 
@@ -340,4 +344,4 @@ Estou sempre aberto a novas parcerias, oportunidades de pesquisa e projetos que 
 
 ---
 
-**Última atualização**: Setembro 2025 | **Versão do site**: Astro 5 + SSR | **Status**: Em desenvolvimento ativo
+**Última atualização**: Janeiro 2026 | **Versão do site**: Astro 5 + Hybrid SSR | **Status**: Em desenvolvimento ativo

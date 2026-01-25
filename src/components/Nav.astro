@@ -6,12 +6,12 @@ import SearchBox from './SearchBox.astro';
 /** Main menu items */
 const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'viewport' }[] = [
 	{ label: 'Home', href: '/', prefetch: 'load' },
-	{ label: 'Trabalhos', href: '/work/', prefetch: 'load' },
-	{ label: 'Blog', href: '/blog/', prefetch: 'load' },
-	{ label: 'Sobre', href: '/about/' }];
+	{ label: 'Trabalhos', href: '/work', prefetch: 'load' },
+	{ label: 'Blog', href: '/blog', prefetch: 'load' },
+	{ label: 'Sobre', href: '/about' }];
 ---
 
-<nav transition:name="nav" transition:animate="none">
+<nav>
 	<div class="nav-shell">
 		<div class="menu-header">
 			<a href="/" class="site-title" aria-label="Isaac D'Césares">
@@ -222,9 +222,6 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 	// Initialize on DOM load
 	document.addEventListener('DOMContentLoaded', initNav);
-	
-	// Re-initialize after view transitions
-	document.addEventListener('astro:page-load', initNav);
 </script>
 
 <style>

@@ -31,7 +31,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 				align="start"
 			/>
 			
-			<div class="content-section">
+			<div class="content-section" data-animate="fade-up">
 				<FilterBar variant="blog" tags={allTags} />
 				
 				<div class="view-controls">

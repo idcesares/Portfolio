@@ -31,7 +31,7 @@ const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sor
 				align="start"
 			/>
 			
-			<div class="content-section">
+			<div class="content-section" data-animate="fade-up">
 				<FilterBar variant="work" tags={allTags} />
 				
 				<div class="view-controls">

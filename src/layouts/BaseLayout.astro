@@ -58,7 +58,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 	</head>
 	<body>
 		<div class="stack backgrounds">
-			<Nav transition:persist />
+			<Nav />
 			<slot />
 			<Footer />
 		</div>
@@ -79,7 +79,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 					return;
 				}
 
-				const elementsToObserve = [];
+				const elementsToObserve: Element[] = [];
 
 				animatedElements.forEach(el => {
 					const rect = el.getBoundingClientRect();
@@ -115,9 +115,6 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 
 			// Run on initial load
 			initScrollReveal();
-
-			// Re-run after view transitions (Astro's client-side navigation)
-			document.addEventListener('astro:page-load', initScrollReveal);
 		</script>
 
 		<style>

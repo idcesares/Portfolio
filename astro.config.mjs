@@ -21,6 +21,20 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
+  // Experimental features for better performance
+  experimental: {
+    // SVGO optimization for smaller SVG files
+    svgo: {
+      plugins: [
+        'preset-default',
+        {
+          name: 'removeViewBox',
+          active: false // Preserve viewBox for scaling
+        }
+      ]
+    }
+  },
+
   adapter: vercel({
     webAnalytics: {
       enabled: true
@@ -54,6 +68,9 @@ export default defineConfig({
   build: {
     format: "file",
   },
+
+  // Ensure consistent URL format (no trailing slash matches build.format: "file")
+  trailingSlash: 'never',
 
   site: 'https://dcesares.dev',
 
