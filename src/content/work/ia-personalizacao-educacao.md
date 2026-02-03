@@ -1,6 +1,7 @@
 ---
 title: Inteligência Artificial e a Personalização na Educação
 publishDate: 2025-06-05 08:00:00
+updatedDate: 2025-06-05 08:00:00
 img: /assets/blog_imgs/SESC_Educacao_437_FHD.webp
 img_alt: Mesa-redonda sobre IA e personalização na educação durante o 1º Congresso da Rede Sesc
 description: Reflexões da mesa-redonda sobre inteligência artificial e personalização do ensino no 1º Congresso da Rede Sesc de Educação, com Dora Kaufman e Lilian Bacich.

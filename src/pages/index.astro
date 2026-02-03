@@ -23,11 +23,11 @@ import { getSiteStructuredData } from '../utils/seo';
 
 
 const projects = (await getCollection('work'))
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
 	.slice(0, 4);
 
 const posts = (await getCollection('blog'))
-	.sort((a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf())
+	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
 	.slice(0, 4);
 
 const site = Astro.site ?? new URL('https://dcesares.dev');

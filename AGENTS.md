@@ -171,7 +171,7 @@ pnpm astro check && pnpm build
 - Build sem erros é gate obrigatório para deploy
 - Vercel executa `pnpm build` automaticamente
 
-**Content Validation**: Collections têm schemas Zod rigorosos (título, descrição, data, tags, imagem obrigatórios).
+**Content Validation**: Collections têm schemas Zod rigorosos (título, descrição, datas, tags, imagem obrigatórios).
 
 **Performance Gates**:
 - Vercel Analytics monitora Core Web Vitals
@@ -237,7 +237,7 @@ pnpm preview               # Testar build SSR localmente
 ## Áreas Sensíveis e "Gotchas"
 
 **Content Collections**:
-- ❌ **ERRO COMUM**: Esquecer campos obrigatórios (title, description, publishDate, tags, img)
+- ❌ **ERRO COMUM**: Esquecer campos obrigatórios (title, description, publishDate, updatedDate, tags, img)
 - ✅ **SOLUÇÃO**: Sempre validar com `pnpm astro check` antes do commit
 
 **Caching**:
@@ -266,6 +266,7 @@ pnpm preview               # Testar build SSR localmente
 title: "Título em Português"
 description: "Descrição SEO (150-160 chars)"
 publishDate: 2025-01-15
+updatedDate: 2025-01-15
 tags: ["ai", "educacao", "inovacao"]
 img: "/assets/blog_imgs/nome-otimizado.webp"
 img_alt: "Alt text descritivo" # opcional, mas recomendado

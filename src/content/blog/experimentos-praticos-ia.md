@@ -1,6 +1,7 @@
 ---
 title: Experimentos Práticos de Inteligência Artificial
 publishDate: 2023-12-20 00:00:00
+updatedDate: 2023-12-20 00:00:00
 img: /assets/blog_imgs/ai-tinkering.webp
 img_alt: Person tinkering with an AI model.
 description: Repositório que reúne alguns experimentos práticos de Inteligência Artificial que não requerem programação!

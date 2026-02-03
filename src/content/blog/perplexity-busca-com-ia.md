@@ -1,6 +1,7 @@
 ---
 title: Perplexity - Uma Nova Abordagem de Busca com IA
 publishDate: 2024-01-08 13:50:00
+updatedDate: 2024-01-08 13:50:00
 img: https://i.ytimg.com/vi_webp/hrggcbweDjc/maxresdefault.webp
 img_alt: Person tinkering with an AI model.
 description: O Perplexity é uma ferramenta de busca com IA que tem se destacado significativamente em minha jornada exploratória por apps baseados em IA. Confira!

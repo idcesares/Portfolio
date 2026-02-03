@@ -7,11 +7,16 @@ const parser = new MarkdownIt();
 export const prerender = true;
 
 export async function GET(context) {
-  const blog = await getCollection('blog');
+  const blog = (await getCollection('blog')).sort(
+    (a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
+  );
   return rss({
     title: "Blog do Isaac D'Césares",
     description: "Blog pessoal do Isaac D'Césares, com foco em tecnologia e educação.",
     site: context.site,
+    xmlns: {
+      atom: 'http://www.w3.org/2005/Atom',
+    },
     items: blog.map((post) => ({
       title: post.data.title,
       pubDate: post.data.publishDate,
@@ -20,6 +25,7 @@ export async function GET(context) {
       content: sanitizeHtml(parser.render(post.body), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
       }),
+      customData: `<atom:updated>${post.data.updatedDate.toISOString()}</atom:updated>`,
       ...post.data,
     })),
   });

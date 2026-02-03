@@ -1,6 +1,7 @@
 ---
 title: LearnChain - Educação descentralizada e colaborativa
 publishDate: 2024-08-30 19:00:00
+updatedDate: 2024-08-30 19:00:00
 img: https://i3.ytimg.com/vi/8DJKh2Snvn4/maxresdefault.jpg
 img_alt: Capa do da transmissão ao vivo "LearnChain - Educação descentralizada e colaborativa"
 description: Como podemos encontrar um novo modelo deproposta de valor para os criadores e consumidores de conteúdo educacional? Assista a essa transmissão do Festival do Conhecimento da UFRJ 2024 e conheça o projeto LearnChain.

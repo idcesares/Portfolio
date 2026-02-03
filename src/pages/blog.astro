@@ -12,7 +12,7 @@ import FilterBar from '../components/FilterBar.astro';
 import ViewToggle from '../components/ViewToggle.astro';
 
 const posts = (await getCollection('blog')).sort(
-	(a, b) => b.data.publishDate.valueOf() - a.data.publishDate.valueOf()
+	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
 
 // Extract all unique tags from posts

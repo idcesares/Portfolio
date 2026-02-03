@@ -1,6 +1,7 @@
 ---
 title: Prompts poderosos que vão fazer a IA trabalhar pra você! | Calourada Descomplica
 publishDate: 2024-10-14 19:00:00
+updatedDate: 2024-10-14 19:00:00
 img: https://i3.ytimg.com/vi/TcSpugXwEa8/maxresdefault.jpg
 img_alt: Capa do da transmissão ao vivo "Prompts poderosos que vão fazer a IA trabalhar pra você!"
 description: Aprenda a fazer perguntas poderosas para obter respostas incríveis da IA!

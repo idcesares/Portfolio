@@ -8,6 +8,7 @@ import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
 import ContentImage from '../../components/ContentImage.astro';
+import ContentDateMeta from '../../components/ContentDateMeta.astro';
 import { render } from 'astro:content';
 import { AUTHOR_PROFILE_PATH, getBlogPostingStructuredData } from '../../utils/seo';
 
@@ -32,6 +33,7 @@ const site = Astro.site ?? new URL('https://dcesares.dev');
 const structuredData = getBlogPostingStructuredData(entry, site);
 const article = {
         publishedTime: entry.data.publishDate.toISOString(),
+        modifiedTime: entry.data.updatedDate.toISOString(),
         authors: [new URL(AUTHOR_PROFILE_PATH, site).toString()],
         section: 'Blog',
         tags: entry.data.tags,
@@ -55,12 +57,17 @@ const article = {
 					<Hero title={entry.data.title} align="start">
 						<div class="post-meta">
 							<div class="meta-row">
-								<div class="tags">
+							<div class="tags">
 									{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
-								</div>
-								<span class="meta-divider"></span>
-								<p class="reading-time"><Icon icon="book-open" /> {remarkPluginFrontmatter.minutesRead}</p>
 							</div>
+							<span class="meta-divider"></span>
+							<ContentDateMeta
+								publishDate={entry.data.publishDate}
+								updatedDate={entry.data.updatedDate}
+							/>
+							<span class="meta-divider"></span>
+							<p class="reading-time"><Icon icon="book-open" /> {remarkPluginFrontmatter.minutesRead}</p>
+						</div>
 							<p class="description">{entry.data.description}</p>
 						</div>
 					</Hero>

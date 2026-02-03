@@ -1,0 +1,38 @@
+---
+interface Props {
+	publishDate: Date;
+	updatedDate: Date;
+}
+
+const { publishDate, updatedDate } = Astro.props;
+const publish = new Date(publishDate);
+const updated = new Date(updatedDate);
+const isUpdated = updated.getTime() > publish.getTime();
+const displayDate = isUpdated ? updated : publish;
+const label = isUpdated ? 'Atualizado em' : 'Publicado em';
+const formattedDate = displayDate.toLocaleDateString('pt-BR', {
+	year: 'numeric',
+	month: 'long',
+	day: 'numeric',
+});
+---
+
+<p class="content-date" data-updated={isUpdated ? 'true' : 'false'}>
+	<span class="content-date__label">{label}</span>
+	<time datetime={displayDate.toISOString()}>{formattedDate}</time>
+</p>
+
+<style>
+	.content-date {
+		display: inline-flex;
+		align-items: center;
+		gap: 0.35rem;
+		font-size: var(--text-sm);
+		color: var(--gray-400);
+		white-space: nowrap;
+	}
+
+	.content-date__label {
+		font-weight: 500;
+	}
+</style>

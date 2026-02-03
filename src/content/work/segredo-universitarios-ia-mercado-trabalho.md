@@ -1,6 +1,7 @@
 ---
 title: O Segredo dos Universitários que Usam IA para Sair na Frente no Mercado de Trabalho
 publishDate: 2025-06-26 19:00:00
+updatedDate: 2025-06-26 19:00:00
 slug: segredo-universitarios-ia-mercado-trabalho
 img: https://i.ytimg.com/vi/lfPnW0PIi6s/sddefault.jpg
 img_alt: Capa da live sobre IA para universitários e mercado de trabalho, mostrando estudantes utilizando tecnologia em um ambiente moderno.

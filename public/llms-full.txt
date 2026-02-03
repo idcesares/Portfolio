@@ -126,7 +126,8 @@ dcesares.dev/
       "url": "/blog/voce-realmente-precisa-de-antivirus-em-2025/",
       "description": "Análise crítica sobre necessidade de antivírus...",
       "tags": ["Segurança", "Tecnologia", "Digital"],
-      "publishDate": "2025-01-15"
+      "publishDate": "2025-01-15",
+      "updatedDate": "2025-01-15"
     }
   ],
   "work": [
@@ -134,7 +135,9 @@ dcesares.dev/
       "title": "LearnChain - Blockchain Educacional",
       "url": "/work/blockchain-educacional-learnchain/",
       "description": "Plataforma descentralizada para educação...",
-      "tags": ["Blockchain", "Educação", "Inovação"]
+      "tags": ["Blockchain", "Educação", "Inovação"],
+      "publishDate": "2025-01-15",
+      "updatedDate": "2025-01-15"
     }
   ]
 }

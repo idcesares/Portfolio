@@ -1,6 +1,7 @@
 ---
 title: Astro -  Elevando o Personal Branding do meu Website com Tecnologia de Ponta
 publishDate: 2024-01-18 13:30:00
+updatedDate: 2024-01-18 13:30:00
 img: /assets/blog_imgs/astro.webp
 img_alt: Logotipo do Framework Astro.
 description: Neste post, exploro a importância de um website pessoal para o branding pessoal, detalho os aspectos técnicos do Astro.js, e discuto o uso da Vercel para hospedagem e análise.

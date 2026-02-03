@@ -1,6 +1,7 @@
 ---
 title: Segurança Digital - protegendo nossos jovens no mundo online
 publishDate: 2025-05-07 09:00:00
+updatedDate: 2025-05-07 09:00:00
 img: /assets/blog_imgs/palestra-cei-seguranca-digital.webp
 img_alt: Foto da Palestra sobre Segurança Digital
 description: Este artigo consolida a palestra que apresentei para pais e responsáveis sobre Segurança Digital de crianças e adolescentes. Aqui você encontra a proposta pedagógica, principais conceitos, ferramentas de proteção, e um Super Guia com todos os links e recursos práticos para continuar aprendendo.

@@ -1,6 +1,7 @@
 ---
 title: O Impacto da Blockchain na Educação - Reflexões do Congresso do Senac
 publishDate: 2024-09-20 19:00:00
+updatedDate: 2024-09-20 19:00:00
 img: https://www.pe.senac.br/wp-content/uploads/2024/09/19-09-24-Senac-XX-Congresso-Simony-RodriguesZ18A8486-1200x565.jpg
 img_alt: Palestra sobre blockchain na educação no Congresso do Senac
 description: Uma visão abrangente sobre as potencialidades da tecnologia blockchain no setor educacional, apresentada por Isaac D'Césares no Congresso do Senac Pernambuco.

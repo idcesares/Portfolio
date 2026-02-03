@@ -1,6 +1,7 @@
 ---
 title: Como aumentar sua produtividade em 40% com IA | AULA INAUGURAL 2024.1 Descomplica
 publishDate: 2024-02-28 19:00:00
+updatedDate: 2024-02-28 19:00:00
 img: https://i3.ytimg.com/vi/5SXH8tLOSqg/maxresdefault.jpg
 img_alt: Capa do da transmissão ao vivo "Como aumentar sua produtividade em 40% com IA | AULA INAUGURAL 2024.1 Descomplica"
 description: Como a inteligência artificial pode nos ajudar a ser mais produtivos?

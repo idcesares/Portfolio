@@ -197,6 +197,7 @@ Crie um novo arquivo `.md` ou `.mdx` em `src/content/blog/` com frontmatter:
 ---
 title: "Título do Seu Post"
 publishDate: 2025-01-15 10:00:00
+updatedDate: 2025-01-15 10:00:00
 description: "Breve descrição do seu post"
 tags: ["IA", "Educação", "Tecnologia"]
 img: "/assets/blog_imgs/nome-da-imagem.webp"
@@ -213,6 +214,7 @@ Crie um novo arquivo `.md` ou `.mdx` em `src/content/work/` com frontmatter:
 ---
 title: "Título do Projeto"
 publishDate: 2025-01-15 10:00:00
+updatedDate: 2025-01-15 10:00:00
 img: "/assets/blog_imgs/projeto-imagem.webp"
 img_alt: "Descrição da imagem"
 description: "Descrição do projeto"
@@ -227,6 +229,7 @@ Ambas as collections (`blog` e `work`) seguem o mesmo schema definido em `src/co
 - **title**: Título obrigatório
 - **description**: Descrição para SEO
 - **publishDate**: Data de publicação
+- **updatedDate**: Data de atualização
 - **tags**: Array de tags para categorização
 - **img**: Caminho para imagem (obrigatório)
 - **img_alt**: Texto alternativo para a imagem

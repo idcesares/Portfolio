@@ -1,6 +1,7 @@
 ---
 title: Queimadas no Pantanal - uma análise exploratória dos últimos 10 anos
 publishDate: 2022-12-20 00:00:00
+updatedDate: 2022-12-20 00:00:00
 img: https://github.com/idcesares/DS_queimadas_pantanal/blob/main/imgs/Queimadas%20no%20Pantanal%20uma%20an%C3%A1lise%20explorat%C3%B3ria%20dos%20%C3%BAltimos%2010%20anos.png?raw=true
 img_alt: Imagem de capa de um incêndio no Pantanal.
 description: Queimadas no Pantanal - uma análise exploratória da última década

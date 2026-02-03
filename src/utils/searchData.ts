@@ -9,6 +9,7 @@ export interface SearchItem {
   type: 'blog' | 'work';
   tags: string[];
   publishDate: Date;
+  updatedDate: Date;
 }
 
 export async function generateSearchData(): Promise<SearchItem[]> {
@@ -28,6 +29,7 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       type: 'blog',
       tags: post.data.tags || [],
       publishDate: post.data.publishDate,
+      updatedDate: post.data.updatedDate,
     });
   }
 
@@ -42,8 +44,9 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       type: 'work',
       tags: project.data.tags || [],
       publishDate: project.data.publishDate,
+      updatedDate: project.data.updatedDate,
     });
   }
 
-  return searchItems.sort((a, b) => b.publishDate.getTime() - a.publishDate.getTime());
+  return searchItems.sort((a, b) => b.updatedDate.getTime() - a.updatedDate.getTime());
 }

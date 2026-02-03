@@ -53,6 +53,7 @@ export const getBlogPostingStructuredData = (
 ) => {
   const pageUrl = new URL(`/blog/${entry.id}/`, site).toString();
   const imageUrl = new URL(entry.data.img, site).toString();
+  const updatedDate = entry.data.updatedDate ?? entry.data.publishDate;
 
   return {
     '@context': 'https://schema.org',
@@ -71,6 +72,7 @@ export const getBlogPostingStructuredData = (
       url: getSiteHref(site),
     },
     datePublished: entry.data.publishDate.toISOString(),
+    dateModified: updatedDate.toISOString(),
     mainEntityOfPage: pageUrl,
     inLanguage: SITE_LANGUAGE,
     keywords: entry.data.tags.join(', '),
@@ -83,6 +85,7 @@ export const getWorkStructuredData = (
 ) => {
   const pageUrl = new URL(`/work/${entry.id}/`, site).toString();
   const imageUrl = new URL(entry.data.img, site).toString();
+  const updatedDate = entry.data.updatedDate ?? entry.data.publishDate;
 
   return {
     '@context': 'https://schema.org',
@@ -102,6 +105,7 @@ export const getWorkStructuredData = (
       url: getSiteHref(site),
     },
     datePublished: entry.data.publishDate.toISOString(),
+    dateModified: updatedDate.toISOString(),
     inLanguage: SITE_LANGUAGE,
     keywords: entry.data.tags.join(', '),
   };

@@ -1,6 +1,7 @@
 ---
 title: "Prompts de IA: Onde Encontrar os Melhores para Turbinar Sua Criatividade e Produtividade"
 publishDate: 2025-05-24 08:00:00
+updatedDate: 2025-05-24 08:00:00
 img: /assets/blog_imgs/prompt-directories.webp
 img_alt: Arte abstrata mostrando diferentes agrupamentos de prompts
 description: "Descubra os melhores repositórios, marketplaces e comunidades para encontrar prompts de alta qualidade para ChatGPT, Gemini, Midjourney e outros modelos de IA."

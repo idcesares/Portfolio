@@ -11,8 +11,8 @@ const { post, variant = 'default' } = Astro.props;
 const { data, id } = post;
 
 // Format date for display
-const publishDate = new Date(data.publishDate);
-const formattedDate = publishDate.toLocaleDateString('pt-BR', {
+const updatedDate = new Date(data.updatedDate);
+const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 	year: 'numeric',
 	month: 'long',
 	day: 'numeric'
@@ -25,7 +25,7 @@ const formattedDate = publishDate.toLocaleDateString('pt-BR', {
 	data-tags={data.tags.join(', ')}
 	data-title={data.title}
 	data-description={data.description}
-	data-publish-date={data.publishDate.toISOString()}
+	data-updated-date={data.updatedDate.toISOString()}
 >
 	<a class="card" href={`/blog/${id}`}>
 		{variant === 'compact' ? (

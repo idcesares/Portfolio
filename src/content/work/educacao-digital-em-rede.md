@@ -1,6 +1,7 @@
 ---
 title: Educação Digital - Reflexões e Práticas para um Futuro Inclusivo
 publishDate: 2024-12-19 19:00:00
+updatedDate: 2024-12-19 19:00:00
 img: https://i3.ytimg.com/vi/ZlN5lInKSiU/maxresdefault.jpg
 img_alt: Capa do 4º Episódio do Podcast Papo em Rede - Educação Digital
 description: Neste episódio do Papo em Rede, conversamos sobre a importância da educação digital e como ela pode ser um caminho para um futuro mais inclusivo e acessível no contexto educacional brasileiro.

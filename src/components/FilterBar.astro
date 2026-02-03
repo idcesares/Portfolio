@@ -450,9 +450,9 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 			const items = Array.from(this.allItems);
 			
 			items.sort((a, b) => {
-				const aDate = a.getAttribute('data-publish-date');
+				const aDate = a.getAttribute('data-updated-date');
 				const aTitle = a.getAttribute('data-title') || '';
-				const bDate = b.getAttribute('data-publish-date');
+				const bDate = b.getAttribute('data-updated-date');
 				const bTitle = b.getAttribute('data-title') || '';
 
 				switch (sortType) {

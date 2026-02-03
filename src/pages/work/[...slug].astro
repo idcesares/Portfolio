@@ -8,8 +8,9 @@ import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
 import Pill from '../../components/Pill.astro';
 import ContentImage from '../../components/ContentImage.astro';
+import ContentDateMeta from '../../components/ContentDateMeta.astro';
 import { render } from 'astro:content';
-import { getWorkStructuredData } from '../../utils/seo';
+import { AUTHOR_PROFILE_PATH, getWorkStructuredData } from '../../utils/seo';
 
 interface Props {
 	entry: CollectionEntry<'work'>;
@@ -30,6 +31,13 @@ const { Content, remarkPluginFrontmatter } = await render(entry);
 
 const site = Astro.site ?? new URL('https://dcesares.dev');
 const structuredData = getWorkStructuredData(entry, site);
+const article = {
+	publishedTime: entry.data.publishDate.toISOString(),
+	modifiedTime: entry.data.updatedDate.toISOString(),
+	authors: [new URL(AUTHOR_PROFILE_PATH, site).toString()],
+	section: 'Work',
+	tags: entry.data.tags,
+};
 ---
 
 <BaseLayout
@@ -37,6 +45,8 @@ const structuredData = getWorkStructuredData(entry, site);
         description={entry.data.description}
         image={entry.data.img}
         imageAlt={entry.data.img_alt}
+		ogType="article"
+		article={article}
         structuredData={structuredData}
 >
 	<div class="stack gap-20">
@@ -47,12 +57,17 @@ const structuredData = getWorkStructuredData(entry, site);
 					<Hero title={entry.data.title} align="start">
 						<div class="post-meta">
 							<div class="meta-row">
-								<div class="tags">
+							<div class="tags">
 									{entry.data.tags.map((t) => <Pill>{t}</Pill>)}
-								</div>
-								<span class="meta-divider"></span>
-								<p class="reading-time"><Icon icon="book-open" /> {remarkPluginFrontmatter.minutesRead}</p>
 							</div>
+							<span class="meta-divider"></span>
+							<ContentDateMeta
+								publishDate={entry.data.publishDate}
+								updatedDate={entry.data.updatedDate}
+							/>
+							<span class="meta-divider"></span>
+							<p class="reading-time"><Icon icon="book-open" /> {remarkPluginFrontmatter.minutesRead}</p>
+						</div>
 							<p class="description">{entry.data.description}</p>
 						</div>
 					</Hero>

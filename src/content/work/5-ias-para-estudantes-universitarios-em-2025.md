@@ -1,6 +1,7 @@
 ---
 title: 5 IAs que todo universitário precisa usar em 2025 - Do TCC à rotina de estudos
 publishDate: 2025-01-23 19:00:00
+updatedDate: 2025-01-23 19:00:00
 img: https://i.ytimg.com/vi/q4E5oi0qAb4/sddefault.jpg
 img_alt: Capa da transmissão ao vivo "5 IAs que todo universitário precisa usar - Do TCC à rotina de estudos" da Descomplica Faculdade Digital
 description: Prepare-se para turbinar seus estudos com as ferramentas de Inteligência Artificial que estão revolucionando o aprendizado! Explore 5 IAs essenciais para universitários, do TCC à organização da rotina. Descubra como a IA pode ser sua aliada na faculdade!

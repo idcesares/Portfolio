@@ -1,6 +1,7 @@
 ---
 title: Como fazer download de transcrições de vídeos do YouTube
 publishDate: 2024-10-13 08:00:00
+updatedDate: 2024-10-13 08:00:00
 img: /assets/blog_imgs/youtube_round.webp
 img_alt: Logotipo do YouTube
 description: Artigo com snippet de código para baixar transcrições de vídeos do YouTube.
