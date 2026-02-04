@@ -70,7 +70,7 @@ export default defineConfig({
   },
 
   // Ensure consistent URL format (no trailing slash matches build.format: "file")
-  trailingSlash: 'never',
+  trailingSlash: 'ignore',
 
   site: 'https://dcesares.dev',
 
