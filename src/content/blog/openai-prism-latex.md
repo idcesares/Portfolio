@@ -23,7 +23,7 @@ O LaTeX já é meu *daily driver* para escrita científica há bastante tempo, e
 
 Tenho testado o PRISM com artigos que antes mantinha no Overleaf, e a experiência tem sido bastante positiva até aqui. A migração é tranquila, o ambiente é estável e a integração com IA ajuda em tarefas pontuais, como revisar trechos, organizar referências ou checar coerência, sem que a IA tome o controle do texto.
 
-![Captura de tela de um editor LaTeX em modo dividido, com o código-fonte de um artigo científico à esquerda e a pré-visualização do PDF à direita, mostrando o título “Open Decentralized Linked Data Networks”, autor e seções iniciais do artigo.](/public/assets/blog_imgs/prism_print.webp)
+![Captura de tela de um editor LaTeX em modo dividido, com o código-fonte de um artigo científico à esquerda e a pré-visualização do PDF à direita, mostrando o título “Open Decentralized Linked Data Networks”, autor e seções iniciais do artigo.](/assets/blog_imgs/prism_print.webp)
 
 Um ponto interessante é que a IA atua **no contexto do próprio documento**, entendendo a estrutura do projeto, as referências e o histórico de edição. Isso reduz aquela fricção comum de copiar e colar trechos entre o editor e uma interface separada de chat.
 
@@ -41,4 +41,4 @@ Usado com critério, o PRISM se mostra como uma alternativa sólida para quem j�
 
 ---
 
-**Nota editorial:** este texto foi escrito com apoio de IA generativa, com curadoria, revisão crítica e autoria humana integral.
+**Nota:** este texto foi escrito com apoio de IA generativa, com curadoria, revisão crítica e autoria humana.
