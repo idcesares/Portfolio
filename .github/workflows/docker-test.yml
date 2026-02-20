@@ -58,7 +58,7 @@ jobs:
 
     - name: Test Astro check command
       run: |
-        docker compose exec -T portfolio-dev pnpm astro check || true
+        docker compose exec -T portfolio-dev pnpm astro check
 
     - name: Test production build
       run: |

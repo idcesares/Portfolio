@@ -233,47 +233,19 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 </style>
 
 <script>
-  import Fuse, { type FuseResult, type FuseResultMatch } from 'fuse.js';
   import type { SearchItem } from '../utils/searchData';
 
+  type FuseInstance = import('fuse.js').default<SearchItem>;
+  type FuseResult = import('fuse.js').FuseResult<SearchItem>;
+  type FuseResultMatch = import('fuse.js').FuseResultMatch;
+
   class SearchManager {
-    private fuse: Fuse<SearchItem> | null = null;
+    private fuse: FuseInstance | null = null;
     private searchData: SearchItem[] = [];
+    private loadPromise: Promise<void> | null = null;
 
     constructor() {
-      this.init();
-    }
-
-    async init() {
-      // Load search data
-      try {
-        const response = await fetch('/search-data.json');
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-        const data = await response.json();
-        this.searchData = Array.isArray(data) ? data : data.data || [];
-        
-        this.fuse = new Fuse(this.searchData, {
-          keys: [
-            { name: 'title', weight: 0.4 },
-            { name: 'description', weight: 0.3 },
-            { name: 'content', weight: 0.2 },
-            { name: 'tags', weight: 0.1 }
-          ],
-          threshold: 0.3,
-          includeMatches: true,
-          minMatchCharLength: 2,
-          ignoreLocation: true,
-        });
-
-        this.setupAllSearchInstances();
-      } catch (error) {
-        console.error('Failed to load search data:', error);
-        // Initialize with empty data and still setup the UI
-        this.searchData = [];
-        this.setupAllSearchInstances();
-      }
+      this.setupAllSearchInstances();
     }
 
     setupAllSearchInstances() {
@@ -291,15 +263,16 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       // Mark as initialized to prevent double initialization
       searchInput.setAttribute('data-search-initialized', 'true');
       
-      searchInput.addEventListener('input', (e: Event) => {
+      searchInput.addEventListener('input', async (e: Event) => {
         const query = (e.target as HTMLInputElement).value;
-        this.performSearch(query, searchResults);
+        await this.performSearch(query, searchResults);
       });
 
-      searchInput.addEventListener('focus', (e: Event) => {
+      searchInput.addEventListener('focus', async (e: Event) => {
+        this.warmup();
         const query = (e.target as HTMLInputElement).value;
         if (query.length >= 2) {
-          this.performSearch(query, searchResults);
+          await this.performSearch(query, searchResults);
         }
       });
 
@@ -324,14 +297,20 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       });
     }
 
-    performSearch(query: string, searchResults: HTMLElement) {
-      if (!this.fuse) {
-        this.displayNoResults(searchResults, 'Search not available at the moment');
+    async performSearch(query: string, searchResults: HTMLElement) {
+      if (query.length < 2) {
+        this.hideResults(searchResults);
         return;
       }
 
-      if (query.length < 2) {
-        this.hideResults(searchResults);
+      if (!this.fuse) {
+        this.displayNoResults(searchResults, 'Carregando busca...');
+      }
+
+      await this.ensureSearchLoaded();
+
+      if (!this.fuse) {
+        this.displayNoResults(searchResults, 'Busca indisponível no momento');
         return;
       }
 
@@ -339,12 +318,59 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       this.displayResults(results.slice(0, 8), searchResults); // Limit to 8 results
     }
 
+    warmup() {
+      void this.ensureSearchLoaded();
+    }
+
+    async ensureSearchLoaded() {
+      if (this.fuse) return;
+      if (!this.loadPromise) {
+        this.loadPromise = this.loadSearchData();
+      }
+      await this.loadPromise;
+    }
+
+    async loadSearchData() {
+      try {
+        const [{ default: Fuse }, response] = await Promise.all([
+          import('fuse.js'),
+          fetch('/search-data.json')
+        ]);
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const data = await response.json();
+        this.searchData = Array.isArray(data) ? data : data.data || [];
+        
+        this.fuse = new Fuse(this.searchData, {
+          keys: [
+            { name: 'title', weight: 0.4 },
+            { name: 'description', weight: 0.3 },
+            { name: 'content', weight: 0.2 },
+            { name: 'tags', weight: 0.1 }
+          ],
+          threshold: 0.3,
+          includeMatches: true,
+          minMatchCharLength: 2,
+          ignoreLocation: true,
+        });
+      } catch (error) {
+        console.error('Failed to load search data:', error);
+        this.searchData = [];
+        this.fuse = null;
+      } finally {
+        this.loadPromise = null;
+      }
+    }
+
     displayNoResults(searchResults: HTMLElement, message: string = 'No results found') {
       searchResults.innerHTML = `<div class="search-no-results">${message}</div>`;
       this.showResults(searchResults);
     }
 
-    displayResults(results: FuseResult<SearchItem>[], searchResults: HTMLElement) {
+    displayResults(results: FuseResult[], searchResults: HTMLElement) {
       if (results.length === 0) {
         this.displayNoResults(searchResults);
         return;
@@ -415,11 +441,17 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     }
   }
 
+  let searchManager: SearchManager | null = null;
+
   // Initialize search when DOM is loaded
   function initializeSearch() {
+    if (searchManager) return;
+
     // Wait a bit more to ensure all components are loaded
     setTimeout(() => {
-      new SearchManager();
+      if (!searchManager) {
+        searchManager = new SearchManager();
+      }
     }, 100);
   }
 
@@ -449,5 +481,15 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     if (searchInput && !searchInput.hasAttribute('data-search-initialized')) {
       initializeSearch();
     }
+  });
+
+  // Warm up search assets when the overlay opens for a snappy first query.
+  document.addEventListener('searchOverlayOpened', () => {
+    if (!searchManager) {
+      initializeSearch();
+    }
+    setTimeout(() => {
+      searchManager?.warmup();
+    }, 0);
   });
 </script>

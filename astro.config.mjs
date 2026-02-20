@@ -13,6 +13,7 @@ import tailwindcss from '@tailwindcss/vite';
 
 // https://astro.build/config
 export default defineConfig({
+  // Keep server output to preserve Vercel runtime image optimization and analytics integration.
   output: 'server',
 
   // Prefetch configuration for faster navigation

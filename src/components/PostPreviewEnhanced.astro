@@ -9,6 +9,7 @@ interface Props {
 
 const { post, variant = 'default' } = Astro.props;
 const { data, id } = post;
+const isRemoteImage = /^https?:\/\//i.test(data.img);
 
 // Format date for display
 const updatedDate = new Date(data.updatedDate);
@@ -46,13 +47,25 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 					<p class="description">{data.description}</p>
 				</div>
 				<div class="image-container">
-					<Image src={data.img} alt={data.img_alt || ''} width={400} height={300} loading="lazy" decoding="async" />
+					{
+						isRemoteImage ? (
+							<img src={data.img} alt={data.img_alt || ''} width="400" height="300" loading="lazy" decoding="async" />
+						) : (
+							<Image src={data.img} alt={data.img_alt || ''} width={400} height={300} loading="lazy" decoding="async" />
+						)
+					}
 				</div>
 			</>
 		) : (
 			<>
 				<span class="title">{data.title}</span>
-				<Image src={data.img} alt={data.img_alt || ''} width={600} height={400} loading="lazy" decoding="async" />
+				{
+					isRemoteImage ? (
+						<img src={data.img} alt={data.img_alt || ''} width="600" height="400" loading="lazy" decoding="async" />
+					) : (
+						<Image src={data.img} alt={data.img_alt || ''} width={600} height={400} loading="lazy" decoding="async" />
+					)
+				}
 			</>
 		)}
 	</a>

@@ -96,13 +96,13 @@ docker-compose up -d
 
 Acesse: **http://localhost:4321**
 
-**Documentação Completa**: Ver **[DOCKER.md](./DOCKER.md)** ou pasta **[`docker/`](./docker/)**
+**Documentação Completa**: Ver **[docker/QUICKSTART.md](./docker/QUICKSTART.md)** e **[docker/GUIDE.md](./docker/GUIDE.md)**
 
 ### 💻 Opção 2: Instalação Local
 
 **Pré-requisitos**:
-- **Node.js** (versão 18 ou superior)
-- **pnpm** (preferível) ou npm como gerenciador de pacotes
+- **Node.js 22.x**
+- **pnpm 10.x** (gerenciador obrigatório)
 - **Git** para controle de versão
 
 **Passos para Instalação**:
@@ -116,15 +116,11 @@ Acesse: **http://localhost:4321**
 2. **Instale as dependências**
    ```bash
    pnpm install
-   # ou
-   npm install
    ```
 
 3. **Inicie o servidor de desenvolvimento**
    ```bash
    pnpm dev
-   # ou
-   npm run dev
    ```
 
 4. **Visualize o website**

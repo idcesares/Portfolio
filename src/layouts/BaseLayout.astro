@@ -66,14 +66,14 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 		<script>
 			// Scroll Reveal Animation System
 			function initScrollReveal() {
-				const animatedElements = document.querySelectorAll('[data-animate]');
+				const animatedElements = document.querySelectorAll<HTMLElement>('[data-animate]');
 				if (!animatedElements.length) return;
 
 				const revealAll = () => {
 					animatedElements.forEach(el => el.classList.add('is-visible'));
 				};
 
-				const revealInView = (elements) => {
+				const revealInView = (elements: NodeListOf<HTMLElement> | HTMLElement[]) => {
 					elements.forEach(el => {
 						const rect = el.getBoundingClientRect();
 						if (rect.top < window.innerHeight && rect.bottom > 0) {
@@ -89,7 +89,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 						ticking = true;
 						requestAnimationFrame(() => {
 							ticking = false;
-							const hidden = document.querySelectorAll('[data-animate]:not(.is-visible)');
+							const hidden = document.querySelectorAll<HTMLElement>('[data-animate]:not(.is-visible)');
 							if (!hidden.length) {
 								window.removeEventListener('scroll', onScroll);
 								window.removeEventListener('resize', onScroll);
@@ -119,7 +119,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 						return;
 					}
 
-					const elementsToObserve = [];
+					const elementsToObserve: HTMLElement[] = [];
 
 					animatedElements.forEach(el => {
 						const rect = el.getBoundingClientRect();
@@ -153,7 +153,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 
 					// Safety fallback: if nothing is revealed shortly after load, use scroll fallback.
 					window.setTimeout(() => {
-						const hidden = document.querySelectorAll('[data-animate]:not(.is-visible)');
+						const hidden = document.querySelectorAll<HTMLElement>('[data-animate]:not(.is-visible)');
 						if (hidden.length) {
 							revealInView(hidden);
 							setupScrollFallback();
