@@ -27,6 +27,9 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Dependency security audit (high+critical)
+        run: pnpm run audit
+
       - name: Type and content checks
         run: pnpm astro check
 
