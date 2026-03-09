@@ -21,7 +21,7 @@
     "@astrojs/vercel": "^9.0.4",
     "@heroui/button": "^2.2.31",
     "@heroui/code": "^2.2.24",
-    "@heroui/react": "^2.8.9",
+    "@heroui/react": "^2.8.10",
     "@lucide/astro": "^0.575.0",
     "@rehype-pretty/transformers": "^0.13.2",
     "@tailwindcss/vite": "^4.2.1",
