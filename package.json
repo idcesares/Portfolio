@@ -20,7 +20,7 @@
     "@astrojs/sitemap": "^3.7.0",
     "@astrojs/vercel": "^9.0.4",
     "@heroui/button": "^2.2.31",
-    "@heroui/code": "^2.2.24",
+    "@heroui/code": "^2.2.25",
     "@heroui/react": "^2.8.9",
     "@lucide/astro": "^0.575.0",
     "@rehype-pretty/transformers": "^0.13.2",
