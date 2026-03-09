@@ -25,7 +25,7 @@ jobs:
       uses: actions/checkout@v4
 
     - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@v4
 
     - name: Cache Docker layers
       uses: actions/cache@v4
@@ -82,7 +82,7 @@ jobs:
 
     - name: Set up Docker (Windows/Linux)
       if: runner.os != 'macOS'
-      uses: docker/setup-buildx-action@v3
+      uses: docker/setup-buildx-action@v4
 
     # macOS setup (Docker Desktop required)
     - name: Set up Docker (macOS)
