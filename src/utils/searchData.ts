@@ -12,6 +12,19 @@ export interface SearchItem {
   updatedDate: Date;
 }
 
+/** Strip markdown syntax and truncate to limit for search indexing */
+function prepareContent(body: string | undefined, limit = 500): string {
+  if (!body) return '';
+  return body
+    .replace(/^---[\s\S]*?---/m, '')     // frontmatter
+    .replace(/```[\s\S]*?```/g, '')       // code blocks
+    .replace(/!?\[([^\]]*)\]\([^)]*\)/g, '$1') // links/images → alt text
+    .replace(/[#*_~`>|]/g, '')            // markdown syntax chars
+    .replace(/\s+/g, ' ')                 // collapse whitespace
+    .trim()
+    .slice(0, limit);
+}
+
 export async function generateSearchData(): Promise<SearchItem[]> {
   const blogPosts = await getCollection('blog');
   const workProjects = await getCollection('work');
@@ -24,7 +37,7 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       id: post.id,
       title: post.data.title,
       description: post.data.description || '',
-      content: post.body || '',
+      content: prepareContent(post.body),
       url: `/blog/${post.id}`,
       type: 'blog',
       tags: post.data.tags || [],
@@ -39,7 +52,7 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       id: project.id,
       title: project.data.title,
       description: project.data.description || '',
-      content: project.body || '',
+      content: prepareContent(project.body),
       url: `/work/${project.id}`,
       type: 'work',
       tags: project.data.tags || [],

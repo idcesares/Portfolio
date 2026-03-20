@@ -76,11 +76,11 @@ const isExternalOrPublic = typeof src === 'string';
 <style>
 	.content-image {
 		margin: 0;
-		margin-block: 2rem;
+		margin-block: var(--space-8);
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.75rem;
+		gap: var(--space-3);
 	}
 
 	.content-image__img {
@@ -89,15 +89,16 @@ const isExternalOrPublic = typeof src === 'string';
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
 		background: var(--gradient-subtle);
-		border: 1px solid var(--gray-800);
+		border: 1px solid var(--color-border-default);
+		filter: var(--photo-warmth);
 		/* Smooth loading transition */
 		opacity: 1;
-		transition: opacity 0.3s ease;
+		transition: opacity var(--duration-normal) var(--ease-out);
 	}
 
 	.content-image__caption {
 		font-size: var(--text-sm);
-		color: var(--gray-400);
+		color: var(--color-text-tertiary);
 		text-align: center;
 		font-style: italic;
 		max-width: 80%;
@@ -106,7 +107,7 @@ const isExternalOrPublic = typeof src === 'string';
 
 	/* Hero images - full width, prominent */
 	.content-image--hero {
-		margin-block: 2.5rem;
+		margin-block: var(--space-10);
 	}
 
 	.content-image--hero .content-image__img {
@@ -119,11 +120,11 @@ const isExternalOrPublic = typeof src === 'string';
 	/* Responsive adjustments */
 	@media (min-width: 50em) {
 		.content-image {
-			margin-block: 2.5rem;
+			margin-block: var(--space-10);
 		}
 
 		.content-image--hero {
-			margin-block: 3rem;
+			margin-block: var(--space-12);
 		}
 
 		.content-image__caption {

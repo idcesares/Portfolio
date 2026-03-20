@@ -83,14 +83,24 @@ const twitter = {
 <link rel="preconnect" href="https://fonts.googleapis.com" />
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 <link
-  href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+  href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+  rel="stylesheet"
+  media="print"
+  onload="this.media='all'"
+/>
+<link
+  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
   rel="stylesheet"
   media="print"
   onload="this.media='all'"
 />
 <noscript>
   <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Fraunces:wght@400;600;700&family=Instrument+Sans:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
     rel="stylesheet"
   />
 </noscript>
@@ -137,8 +147,15 @@ const twitter = {
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   };
 
-  // Apply theme immediately on script load
+  // Apply theme immediately on script load (before paint)
   applyTheme();
+
+  // Enable smooth transitions only after initial paint
+  requestAnimationFrame(() => {
+    requestAnimationFrame(() => {
+      document.documentElement.classList.add('theme-ready');
+    });
+  });
 
   if (typeof localStorage !== 'undefined') {
     // Watch the document element and persist user preference when it changes.
