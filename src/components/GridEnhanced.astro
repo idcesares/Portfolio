@@ -22,7 +22,7 @@ const { variant = 'offset' } = Astro.props;
 	.grid {
 		display: grid;
 		grid-auto-rows: 1fr;
-		gap: 1rem;
+		gap: var(--space-4);
 		list-style: none;
 		padding: 0;
 		margin: 0;
@@ -30,18 +30,18 @@ const { variant = 'offset' } = Astro.props;
 
 	.grid.small {
 		grid-template-columns: 1fr 1fr;
-		gap: 1.5rem;
+		gap: var(--space-6);
 	}
 
 	.grid.compact {
 		grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-		gap: 1rem;
+		gap: var(--space-4);
 		grid-auto-rows: auto;
 	}
 
 	.grid.list {
 		grid-template-columns: 1fr;
-		gap: 0.75rem;
+		gap: var(--space-3);
 		grid-auto-rows: auto;
 	}
 
@@ -53,11 +53,11 @@ const { variant = 'offset' } = Astro.props;
 	@media (min-width: 50em) {
 		.grid {
 			grid-template-columns: 1fr 1fr;
-			gap: 4rem;
+			gap: var(--space-16);
 		}
 
 		.grid.offset {
-			--row-offset: 7.5rem;
+			--row-offset: var(--space-32);
 			padding-bottom: var(--row-offset);
 		}
 
@@ -74,7 +74,7 @@ const { variant = 'offset' } = Astro.props;
 
 		.grid.small {
 			grid-template-columns: repeat(3, 1fr);
-			gap: 2rem;
+			gap: var(--space-8);
 		}
 
 		.grid.small > :global(:last-child:nth-child(3n-1)) {
@@ -83,18 +83,18 @@ const { variant = 'offset' } = Astro.props;
 
 		.grid.compact {
 			grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-			gap: 1.5rem;
+			gap: var(--space-6);
 		}
 
 		.grid.list {
-			gap: 1rem;
+			gap: var(--space-4);
 		}
 	}
 
 	@media (min-width: 75em) {
 		.grid.compact {
 			grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
-			gap: 2rem;
+			gap: var(--space-8);
 		}
 
 		.grid.small {

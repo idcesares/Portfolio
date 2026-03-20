@@ -16,52 +16,41 @@ const { href } = Astro.props;
 		text-align: center;
 		padding: 0.56em 2em;
 		gap: 0.8em;
-		color: var(--accent-text-over);
+		color: var(--color-text-on-accent);
 		text-decoration: none;
 		line-height: 1.1;
-		border-radius: 999rem;
+		border-radius: var(--radius-full);
 		overflow: hidden;
-		background: var(--gradient-accent-orange);
-		background-size: 140% 140%;
-		background-position: 0% 50%;
+		background: var(--color-terracotta);
 		box-shadow: var(--shadow-md);
-		border: 1px solid color-mix(in oklab, var(--accent-dark) 45%, transparent);
+		border: 1px solid var(--color-terracotta-dark);
 		letter-spacing: 0.01em;
-		transition: transform 0.2s ease, box-shadow 0.2s ease, background-position 0.4s ease;
+		transition: transform var(--duration-normal) var(--ease-out),
+			box-shadow var(--duration-normal) var(--ease-out),
+			background-color var(--duration-slow) var(--ease-out);
 		white-space: nowrap;
 	}
 
 	@media (min-width: 20em) {
 		a {
-			font-size: var(--text-lg);
+			font-size: var(--text-h3);
 		}
-	}
-
-	/* Overlay for hover effects. */
-	a::after {
-		content: '';
-		position: absolute;
-		inset: 0;
-		pointer-events: none;
-		transition: background-color var(--theme-transition);
-		mix-blend-mode: overlay;
-	}
-
-	a:focus::after,
-	a:hover::after {
-		background-color: hsla(var(--gray-999-basis), 0.12);
 	}
 
 	a:hover {
 		transform: translateY(-1px);
-		box-shadow: var(--shadow-md);
-		background-position: 60% 40%;
+		background: var(--color-terracotta-light);
+		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+	}
+
+	a:active {
+		transform: translateY(0);
 	}
 
 	@media (min-width: 50em) {
 		a {
 			padding: 1.125rem 2.5rem;
-			font-size: var(--text-xl);
+			font-size: var(--text-h2);
 		}
 	}
 </style>

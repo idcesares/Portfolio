@@ -15,7 +15,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	<div class="nav-shell">
 		<div class="menu-header">
 			<a href="/" class="site-title" aria-label="Isaac D'Césares">
-				<Icon icon="terminal-window" color="var(--accent-regular)" size="1.5em" gradient />
+				<span class="monogram" aria-hidden="true"><span class="monogram-d">d</span><span class="monogram-c">c</span></span>
 			</a>
 			<div class="nav-actions">
 				<button class="search-toggle" id="search-toggle" type="button" aria-label="Open search">
@@ -230,10 +230,10 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		z-index: 9999;
 		position: sticky;
 		top: 0;
-		padding: 1.25rem 1.5rem 0;
-		font-family: var(--font-body);
+		padding: var(--space-5) var(--space-6) 0;
+		font-family: var(--font-sans);
 		font-weight: 500;
-		margin-bottom: 3rem;
+		margin-bottom: var(--space-12);
 		display: flex;
 		justify-content: center;
 	}
@@ -241,14 +241,14 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	.nav-shell {
 		display: flex;
 		flex-direction: column;
-		gap: 0.75rem;
-		padding: 0.75rem 1rem;
+		gap: var(--space-3);
+		padding: var(--space-3) var(--space-4);
 		border-radius: var(--radius-xl);
-		border: 1px solid var(--gray-800);
-		background: color-mix(in oklab, var(--gray-999) 80%, transparent);
+		border: 1px solid var(--color-border-default);
+		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
 		backdrop-filter: blur(14px);
 		box-shadow: var(--shadow-sm);
-		transition: box-shadow var(--theme-transition), background-color var(--theme-transition);
+		transition: box-shadow var(--duration-normal) var(--ease-default), background-color var(--duration-normal) var(--ease-default);
 		position: relative;
 		overflow: hidden;
 		width: min(90rem, calc(100% - 3rem));
@@ -264,53 +264,53 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		background: linear-gradient(
 			90deg,
 			transparent,
-			color-mix(in oklab, var(--accent-regular) 55%, transparent),
+			color-mix(in oklab, var(--color-teal) 55%, transparent),
 			transparent
 		);
 		opacity: 0.45;
 	}
 
 	nav[data-scrolled='true'] .nav-shell {
-		background: color-mix(in oklab, var(--gray-999) 92%, transparent);
+		background: color-mix(in oklab, var(--color-bg-primary) 92%, transparent);
 		box-shadow: var(--shadow-md);
-		border-color: color-mix(in oklab, var(--gray-800) 70%, transparent);
+		border-color: color-mix(in oklab, var(--color-border-default) 70%, transparent);
 	}
 
 	.menu-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		gap: 0.5rem;
-		padding: 0.25rem 0.25rem 0;
+		gap: var(--space-2);
+		padding: var(--space-1) var(--space-1) 0;
 	}
 
 	.nav-actions {
 		display: flex;
 		align-items: center;
-		gap: 0.5rem;
+		gap: var(--space-2);
 	}
 
 	.search-toggle {
 		position: relative;
 		display: flex;
 		border: 0;
-		border-radius: 999rem;
+		border-radius: var(--radius-full);
 		padding: 0.45rem;
 		font-size: 1.05rem;
-		color: var(--gray-300);
-		background: color-mix(in oklab, var(--gray-999) 72%, transparent);
-		border: 1px solid color-mix(in oklab, var(--gray-700) 60%, transparent);
+		color: var(--color-text-tertiary);
+		background: color-mix(in oklab, var(--color-bg-primary) 72%, transparent);
+		border: 1px solid color-mix(in oklab, var(--color-border-emphasis) 60%, transparent);
 		box-shadow: none;
 		cursor: pointer;
-		transition: color var(--theme-transition);
+		transition: color var(--duration-normal) var(--ease-default);
 	}
 
 	.search-toggle:hover {
-		color: var(--gray-0);
+		color: var(--color-text-primary);
 	}
 
 	.desktop-search-btn {
-		display: none; /* Hidden on mobile */
+		display: none;
 	}
 
 	.search-overlay {
@@ -319,15 +319,15 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: rgba(18, 14, 12, 0.65);
+		background: rgba(26, 27, 31, 0.65);
 		backdrop-filter: blur(8px);
 		z-index: 10000;
 		display: flex;
 		align-items: flex-start;
 		justify-content: center;
-		padding: 2rem 1rem;
+		padding: var(--space-8) var(--space-4);
 		opacity: 1;
-		transition: opacity 0.2s ease;
+		transition: opacity var(--duration-normal) var(--ease-default);
 	}
 
 	.search-overlay[hidden] {
@@ -338,28 +338,28 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	.search-overlay-content {
 		width: 100%;
 		max-width: 600px;
-		margin-top: 4rem;
-		background: var(--gray-999);
+		margin-top: var(--space-16);
+		background: var(--color-bg-primary);
 		border-radius: var(--radius-lg);
-		padding: 1.5rem;
+		padding: var(--space-6);
 		box-shadow: var(--shadow-lg);
-		border: 1px solid var(--gray-800);
+		border: 1px solid var(--color-border-default);
 		transform: translateY(0);
-		transition: transform 0.2s ease;
+		transition: transform var(--duration-normal) var(--ease-out);
 	}
 
 	.search-modal-header {
 		display: flex;
 		justify-content: space-between;
 		align-items: center;
-		margin-bottom: 1.5rem;
+		margin-bottom: var(--space-6);
 	}
 
 	.search-modal-header h2 {
 		margin: 0;
-		font-size: var(--text-xl);
+		font-size: var(--text-h2);
 		font-weight: 600;
-		color: var(--gray-0);
+		color: var(--color-text-primary);
 	}
 
 	.search-close {
@@ -369,49 +369,65 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		width: 2.5rem;
 		height: 2.5rem;
 		background: none;
-		border: 1px solid var(--gray-800);
-		border-radius: 0.5rem;
-		color: var(--gray-300);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		color: var(--color-text-tertiary);
 		cursor: pointer;
-		transition: all 0.2s ease;
+		transition: all var(--duration-normal) var(--ease-default);
 	}
 
 	.search-close:hover {
-		background: var(--gray-800);
-		color: var(--gray-0);
-		border-color: var(--gray-700);
+		background: var(--color-bg-tertiary);
+		color: var(--color-text-primary);
+		border-color: var(--color-border-emphasis);
 	}
-
-
 
 	.site-title {
 		display: flex;
-		gap: 0.5rem;
+		gap: var(--space-2);
 		align-items: center;
 		line-height: 1.1;
-		color: var(--gray-0);
+		color: var(--color-text-primary);
 		text-decoration: none;
-		font-family: var(--font-brand);
+		font-family: var(--font-serif);
 		font-weight: 600;
-		font-size: var(--text-md);
+		font-size: var(--text-h4);
+	}
+
+	.monogram {
+		display: inline-flex;
+		font-family: var(--font-serif);
+		font-weight: 700;
+		font-size: 1.6rem;
+		line-height: 1;
+		letter-spacing: -0.04em;
+		user-select: none;
+	}
+
+	.monogram-d {
+		color: var(--color-terracotta);
+	}
+
+	.monogram-c {
+		color: var(--color-teal);
 	}
 
 	.menu-button {
 		position: relative;
 		display: flex;
 		border: 0;
-		border-radius: 999rem;
-		padding: 0.5rem;
+		border-radius: var(--radius-full);
+		padding: var(--space-2);
 		font-size: 1.3rem;
-		color: var(--gray-300);
-		background: color-mix(in oklab, var(--gray-999) 72%, transparent);
-		border: 1px solid color-mix(in oklab, var(--gray-700) 60%, transparent);
+		color: var(--color-text-tertiary);
+		background: color-mix(in oklab, var(--color-bg-primary) 72%, transparent);
+		border: 1px solid color-mix(in oklab, var(--color-border-emphasis) 60%, transparent);
 		box-shadow: none;
 	}
 
 	.menu-button[aria-expanded='true'] {
-		color: var(--gray-0);
-		background: var(--gradient-accent);
+		color: var(--color-text-on-accent);
+		background: var(--gradient-membrane);
 	}
 
 	.menu-button[hidden] {
@@ -426,12 +442,12 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		margin: 0;
 		display: flex;
 		flex-direction: column;
-		gap: 1rem;
-		font-size: var(--text-md);
-		line-height: 1.2;
-		letter-spacing: 0.01em;
+		gap: var(--space-4);
+		font-size: var(--text-h4);
+		line-height: var(--leading-label);
+		letter-spacing: var(--tracking-small);
 		list-style: none;
-		padding: 1rem 0;
+		padding: var(--space-4) 0;
 		background-color: transparent;
 		border: 0;
 		align-items: center;
@@ -440,11 +456,11 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 	.link {
 		display: inline-block;
-		color: var(--gray-300);
+		color: var(--color-text-tertiary);
 		text-decoration: none;
 		position: relative;
 		padding: 0.35rem 0;
-		transition: color var(--theme-transition);
+		transition: color var(--duration-normal) var(--ease-default);
 	}
 
 	.link::after {
@@ -454,8 +470,8 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		bottom: -0.2rem;
 		width: 0%;
 		height: 2px;
-		background: var(--accent-regular);
-		transition: width 0.2s ease;
+		background: var(--color-teal);
+		transition: width var(--duration-normal) var(--ease-out);
 	}
 
 	.link:hover::after,
@@ -464,7 +480,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	}
 
 	.link.active {
-		color: var(--gray-0);
+		color: var(--color-text-primary);
 	}
 
 	.link.active::after {
@@ -472,13 +488,13 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	}
 
 	.menu-footer {
-		--icon-size: var(--text-xl);
-		--icon-padding: 0.5rem;
+		--icon-size: var(--text-h2);
+		--icon-padding: var(--space-2);
 
 		display: flex;
 		justify-content: space-between;
-		gap: 0.75rem;
-		padding: 0 0 0.75rem;
+		gap: var(--space-3);
+		padding: 0 0 var(--space-3);
 		background-color: transparent;
 		border-radius: 0;
 		border: 0;
@@ -493,15 +509,15 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 	@media (min-width: 50em) {
 		nav {
-			padding: 1.75rem 4rem 0;
+			padding: 1.75rem var(--space-16) 0;
 		}
 
 		.nav-shell {
 			display: grid;
 			grid-template-columns: auto 1fr auto;
 			align-items: center;
-			gap: 2rem;
-			padding: 0.75rem 1.5rem;
+			gap: var(--space-8);
+			padding: var(--space-3) var(--space-6);
 			width: min(88rem, calc(100% - 4rem));
 		}
 
@@ -514,11 +530,11 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		}
 
 		.nav-actions {
-			display: none; /* Hide on desktop, search will be in menu-footer */
+			display: none;
 		}
 
 		.search-overlay-content {
-			margin-top: 6rem;
+			margin-top: var(--space-24);
 			max-width: 700px;
 		}
 
@@ -528,15 +544,19 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		}
 
 		.menu-footer .search-toggle {
-			display: flex; /* Show search in menu-footer on desktop */
+			display: flex;
 		}
 
 		.desktop-search-btn {
-			display: flex; /* Show desktop search button */
+			display: flex;
 		}
 
 		.site-title {
-			font-size: var(--text-lg);
+			font-size: var(--text-h3);
+		}
+
+		.monogram {
+			font-size: 1.8rem;
 		}
 
 		.menu-content {
@@ -547,7 +567,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 		.nav-items {
 			flex-direction: row;
-			font-size: var(--text-base);
+			font-size: var(--text-body);
 			gap: 1.75rem;
 			padding: 0;
 			justify-content: center;
@@ -557,17 +577,17 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		.link {
 			padding: 0.35rem 0;
 			transition:
-				color var(--theme-transition),
-				background-color var(--theme-transition);
+				color var(--duration-normal) var(--ease-default),
+				background-color var(--duration-normal) var(--ease-default);
 		}
 
 		.link:hover,
 		.link:focus {
-			color: var(--gray-100);
+			color: var(--color-text-primary);
 		}
 
 		.link.active {
-			color: var(--accent-regular);
+			color: var(--color-teal);
 		}
 
 		.menu-footer {
@@ -580,33 +600,13 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			background-color: transparent;
 			box-shadow: none;
 			display: flex;
-			gap: 0.75rem;
+			gap: var(--space-3);
 		}
 	}
+
 	@media (forced-colors: active) {
 		.link.active {
 			color: SelectedItem;
 		}
-	}
-
-	/* Light theme adjustments */
-	:global([data-theme="light"]) .search-overlay-content {
-		background: var(--gray-0);
-		border: 1px solid var(--gray-300);
-	}
-
-	:global([data-theme="light"]) .search-modal-header h2 {
-		color: var(--gray-800);
-	}
-
-	:global([data-theme="light"]) .search-close {
-		border-color: var(--gray-300);
-		color: var(--gray-600);
-	}
-
-	:global([data-theme="light"]) .search-close:hover {
-		background: var(--gray-100);
-		color: var(--gray-800);
-		border-color: var(--gray-400);
 	}
 </style>

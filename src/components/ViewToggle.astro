@@ -56,47 +56,47 @@ const { currentView = 'default' } = Astro.props;
 	.view-toggle {
 		display: flex;
 		align-items: center;
-		gap: 1rem;
-		margin-bottom: 1rem;
+		gap: var(--space-4);
+		margin-bottom: var(--space-4);
 	}
 
 	.view-label {
 		font-size: var(--text-sm);
-		color: var(--gray-400);
+		color: var(--color-text-tertiary);
 		font-weight: 500;
 	}
 
 	.toggle-buttons {
 		display: flex;
-		gap: 0.25rem;
-		border: 1px solid var(--gray-800);
-		border-radius: 999rem;
-		padding: 0.25rem;
-		background: color-mix(in oklab, var(--gray-999) 75%, transparent);
+		gap: var(--space-1);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-full);
+		padding: var(--space-1);
+		background: color-mix(in oklab, var(--color-bg-primary) 75%, transparent);
 		backdrop-filter: blur(8px);
 	}
 
 	.view-button {
-		padding: 0.5rem;
+		padding: var(--space-2);
 		border: none;
 		background: transparent;
-		color: var(--gray-400);
-		border-radius: 999rem;
+		color: var(--color-text-tertiary);
+		border-radius: var(--radius-full);
 		cursor: pointer;
-		transition: all 0.2s ease;
+		transition: all var(--duration-normal) var(--ease-out);
 		display: flex;
 		align-items: center;
 		justify-content: center;
 	}
 
 	.view-button:hover {
-		background: color-mix(in oklab, var(--gray-999) 80%, transparent);
-		color: var(--gray-200);
+		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
+		color: var(--color-text-primary);
 	}
 
 	.view-button.active {
-		background: var(--accent-regular);
-		color: var(--gray-0);
+		background: var(--color-teal);
+		color: var(--color-text-on-accent);
 	}
 
 	.view-button svg {
@@ -104,35 +104,12 @@ const { currentView = 'default' } = Astro.props;
 		height: 16px;
 	}
 
-	/* Light theme adjustments */
-	:global([data-theme="light"]) .view-label {
-		color: var(--gray-600);
-	}
-
-	:global([data-theme="light"]) .toggle-buttons {
-		border-color: var(--gray-300);
-		background: var(--gray-100);
-	}
-
-	:global([data-theme="light"]) .view-button {
-		color: var(--gray-600);
-	}
-
-	:global([data-theme="light"]) .view-button:hover {
-		background: var(--gray-200);
-		color: var(--gray-800);
-	}
-
-	:global([data-theme="light"]) .view-button.active {
-		color: var(--gray-0);
-	}
-
 	/* Mobile responsive */
 	@media (max-width: 50em) {
 		.view-toggle {
 			flex-direction: column;
 			align-items: flex-start;
-			gap: 0.5rem;
+			gap: var(--space-2);
 		}
 	}
 </style>

@@ -14,10 +14,10 @@ import Icon from './Icon.astro';
 	button {
 		display: flex;
 		border: 0;
-		border-radius: 999rem;
+		border-radius: var(--radius-full);
 		padding: 0;
-		background-color: var(--gray-999);
-		box-shadow: inset 0 0 0 1px var(--accent-overlay), var(--shadow-sm);
+		background-color: var(--color-bg-primary);
+		box-shadow: inset 0 0 0 1px var(--color-teal-20), var(--shadow-sm);
 		cursor: pointer;
 	}
 
@@ -25,11 +25,11 @@ import Icon from './Icon.astro';
 		z-index: 1;
 		position: relative;
 		display: flex;
-		padding: 0.5rem;
+		padding: var(--space-2);
 		width: 2rem;
 		height: 2rem;
 		font-size: 1rem;
-		color: var(--accent-overlay);
+		color: var(--color-teal-20);
 	}
 
 	.icon.light::before {
@@ -37,8 +37,8 @@ import Icon from './Icon.astro';
 		z-index: -1;
 		position: absolute;
 		inset: 0;
-		background-color: var(--accent-regular);
-		border-radius: 999rem;
+		background-color: var(--color-teal);
+		border-radius: var(--radius-full);
 	}
 
 	:global(.theme-dark) .icon.light::before {
@@ -48,15 +48,15 @@ import Icon from './Icon.astro';
 	:global(.theme-dark) .icon.dark,
 	:global(html:not(.theme-dark)) .icon.light,
 	button[aria-pressed='false'] .icon.light {
-		color: var(--accent-text-over);
+		color: var(--color-text-on-accent);
 	}
 
 	@media (prefers-reduced-motion: no-preference) {
 		.icon,
 		.icon.light::before {
 			transition:
-				transform var(--theme-transition),
-				color var(--theme-transition);
+				transform var(--duration-normal) var(--ease-default),
+				color var(--duration-normal) var(--ease-default);
 		}
 	}
 

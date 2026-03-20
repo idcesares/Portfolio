@@ -187,64 +187,65 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 		<style>
 			:root {
 				--bg-noise: url('/assets/backgrounds/noise.png');
+				/* Membrane Palette: warm (terracotta) + digital (teal) ambient glows */
 				--bg-ambient-1: radial-gradient(
 					1200px 600px at 6% -10%,
-					rgba(47, 111, 109, 0.16),
+					rgba(191, 91, 51, 0.09),
 					transparent 60%
 				);
 				--bg-ambient-2: radial-gradient(
 					900px 500px at 92% 10%,
-					rgba(28, 42, 58, 0.12),
+					rgba(27, 117, 109, 0.10),
 					transparent 55%
 				);
 				--bg-ambient-3: radial-gradient(
 					1000px 700px at 50% 110%,
-					rgba(143, 182, 198, 0.12),
+					rgba(90, 138, 110, 0.08),
 					transparent 60%
 				);
 				--bg-glow: radial-gradient(
 					800px 500px at 40% 0%,
-					rgba(47, 111, 109, 0.08),
+					rgba(191, 91, 51, 0.06),
 					transparent 60%
 				);
-				--bg-base: linear-gradient(180deg, var(--gray-999) 0%, #efe7e0 100%);
+				--bg-base: var(--color-bg-primary);
 			}
 
 			:root.theme-dark {
 				--bg-ambient-1: radial-gradient(
 					1200px 600px at 6% -10%,
-					rgba(90, 154, 166, 0.2),
+					rgba(191, 91, 51, 0.12),
 					transparent 60%
 				);
 				--bg-ambient-2: radial-gradient(
 					900px 500px at 92% 10%,
-					rgba(43, 58, 70, 0.16),
+					rgba(58, 175, 168, 0.10),
 					transparent 55%
 				);
 				--bg-ambient-3: radial-gradient(
 					1000px 700px at 50% 110%,
-					rgba(90, 154, 166, 0.12),
+					rgba(58, 175, 168, 0.08),
 					transparent 60%
 				);
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(90, 154, 166, 0.12),
+					rgba(191, 91, 51, 0.08),
 					transparent 60%
 				);
-				--bg-base: linear-gradient(180deg, var(--gray-999) 0%, #0f0c0a 100%);
+				--bg-base: var(--color-bg-primary);
 			}
 
 			:root.loaded {
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(47, 111, 109, 0.14),
+					rgba(191, 91, 51, 0.10),
 					transparent 60%
 				);
 			}
 			:root.loaded.theme-dark {
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(90, 154, 166, 0.18),
+					rgba(191, 91, 51, 0.14),
 					transparent 60%
 				);
 			}

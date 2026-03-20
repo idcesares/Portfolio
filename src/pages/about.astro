@@ -92,7 +92,7 @@ const structuredData = getSiteStructuredData(site);
     .about {
         display: flex;
         flex-direction: column;
-        gap: 3.5rem;
+        gap: var(--space-14);
     }
 
     img {
@@ -100,39 +100,42 @@ const structuredData = getSiteStructuredData(site);
         height: auto;
         max-height: 400px;
         width: auto;
-        margin: 1.5rem auto;
-        border-radius: 1.5rem;
+        margin: var(--space-6) auto;
+        border-radius: var(--radius-xl);
         box-shadow: var(--shadow-md);
         display: block;
+        filter: var(--photo-warmth);
     }
 
     section {
         display: flex;
         flex-direction: column;
-        gap: 0.5rem;
-        color: var(--gray-200);
+        gap: var(--space-2);
+        color: var(--color-text-secondary);
     }
 
     section.section-card {
-        background-color: var(--gray-800);
-        padding: 2rem;
-        border-radius: 1rem;
+        background-color: var(--color-bg-secondary);
+        padding: var(--space-8);
+        border-radius: var(--radius-lg);
+        border: 1px solid var(--color-border-default);
     }
 
     section.section-card:nth-of-type(even) {
-        background-color: var(--gray-700);
+        background-color: color-mix(in oklab, var(--color-bg-secondary) 80%, var(--color-bg-primary));
     }
 
     .section-title::before {
         content: '▹';
-        margin-right: 0.5rem;
-        color: var(--primary);
+        margin-right: var(--space-2);
+        color: var(--color-terracotta);
     }
 
     .section-title {
         grid-column-start: 1;
-        font-size: var(--text-xl);
-        color: var(--gray-0);
+        font-size: var(--text-h2);
+        color: var(--color-text-primary);
+        font-family: var(--font-serif);
     }
 
     .content {
@@ -142,7 +145,7 @@ const structuredData = getSiteStructuredData(site);
     .content :global(a) {
         text-decoration: 1px solid underline transparent;
         text-underline-offset: 0.25em;
-        transition: text-decoration-color var(--theme-transition);
+        transition: text-decoration-color var(--duration-normal) var(--ease-out);
     }
 
     .content :global(a:hover),
