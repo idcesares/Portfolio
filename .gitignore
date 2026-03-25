@@ -30,3 +30,6 @@ pnpm-debug.log*
 .docker/
 docker-compose.override.yml
 *.log
+
+# Claude
+.claude
