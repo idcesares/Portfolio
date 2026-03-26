@@ -53,7 +53,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 	.content-section {
 		display: flex;
 		flex-direction: column;
-		gap: 1.5rem;
+		gap: var(--space-6);
 	}
 
 	.view-controls {

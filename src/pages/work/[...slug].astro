@@ -174,8 +174,8 @@ const article = {
 		font-size: var(--text-display);
 		line-height: var(--leading-display);
 		letter-spacing: var(--tracking-display);
-		margin-top: 3rem;
-		margin-bottom: 1rem;
+		margin-top: var(--space-12);
+		margin-bottom: var(--space-4);
 		color: var(--color-text-primary);
 		font-family: var(--font-serif);
 	}
@@ -184,8 +184,8 @@ const article = {
 		font-size: var(--text-h1);
 		line-height: var(--leading-heading);
 		letter-spacing: var(--tracking-heading);
-		margin-top: 2.5rem;
-		margin-bottom: 0.875rem;
+		margin-top: var(--space-10);
+		margin-bottom: var(--space-3);
 		color: var(--color-text-primary);
 		font-family: var(--font-serif);
 		padding-bottom: var(--space-2);
@@ -196,8 +196,8 @@ const article = {
 		font-size: var(--text-h2);
 		line-height: var(--leading-heading);
 		letter-spacing: var(--tracking-heading);
-		margin-top: 2rem;
-		margin-bottom: 0.75rem;
+		margin-top: var(--space-8);
+		margin-bottom: var(--space-3);
 		color: var(--color-text-primary);
 		font-family: var(--font-serif);
 	}
@@ -206,8 +206,8 @@ const article = {
 	.content :global(h5),
 	.content :global(h6) {
 		font-size: var(--text-lg);
-		line-height: 1.35;
-		margin-top: 1.75rem;
+		line-height: var(--leading-subheading);
+		margin-top: var(--space-8);
 		margin-bottom: var(--space-2);
 		color: var(--color-text-primary);
 		font-family: var(--font-sans);
@@ -230,7 +230,7 @@ const article = {
 		box-shadow: var(--shadow-sm);
 		background: var(--gradient-subtle);
 		border: 1px solid var(--color-border-default);
-		margin-block: 2rem;
+		margin-block: var(--space-8);
 		margin-inline: auto;
 		filter: var(--photo-warmth);
 	}
@@ -245,11 +245,11 @@ const article = {
 
 	/* Image figures with captions */
 	.content :global(figure) {
-		margin: 2rem 0;
+		margin: var(--space-8) 0;
 		display: flex;
 		flex-direction: column;
 		align-items: center;
-		gap: 0.75rem;
+		gap: var(--space-3);
 	}
 
 	.content :global(figure img) {
@@ -262,7 +262,7 @@ const article = {
 		text-align: center;
 		font-style: italic;
 		max-width: 90%;
-		line-height: 1.5;
+		line-height: var(--leading-body-lg);
 	}
 
 	/* Blockquotes - distinctive with terracotta accent (human register) */
@@ -271,7 +271,7 @@ const article = {
 		font-style: italic;
 		line-height: var(--leading-body);
 		padding: var(--space-5) var(--space-6);
-		margin-block: 2rem;
+		margin-block: var(--space-8);
 		border-inline-start: 4px solid var(--color-terracotta);
 		background: color-mix(in oklab, var(--color-terracotta) 8%, var(--color-bg-primary));
 		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
@@ -286,13 +286,13 @@ const article = {
 	/* Lists - proper indentation and spacing */
 	.content :global(ul),
 	.content :global(ol) {
-		padding-inline-start: 1.5rem;
-		margin-block: 1.5rem;
+		padding-inline-start: var(--space-6);
+		margin-block: var(--space-6);
 	}
 
 	.content :global(li) {
 		font-size: var(--text-md);
-		line-height: 1.7;
+		line-height: var(--leading-body);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-2);
 	}
@@ -349,9 +349,9 @@ const article = {
 	/* Code blocks */
 	.content :global(pre) {
 		font-size: var(--text-sm);
-		line-height: 1.6;
+		line-height: var(--leading-code);
 		padding: var(--space-5) var(--space-6);
-		margin-block: 2rem;
+		margin-block: var(--space-8);
 		border-radius: var(--radius-md);
 		border: 1px solid var(--color-border-default);
 		overflow-x: auto;
@@ -362,14 +362,14 @@ const article = {
 		border: none;
 		height: 1px;
 		background: var(--color-border-default);
-		margin-block: 3rem;
+		margin-block: var(--space-12);
 	}
 
 	/* Tables */
 	.content :global(table) {
 		width: 100%;
 		border-collapse: collapse;
-		margin-block: 2rem;
+		margin-block: var(--space-8);
 		font-size: var(--text-sm);
 	}
 
@@ -382,7 +382,7 @@ const article = {
 
 	.content :global(th) {
 		background: var(--color-bg-tertiary);
-		font-weight: 600;
+		font-weight: var(--weight-semibold);
 		color: var(--color-text-primary);
 	}
 
@@ -392,7 +392,7 @@ const article = {
 
 	/* Strong and emphasis */
 	.content :global(strong) {
-		font-weight: 600;
+		font-weight: var(--weight-semibold);
 		color: var(--color-text-primary);
 	}
 

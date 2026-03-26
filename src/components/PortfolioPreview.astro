@@ -26,9 +26,9 @@ const { data, id } = Astro.props.project;
 		text-decoration: none;
 		font-family: var(--font-serif);
 		font-size: var(--text-h3);
-		font-weight: 500;
-		transition: box-shadow var(--duration-normal) var(--ease-out),
-			transform var(--duration-normal) var(--ease-out);
+		font-weight: var(--weight-medium);
+		transition: box-shadow var(--transition-default),
+			transform var(--transition-default);
 	}
 
 	.card:hover {
@@ -44,7 +44,7 @@ const { data, id } = Astro.props.project;
 		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
 		color: var(--color-text-primary);
 		border-radius: var(--radius-sm);
-		backdrop-filter: blur(6px);
+		backdrop-filter: blur(var(--space-2));
 	}
 
 	img {

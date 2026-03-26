@@ -190,7 +190,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 				/* Membrane Palette: warm (terracotta) + digital (teal) ambient glows */
 				--bg-ambient-1: radial-gradient(
 					1200px 600px at 6% -10%,
-					rgba(191, 91, 51, 0.09),
+					rgba(179, 85, 48, 0.09),
 					transparent 60%
 				);
 				--bg-ambient-2: radial-gradient(
@@ -205,16 +205,17 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 				);
 				--bg-glow: radial-gradient(
 					800px 500px at 40% 0%,
-					rgba(191, 91, 51, 0.06),
+					rgba(179, 85, 48, 0.06),
 					transparent 60%
 				);
 				--bg-base: var(--color-bg-primary);
 			}
 
-			:root.theme-dark {
+			:root.theme-dark,
+			:root[data-theme="dark"] {
 				--bg-ambient-1: radial-gradient(
 					1200px 600px at 6% -10%,
-					rgba(191, 91, 51, 0.12),
+					rgba(179, 85, 48, 0.12),
 					transparent 60%
 				);
 				--bg-ambient-2: radial-gradient(
@@ -229,7 +230,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 				);
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(191, 91, 51, 0.08),
+					rgba(179, 85, 48, 0.08),
 					transparent 60%
 				);
 				--bg-base: var(--color-bg-primary);
@@ -238,14 +239,15 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 			:root.loaded {
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(191, 91, 51, 0.10),
+					rgba(179, 85, 48, 0.10),
 					transparent 60%
 				);
 			}
-			:root.loaded.theme-dark {
+			:root.loaded.theme-dark,
+			:root.loaded[data-theme="dark"] {
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(191, 91, 51, 0.14),
+					rgba(179, 85, 48, 0.14),
 					transparent 60%
 				);
 			}
