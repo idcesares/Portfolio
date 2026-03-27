@@ -22,7 +22,9 @@
   --color-teal:             #1B756D;
   --color-teal-light:       #3AAFA8;
   --color-teal-dark:        #145C56;
+  --color-teal-08:          rgba(27, 117, 109, 0.08);
   --color-teal-10:          rgba(27, 117, 109, 0.10);
+  --color-teal-12:          rgba(27, 117, 109, 0.12);
   --color-teal-20:          rgba(27, 117, 109, 0.20);
 
   /* Canvas */
@@ -74,6 +76,8 @@
   --color-border-default:   var(--color-neutral-200);
   --color-border-emphasis:  var(--color-neutral-300);
 
+  --color-overlay-bg:       rgba(26, 27, 31, 0.70);   /* charcoal at overlay opacity */
+
   --color-success:          var(--color-sage);
   --color-warning:          var(--color-amber);
   --color-error:            #C44040;
@@ -87,6 +91,13 @@
   --gradient-warmth:        radial-gradient(ellipse 600px 300px at 15% 0%, rgba(179, 85, 48, 0.08) 0%, transparent 70%);
   --gradient-depth:         linear-gradient(180deg, var(--color-charcoal) 0%, #12131A 100%);
   --gradient-divider:       linear-gradient(90deg, transparent, var(--color-border-default), transparent);
+
+  /* Ambient glow stop-colors (for layout background radial gradients) */
+  --bg-glow-terracotta:     rgba(179, 85, 48, 0.09);
+  --bg-glow-teal:           rgba(27, 117, 109, 0.10);
+  --bg-glow-sage:           rgba(90, 138, 110, 0.08);
+  --bg-glow-focal:          rgba(179, 85, 48, 0.06);
+  --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.10);
 
   /* --------------------------------------------------------
      5. COLORS — Code Block (always dark)
@@ -323,6 +334,12 @@
     --shadow-lg:              0 12px 32px rgba(0, 0, 0, 0.30),
                               0 4px 8px rgba(0, 0, 0, 0.20);
     --shadow-glow-warm:       0 0 24px rgba(212, 114, 79, 0.20);
+
+    --bg-glow-terracotta:     rgba(179, 85, 48, 0.12);
+    --bg-glow-teal:           rgba(58, 175, 168, 0.10);
+    --bg-glow-sage:           rgba(58, 175, 168, 0.08);
+    --bg-glow-focal:          rgba(179, 85, 48, 0.08);
+    --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.14);
   }
 }
 
@@ -356,6 +373,12 @@
   --shadow-lg:              0 12px 32px rgba(0, 0, 0, 0.30),
                             0 4px 8px rgba(0, 0, 0, 0.20);
   --shadow-glow-warm:       0 0 24px rgba(212, 114, 79, 0.20);
+
+  --bg-glow-terracotta:     rgba(179, 85, 48, 0.12);
+  --bg-glow-teal:           rgba(58, 175, 168, 0.10);
+  --bg-glow-sage:           rgba(58, 175, 168, 0.08);
+  --bg-glow-focal:          rgba(179, 85, 48, 0.08);
+  --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.14);
 }
 
 /* ===========================================================

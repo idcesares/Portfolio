@@ -190,22 +190,22 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 				/* Membrane Palette: warm (terracotta) + digital (teal) ambient glows */
 				--bg-ambient-1: radial-gradient(
 					1200px 600px at 6% -10%,
-					rgba(179, 85, 48, 0.09),
+					var(--bg-glow-terracotta),
 					transparent 60%
 				);
 				--bg-ambient-2: radial-gradient(
 					900px 500px at 92% 10%,
-					rgba(27, 117, 109, 0.10),
+					var(--bg-glow-teal),
 					transparent 55%
 				);
 				--bg-ambient-3: radial-gradient(
 					1000px 700px at 50% 110%,
-					rgba(90, 138, 110, 0.08),
+					var(--bg-glow-sage),
 					transparent 60%
 				);
 				--bg-glow: radial-gradient(
 					800px 500px at 40% 0%,
-					rgba(179, 85, 48, 0.06),
+					var(--bg-glow-focal),
 					transparent 60%
 				);
 				--bg-base: var(--color-bg-primary);
@@ -213,24 +213,10 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 
 			:root.theme-dark,
 			:root[data-theme="dark"] {
-				--bg-ambient-1: radial-gradient(
-					1200px 600px at 6% -10%,
-					rgba(179, 85, 48, 0.12),
-					transparent 60%
-				);
-				--bg-ambient-2: radial-gradient(
-					900px 500px at 92% 10%,
-					rgba(58, 175, 168, 0.10),
-					transparent 55%
-				);
-				--bg-ambient-3: radial-gradient(
-					1000px 700px at 50% 110%,
-					rgba(58, 175, 168, 0.08),
-					transparent 60%
-				);
+				/* Gradient dimensions expand in dark mode; colors update via design-tokens.css */
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(179, 85, 48, 0.08),
+					var(--bg-glow-focal),
 					transparent 60%
 				);
 				--bg-base: var(--color-bg-primary);
@@ -239,15 +225,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 			:root.loaded {
 				--bg-glow: radial-gradient(
 					900px 600px at 40% 0%,
-					rgba(179, 85, 48, 0.10),
-					transparent 60%
-				);
-			}
-			:root.loaded.theme-dark,
-			:root.loaded[data-theme="dark"] {
-				--bg-glow: radial-gradient(
-					900px 600px at 40% 0%,
-					rgba(179, 85, 48, 0.14),
+					var(--bg-glow-focal-loaded),
 					transparent 60%
 				);
 			}
