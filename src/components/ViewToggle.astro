@@ -63,7 +63,7 @@ const { currentView = 'default' } = Astro.props;
 	.view-label {
 		font-size: var(--text-sm);
 		color: var(--color-text-tertiary);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 	}
 
 	.toggle-buttons {
@@ -73,7 +73,7 @@ const { currentView = 'default' } = Astro.props;
 		border-radius: var(--radius-full);
 		padding: var(--space-1);
 		background: color-mix(in oklab, var(--color-bg-primary) 75%, transparent);
-		backdrop-filter: blur(8px);
+		backdrop-filter: blur(var(--space-2));
 	}
 
 	.view-button {

@@ -100,7 +100,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     border-radius: 0 0 var(--radius-md) var(--radius-md);
     max-height: 350px;
     overflow-y: auto;
-    z-index: 100;
+    z-index: var(--z-nav);
     box-shadow: var(--shadow-md);
   }
 
@@ -127,7 +127,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
   }
 
   :global(.search-result-title) {
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     color: var(--color-text-primary);
     margin-bottom: var(--space-1);
     font-size: var(--text-base);
@@ -136,14 +136,14 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
   :global(.search-result-description) {
     font-size: var(--text-sm);
     color: var(--color-text-secondary);
-    line-height: 1.4;
+    line-height: var(--leading-body-lg);
   }
 
   :global(.search-result-type) {
     font-size: var(--text-xs);
     color: var(--color-teal);
     text-transform: uppercase;
-    font-weight: 600;
+    font-weight: var(--weight-semibold);
     letter-spacing: var(--tracking-label);
     margin-bottom: var(--space-1);
   }

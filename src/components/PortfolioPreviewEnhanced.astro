@@ -89,8 +89,8 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 		text-decoration: none;
 		font-family: var(--font-serif);
 		font-size: var(--text-lg);
-		font-weight: 500;
-		transition: box-shadow var(--duration-normal) var(--ease-out), transform var(--duration-normal) var(--ease-out);
+		font-weight: var(--weight-medium);
+		transition: box-shadow var(--transition-default), transform var(--transition-default);
 	}
 
 	.project-item.default .card:hover {
@@ -106,7 +106,7 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
 		color: var(--color-text-primary);
 		border-radius: var(--radius-sm);
-		backdrop-filter: blur(6px);
+		backdrop-filter: blur(var(--space-2));
 	}
 
 	.project-item.default img {
@@ -155,7 +155,7 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 	.project-item.compact .date {
 		font-size: var(--text-xs);
 		color: var(--color-text-tertiary);
-		font-weight: 400;
+		font-weight: var(--weight-regular);
 	}
 
 	.project-item.compact .tags {
@@ -170,7 +170,7 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 		background: color-mix(in oklab, var(--color-teal) 20%, var(--color-bg-primary));
 		color: var(--color-teal);
 		border-radius: var(--radius-full);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-label);
 	}
@@ -181,14 +181,14 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 		background: var(--color-bg-secondary);
 		color: var(--color-text-tertiary);
 		border-radius: var(--radius-full);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 	}
 
 	.project-item.compact .title {
 		font-size: var(--text-md);
-		font-weight: 600;
+		font-weight: var(--weight-semibold);
 		color: var(--color-text-primary);
-		line-height: 1.3;
+		line-height: var(--leading-subheading);
 		margin: 0;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;
@@ -199,7 +199,7 @@ const formattedDate = updatedDate.toLocaleDateString('pt-BR', {
 	.project-item.compact .description {
 		font-size: var(--text-base);
 		color: var(--color-text-secondary);
-		line-height: 1.4;
+		line-height: var(--leading-body);
 		margin: 0;
 		display: -webkit-box;
 		-webkit-line-clamp: 2;

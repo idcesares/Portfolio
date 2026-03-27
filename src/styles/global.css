@@ -65,14 +65,14 @@ h1,
 h2,
 h3 {
 	font-family: var(--font-serif);
-	font-weight: 600;
+	font-weight: var(--weight-semibold);
 	color: var(--color-text-primary);
 }
 
 h4,
 h5 {
 	font-family: var(--font-sans);
-	font-weight: 600;
+	font-weight: var(--weight-semibold);
 	color: var(--color-text-primary);
 }
 
@@ -125,8 +125,8 @@ pre {
    ============================================================ */
 
 :focus-visible {
-	outline: 2px solid var(--color-teal);
-	outline-offset: 2px;
+	outline: var(--focus-ring);
+	outline-offset: var(--focus-ring-offset);
 }
 
 /* ============================================================
@@ -141,12 +141,12 @@ pre {
 	color: var(--color-text-on-accent);
 	cursor: pointer;
 	font-family: var(--font-sans);
-	font-size: 16px;
-	font-weight: 700;
-	line-height: 24px;
+	font-size: var(--text-body);
+	font-weight: var(--weight-bold);
+	line-height: var(--leading-body-lg);
 	opacity: 1;
 	outline: 0 solid transparent;
-	padding: 8px 18px;
+	padding: var(--space-2) var(--space-5);
 	-webkit-user-select: none;
 	user-select: none;
 	touch-action: manipulation;
@@ -156,9 +156,9 @@ pre {
 	text-decoration: none;
 	background-position: 0% 50%;
 	background-size: 140% 140%;
-	transition: transform var(--duration-normal) var(--ease-out),
-		box-shadow var(--duration-normal) var(--ease-out),
-		background-position var(--duration-slow) var(--ease-out);
+	transition: transform var(--transition-default),
+		box-shadow var(--transition-default),
+		background-position var(--transition-slow);
 }
 
 .button-post:hover {
@@ -474,17 +474,11 @@ code[data-theme*=" "] span {
 
 /* ============================================================
    REDUCED MOTION SUPPORT
+   Core duration/transition resets are in design-tokens.css.
+   These rules handle animation-specific and view-transition overrides.
    ============================================================ */
 
 @media (prefers-reduced-motion: reduce) {
-	*,
-	*::before,
-	*::after {
-		animation-duration: 0.01ms !important;
-		animation-iteration-count: 1 !important;
-		transition-duration: 0.01ms !important;
-	}
-
 	[data-animate] {
 		opacity: 1 !important;
 		transform: none !important;

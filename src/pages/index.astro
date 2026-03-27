@@ -41,13 +41,13 @@ const structuredData = getSiteStructuredData(site);
 			<header class="hero" data-animate="fade-up">
 				<Hero
 					title="Isaac D'Césares"
-					tagline="Pesquisador e desenvolvedor de Tecnologias da Educação, com foco em Inovação e Transformação Digital."
+					tagline="Traduzo tecnologias emergentes em experiências que transformam como pessoas e instituições aprendem."
 					align="start"
 				>
 					<div class="roles" data-animate-stagger>
-						<Pill><Icon icon="code" size="1.33em" /> Desenvolvedor</Pill>
-						<Pill><University /> Educador</Pill>
-						<Pill><Icon icon="pencil-line" size="1.33em" /> Pesquisador</Pill>
+						<Pill color="terracotta"><Icon icon="book-open" size="1.33em" /> Pesquisador</Pill>
+						<Pill color="sage"><University /> Educador</Pill>
+						<Pill color="teal"><Icon icon="terminal-window" size="1.33em" /> Construtor</Pill>
 					</div>
 
 					<div class="hero-actions">
@@ -204,10 +204,11 @@ const structuredData = getSiteStructuredData(site);
 		color: var(--color-text-secondary);
 		text-decoration: none;
 		font-family: var(--font-sans);
-		font-weight: 500;
-		transition: all var(--duration-normal) var(--ease-out);
+		font-weight: var(--weight-medium);
+		transition: all var(--transition-default);
 		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
 		box-shadow: var(--shadow-sm);
+		min-height: 44px;
 	}
 
 	.ghost-link:hover {
@@ -221,7 +222,7 @@ const structuredData = getSiteStructuredData(site);
 			display: grid;
 			grid-template-columns: 6fr 4fr;
 			padding-inline: var(--space-10);
-			gap: 3.75rem;
+			gap: var(--space-16);
 		}
 
 		.roles {
@@ -231,7 +232,7 @@ const structuredData = getSiteStructuredData(site);
 
 		.hero img {
 			aspect-ratio: 3 / 4;
-			border-radius: 4rem;
+			border-radius: var(--radius-xl);
 			object-fit: cover;
 		}
 	}
@@ -257,16 +258,16 @@ const structuredData = getSiteStructuredData(site);
 		top: -40%;
 		transform: translateX(-50%);
 		background:
-			radial-gradient(800px 400px at 50% 10%, rgba(191, 91, 51, 0.10), transparent 70%),
-			radial-gradient(600px 300px at 80% 20%, rgba(27, 117, 109, 0.08), transparent 65%);
-		opacity: 0.8;
+			radial-gradient(800px 400px at 50% 10%, var(--color-terracotta-10), transparent 70%),
+			radial-gradient(600px 300px at 80% 20%, var(--color-teal-08), transparent 65%);
+		opacity: var(--opacity-heavy);
 		z-index: -1;
 	}
 
 	.with-background.bg-variant::before {
 		background:
-			radial-gradient(800px 400px at 40% 10%, rgba(27, 117, 109, 0.12), transparent 70%),
-			radial-gradient(600px 300px at 70% 20%, rgba(90, 138, 110, 0.10), transparent 65%);
+			radial-gradient(800px 400px at 40% 10%, var(--color-teal-12), transparent 70%),
+			radial-gradient(600px 300px at 70% 20%, var(--color-sage-10), transparent 65%);
 	}
 
 	.section-header {
@@ -354,8 +355,8 @@ const structuredData = getSiteStructuredData(site);
 		border: 1px solid var(--color-border-default);
 		border-radius: var(--radius-lg);
 		box-shadow: var(--shadow-sm);
-		transition: transform var(--duration-normal) var(--ease-out),
-			box-shadow var(--duration-normal) var(--ease-out);
+		transition: transform var(--transition-default),
+			box-shadow var(--transition-default);
 		width: 100%;
 		display: flex;
 		flex-direction: column;
@@ -369,7 +370,7 @@ const structuredData = getSiteStructuredData(site);
 
 	.stat-number {
 		font-size: var(--text-display);
-		font-weight: 700;
+		font-weight: var(--weight-bold);
 		color: var(--color-terracotta);
 		line-height: var(--leading-display);
 		margin-bottom: var(--space-2);
@@ -379,7 +380,7 @@ const structuredData = getSiteStructuredData(site);
 	.stat-label {
 		font-size: var(--text-small);
 		color: var(--color-text-secondary);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-label);
 	}

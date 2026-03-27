@@ -14,21 +14,22 @@ const { href } = Astro.props;
 		display: flex;
 		place-content: center;
 		text-align: center;
-		padding: 0.56em 2em;
-		gap: 0.8em;
+		padding: var(--space-2) var(--space-8);
+		gap: var(--space-2);
 		color: var(--color-text-on-accent);
 		text-decoration: none;
-		line-height: 1.1;
+		line-height: var(--leading-display);
 		border-radius: var(--radius-full);
 		overflow: hidden;
 		background: var(--color-terracotta);
 		box-shadow: var(--shadow-md);
 		border: 1px solid var(--color-terracotta-dark);
-		letter-spacing: 0.01em;
-		transition: transform var(--duration-normal) var(--ease-out),
-			box-shadow var(--duration-normal) var(--ease-out),
-			background-color var(--duration-slow) var(--ease-out);
+		letter-spacing: var(--tracking-small);
+		transition: transform var(--transition-default),
+			box-shadow var(--transition-default),
+			background-color var(--transition-slow);
 		white-space: nowrap;
+		min-height: 44px;
 	}
 
 	@media (min-width: 20em) {
@@ -49,7 +50,7 @@ const { href } = Astro.props;
 
 	@media (min-width: 50em) {
 		a {
-			padding: 1.125rem 2.5rem;
+			padding: var(--space-4) var(--space-10);
 			font-size: var(--text-h2);
 		}
 	}

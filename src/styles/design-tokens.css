@@ -1,6 +1,6 @@
 /* ============================================================
    Isaac D'Césares — Brand Design Tokens
-   Version 1.0 · March 2026
+   Version 1.1 · March 2026
 
    The Membrane Palette: where human warmth meets digital precision.
    Import this single file to access all brand tokens.
@@ -12,17 +12,19 @@
      -------------------------------------------------------- */
 
   /* Primary: The Human Register */
-  --color-terracotta:       #BF5B33;
+  --color-terracotta:       #B35530;
   --color-terracotta-light: #D4724F;
-  --color-terracotta-dark:  #9E4826;
-  --color-terracotta-10:    rgba(191, 91, 51, 0.10);
-  --color-terracotta-20:    rgba(191, 91, 51, 0.20);
+  --color-terracotta-dark:  #944425;
+  --color-terracotta-10:    rgba(179, 85, 48, 0.10);
+  --color-terracotta-20:    rgba(179, 85, 48, 0.20);
 
   /* Primary: The Digital Register */
   --color-teal:             #1B756D;
   --color-teal-light:       #3AAFA8;
   --color-teal-dark:        #145C56;
+  --color-teal-08:          rgba(27, 117, 109, 0.08);
   --color-teal-10:          rgba(27, 117, 109, 0.10);
+  --color-teal-12:          rgba(27, 117, 109, 0.12);
   --color-teal-20:          rgba(27, 117, 109, 0.20);
 
   /* Canvas */
@@ -74,21 +76,44 @@
   --color-border-default:   var(--color-neutral-200);
   --color-border-emphasis:  var(--color-neutral-300);
 
+  --color-overlay-bg:       rgba(26, 27, 31, 0.70);   /* charcoal at overlay opacity */
+
   --color-success:          var(--color-sage);
   --color-warning:          var(--color-amber);
   --color-error:            #C44040;
+  --color-info:             var(--color-teal);
 
   /* --------------------------------------------------------
      4. COLORS — Gradients
      -------------------------------------------------------- */
 
-  --gradient-membrane:      linear-gradient(135deg, #BF5B33 0%, #1B756D 100%);
-  --gradient-warmth:        radial-gradient(ellipse 600px 300px at 15% 0%, rgba(191, 91, 51, 0.08) 0%, transparent 70%);
+  --gradient-membrane:      linear-gradient(135deg, #B35530 0%, #1B756D 100%);
+  --gradient-warmth:        radial-gradient(ellipse 600px 300px at 15% 0%, rgba(179, 85, 48, 0.08) 0%, transparent 70%);
   --gradient-depth:         linear-gradient(180deg, var(--color-charcoal) 0%, #12131A 100%);
   --gradient-divider:       linear-gradient(90deg, transparent, var(--color-border-default), transparent);
 
+  /* Ambient glow stop-colors (for layout background radial gradients) */
+  --bg-glow-terracotta:     rgba(179, 85, 48, 0.09);
+  --bg-glow-teal:           rgba(27, 117, 109, 0.10);
+  --bg-glow-sage:           rgba(90, 138, 110, 0.08);
+  --bg-glow-focal:          rgba(179, 85, 48, 0.06);
+  --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.10);
+
   /* --------------------------------------------------------
-     5. TYPOGRAPHY — Font Stacks
+     5. COLORS — Code Block (always dark)
+     -------------------------------------------------------- */
+
+  --code-bg:                #1E1F26;
+  --code-text:              #E2DCD2;
+  --code-border:            rgba(255, 255, 255, 0.06);
+  --code-keyword:           #E07050;
+  --code-string:            #7BC494;
+  --code-function:          #E8B44A;
+  --code-comment:           #7D776E;
+  --code-number:            #5AC8C0;
+
+  /* --------------------------------------------------------
+     6. TYPOGRAPHY — Font Stacks
      -------------------------------------------------------- */
 
   --font-serif:             'Fraunces', 'Georgia', 'Times New Roman', serif;
@@ -96,7 +121,7 @@
   --font-mono:              'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
   /* --------------------------------------------------------
-     6. TYPOGRAPHY — Scale (fluid clamp values)
+     7. TYPOGRAPHY — Scale (fluid clamp values)
      -------------------------------------------------------- */
 
   --text-display:           clamp(2.25rem, 3.5vw + 1rem, 3.75rem);
@@ -111,7 +136,7 @@
   --text-code:              clamp(0.875rem, 0.25vw + 0.8rem, 0.9375rem);
 
   /* --------------------------------------------------------
-     7. TYPOGRAPHY — Line Height
+     8. TYPOGRAPHY — Line Height
      -------------------------------------------------------- */
 
   --leading-display:        1.1;
@@ -124,7 +149,7 @@
   --leading-label:          1.2;
 
   /* --------------------------------------------------------
-     8. TYPOGRAPHY — Letter Spacing
+     9. TYPOGRAPHY — Letter Spacing
      -------------------------------------------------------- */
 
   --tracking-display:       -0.02em;
@@ -135,7 +160,16 @@
   --tracking-label:         0.08em;
 
   /* --------------------------------------------------------
-     9. SPACING — Scale (4px base unit)
+     10. TYPOGRAPHY — Font Weight
+     -------------------------------------------------------- */
+
+  --weight-regular:         400;
+  --weight-medium:          500;
+  --weight-semibold:        600;
+  --weight-bold:            700;
+
+  /* --------------------------------------------------------
+     11. SPACING — Scale (4px base unit)
      -------------------------------------------------------- */
 
   --space-1:                0.25rem;   /*  4px */
@@ -153,17 +187,18 @@
   --space-32:               8rem;      /* 128px */
 
   /* --------------------------------------------------------
-     10. LAYOUT — Containers & Grid
+     12. LAYOUT — Containers & Grid
      -------------------------------------------------------- */
 
   --container-sm:           640px;
   --container-md:           768px;
   --container-lg:           1024px;
   --container-xl:           1200px;
+  --container-full:         100%;
   --site-margin:            clamp(1.5rem, 5vw, 5rem);
 
   /* --------------------------------------------------------
-     11. BORDER RADIUS
+     13. BORDER RADIUS
      -------------------------------------------------------- */
 
   --radius-sm:              4px;
@@ -173,7 +208,7 @@
   --radius-full:            999px;
 
   /* --------------------------------------------------------
-     12. SHADOWS (warm-tinted)
+     14. SHADOWS (warm-tinted)
      -------------------------------------------------------- */
 
   --shadow-sm:              0 1px 3px rgba(26, 27, 31, 0.06),
@@ -182,11 +217,11 @@
                             0 2px 4px rgba(26, 27, 31, 0.04);
   --shadow-lg:              0 12px 32px rgba(26, 27, 31, 0.12),
                             0 4px 8px rgba(26, 27, 31, 0.06);
-  --shadow-glow-warm:       0 0 24px rgba(191, 91, 51, 0.15);
+  --shadow-glow-warm:       0 0 24px rgba(179, 85, 48, 0.15);
   --shadow-glow-teal:       0 0 24px rgba(27, 117, 109, 0.15);
 
   /* --------------------------------------------------------
-     13. BORDERS
+     15. BORDERS
      -------------------------------------------------------- */
 
   --border-default:         1px solid var(--color-border-default);
@@ -194,7 +229,7 @@
   --border-accent:          2px solid var(--color-terracotta);
 
   /* --------------------------------------------------------
-     14. MOTION — Durations
+     16. MOTION — Durations
      -------------------------------------------------------- */
 
   --duration-fast:          150ms;
@@ -203,7 +238,7 @@
   --duration-slower:        600ms;
 
   /* --------------------------------------------------------
-     15. MOTION — Easing
+     17. MOTION — Easing
      -------------------------------------------------------- */
 
   --ease-default:           cubic-bezier(0.25, 0.1, 0.25, 1);
@@ -212,24 +247,108 @@
   --ease-spring:            cubic-bezier(0.34, 1.56, 0.64, 1);
 
   /* --------------------------------------------------------
-     16. IMAGERY — Photo treatment
+     18. MOTION — Transitions (composite shorthand)
+     -------------------------------------------------------- */
+
+  --transition-fast:        150ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-default:     250ms cubic-bezier(0.25, 0.1, 0.25, 1);
+  --transition-slow:        400ms cubic-bezier(0.25, 0.1, 0.25, 1);
+
+  /* --------------------------------------------------------
+     19. OPACITY — Scale
+     -------------------------------------------------------- */
+
+  --opacity-subtle:         0.10;
+  --opacity-light:          0.20;
+  --opacity-medium:         0.50;
+  --opacity-overlay:        0.70;
+  --opacity-heavy:          0.85;
+
+  /* --------------------------------------------------------
+     20. Z-INDEX — Stacking Context
+     -------------------------------------------------------- */
+
+  --z-base:                 0;
+  --z-dropdown:             10;
+  --z-sticky:               20;
+  --z-nav:                  100;
+  --z-overlay:              200;
+  --z-modal:                300;
+  --z-toast:                400;
+  --z-tooltip:              500;
+
+  /* --------------------------------------------------------
+     21. FOCUS — Accessibility
+     -------------------------------------------------------- */
+
+  --focus-ring:             2px solid var(--color-teal);
+  --focus-ring-offset:      2px;
+
+  /* --------------------------------------------------------
+     22. IMAGERY — Photo treatment
      -------------------------------------------------------- */
 
   --photo-warmth:           sepia(0.05) saturate(1.05) brightness(1.02);
   --photo-border-radius:    var(--radius-lg);
   --photo-shadow:           var(--shadow-md);
+
+  /* --------------------------------------------------------
+     23. BREAKPOINTS (for reference — use in media queries)
+     -------------------------------------------------------- */
+
+  /* --bp-sm: 640px;   */
+  /* --bp-md: 768px;   */
+  /* --bp-lg: 1024px;  */
+  /* --bp-xl: 1280px;  */
 }
 
 /* ===========================================================
    DARK MODE
-   Single block handles both auto (prefers-color-scheme) and
-   manual toggle (data-theme="dark" / .theme-dark class).
-   The theme init script in MainHead always sets data-theme,
-   so the attribute selector covers both cases.
    =========================================================== */
 
+/* Auto dark mode — only applies when no explicit data-theme is set */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]):not([data-theme="dark"]) {
+    --color-terracotta:       var(--color-terracotta-light);
+    --color-text-primary:     #F0EBE1;
+    --color-text-secondary:   #A39D93;
+    --color-text-tertiary:    #7D776E;
+    --color-text-accent:      var(--color-teal-light);
+
+    --color-bg-primary:       var(--color-charcoal);
+    --color-bg-secondary:     #242429;
+    --color-bg-tertiary:      #2E2E34;
+
+    --color-border-default:   #3D3842;
+    --color-border-emphasis:  #5C564E;
+
+    --color-success:          var(--color-sage-light);
+    --color-warning:          var(--color-amber-light);
+    --color-error:            #E86060;
+    --color-info:             var(--color-teal-light);
+
+    --shadow-sm:              0 1px 3px rgba(0, 0, 0, 0.20),
+                              0 1px 2px rgba(0, 0, 0, 0.15);
+    --shadow-md:              0 4px 12px rgba(0, 0, 0, 0.25),
+                              0 2px 4px rgba(0, 0, 0, 0.15);
+    --shadow-lg:              0 12px 32px rgba(0, 0, 0, 0.30),
+                              0 4px 8px rgba(0, 0, 0, 0.20);
+    --shadow-glow-warm:       0 0 24px rgba(212, 114, 79, 0.20);
+
+    --bg-glow-terracotta:     rgba(179, 85, 48, 0.12);
+    --bg-glow-teal:           rgba(58, 175, 168, 0.10);
+    --bg-glow-sage:           rgba(58, 175, 168, 0.08);
+    --bg-glow-focal:          rgba(179, 85, 48, 0.08);
+    --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.14);
+  }
+}
+
+/* Manual dark mode (for toggle support) —
+   Supports both [data-theme="dark"] attribute and .theme-dark class
+   for backward compatibility with the existing theme init script. */
 [data-theme="dark"],
 :root.theme-dark {
+  --color-terracotta:       var(--color-terracotta-light);
   --color-text-primary:     #F0EBE1;
   --color-text-secondary:   #A39D93;
   --color-text-tertiary:    #7D776E;
@@ -245,6 +364,7 @@
   --color-success:          var(--color-sage-light);
   --color-warning:          var(--color-amber-light);
   --color-error:            #E86060;
+  --color-info:             var(--color-teal-light);
 
   --shadow-sm:              0 1px 3px rgba(0, 0, 0, 0.20),
                             0 1px 2px rgba(0, 0, 0, 0.15);
@@ -252,6 +372,13 @@
                             0 2px 4px rgba(0, 0, 0, 0.15);
   --shadow-lg:              0 12px 32px rgba(0, 0, 0, 0.30),
                             0 4px 8px rgba(0, 0, 0, 0.20);
+  --shadow-glow-warm:       0 0 24px rgba(212, 114, 79, 0.20);
+
+  --bg-glow-terracotta:     rgba(179, 85, 48, 0.12);
+  --bg-glow-teal:           rgba(58, 175, 168, 0.10);
+  --bg-glow-sage:           rgba(58, 175, 168, 0.08);
+  --bg-glow-focal:          rgba(179, 85, 48, 0.08);
+  --bg-glow-focal-loaded:   rgba(179, 85, 48, 0.14);
 }
 
 /* ===========================================================
@@ -262,7 +389,21 @@
   :root {
     --duration-fast:          0ms;
     --duration-normal:        0ms;
-    --duration-slow:          150ms;
+    --duration-slow:          0ms;
     --duration-slower:        150ms;
+
+    --transition-fast:        0ms;
+    --transition-default:     0ms;
+    --transition-slow:        0ms;
+  }
+
+  /* Replace transform-based animations with opacity-only fades */
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-property: opacity, color, background-color, border-color, box-shadow !important;
+    scroll-behavior: auto !important;
   }
 }

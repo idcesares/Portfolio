@@ -94,7 +94,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-4);
-		backdrop-filter: blur(10px);
+		backdrop-filter: blur(var(--space-3));
 	}
 
 	/* Main Filter Bar */
@@ -210,7 +210,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 	.filter-label {
 		font-size: var(--text-xs);
 		color: var(--color-text-tertiary);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 	}
 
 	.category-select {

@@ -18,11 +18,11 @@ import WhatsAppIcon from './WhatsAppIcon.astro';
 	color: var(--color-cream);
 	border-radius: var(--radius-full);
 	text-align: center;
-	font-size: 1.875rem;
+	font-size: var(--text-h2);
 	box-shadow: var(--shadow-md);
-	z-index: 100;
-	transition: transform var(--duration-normal) var(--ease-out),
-		box-shadow var(--duration-normal) var(--ease-out);
+	z-index: var(--z-nav);
+	transition: transform var(--transition-default),
+		box-shadow var(--transition-default);
     }
 
     .float:hover {

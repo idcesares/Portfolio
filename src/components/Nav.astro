@@ -227,12 +227,12 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 <style>
 	nav {
-		z-index: 9999;
+		z-index: var(--z-nav);
 		position: sticky;
 		top: 0;
 		padding: var(--space-5) var(--space-6) 0;
 		font-family: var(--font-sans);
-		font-weight: 500;
+		font-weight: var(--weight-medium);
 		margin-bottom: var(--space-12);
 		display: flex;
 		justify-content: center;
@@ -246,9 +246,9 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		border-radius: var(--radius-xl);
 		border: 1px solid var(--color-border-default);
 		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
-		backdrop-filter: blur(14px);
+		backdrop-filter: blur(var(--space-3));
 		box-shadow: var(--shadow-sm);
-		transition: box-shadow var(--duration-normal) var(--ease-default), background-color var(--duration-normal) var(--ease-default);
+		transition: box-shadow var(--transition-default), background-color var(--transition-default);
 		position: relative;
 		overflow: hidden;
 		width: min(90rem, calc(100% - 3rem));
@@ -295,14 +295,18 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		display: flex;
 		border: 0;
 		border-radius: var(--radius-full);
-		padding: 0.45rem;
-		font-size: 1.05rem;
+		padding: var(--space-2);
+		font-size: var(--text-body);
 		color: var(--color-text-tertiary);
 		background: color-mix(in oklab, var(--color-bg-primary) 72%, transparent);
 		border: 1px solid color-mix(in oklab, var(--color-border-emphasis) 60%, transparent);
 		box-shadow: none;
 		cursor: pointer;
-		transition: color var(--duration-normal) var(--ease-default);
+		min-height: 44px;
+		min-width: 44px;
+		align-items: center;
+		justify-content: center;
+		transition: color var(--transition-default);
 	}
 
 	.search-toggle:hover {
@@ -319,15 +323,15 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		left: 0;
 		right: 0;
 		bottom: 0;
-		background: rgba(26, 27, 31, 0.65);
-		backdrop-filter: blur(8px);
-		z-index: 10000;
+		background: var(--color-overlay-bg);
+		backdrop-filter: blur(var(--space-2));
+		z-index: var(--z-overlay);
 		display: flex;
 		align-items: flex-start;
 		justify-content: center;
 		padding: var(--space-8) var(--space-4);
 		opacity: 1;
-		transition: opacity var(--duration-normal) var(--ease-default);
+		transition: opacity var(--transition-default);
 	}
 
 	.search-overlay[hidden] {
@@ -337,7 +341,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 	.search-overlay-content {
 		width: 100%;
-		max-width: 600px;
+		max-width: var(--container-sm);
 		margin-top: var(--space-16);
 		background: var(--color-bg-primary);
 		border-radius: var(--radius-lg);
@@ -345,7 +349,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		box-shadow: var(--shadow-lg);
 		border: 1px solid var(--color-border-default);
 		transform: translateY(0);
-		transition: transform var(--duration-normal) var(--ease-out);
+		transition: transform var(--transition-default);
 	}
 
 	.search-modal-header {
@@ -358,7 +362,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	.search-modal-header h2 {
 		margin: 0;
 		font-size: var(--text-h2);
-		font-weight: 600;
+		font-weight: var(--weight-semibold);
 		color: var(--color-text-primary);
 	}
 
@@ -366,14 +370,16 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		width: 2.5rem;
-		height: 2.5rem;
+		width: var(--space-10);
+		height: var(--space-10);
+		min-height: 44px;
+		min-width: 44px;
 		background: none;
 		border: 1px solid var(--color-border-default);
 		border-radius: var(--radius-md);
 		color: var(--color-text-tertiary);
 		cursor: pointer;
-		transition: all var(--duration-normal) var(--ease-default);
+		transition: all var(--transition-default);
 	}
 
 	.search-close:hover {
@@ -386,21 +392,21 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		display: flex;
 		gap: var(--space-2);
 		align-items: center;
-		line-height: 1.1;
+		line-height: var(--leading-display);
 		color: var(--color-text-primary);
 		text-decoration: none;
 		font-family: var(--font-serif);
-		font-weight: 600;
+		font-weight: var(--weight-semibold);
 		font-size: var(--text-h4);
 	}
 
 	.monogram {
 		display: inline-flex;
 		font-family: var(--font-serif);
-		font-weight: 700;
-		font-size: 1.6rem;
+		font-weight: var(--weight-bold);
+		font-size: var(--text-h3);
 		line-height: 1;
-		letter-spacing: -0.04em;
+		letter-spacing: var(--tracking-display);
 		user-select: none;
 	}
 
@@ -418,11 +424,15 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		border: 0;
 		border-radius: var(--radius-full);
 		padding: var(--space-2);
-		font-size: 1.3rem;
+		font-size: var(--text-h3);
 		color: var(--color-text-tertiary);
 		background: color-mix(in oklab, var(--color-bg-primary) 72%, transparent);
 		border: 1px solid color-mix(in oklab, var(--color-border-emphasis) 60%, transparent);
 		box-shadow: none;
+		min-height: 44px;
+		min-width: 44px;
+		align-items: center;
+		justify-content: center;
 	}
 
 	.menu-button[aria-expanded='true'] {
@@ -459,19 +469,19 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		color: var(--color-text-tertiary);
 		text-decoration: none;
 		position: relative;
-		padding: 0.35rem 0;
-		transition: color var(--duration-normal) var(--ease-default);
+		padding: var(--space-1) 0;
+		transition: color var(--transition-default);
 	}
 
 	.link::after {
 		content: '';
 		position: absolute;
 		left: 0;
-		bottom: -0.2rem;
+		bottom: calc(var(--space-1) * -0.5);
 		width: 0%;
 		height: 2px;
 		background: var(--color-teal);
-		transition: width var(--duration-normal) var(--ease-out);
+		transition: width var(--transition-default);
 	}
 
 	.link:hover::after,
@@ -509,7 +519,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 	@media (min-width: 50em) {
 		nav {
-			padding: 1.75rem var(--space-16) 0;
+			padding: var(--space-8) var(--space-16) 0;
 		}
 
 		.nav-shell {
@@ -518,7 +528,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			align-items: center;
 			gap: var(--space-8);
 			padding: var(--space-3) var(--space-6);
-			width: min(88rem, calc(100% - 4rem));
+			width: min(88rem, calc(100% - var(--space-16)));
 		}
 
 		.menu-header {
@@ -535,12 +545,12 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 		.search-overlay-content {
 			margin-top: var(--space-24);
-			max-width: 700px;
+			max-width: var(--container-md);
 		}
 
 		.search-toggle {
-			font-size: 1rem;
-			padding: 0.45rem;
+			font-size: var(--text-body);
+			padding: var(--space-2);
 		}
 
 		.menu-footer .search-toggle {
@@ -556,7 +566,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		}
 
 		.monogram {
-			font-size: 1.8rem;
+			font-size: var(--text-h2);
 		}
 
 		.menu-content {
@@ -568,17 +578,17 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		.nav-items {
 			flex-direction: row;
 			font-size: var(--text-body);
-			gap: 1.75rem;
+			gap: var(--space-8);
 			padding: 0;
 			justify-content: center;
 			width: 100%;
 		}
 
 		.link {
-			padding: 0.35rem 0;
+			padding: var(--space-1) 0;
 			transition:
-				color var(--duration-normal) var(--ease-default),
-				background-color var(--duration-normal) var(--ease-default);
+				color var(--transition-default),
+				background-color var(--transition-default);
 		}
 
 		.link:hover,
@@ -591,7 +601,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 		}
 
 		.menu-footer {
-			--icon-padding: 0.375rem;
+			--icon-padding: var(--space-1);
 
 			grid-column: 3;
 			justify-self: flex-end;
