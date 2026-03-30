@@ -17,7 +17,7 @@
     "@astrojs/partytown": "^2.1.5",
     "@astrojs/react": "^4.4.2",
     "@astrojs/rss": "^4.0.17",
-    "@astrojs/sitemap": "^3.7.1",
+    "@astrojs/sitemap": "^3.7.2",
     "@astrojs/vercel": "^9.0.5",
     "@heroui/button": "^2.2.32",
     "@heroui/code": "^2.2.25",
