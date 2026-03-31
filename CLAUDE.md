@@ -9,7 +9,8 @@ pnpm dev                  # Dev server at http://localhost:4321
 pnpm astro check          # Validate TypeScript + content collection schemas
 pnpm build                # SSR build for Vercel (may fail on Windows due to symlink EPERM — ignore if deploying via Vercel Git)
 pnpm preview              # Test SSR build locally
-pnpm astro check && pnpm build  # Full pre-commit gate
+pnpm check                # Full pre-commit gate (astro check + build)
+pnpm audit                # Audit dependencies (high+critical)
 ```
 
 Docker alternatives (when local build fails on Windows):
@@ -57,9 +58,9 @@ The site uses the **Membrane Palette** design system (v1.1). All visual values M
 #### Token Rules (non-negotiable)
 
 1. **Never hardcode colors, spacing, font-sizes, font-weights, shadows, radii, z-index, or transitions.** Always use `var(--token-name)` from design-tokens.css.
-2. **Never use pure white (`#FFFFFF`) as background or pure black (`#000000`) as text.** Use `var(--color-bg-primary)` (#FAF7F2 cream) and `var(--color-text-primary)` (#1A1B1F charcoal).
+2. **Never use pure white (`#FFFFFF`) as background or pure black (`#000000`) as text.** Use `var(--color-bg-primary)` (#FAF6EE cream) and `var(--color-text-primary)` (#1A1B1F charcoal).
 3. **60/30/10 color distribution:** 60% canvas/neutrals (Membrane register), 30% accents (Human register: terracotta, amber, burgundy), 10% digital register (teal, steel blue, slate).
-4. **Terracotta is the primary action color** (`var(--color-terracotta)`, #B35530). Teal is secondary/nav (`var(--color-teal)`, #2A6F6F).
+4. **Terracotta is the primary action color** (`var(--color-terracotta)`, #B35530). Teal is secondary/nav (`var(--color-teal)`, #1B756D).
 5. **Typography triad:** Fraunces (serif, headings via `var(--font-serif)`), Instrument Sans (body/UI via `var(--font-sans)`), JetBrains Mono (code via `var(--font-mono)`).
 6. **Font weights:** Use `var(--weight-regular/medium/semibold/bold)` — never hardcode 400/500/600/700.
 7. **Spacing:** Use `var(--space-1)` through `var(--space-32)` — never hardcode rem/px values in `<style>` blocks.

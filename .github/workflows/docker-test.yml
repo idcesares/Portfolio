@@ -74,21 +74,14 @@ jobs:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest]
     
     steps:
     - name: Checkout repository
       uses: actions/checkout@v4
 
-    - name: Set up Docker (Windows/Linux)
-      if: runner.os != 'macOS'
+    - name: Set up Docker Buildx
       uses: docker/setup-buildx-action@v3
-
-    # macOS setup (Docker Desktop required)
-    - name: Set up Docker (macOS)
-      if: runner.os == 'macOS'
-      run: |
-        brew install docker docker-compose
 
     - name: Validate Docker Compose files
       run: |

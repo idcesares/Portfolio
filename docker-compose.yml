@@ -1,5 +1,3 @@
-version: '3.8'
-
 services:
   # Development service - hot reload enabled
   portfolio-dev:
@@ -18,6 +16,7 @@ services:
       - ./tailwind.config.cjs:/app/tailwind.config.cjs
       - ./tsconfig.json:/app/tsconfig.json
       - ./vercel.json:/app/vercel.json
+      - ./remark-reading-time.mjs:/app/remark-reading-time.mjs
       # Prevent node_modules from being mounted (use container's version)
       - /app/node_modules
       - /app/.astro

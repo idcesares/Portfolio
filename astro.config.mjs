@@ -1,4 +1,4 @@
-import { defineConfig } from 'astro/config';
+import { defineConfig, fontProviders } from 'astro/config';
 import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
@@ -33,7 +33,11 @@ export default defineConfig({
           active: false // Preserve viewBox for scaling
         }
       ]
-    }
+    },
+    // Queued rendering: two-pass approach for up to 2x faster rendering (planned default in v7)
+    queuedRendering: {
+      enabled: true,
+    },
   },
 
   adapter: vercel({
@@ -52,6 +56,15 @@ export default defineConfig({
     layout: 'constrained',
     // Enable responsive styles for proper image resizing
     responsiveStyles: true,
+    // Sharp codec-specific defaults (Astro 6.1) for consistent image encoding
+    service: {
+      config: {
+        jpeg: { mozjpeg: true },
+        webp: { effort: 6, alphaQuality: 80 },
+        avif: { effort: 4 },
+        png: { compressionLevel: 9 },
+      },
+    },
     // Authorize remote image domains for optimization
     domains: [
       'i.ytimg.com',
@@ -75,6 +88,34 @@ export default defineConfig({
 
   site: 'https://dcesares.dev',
 
+  // Built-in Fonts API (Astro 6) — self-hosted, optimized fallbacks, no external Google requests
+  fonts: [
+    {
+      provider: fontProviders.google(),
+      name: 'Fraunces',
+      cssVariable: '--font-serif',
+      weights: ['300 900'],
+      styles: ['normal', 'italic'],
+      fallbacks: ['serif'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'Instrument Sans',
+      cssVariable: '--font-sans',
+      weights: [400, 500, 600, 700],
+      styles: ['normal'],
+      fallbacks: ['sans-serif'],
+    },
+    {
+      provider: fontProviders.google(),
+      name: 'JetBrains Mono',
+      cssVariable: '--font-mono',
+      weights: [400, 600],
+      styles: ['normal'],
+      fallbacks: ['monospace'],
+    },
+  ],
+
   integrations: [sitemap(), partytown({
     config: {
       forward: ["dataLayer.push"]
@@ -82,6 +123,13 @@ export default defineConfig({
   }), embeds(), mdx(), react()],
 
   markdown: {
+    // SmartyPants configured for Brazilian Portuguese typography (Astro 6.1)
+    smartypants: {
+      openingQuotes: { double: '\u201C', single: '\u2018' },
+      closingQuotes: { double: '\u201D', single: '\u2019' },
+      dashes: true,
+      ellipses: true,
+    },
     syntaxHighlight: false,
     remarkPlugins: [remarkReadingTime],
     rehypePlugins: [
@@ -107,8 +155,10 @@ export default defineConfig({
     build: {
       rollupOptions: {
         output: {
-          manualChunks: {
-            'search': ['fuse.js']
+          manualChunks(id) {
+            if (id.includes('fuse.js')) {
+              return 'search';
+            }
           }
         }
       }

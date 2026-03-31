@@ -4,8 +4,8 @@
 # Base stage - shared dependencies
 FROM node:22-alpine AS base
 
-# Install pnpm (pinned for reproducibility)
-RUN corepack enable && corepack prepare pnpm@10.20.0 --activate
+# Install pnpm (pinned for reproducibility — must match packageManager in package.json)
+RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
 
 # Set working directory
 WORKDIR /app
@@ -43,8 +43,8 @@ RUN pnpm build
 # Production stage - lightweight runtime
 FROM node:22-alpine AS production
 
-# Install pnpm (pinned for reproducibility)
-RUN corepack enable && corepack prepare pnpm@10.20.0 --activate
+# Install pnpm (pinned for reproducibility — must match packageManager in package.json)
+RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
 
 WORKDIR /app
 

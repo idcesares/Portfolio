@@ -114,11 +114,10 @@
 
   /* --------------------------------------------------------
      6. TYPOGRAPHY — Font Stacks
+     Managed by Astro Fonts API (astro.config.mjs → fonts[]).
+     --font-serif, --font-sans, --font-mono are generated
+     with optimized metric-based fallbacks. Do NOT redefine here.
      -------------------------------------------------------- */
-
-  --font-serif:             'Fraunces', 'Georgia', 'Times New Roman', serif;
-  --font-sans:              'Instrument Sans', 'Inter', 'Helvetica Neue', sans-serif;
-  --font-mono:              'JetBrains Mono', 'Fira Code', 'Consolas', monospace;
 
   /* --------------------------------------------------------
      7. TYPOGRAPHY — Scale (fluid clamp values)

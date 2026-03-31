@@ -38,6 +38,25 @@ Thumbs.db
 .gitignore
 .gitattributes
 
+# Docker (avoid recursive copy)
+docker/
+.devcontainer/
+Dockerfile
+docker-compose*.yml
+docker.ps1
+
+# Documentation (not needed in image)
+docs/
+design-system/
+AGENTS.md
+CLAUDE.md
+README.md
+LICENSE
+Makefile
+
+# CI
+.github/
+
 # Docker
 Dockerfile
 docker-compose*.yml

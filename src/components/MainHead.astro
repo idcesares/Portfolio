@@ -1,5 +1,6 @@
 ---
 import '../styles/global.css';
+import { Font } from 'astro:assets';
 import SpeedInsights from '@vercel/speed-insights/astro';
 import { SEO } from 'astro-seo';
 import {
@@ -80,30 +81,9 @@ const twitter = {
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link
-  href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:wght@400;500;600;700&display=swap"
-  rel="stylesheet"
-  media="print"
-  onload="this.media='all'"
-/>
-<link
-  href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
-  rel="stylesheet"
-  media="print"
-  onload="this.media='all'"
-/>
-<noscript>
-  <link
-    href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,300..900;1,9..144,300..900&family=Instrument+Sans:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
-  />
-  <link
-    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600&display=swap"
-    rel="stylesheet"
-  />
-</noscript>
+<Font cssVariable="--font-serif" preload />
+<Font cssVariable="--font-sans" preload />
+<Font cssVariable="--font-mono" />
 <link
   rel="alternate"
   type="application/rss+xml"

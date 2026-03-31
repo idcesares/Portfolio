@@ -17,7 +17,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 │   ├── content/            # Collections (blog/, work/) com schemas Zod
 │   ├── layouts/            # Layouts base (BaseLayout.astro)
 │   ├── pages/              # Rotas e API endpoints (kebab-case)
-│   ├── styles/             # CSS global com custom properties
+│   ├── styles/             # CSS global + design tokens (Membrane Palette)
 │   ├── utils/              # Utilitários TypeScript
 │   ├── content.config.ts   # Schema das collections
 │   └── env.d.ts
@@ -30,12 +30,16 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 │   ├── llms-full.txt       # Instruções completas para LLMs
 │   ├── robots.txt
 │   └── search-fallback.js  # Fallback de busca (cache 24h)
-├── docs/                   # Documentação extra (ex: content-factory/)
+├── .github/
+│   ├── copilot-instructions.md
+│   └── workflows/          # CI (astro check + build) e Docker test
+├── design-system/          # Spec do Membrane Palette (DESIGN-SYSTEM.md, BRAND-VOICE.md, tokens/)
 ├── docker/                 # Docs e scripts Docker
 ├── astro.config.mjs        # Configuração Astro + integrações
 ├── docker-compose.yml      # Compose dev
 ├── docker-compose.prod.yml # Compose preview de produção
 ├── Dockerfile              # Imagem dev/prod
+├── remark-reading-time.mjs # Plugin custom de reading time (PT-BR)
 ├── tailwind.config.cjs     # Tailwind + HeroUI
 ├── vercel.json             # Deploy config + security headers + caching
 └── tsconfig.json           # TypeScript strict mode
@@ -68,8 +72,8 @@ docker-compose up -d
 ### Opção 2: Instalação Local
 
 **Versões**:
-- Node.js >= 18.x
-- pnpm >= 8.x (package manager obrigatório)
+- Node.js >= 22 <25
+- pnpm >= 9 <11 (package manager obrigatório)
 - TypeScript strict mode habilitado
 
 **Variáveis de Ambiente** (opcional):
@@ -143,7 +147,12 @@ pnpm astro check
 
 **Checagem completa antes do commit**:
 ```bash
-pnpm astro check && pnpm build
+pnpm check
+```
+
+**Auditoria de dependências**:
+```bash
+pnpm audit
 ```
 
 ## Padrões de Código
@@ -158,7 +167,7 @@ pnpm astro check && pnpm build
 
 **Styling**: 
 - Tailwind v4 + HeroUI components
-- CSS custom properties: `var(--gray-0)`, `var(--shadow-md)`, `var(--gradient-accent-orange)`
+- Membrane Palette design tokens: `var(--color-*)`, `var(--space-*)`, `var(--font-*)` (definidos em `src/styles/design-tokens.css`; spec em `design-system/`)
 - Utility class `stack` para layouts verticais com gaps consistentes
 - Pattern `class:list={['base-class', variant]}` para variantes de componentes
 
@@ -331,7 +340,7 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 
 **Build Process**:
 1. `pnpm install` (ignoredBuiltDependencies: esbuild)
-2. `pnpm build` (output: server, format: file, trailingSlash: never)
+2. `pnpm build` (output: server, format: file, trailingSlash: ignore)
 3. Deploy para Vercel (SSR)
 
 **Environment**:
@@ -352,4 +361,4 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 - Manter sincronizado com `README.md` 
 - PRs que alteram workflow devem atualizar seções relevantes
 
-_Atualizado em: 25/01/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._
+_Atualizado em: 31/03/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._

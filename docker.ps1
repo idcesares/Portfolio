@@ -43,7 +43,7 @@ function Show-Help {
 
 function Start-Dev {
     Write-Host "Iniciando ambiente de desenvolvimento..." -ForegroundColor Green
-    docker-compose up -d
+    docker compose up -d
     Write-Host ""
     Write-Host "✓ Container iniciado!" -ForegroundColor Green
     Write-Host "✓ Acesse: " -ForegroundColor Green -NoNewline
@@ -54,24 +54,24 @@ function Start-Dev {
 
 function Stop-Dev {
     Write-Host "Parando containers..." -ForegroundColor Yellow
-    docker-compose down
+    docker compose down
     Write-Host "✓ Containers parados!" -ForegroundColor Green
 }
 
 function Build-Image {
     Write-Host "Rebuilding imagem Docker..." -ForegroundColor Yellow
-    docker-compose build --no-cache
+    docker compose build --no-cache
     Write-Host "✓ Build completo!" -ForegroundColor Green
 }
 
 function Show-Logs {
     Write-Host "Mostrando logs (Ctrl+C para sair)..." -ForegroundColor Yellow
-    docker-compose logs -f
+    docker compose logs -f
 }
 
 function Restart-Dev {
     Write-Host "Reiniciando containers..." -ForegroundColor Yellow
-    docker-compose restart
+    docker compose restart
     Write-Host "✓ Containers reiniciados!" -ForegroundColor Green
 }
 
@@ -80,7 +80,7 @@ function Clean-All {
     $confirm = Read-Host "Confirmar? (s/n)"
     if ($confirm -eq 's' -or $confirm -eq 'S') {
         Write-Host "Limpando tudo..." -ForegroundColor Yellow
-        docker-compose down -v --rmi all
+        docker compose down -v --rmi all
         Write-Host "✓ Limpeza completa!" -ForegroundColor Green
     } else {
         Write-Host "Cancelado." -ForegroundColor Yellow
@@ -89,17 +89,17 @@ function Clean-All {
 
 function Start-Prod {
     Write-Host "Iniciando preview de produção..." -ForegroundColor Green
-    docker-compose -f docker-compose.prod.yml up --build
+    docker compose -f docker-compose.prod.yml up --build
 }
 
 function Run-Check {
     Write-Host "Executando astro check..." -ForegroundColor Yellow
-    docker-compose exec portfolio-dev pnpm astro check
+    docker compose exec portfolio-dev pnpm astro check
 }
 
 function Open-Shell {
     Write-Host "Abrindo shell no container..." -ForegroundColor Green
-    docker-compose exec portfolio-dev sh
+    docker compose exec portfolio-dev sh
 }
 
 # Main logic
