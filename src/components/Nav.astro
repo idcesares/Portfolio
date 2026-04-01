@@ -8,6 +8,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	{ label: 'Home', href: '/', prefetch: 'load' },
 	{ label: 'Trabalhos', href: '/work', prefetch: 'load' },
 	{ label: 'Blog', href: '/blog', prefetch: 'load' },
+	{ label: 'Dev', href: '/dev' },
 	{ label: 'Sobre', href: '/about' }];
 ---
 
@@ -514,7 +515,6 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	.theme-toggle {
 		display: flex;
 		align-items: center;
-		height: calc(var(--icon-size) + 2 * var(--icon-padding));
 	}
 
 	@media (min-width: 50em) {

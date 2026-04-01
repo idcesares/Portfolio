@@ -1,6 +1,4 @@
 ---
-import Icon from './Icon.astro';
-
 interface Props {
   placeholder?: string;
 }
@@ -10,7 +8,6 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 
 <div class="search-container">
   <div class="search-box">
-    <Icon icon="magnifying-glass" class:list="search-icon" />
     <input
       type="text"
       id="search-input"
@@ -43,18 +40,9 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     box-shadow: var(--shadow-sm);
   }
 
-  .search-icon {
-    position: absolute;
-    left: var(--space-3);
-    z-index: 1;
-    color: var(--color-text-tertiary);
-    pointer-events: none;
-    font-size: var(--text-base);
-  }
-
   .search-input {
     width: 100%;
-    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-10);
+    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-4);
     border: 0;
     border-radius: var(--radius-md);
     background: transparent;
@@ -158,13 +146,8 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
   /* Desktop adjustments */
   @media (min-width: 50em) {
     .search-input {
-      padding: var(--space-2) var(--space-8) var(--space-2) var(--space-8);
+      padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
       font-size: var(--text-base);
-    }
-
-    .search-icon {
-      left: var(--space-2);
-      font-size: var(--text-sm);
     }
 
     .search-clear {

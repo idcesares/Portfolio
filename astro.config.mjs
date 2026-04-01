@@ -26,6 +26,8 @@ export default defineConfig({
   experimental: {
     // SVGO optimization for smaller SVG files
     svgo: {
+      // Run optimization repeatedly until no further improvements are found
+      multipass: true,
       plugins: [
         'preset-default',
         {
@@ -37,6 +39,8 @@ export default defineConfig({
     // Queued rendering: two-pass approach for up to 2x faster rendering (planned default in v7)
     queuedRendering: {
       enabled: true,
+      // Reuse rendered string values across content collection pages (blog/work)
+      contentCache: true,
     },
   },
 
