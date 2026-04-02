@@ -419,10 +419,11 @@ docker volume prune
 - [Docker Documentation](https://docs.docker.com/)
 - [Docker Compose Documentation](https://docs.docker.com/compose/)
 - [Astro Troubleshooting](https://docs.astro.build/en/guides/troubleshooting/)
-- [README-DOCKER.md](./README-DOCKER.md) - Guia completo
-- [QUICKSTART-DOCKER.md](./QUICKSTART-DOCKER.md) - Início rápido
+- [README.md](./README.md) - Guia rápido do diretório Docker
+- [GUIDE.md](./GUIDE.md) - Guia completo
+- [QUICKSTART.md](./QUICKSTART.md) - Início rápido
 
 ---
 
-**Última atualização**: 12/11/2025  
+**Última atualização**: 02/04/2026  
 **Maintainer**: Isaac D'Césares (@idcesares)

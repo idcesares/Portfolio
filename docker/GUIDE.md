@@ -13,8 +13,8 @@ Este guia explica como executar o ambiente de desenvolvimento do portfólio usan
 
 ```
 ├── Dockerfile              # Multi-stage build (dev + prod)
-├── docker-compose.yml      # Ambiente de desenvolvimento
-├── docker-compose.prod.yml # Preview de produção
+├── docker compose.yml      # Ambiente de desenvolvimento
+├── docker compose.prod.yml # Preview de produção
 └── .dockerignore          # Otimização do build context
 ```
 
@@ -24,16 +24,16 @@ Este guia explica como executar o ambiente de desenvolvimento do portfólio usan
 
 ```bash
 # Iniciar ambiente de desenvolvimento
-docker-compose up
+docker compose up
 
 # Ou em background
-docker-compose up -d
+docker compose up -d
 
 # Ver logs
-docker-compose logs -f
+docker compose logs -f
 
 # Parar containers
-docker-compose down
+docker compose down
 ```
 
 **Acesso**: http://localhost:4321
@@ -42,13 +42,13 @@ docker-compose down
 
 ```bash
 # Build e preview da versão de produção
-docker-compose -f docker-compose.prod.yml up --build
+docker compose -f docker compose.prod.yml up --build
 
 # Em background
-docker-compose -f docker-compose.prod.yml up -d --build
+docker compose -f docker compose.prod.yml up -d --build
 
 # Parar
-docker-compose -f docker-compose.prod.yml down
+docker compose -f docker compose.prod.yml down
 ```
 
 **Acesso**: http://localhost:4321
@@ -59,45 +59,45 @@ docker-compose -f docker-compose.prod.yml down
 
 ```bash
 # Build apenas (sem iniciar)
-docker-compose build
+docker compose build
 
 # Force rebuild (ignora cache)
-docker-compose build --no-cache
+docker compose build --no-cache
 
 # Build de produção
-docker-compose -f docker-compose.prod.yml build --no-cache
+docker compose -f docker compose.prod.yml build --no-cache
 ```
 
 ### Gerenciamento de Containers
 
 ```bash
 # Listar containers ativos
-docker-compose ps
+docker compose ps
 
 # Executar comando dentro do container
-docker-compose exec portfolio-dev sh
+docker compose exec portfolio-dev sh
 
 # Ver logs em tempo real
-docker-compose logs -f portfolio-dev
+docker compose logs -f portfolio-dev
 
 # Reiniciar serviço
-docker-compose restart portfolio-dev
+docker compose restart portfolio-dev
 
 # Parar e remover containers + volumes
-docker-compose down -v
+docker compose down -v
 ```
 
 ### Validação e Testes
 
 ```bash
 # Executar astro check dentro do container
-docker-compose exec portfolio-dev pnpm astro check
+docker compose exec portfolio-dev pnpm astro check
 
 # Executar build de validação
-docker-compose exec portfolio-dev pnpm build
+docker compose exec portfolio-dev pnpm build
 
 # Acessar shell do container
-docker-compose exec portfolio-dev sh
+docker compose exec portfolio-dev sh
 ```
 
 ## Estrutura de Volumes
@@ -113,7 +113,7 @@ O ambiente de desenvolvimento monta os seguintes diretórios para hot reload:
 
 ## Variáveis de Ambiente
 
-Configuradas automaticamente no `docker-compose.yml`:
+Configuradas automaticamente no `docker compose.yml`:
 
 ```yaml
 NODE_ENV=development
@@ -128,7 +128,7 @@ Para adicionar variáveis customizadas, crie um arquivo `.env` na raiz:
 CUSTOM_VAR=valor
 ```
 
-E referencia no `docker-compose.yml`:
+E referencia no `docker compose.yml`:
 
 ```yaml
 environment:
@@ -144,7 +144,7 @@ environment:
 # Encontrar processo usando a porta
 Get-Process -Id (Get-NetTCPConnection -LocalPort 4321).OwningProcess
 
-# Ou mudar porta no docker-compose.yml
+# Ou mudar porta no docker compose.yml
 ports:
   - "3000:4321"  # Mapeia porta 3000 externa → 4321 interna
 ```
@@ -163,14 +163,14 @@ ports:
 
 ```bash
 # 1. Verificar se volumes estão montados
-docker-compose exec portfolio-dev ls -la /app/src
+docker compose exec portfolio-dev ls -la /app/src
 
 # 2. Reiniciar container
-docker-compose restart portfolio-dev
+docker compose restart portfolio-dev
 
 # 3. Rebuild completo
-docker-compose down -v
-docker-compose up --build
+docker compose down -v
+docker compose up --build
 ```
 
 ### Build falha com erro de memória
@@ -214,26 +214,26 @@ docker system df
 
 ```bash
 # 1. Iniciar ambiente
-docker-compose up -d
+docker compose up -d
 
 # 2. Desenvolver normalmente (hot reload ativo)
 # Editar arquivos em src/, public/, etc.
 
 # 3. Ver logs se necessário
-docker-compose logs -f
+docker compose logs -f
 
 # 4. Validar antes de commit
-docker-compose exec portfolio-dev pnpm astro check
+docker compose exec portfolio-dev pnpm astro check
 
 # 5. Parar ao final do dia
-docker-compose down
+docker compose down
 ```
 
 ### Antes de Deploy
 
 ```bash
 # 1. Testar build de produção
-docker-compose -f docker-compose.prod.yml up --build
+docker compose -f docker compose.prod.yml up --build
 
 # 2. Verificar em http://localhost:4321
 
@@ -249,7 +249,7 @@ Instale extensão **Dev Containers** e adicione `.devcontainer/devcontainer.json
 ```json
 {
   "name": "dcesares.dev Portfolio",
-  "dockerComposeFile": "../docker-compose.yml",
+  "dockerComposeFile": "../docker compose.yml",
   "service": "portfolio-dev",
   "workspaceFolder": "/app",
   "customizations": {
@@ -271,7 +271,7 @@ O container possui healthcheck automático:
 
 ```bash
 # Ver status de saúde
-docker-compose ps
+docker compose ps
 
 # Output esperado:
 # NAME                    STATUS
@@ -286,10 +286,10 @@ O Docker Compose cria rede isolada `portfolio-network`. Para conectar outros ser
 
 ```powershell
 # Alias úteis (adicionar ao perfil PowerShell)
-function dc-up { docker-compose up }
-function dc-down { docker-compose down }
-function dc-logs { docker-compose logs -f }
-function dc-build { docker-compose build --no-cache }
+function dc-up { docker compose up }
+function dc-down { docker compose down }
+function dc-logs { docker compose logs -f }
+function dc-build { docker compose build --no-cache }
 
 # Executar
 dc-up
@@ -304,7 +304,7 @@ dc-up
 # Ctrl+C no terminal
 
 # 2. Inicie Docker
-docker-compose up -d
+docker compose up -d
 
 # 3. Confirme acesso em http://localhost:4321
 ```
@@ -315,7 +315,7 @@ Ambos não podem rodar simultaneamente na mesma porta!
 
 ```bash
 # Remover tudo relacionado ao projeto
-docker-compose down -v --rmi all
+docker compose down -v --rmi all
 
 # Isso remove:
 # - Containers
@@ -329,20 +329,20 @@ docker-compose down -v --rmi all
 
 ```bash
 # Logs completos desde o início
-docker-compose logs --tail=1000
+docker compose logs --tail=1000
 
 # Logs de erro apenas
-docker-compose logs | grep -i error
+docker compose logs | grep -i error
 ```
 
 ### Executar Comandos Ad-Hoc
 
 ```bash
 # Instalar nova dependência
-docker-compose exec portfolio-dev pnpm add <package>
+docker compose exec portfolio-dev pnpm add <package>
 
 # Executar script customizado
-docker-compose exec portfolio-dev pnpm run <script>
+docker compose exec portfolio-dev pnpm run <script>
 ```
 
 ## Notas Importantes
@@ -370,3 +370,4 @@ docker-compose exec portfolio-dev pnpm run <script>
 **Atualizado**: 12/11/2025  
 **Documentação Principal**: README.md  
 **Arquitetura**: AGENTS.md
+

@@ -15,7 +15,7 @@
 
 **Linux/macOS ou Terminal padrão**:
 ```bash
-docker-compose up -d
+docker compose up -d
 ```
 
 ### 3. Acessar o Site
@@ -23,8 +23,8 @@ Abra seu navegador em: **http://localhost:4321**
 
 ### 4. Parar
 ```powershell
-.\docker.ps1 down    # Windows
-docker-compose down  # Linux/macOS
+.\docker.ps1 down   # Windows
+docker compose down # Linux/macOS
 ```
 
 ---
@@ -69,7 +69,7 @@ ports:
 ---
 
 ## 📖 Documentação Completa
-Ver **[README-DOCKER.md](./README-DOCKER.md)** para guia detalhado.
+Ver **[README.md](./README.md)** e **[GUIDE.md](./GUIDE.md)** para o guia detalhado.
 
 ## 🎯 Workflow Diário
 
@@ -92,7 +92,7 @@ Ver **[README-DOCKER.md](./README-DOCKER.md)** para guia detalhado.
 
 - [ ] Docker Desktop instalado e rodando
 - [ ] Clone do repositório completo
-- [ ] Executar `.\docker.ps1 up` (Windows) ou `docker-compose up -d`
+- [ ] Executar `.\docker.ps1 up` (Windows) ou `docker compose up -d`
 - [ ] Acessar http://localhost:4321
 - [ ] Ver hot reload funcionando (edite um arquivo em `src/`)
 - [ ] Executar `.\docker.ps1 check` para validar

@@ -91,7 +91,7 @@
            │                                             │
            │                                             │
            ▼                                             ▼
-    docker-compose.yml                     docker-compose.prod.yml
+    docker compose.yml                     docker compose.prod.yml
     (Development)                          (Production Preview)
 ```
 
@@ -150,7 +150,7 @@
      │
      ├─ Windows:       .\docker.ps1 up
      ├─ Linux/macOS:   make up
-     └─ Universal:     docker-compose up -d
+     └─ Universal:     docker compose up -d
      │
      ▼
   2. CONTAINER STARTS
@@ -166,18 +166,18 @@
      ├─ Edit files in IDE
      ├─ Hot reload happens automatically
      ├─ View changes in browser
-     └─ Logs available: docker-compose logs -f
+     └─ Logs available: docker compose logs -f
      │
      ▼
   4. VALIDATE
      │
-     ├─ docker-compose exec portfolio-dev pnpm astro check
+     ├─ docker compose exec portfolio-dev pnpm astro check
      └─ Fix any issues
      │
      ▼
   5. STOP
      │
-     └─ docker-compose down
+     └─ docker compose down
 ```
 
 ## Network Architecture
@@ -350,3 +350,4 @@
 **Created**: 12/11/2025  
 **Purpose**: Architecture visualization for dcesares.dev Docker setup  
 **Maintainer**: Isaac D'Césares (@idcesares)
+

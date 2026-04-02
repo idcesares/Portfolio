@@ -1,346 +1,336 @@
 # Portfolio Isaac D'Césares
 
-**Pesquisador, Educador e Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc**
+Portfólio profissional, blog técnico e vitrine de projetos de Isaac D'Césares, pesquisador, educador e coordenador de tecnologia educacional. O site reúne produção autoral sobre IA, educação, segurança digital e desenvolvimento, com foco em performance, acessibilidade e uma identidade visual própria baseada no design system Membrane Palette.
 
 [![Website](https://img.shields.io/badge/Website-dcesares.dev-blue?style=for-the-badge)](https://dcesares.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-isaacdcesares-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/isaacdcesares)
 [![GitHub](https://img.shields.io/badge/GitHub-idcesares-181717?style=for-the-badge&logo=github)](https://github.com/idcesares)
 
-## Sobre Mim
+## Visão Geral
 
-Sou Isaac D'Césares, Coordenador de Tecnologia Educacional no Departamento Nacional do Sesc e mestrando em Computação pela UFRJ. Minha paixão está na interseção entre tecnologia, inovação e educação, buscando constantemente formas de transformar e melhorar os processos de ensino e aprendizagem.
+O projeto está atualmente em **Astro 6** com `output: 'server'`, deploy na **Vercel** e páginas públicas prerenderizadas no build. A navegação é MPA, com prefetch nativo do Astro e superfícies interativas pontuais para filtros, busca, toggle de visualização, troca de tema e cards com microinterações.
 
-Com uma sólida formação acadêmica e profissional, incluindo MBA em Inovação em Engenharia de Software (UFRJ), especializações em Educação Inovadora (Stanford) e Transformação Digital (FDC), além de certificações como Educador Inovador pelo Google e Microsoft, estou equipado para liderar iniciativas de vanguarda no campo da tecnologia educacional.
+Além do conteúdo editorial, o repositório também documenta:
 
-### Impacto Profissional
-- 🎓 **2000+ educadores** capacitados em programas de tecnologia educacional
-- 👥 **1700+ estudantes** impactados através de programas de Cultura Tecnológica e Empreendedorismo Social
-- 🌐 **600.000+ acessos** em plataformas educacionais que implementei
-- 🏗️ **50+ projetos** desenvolvidos em inovação educacional
-- 🤝 **10+ instituições parceiras** em iniciativas colaborativas
-- 📈 **10+ anos** de experiência em tecnologia educacional
+- um fluxo Docker completo para desenvolvimento machine-agnostic;
+- um design system próprio em `design-system/`;
+- instruções para agentes e copilots alinhadas com a arquitetura atual;
+- pipelines de validação com `astro check`, build e auditoria de dependências.
 
-## Características do Portfolio
+## Estado Atual do Repositório
 
-### 🚀 Showcase Profissional
-- **Pesquisa e Publicações**: Trabalhos acadêmicos sobre IA na educação, aplicações de blockchain e tecnologia educacional
-- **Lives e Palestras**: Conteúdo educacional sobre IA para estudantes universitários, segurança digital e inovação tecnológica
-- **Portfolio de Projetos**: Visão abrangente das iniciativas e desenvolvimentos em tecnologia educacional
-- **Trajetória Profissional**: Jornada de desenvolvedor a líder em tecnologia educacional
+No snapshot atual do projeto, o site expõe:
 
-### 📚 Conteúdo Educacional
-- **Artigos do Blog**: Análises aprofundadas sobre tendências em tecnologia educacional e aplicações de IA
-- **Ferramentas de IA para Estudantes**: Guias selecionados para uso de inteligência artificial em ambientes acadêmicos
-- **Segurança Digital**: Recursos para famílias e educadores sobre uso seguro da tecnologia
-- **Integração Tecnológica**: Estratégias para implementação de tecnologia em ambientes educacionais
+- página inicial em `/`;
+- páginas estáticas em `/about`, `/blog`, `/work`, `/dev` e `/deals`;
+- rotas dinâmicas em `/blog/[...slug]` e `/work/[...slug]`;
+- feed RSS em `/rss.xml`;
+- índice de busca em `/search-data.json`.
 
-### 🔬 Áreas de Pesquisa
-- **Inteligência Artificial na Educação**: Aprendizagem personalizada e sistemas adaptativos
-- **Tecnologia Blockchain**: Educação descentralizada e desenvolvimento do projeto LearnChain
-- **Ciência de Dados Educacionais**: Analytics para melhoria dos resultados de aprendizagem
-- **Educação Maker**: Laboratórios de tecnologia e ambientes de aprendizagem prática
-- **Letramento Digital**: Pensamento crítico e uso responsável da tecnologia
+Conteúdo incluído hoje no repositório:
 
-## Stack Tecnológico e Arquitetura
+- **12 posts** em `src/content/blog/`;
+- **18 entries** em `src/content/work/`;
+- **2 projetos de desenvolvimento** em `src/data/dev-projects.ts`.
 
-### 🏗️ Tecnologias Principais
-- **[Astro.js](https://astro.build/)** - Gerador de site moderno com arquitetura de ilhas
-- **[React](https://react.dev/)** - Desenvolvimento de UI baseado em componentes para elementos interativos
-- **[Tailwind CSS](https://tailwindcss.com/)** - Framework CSS utility-first para design responsivo
-- **[HeroUI](https://heroui.com/)** - Biblioteca moderna de componentes React para UX aprimorada
-- **[TypeScript](https://www.typescriptlang.org/)** - JavaScript com tipagem segura para desenvolvimento robusto
+Principais entregas já implementadas:
 
-### 🎨 Design e UX
-- **UI/UX Moderna**: Design limpo e profissional refletindo expertise em tecnologia educacional
-- **Design Responsivo**: Otimizado para todos os dispositivos e tamanhos de tela
-- **Temas Claro/Escuro**: Alternância de tema baseada na preferência do usuário
-- **Componentes Interativos**: Interface de usuário envolvente com transições suaves
-- **Acessibilidade**: Design compatível com WCAG para experiência de usuário inclusiva
+- listagens de blog e work com filtros por tags, busca textual, ordenação e toggle de visualização;
+- página `/dev` dedicada a projetos de software e design system;
+- Membrane Palette aplicado em toda a interface;
+- animações CSS com scroll reveal e respeito a `prefers-reduced-motion`;
+- SEO com `astro-seo`, sitemap, JSON-LD e RSS;
+- analytics e speed insights via Vercel;
+- fallback estático para busca em `public/search-fallback.js`.
 
-### ⚡ Performance e Funcionalidades
-- **Hybrid SSR + Prerender**: Todas as páginas são prerendered no build para máxima performance
-- **MPA Navigation**: Navegação tradicional com prefetch inteligente (viewport strategy)
-- **SEO Otimizado**: Meta tags abrangentes, dados estruturados e sitemap
-- **Gerenciamento de Conteúdo**: Conteúdo baseado em Markdown com frontmatter para atualizações fáceis
-- **Funcionalidade de Busca**: Busca em texto completo em artigos e projetos usando Fuse.js
-- **Integração de Analytics**: Vercel Analytics e Speed Insights para monitoramento de performance
-- **Scroll Animations**: Animações CSS com `data-animate` attributes (respeitando prefers-reduced-motion)
+## Stack Atual
 
-### 🔧 Integrações Avançadas
-- **Content Collections**: Sistema de gerenciamento de conteúdo type-safe do Astro
-- **Suporte MDX**: Markdown aprimorado com integração de componentes React
-- **Feed RSS**: Geração automatizada de feed para conteúdo do blog
-- **Geração de Sitemap**: Criação automática de sitemap para SEO
-- **Otimização de Imagens**: Carregamento otimizado e imagens responsivas
+### Core
 
-### 🌐 Deploy e Infraestrutura
-- **Plataforma Vercel**: Deploy edge com CDN global
-- **Security Headers**: X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy
-- **Asset Caching**: Cache immutable (1 ano) para assets otimizados
-- **Workflow baseado em Git**: Deploy contínuo a partir do GitHub
-- **Monitoramento de Performance**: Analytics e insights de velocidade em tempo real
-- **Gerenciamento de Domínio**: Domínio personalizado com certificado SSL
+- **Astro 6.1**
+- **React 19**
+- **TypeScript strict**
+- **Tailwind CSS v4**
+- **HeroUI**
 
-## Desenvolvimento e Configuração Local
+### Conteúdo e rendering
 
-### 🐳 Opção 1: Docker (Recomendado - Machine Agnostic)
+- **Astro Content Collections** com schema Zod
+- **MDX** para conteúdo enriquecido
+- **rehype-pretty-code** + botão de cópia
+- **remark-reading-time** customizado em PT-BR
 
-**Início Rápido com Docker**:
-```bash
-# Windows PowerShell
-.\docker.ps1 up
+### Busca, SEO e observabilidade
 
-# Linux/macOS ou Terminal padrão
-docker-compose up -d
+- **Fuse.js** para busca client-side
+- **astro-seo**
+- **@astrojs/rss**
+- **@astrojs/sitemap**
+- **@astrojs/partytown**
+- **@vercel/analytics**
+- **@vercel/speed-insights**
+
+### Infraestrutura
+
+- **Vercel adapter**
+- **Docker / Docker Compose**
+- **GitHub Actions**
+
+## Arquitetura
+
+### Rendering e navegação
+
+- `output: 'server'` para preservar integrações da Vercel, image service e analytics.
+- Páginas e endpoints públicos usam `export const prerender = true`.
+- `prefetchAll: true` com `defaultStrategy: 'viewport'`.
+- `trailingSlash: 'ignore'` + `build.format: 'file'` para URLs consistentes.
+
+### Conteúdo
+
+As collections `blog` e `work` vivem em `src/content/` e compartilham o mesmo schema:
+
+```ts
+title: string
+description: string
+publishDate: Date
+updatedDate: Date
+tags: string[]
+img: string
+img_alt?: string
 ```
 
-Acesse: **http://localhost:4321**
+Formatos suportados:
 
-**Documentação Completa**: Ver **[docker/QUICKSTART.md](./docker/QUICKSTART.md)** e **[docker/GUIDE.md](./docker/GUIDE.md)**
+- `.md`
+- `.mdx`
 
-### 💻 Opção 2: Instalação Local
+### Busca e filtragem
 
-**Pré-requisitos**:
-- **Node.js 22.x**
-- **pnpm 10.x** (gerenciador obrigatório)
-- **Git** para controle de versão
+O endpoint [`src/pages/search-data.json.ts`](./src/pages/search-data.json.ts) gera um JSON com dados consolidados de `blog` e `work`, incluindo:
 
-**Passos para Instalação**:
+- título;
+- descrição;
+- conteúdo sanitizado para indexação;
+- tags;
+- tipo (`blog` ou `work`);
+- datas;
+- URL pública.
 
-1. **Clone o repositório**
-   ```bash
-   git clone https://github.com/idcesares/Portfolio.git
-   cd Portfolio
-   ```
+Esse índice alimenta a experiência client-side com Fuse.js e é entregue com cache de 5 minutos, CORS aberto e fallback estático em [`public/search-fallback.js`](./public/search-fallback.js).
 
-2. **Instale as dependências**
-   ```bash
-   pnpm install
-   ```
+### Design system
 
-3. **Inicie o servidor de desenvolvimento**
-   ```bash
-   pnpm dev
-   ```
+O site usa o **Membrane Palette**, com tokens semânticos em [`src/styles/design-tokens.css`](./src/styles/design-tokens.css) e documentação em:
 
-4. **Visualize o website**
-   Abra [http://localhost:4321](http://localhost:4321) no seu navegador
+- [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md)
+- [`design-system/BRAND-VOICE.md`](./design-system/BRAND-VOICE.md)
 
-### Scripts Disponíveis
+Tipografia atual:
 
-```bash
-pnpm dev        # Inicia servidor de desenvolvimento
-pnpm build      # Build para produção
-pnpm preview    # Preview do build de produção
-pnpm astro      # Executa comandos CLI do Astro
-```
+- **Fraunces** para títulos;
+- **Instrument Sans** para interface e texto corrido;
+- **JetBrains Mono** para código.
 
-### Observação (Windows + Vercel Adapter)
-Em Windows, o build com `@astrojs/vercel` pode falhar com `EPERM: operation not permitted, symlink`
-ao gerar `.vercel/output`. Isso acontece porque a criação de symlinks exige permissões elevadas
-ou o **Developer Mode** habilitado. Soluções comuns:
-- habilitar Developer Mode no Windows;
-- rodar o terminal/VS Code como Administrador; ou
-- executar o build em WSL/Docker/Linux.
+### SEO e distribuição
 
-Se você usa o deploy automático da Vercel via Git, o build em produção ocorre em Linux e esse
-erro local pode ser ignorado.
+- meta tags e Open Graph via `astro-seo`;
+- JSON-LD via `src/utils/seo.ts`;
+- sitemap automático;
+- RSS para o blog;
+- headers de segurança e caching em [`vercel.json`](./vercel.json).
 
-### Estrutura do Projeto
+## Estrutura do Projeto
 
-```
+```text
 Portfolio/
 ├── src/
-│   ├── components/          # Componentes UI reutilizáveis
-│   │   ├── Hero.astro      # Seção hero da homepage
-│   │   ├── Nav.astro       # Componente de navegação
-│   │   ├── Skills.astro    # Showcase de habilidades
-│   │   ├── FilterBar.astro # Barra de filtros para busca
-│   │   └── ...
-│   ├── content/            # Collections de conteúdo
-│   │   ├── blog/           # Artigos do blog (Markdown/MDX)
-│   │   └── work/           # Projetos do portfolio (Markdown/MDX)
-│   ├── layouts/            # Layouts de página
-│   │   └── BaseLayout.astro
-│   ├── pages/              # Páginas de rota
-│   │   ├── index.astro     # Homepage
-│   │   ├── about.astro     # Página sobre
-│   │   ├── blog.astro      # Listagem do blog
-│   │   ├── work.astro      # Listagem do portfolio
-│   │   ├── deals.astro     # Página de ofertas
-│   │   └── search-data.json.ts  # API endpoint para busca
-│   ├── styles/             # Estilos globais
-│   └── utils/              # Funções utilitárias
-├── public/                 # Assets estáticos
-│   ├── assets/             # Imagens e mídia
-│   │   ├── blog_imgs/      # Imagens dos posts do blog
-│   │   └── backgrounds/    # Imagens de fundo responsivas
-│   ├── favicon.svg
-│   ├── search-fallback.js  # Fallback de busca (cache 24h)
-│   └── llms.txt           # Instruções para LLMs
-├── astro.config.mjs        # Configuração do Astro
-├── tailwind.config.cjs     # Configuração do Tailwind CSS
-├── vercel.json             # Configuração de deploy, security headers e caching
-└── package.json
+│   ├── assets/               # Assets importados pelo Astro
+│   ├── components/           # Componentes Astro e React reutilizáveis
+│   ├── content/              # Collections blog/ e work/
+│   ├── data/                 # Dados tipados para superfícies como /dev
+│   ├── layouts/              # Layouts base
+│   ├── pages/                # Rotas do site e endpoints
+│   ├── styles/               # Tokens e CSS global
+│   ├── utils/                # Helpers de SEO, busca e utilidades
+│   └── content.config.ts     # Schema das collections
+├── public/
+│   ├── assets/               # Imagens estáticas otimizadas
+│   ├── certificates/         # PDFs públicos
+│   ├── llms.txt              # Guia resumido para LLMs
+│   ├── llms-full.txt         # Guia estendido para LLMs
+│   └── search-fallback.js    # Fallback cacheado para busca
+├── design-system/            # Membrane Palette
+├── docker/                   # Documentação e scripts Docker
+├── .github/workflows/        # CI
+├── astro.config.mjs
+├── docker-compose.yml
+├── docker-compose.prod.yml
+├── Dockerfile
+├── package.json
+└── vercel.json
 ```
 
-## Gerenciamento de Conteúdo
+## Desenvolvimento Local
 
-### Adicionando Posts do Blog
-Crie um novo arquivo `.md` ou `.mdx` em `src/content/blog/` com frontmatter:
+### Pré-requisitos
 
-```markdown
+- **Node.js** `>=22 <25`
+- **pnpm** `>=9 <11`
+
+Instalação e uso:
+
+```bash
+pnpm install
+pnpm dev
+```
+
+Site local:
+
+- [http://localhost:4321](http://localhost:4321)
+
+### Scripts principais
+
+```bash
+pnpm dev          # Desenvolvimento
+pnpm build        # Build de produção
+pnpm preview      # Preview do build
+pnpm astro check  # TypeScript + content collections
+pnpm check        # astro check + build
+pnpm audit        # Auditoria high/critical
+pnpm audit:full   # Auditoria moderate+
+```
+
+### Observação para Windows
+
+Em máquinas Windows, `pnpm build` pode falhar com erro de symlink ao gerar `.vercel/output`. Isso acontece por restrições do sistema em torno de links simbólicos. As alternativas recomendadas são:
+
+- habilitar **Developer Mode**;
+- rodar o terminal como administrador;
+- usar **WSL**;
+- usar **Docker**;
+- confiar no build Linux da Vercel em deploys via Git.
+
+## Desenvolvimento com Docker
+
+O repositório inclui ambiente Docker multi-stage para desenvolvimento e preview de produção.
+
+### Início rápido
+
+```powershell
+.\docker.ps1 up
+```
+
+```bash
+docker compose up -d
+```
+
+Comandos úteis:
+
+```powershell
+.\docker.ps1 up
+.\docker.ps1 down
+.\docker.ps1 logs
+.\docker.ps1 check
+.\docker.ps1 shell
+.\docker.ps1 prod
+```
+
+```bash
+make up
+make down
+make logs
+make check
+make shell
+make prod
+```
+
+Documentação relacionada:
+
+- [`docker/QUICKSTART.md`](./docker/QUICKSTART.md)
+- [`docker/GUIDE.md`](./docker/GUIDE.md)
+- [`docker/TROUBLESHOOTING.md`](./docker/TROUBLESHOOTING.md)
+- [`docker/INDEX.md`](./docker/INDEX.md)
+
+## Conteúdo
+
+### Novo post de blog
+
+Crie um arquivo em `src/content/blog/`:
+
+```md
 ---
-title: "Título do Seu Post"
-publishDate: 2025-01-15 10:00:00
-updatedDate: 2025-01-15 10:00:00
-description: "Breve descrição do seu post"
-tags: ["IA", "Educação", "Tecnologia"]
-img: "/assets/blog_imgs/nome-da-imagem.webp"
+title: "Título do post"
+description: "Descrição curta para SEO"
+publishDate: 2026-04-02
+updatedDate: 2026-04-02
+tags: ["ia", "educacao", "inovacao"]
+img: "/assets/blog_imgs/exemplo.webp"
 img_alt: "Descrição da imagem"
 ---
-
-Seu conteúdo aqui...
 ```
 
-### Adicionando Projetos do Portfolio
-Crie um novo arquivo `.md` ou `.mdx` em `src/content/work/` com frontmatter:
+### Novo trabalho
 
-```markdown
+Crie um arquivo em `src/content/work/`:
+
+```md
 ---
-title: "Título do Projeto"
-publishDate: 2025-01-15 10:00:00
-updatedDate: 2025-01-15 10:00:00
-img: "/assets/blog_imgs/projeto-imagem.webp"
+title: "Título do trabalho"
+description: "Resumo do projeto"
+publishDate: 2026-04-02
+updatedDate: 2026-04-02
+tags: ["pesquisa", "ia", "educacao"]
+img: "/assets/blog_imgs/exemplo.webp"
 img_alt: "Descrição da imagem"
-description: "Descrição do projeto"
-tags: ["React", "IA", "Educação"]
 ---
-
-Detalhes do projeto...
 ```
 
-### Schema das Collections
-Ambas as collections (`blog` e `work`) seguem o mesmo schema definido em `src/content.config.ts`:
-- **title**: Título obrigatório
-- **description**: Descrição para SEO
-- **publishDate**: Data de publicação
-- **updatedDate**: Data de atualização
-- **tags**: Array de tags para categorização
-- **img**: Caminho para imagem (obrigatório)
-- **img_alt**: Texto alternativo para a imagem
+Regras importantes:
 
-## Contexto Profissional
+- use caminhos absolutos em imagens, como `/assets/blog_imgs/nome.webp`;
+- mantenha slugs em lowercase-hyphenated;
+- valide com `pnpm astro check` antes de abrir PR;
+- prefira WebP/AVIF e mantenha assets públicos abaixo de 5 MB.
 
-### Função Atual
-**Coordenador de Tecnologia Educacional** no Departamento Nacional do Sesc
-- Liderança de iniciativas de transformação digital em instituições educacionais
-- Desenvolvimento de plataformas educacionais com IA e 600.000+ acessos de usuários
-- Coordenação de programas de integração tecnológica para 2000+ educadores
+## Qualidade, CI e Deploy
 
-### Formação Acadêmica
-**Mestrado em Computação** na UFRJ (Universidade Federal do Rio de Janeiro)
-- Foco de pesquisa: Aplicações de IA em tecnologia educacional
-- Dissertação: Blockchain e sistemas de aprendizagem descentralizada (projeto LearnChain)
+### CI
 
-**Formação Complementar**
-- MBA em Inovação em Engenharia de Software (UFRJ)
-- Especialização em Educação Inovadora (Stanford)
-- Especialização em Transformação Digital (FDC)
-- Certificação como Educador Inovador (Google e Microsoft)
+O workflow em [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) executa:
 
-### Áreas de Expertise
-- **IA na Educação**: Sistemas de aprendizagem personalizada e tecnologias adaptativas
-- **Inovação Educacional**: Espaços maker, laboratórios de robótica e programas STEM
-- **Pesquisa e Desenvolvimento**: Publicações acadêmicas e avaliação de tecnologias
-- **Formação Profissional**: Desenvolvimento de educadores e programas de letramento digital
+- `pnpm install --frozen-lockfile`
+- `pnpm run audit` com `continue-on-error`
+- `pnpm astro check`
+- `pnpm build`
 
-### Projetos e Iniciativas Principais
+### Vercel
 
-#### LearnChain - Plataforma de Educação Descentralizada
-Plataforma baseada em blockchain para compartilhamento e monetização de conteúdo educacional, desenvolvida em colaboração com o Grupo Greco da UFRJ.
+O deploy usa:
 
-#### Programa IA para Estudantes Universitários
-Iniciativas educacionais ajudando estudantes a aproveitar ferramentas de IA para sucesso acadêmico, alcançando milhares de estudantes em diversas instituições.
+- `pnpm install`
+- `pnpm build`
+- headers de segurança globais;
+- cache dedicado para `/search-data.json`, `/search-fallback.js`, `/_astro/*`, `/rss.xml` e `/favicon.svg`.
 
-#### Segurança Digital para Famílias
-Programas abrangentes ensinando letramento digital e segurança online para famílias e educadores.
+## Documentação do Repositório
 
-#### Arquitetura de Tecnologia Educacional do Sesc
-Sistema de três camadas integrando gestão educacional, plataformas de aprendizagem adaptativa e materiais físico-digitais.
+- [`AGENTS.md`](./AGENTS.md): instruções para agentes e automação
+- [`CLAUDE.md`](./CLAUDE.md): guia operacional para Claude Code
+- [`.github/copilot-instructions.md`](./.github/copilot-instructions.md): contexto para GitHub Copilot
+- [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md): tokens, princípios e semântica visual
+- [`docker/INDEX.md`](./docker/INDEX.md): hub da documentação Docker
 
-## Funcionalidades Avançadas
+## Licença
 
-### Sistema de Busca
-- **Endpoint de Dados**: `/search-data.json` gera dados estruturados para busca
-- **Busca Client-Side**: Implementação com Fuse.js para busca em tempo real
-- **Filtros**: Por tags, termos de busca e ordenação (mais recente/antigo/alfabético)
-- **Cache**: Endpoint cached por 5 minutos via configuração Vercel
+O código está sob a licença MIT. Consulte [`LICENSE`](./LICENSE).
 
-### Otimizações de Performance
-- **Lazy Loading**: Imagens carregadas sob demanda
-- **WebP/AVIF**: Formatos de imagem otimizados
-- **Bundle Splitting**: Código dividido para carregamento eficiente
-- **Tailwind Purging**: CSS otimizado automaticamente
+## Contato
 
-### SEO e Analytics
-- **Meta Tags**: Configuração abrangente via astro-seo
-- **JSON-LD**: Dados estruturados para mecanismos de busca
-- **Sitemap**: Geração automática
-- **RSS Feed**: Feed automatizado para conteúdo do blog
-- **Vercel Analytics**: Monitoramento de performance e Core Web Vitals
-
-## Contribuições
-
-Contribuições são bem-vindas! Este portfolio serve tanto como showcase pessoal quanto como recurso para a comunidade de tecnologia educacional.
-
-### Formas de Contribuir
-1. **Sugerir melhorias** no conteúdo educacional ou implementação técnica
-2. **Reportar problemas** ou bugs encontrados
-3. **Compartilhar insights** sobre tendências em tecnologia educacional
-4. **Colaborar** em pesquisas ou iniciativas educacionais
-
-### Processo de Contribuição
-1. Faça um fork do repositório
-2. Crie uma branch de feature: `git checkout -b feature/nome-da-sua-feature`
-3. Faça suas mudanças e commit: `git commit -m 'Adiciona descrição significativa'`
-4. Push para sua branch: `git push origin feature/nome-da-sua-feature`
-5. Submeta um pull request
-
-## Licença e Uso
-
-Este projeto está licenciado sob a Licença MIT - veja o arquivo [LICENSE](LICENSE) para detalhes.
-
-### Uso Educacional
-Sinta-se livre para usar este portfolio como inspiração para seus próprios projetos de tecnologia educacional ou portfolios acadêmicos. Atribuição é apreciada, mas não obrigatória.
-
-## Conecte-se e Colabore
-
-Estou sempre aberto a novas parcerias, oportunidades de pesquisa e projetos que se alinhem com minha visão de educação transformadora e tecnologicamente avançada.
-
-### Contato Profissional
-- **Email**: [isaac.dcesares@gmail.com](mailto:isaac.dcesares@gmail.com)
-- **LinkedIn**: [Isaac D'Césares](https://www.linkedin.com/in/isaacdcesares)
-- **GitHub**: [@idcesares](https://github.com/idcesares)
-- **Website**: [dcesares.dev](https://dcesares.dev)
-
-### Áreas de Interesse para Colaboração
-- IA e machine learning em contextos educacionais
-- Aplicações de blockchain para educação e pesquisa
-- Pesquisa e desenvolvimento em tecnologia educacional
-- Letramento digital e uso responsável da tecnologia
-- Educação STEM e pedagogia maker
-
-### Recursos Adicionais
-- **Feed RSS**: [dcesares.dev/rss.xml](https://dcesares.dev/rss.xml)
-- **Sitemap**: [dcesares.dev/sitemap-0.xml](https://dcesares.dev/sitemap-0.xml)
-- **Dados de Busca**: [dcesares.dev/search-data.json](https://dcesares.dev/search-data.json)
-- **Instruções para LLMs**: [dcesares.dev/llms.txt](https://dcesares.dev/llms.txt)
+- Website: [dcesares.dev](https://dcesares.dev)
+- LinkedIn: [Isaac D'Césares](https://www.linkedin.com/in/isaacdcesares)
+- GitHub: [@idcesares](https://github.com/idcesares)
+- RSS: [dcesares.dev/rss.xml](https://dcesares.dev/rss.xml)
 
 ---
 
-*"A tecnologia deve empoderar, não oprimir. Minha missão é ser um catalisador da transformação digital na educação, fomentando aprendizagem contínua e adaptabilidade tecnológica."* - Isaac D'Césares
-
----
-
-**Última atualização**: Janeiro 2026 | **Versão do site**: Astro 5 + Hybrid SSR | **Status**: Em desenvolvimento ativo
+**Última atualização**: 2 de abril de 2026

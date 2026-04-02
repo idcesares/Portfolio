@@ -18,14 +18,14 @@ Este diretório contém todos os arquivos e documentação relacionados ao Docke
 ```bash
 make up
 # ou
-docker-compose up -d
+docker compose up -d
 ```
 
 **Acesse**: http://localhost:4321
 
 ### Parar Desenvolvimento
 ```bash
-docker-compose down
+docker compose down
 ```
 
 ## 📚 Documentação
@@ -78,22 +78,22 @@ Da raiz do projeto:
 
 ```bash
 # Desenvolvimento
-docker-compose up -d              # Iniciar
-docker-compose down               # Parar
-docker-compose logs -f            # Ver logs
-docker-compose restart            # Reiniciar
+docker compose up -d              # Iniciar
+docker compose down               # Parar
+docker compose logs -f            # Ver logs
+docker compose restart            # Reiniciar
 
 # Validação
-docker-compose exec portfolio-dev pnpm astro check
+docker compose exec portfolio-dev pnpm astro check
 
 # Acessar container
-docker-compose exec portfolio-dev sh
+docker compose exec portfolio-dev sh
 
 # Preview de produção
-docker-compose -f docker-compose.prod.yml up
+docker compose -f docker-compose.prod.yml up
 
 # Limpar tudo
-docker-compose down -v --rmi all
+docker compose down -v --rmi all
 ```
 
 Ou use os scripts auxiliares:
@@ -122,4 +122,4 @@ make up|down|logs|check|shell|prod|clean
 ---
 
 **Mantido por**: Isaac D'Césares (@idcesares)  
-**Última atualização**: 12 de novembro de 2025
+**Última atualização**: 2 de abril de 2026

@@ -4,19 +4,21 @@
 
 Base URL: https://dcesares.dev  
 Idiomas: Português (pt-BR), termos técnicos em inglês  
-Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação educacional, IA na educação e transformação digital.  
-Última atualização: Janeiro 2026
+Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação educacional, IA na educação, transformação digital e projetos de desenvolvimento.  
+Última atualização: Abril 2026
 
 ## Navegação Essencial
 - [Início](https://dcesares.dev/): Visão geral e destaques profissionais
 - [Trabalhos](https://dcesares.dev/work/): Portfolio de projetos em tecnologia educacional
 - [Blog](https://dcesares.dev/blog/): Artigos sobre IA, educação e tecnologia
+- [Dev](https://dcesares.dev/dev/): Projetos de desenvolvimento, design system e software autoral
 - [Sobre](https://dcesares.dev/about/): Trajetória profissional e formação acadêmica
 - [Ofertas](https://dcesares.dev/deals/): Links e códigos exclusivos para ferramentas
 
 ## Conteúdos Canônicos
 - [Você realmente precisa de antivírus em 2025?](https://dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/): Análise de segurança digital
-- [Trabalhos](https://dcesares.dev/work/): Projetos em blockchain educacional (LearnChain)
+- [Dev](https://dcesares.dev/dev/): Showcase técnico de projetos de software e do sistema Membrane Palette
+- [Trabalhos](https://dcesares.dev/work/): Projetos em blockchain educacional, IA e tecnologia educacional
 - [Sobre](https://dcesares.dev/about/): Perfil profissional completo
 - [Blog](https://dcesares.dev/blog/): Artigos sobre IA aplicada à educação
 - [Dados de busca](https://dcesares.dev/search-data.json): Dados estruturados para busca
@@ -24,6 +26,7 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 ## O que LLMs podem fazer aqui
 - Resumir artigos sobre tecnologia educacional e IA
 - Responder perguntas sobre projetos de pesquisa em blockchain e educação
+- Descrever projetos autorais da seção /dev e o design system do site
 - Fornecer informações sobre formação e experiência profissional
 - Explicar conceitos de tecnologia educacional e inovação
 - Sugerir recursos e ferramentas baseados no conteúdo do portfolio
@@ -36,7 +39,7 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 - Responsabilidade: Conteúdo colaborativo com IA, revisão humana aplicada
 
 ## Dados dinâmicos
-- Frequência de atualização: Semanal (blog), mensal (projetos)
+- Frequência de atualização: Contínua, com novos posts, trabalhos e projetos conforme publicação
 - Conteúdo em desenvolvimento: Pesquisa de mestrado em andamento
 - Changelog: Disponível no repositório GitHub
 
@@ -53,4 +56,4 @@ D'Césares, Isaac. *[Título do conteúdo]*. Isaac D'Césares Portfolio, [data d
 ## Optional
 - [llms-full.txt](https://dcesares.dev/llms-full.txt): versão completa com FAQ, glossário e políticas detalhadas
 
-_Gerado em: 25 de janeiro de 2026_
+_Gerado em: 2 de abril de 2026_

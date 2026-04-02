@@ -25,7 +25,7 @@ Health check endpoints during dev:
 
 ## Architecture
 
-**Astro 5 SSR** (`output: 'server'`) deployed on Vercel, but every page uses `export const prerender = true` for static generation at build time. No client-side routing — MPA with Astro prefetch.
+**Astro 6** (`output: 'server'`) deployed on Vercel, with public pages and feeds using `export const prerender = true` for static generation at build time. No client-side routing — MPA with Astro prefetch.
 
 ### Content Collections (`src/content.config.ts`)
 
@@ -37,7 +37,7 @@ Content lives in `src/content/blog/` and `src/content/work/` as `.md`/`.mdx` fil
 
 ### Routing & Pages (`src/pages/`)
 
-- `index.astro`, `about.astro`, `blog.astro`, `work.astro`, `deals.astro` — static pages
+- `index.astro`, `about.astro`, `blog.astro`, `work.astro`, `dev.astro`, `deals.astro` — static pages
 - `blog/[...slug].astro`, `work/[...slug].astro` — dynamic routes with `getStaticPaths()` + `prerender = true`
 - `search-data.json.ts` — SSR API endpoint (cached 5 min via `vercel.json`)
 - `rss.xml.js` — prerendered RSS feed

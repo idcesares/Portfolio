@@ -23,14 +23,14 @@ Use este checklist para verificar se sua configuração Docker está funcionando
 ```bash
 # Execute da raiz do projeto
 ls -la Dockerfile
-ls -la docker-compose.yml
-ls -la docker-compose.prod.yml
+ls -la docker compose.yml
+ls -la docker compose.prod.yml
 ls -la .dockerignore
 ```
 
 - [ ] `Dockerfile` existe
-- [ ] `docker-compose.yml` existe
-- [ ] `docker-compose.prod.yml` existe
+- [ ] `docker compose.yml` existe
+- [ ] `docker compose.prod.yml` existe
 - [ ] `.dockerignore` existe
 
 ### Scripts Auxiliares
@@ -99,7 +99,7 @@ docker info
 make build
 
 # Ou universal
-docker-compose build
+docker compose build
 ```
 
 **Esperado**:
@@ -118,7 +118,7 @@ docker-compose build
 make up
 
 # Ou universal
-docker-compose up -d
+docker compose up -d
 ```
 
 **Esperado**:
@@ -128,7 +128,7 @@ docker-compose up -d
 
 ### Passo 4: Verificar Status do Container
 ```bash
-docker-compose ps
+docker compose ps
 ```
 
 **Output Esperado**:
@@ -142,7 +142,7 @@ dcesares-portfolio-dev  Up X minutes (healthy)
 
 ### Passo 5: Verificar Logs
 ```bash
-docker-compose logs
+docker compose logs
 ```
 
 **Esperado nos logs**:
@@ -192,7 +192,7 @@ http://localhost:4321/search-data.json
 
 ### Passo 9: Testar Astro Check
 ```bash
-docker-compose exec portfolio-dev pnpm astro check
+docker compose exec portfolio-dev pnpm astro check
 ```
 
 **Esperado**:
@@ -209,7 +209,7 @@ docker-compose exec portfolio-dev pnpm astro check
 make shell
 
 # Ou universal
-docker-compose exec portfolio-dev sh
+docker compose exec portfolio-dev sh
 ```
 
 **No shell do container, teste**:
@@ -231,7 +231,7 @@ exit                # Sair do shell
 
 ### Build da Imagem de Produção
 ```bash
-docker-compose -f docker-compose.prod.yml build
+docker compose -f docker compose.prod.yml build
 ```
 
 **Esperado**:
@@ -240,7 +240,7 @@ docker-compose -f docker-compose.prod.yml build
 
 ### Iniciar Preview de Produção
 ```bash
-docker-compose -f docker-compose.prod.yml up
+docker compose -f docker compose.prod.yml up
 ```
 
 **Esperado**:
@@ -251,7 +251,7 @@ docker-compose -f docker-compose.prod.yml up
 ### Parar Preview de Produção
 ```bash
 # Ctrl+C ou em novo terminal:
-docker-compose -f docker-compose.prod.yml down
+docker compose -f docker compose.prod.yml down
 ```
 
 - [ ] Para corretamente
@@ -262,13 +262,13 @@ docker-compose -f docker-compose.prod.yml down
 
 ### Parar Desenvolvimento
 ```bash
-docker-compose down
+docker compose down
 ```
 
 **Esperado**:
 - [ ] Container para
 - [ ] Sem erros
-- [ ] `docker-compose ps` não mostra nada rodando
+- [ ] `docker compose ps` não mostra nada rodando
 
 ### Limpeza Completa (Opcional)
 ```bash
@@ -279,7 +279,7 @@ docker-compose down
 make clean
 
 # Ou universal
-docker-compose down -v --rmi all
+docker compose down -v --rmi all
 ```
 
 **Esperado**:
@@ -353,7 +353,7 @@ Get-Process -Id (Get-NetTCPConnection -LocalPort 4321).OwningProcess
 # Linux/macOS
 lsof -i :4321
 
-# Mate o processo ou mude a porta no docker-compose.yml
+# Mate o processo ou mude a porta no docker compose.yml
 ```
 
 - [ ] Nenhum outro processo usando porta 4321
@@ -369,9 +369,9 @@ newgrp docker
 
 ### Cache Desatualizado
 ```bash
-docker-compose down -v
-docker-compose build --no-cache
-docker-compose up -d
+docker compose down -v
+docker compose build --no-cache
+docker compose up -d
 ```
 
 - [ ] Rebuild limpo funciona
@@ -399,8 +399,8 @@ Se qualquer verificação falhar:
 
 1. **Confira**: [TROUBLESHOOTING.md](./TROUBLESHOOTING.md)
 2. **Leia**: [GUIDE.md](./GUIDE.md)
-3. **Revise**: Logs com `docker-compose logs`
-4. **Reset**: Build limpo com `docker-compose down -v && docker-compose build --no-cache`
+3. **Revise**: Logs com `docker compose logs`
+4. **Reset**: Build limpo com `docker compose down -v && docker compose build --no-cache`
 
 ---
 
@@ -423,4 +423,5 @@ Data: _______________
 **Versão do Checklist**: 1.0  
 **Criado**: 12/11/2025  
 **Para**: Configuração Docker do Portfolio dcesares.dev  
-**Próximo**: Começar desenvolvimento com `docker-compose up -d`
+**Próximo**: Começar desenvolvimento com `docker compose up -d`
+

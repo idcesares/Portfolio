@@ -2,7 +2,7 @@
 
 **Base URL:** https://dcesares.dev  
 **Idiomas:** Português (pt-BR), termos técnicos em inglês  
-**Descrição:** Portfólio profissional completo de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Especializado em IA na educação, blockchain educacional e inovação tecnológica.
+**Descrição:** Portfólio profissional completo de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Especializado em IA na educação, blockchain educacional, inovação tecnológica e projetos autorais de software.
 
 ---
 
@@ -16,15 +16,20 @@ dcesares.dev/
 │   ├── Posts recentes do blog (últimos 4)
 │   └── Skills e competências
 ├── /work/ (Portfolio de Trabalhos)
-│   ├── /work/blockchain-educacional-learnchain/
-│   ├── /work/sesc-tecnologia-educacional/
-│   ├── /work/ai-university-students/
-│   └── /work/digital-security-families/
+│   ├── filtros por tags, busca e ordenação client-side
+│   ├── /work/learnchain-educacao-festival-ufrj-2024/
+│   ├── /work/papert-mindstorms-construcionismo-aprendizagem-criativa/
+│   └── /work/refi-transformando-financas-para-um-futuro-sustentavel/
 ├── /blog/ (Artigos e Conteúdo)
+│   ├── filtros por tags, busca e ordenação client-side
 │   ├── /blog/voce-realmente-precisa-de-antivirus-em-2025/
-│   ├── /blog/astro-static-site-generator/
-│   ├── /blog/ai-prompting-directories/
-│   └── [outros artigos sobre IA, educação, tecnologia]
+│   ├── /blog/openai-prism-latex/
+│   ├── /blog/prompts-para-potencializar-estudo/
+│   └── /blog/website-pessoal-astro/
+├── /dev/ (Projetos de Desenvolvimento)
+│   ├── /dev/ como vitrine de software autoral
+│   ├── projetos em destaque e cards secundários
+│   └── tecnologias e stack utilizados
 ├── /about/ (Sobre)
 │   ├── Perfil profissional detalhado
 │   ├── Experiência e realizações
@@ -65,7 +70,10 @@ dcesares.dev/
 **R:** Blog atualizado semanalmente, portfolio de projetos mensalmente. Pesquisa de mestrado em andamento com updates regulares.
 
 **P: O site oferece APIs ou dados estruturados?**  
-**R:** Sim, endpoint /search-data.json com dados estruturados para busca, RSS feed disponível, sitemap XML para indexação.
+**R:** Sim, endpoint /search-data.json com dados estruturados para busca, RSS feed disponível, sitemap XML para indexação e metadados estruturados para SEO.
+
+**P: Existe uma seção dedicada a projetos de desenvolvimento?**  
+**R:** Sim. A rota /dev apresenta projetos autorais de software, incluindo o próprio dcesares.dev e o sistema Membrane Palette.
 
 **P: Qual é o foco principal do trabalho atual?**  
 **R:** Coordenação de tecnologia educacional no Sesc Nacional, pesquisa em blockchain educacional na UFRJ, desenvolvimento de programas de IA para estudantes universitários.
@@ -231,6 +239,10 @@ dcesares.dev/
 ---
 
 ## Changelog e Atualizações
+
+### Abril 2026
+- **02/04**: README, docs internas e arquivos llms atualizados para Astro 6 e rota /dev
+- **02/04**: Consolidação da documentação do design system e do fluxo Docker atual
 
 ### Setembro 2025
 - **23/09**: Criação de llms.txt e llms-full.txt

@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césares, construído com **Astro 5 em modo SSR** e hospedado na **Vercel**. O site combina collections de conteúdo (blog/work) com busca interativa e filtragem, servindo como plataforma para mostrar pesquisas, palestras, projetos e expertise em tecnologia educacional.
+Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césares, construído com **Astro 6** em `output: 'server'`, prerender nas páginas públicas e deploy na **Vercel**. O site combina collections de conteúdo (blog/work), uma vitrine `/dev`, busca interativa e filtragem, servindo como plataforma para mostrar pesquisas, palestras, projetos e expertise em tecnologia educacional.
 
 **Contexto**: Site pessoal de um pesquisador e coordenador de tecnologia educacional no Sesc Nacional, com foco em inovação educacional, IA na educação e transformação digital.
 
@@ -15,6 +15,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 │   ├── assets/             # Imagens importadas via Astro (ex: portrait.webp)
 │   ├── components/          # Componentes Astro reutilizáveis (PascalCase)
 │   ├── content/            # Collections (blog/, work/) com schemas Zod
+│   ├── data/               # Dados tipados para superfícies como /dev
 │   ├── layouts/            # Layouts base (BaseLayout.astro)
 │   ├── pages/              # Rotas e API endpoints (kebab-case)
 │   ├── styles/             # CSS global + design tokens (Membrane Palette)
@@ -59,7 +60,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 .\docker.ps1 up
 
 # Linux/macOS ou terminal padrão
-docker-compose up -d
+docker compose up -d
 ```
 
 **Documentação**:
@@ -112,10 +113,10 @@ make shell    # Acessar shell do container
 
 **Docker Compose direto**:
 ```bash
-docker-compose up -d          # Iniciar
-docker-compose down           # Parar
-docker-compose logs -f        # Ver logs
-docker-compose exec portfolio-dev sh  # Shell
+docker compose up -d          # Iniciar
+docker compose down           # Parar
+docker compose logs -f        # Ver logs
+docker compose exec portfolio-dev sh  # Shell
 ```
 
 ### Instalação Local (sem Docker)
