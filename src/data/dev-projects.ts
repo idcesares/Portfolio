@@ -72,7 +72,66 @@ export const devProjects: DevProject[] = [
 			{ name: 'Design Tokens', color: 'amber' },
 			{ name: 'Tailwind v4', color: 'sage' },
 		],
+		demoUrl: 'https://dcesares.dev/design-system-showcase.html',
+		repoUrl: 'https://github.com/idcesares/idcesares-design-system',
 		status: 'live',
+		year: 2026,
+	},
+	{
+		id: 'cloud-dancer',
+		title: 'Cloud Dancer',
+		description:
+			'Template open-source de portfólio dev com layout bento, motion ambient, temas light/dark e otimização LLM/GEO.',
+		longDescription:
+			'Landing page de alto desempenho inspirada no Pantone 11-4201 Cloud Dancer. Arquitetura content-driven com seções bento-style, animações ambient com Framer Motion, testes Playwright, assets prontos para LLMs (llms.txt, JSON-LD) e personalização em 5 minutos.',
+		techStack: [
+			{ name: 'Next.js 16', color: 'teal' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'Tailwind CSS', color: 'sage' },
+			{ name: 'Framer Motion', color: 'amber' },
+			{ name: 'Playwright', color: 'burgundy' },
+		],
+		demoUrl: 'https://cloud-dancer.dcesares.dev',
+		repoUrl: 'https://github.com/idcesares/Cloud-Dancer',
+		status: 'live',
+		featured: false,
+		year: 2026,
+	},
+	{
+		id: 'base64-encoder-decoder',
+		title: 'Base64 Encoder/Decoder',
+		description:
+			'Ferramenta web para codificar e decodificar texto em Base64 com suporte a Unicode, feedback em tempo real e API server-side.',
+		techStack: [
+			{ name: 'Next.js', color: 'teal' },
+			{ name: 'React', color: 'terracotta' },
+			{ name: 'JavaScript', color: 'amber' },
+			{ name: 'Tailwind CSS', color: 'sage' },
+		],
+		demoUrl: 'https://base64.dcesares.dev',
+		repoUrl: 'https://github.com/idcesares/Base64-Encoder-Decoder',
+		status: 'live',
+		featured: false,
+		year: 2024,
+	},
+	{
+		id: 'my-ip',
+		title: "What's My IP",
+		description:
+			'App privacy-first de diagnóstico de IP e rede, com detecção server-side, exportação de dados e endpoint API público.',
+		longDescription:
+			'Aplicação web que exibe seu IP detectado (IPv4/IPv6) com diagnósticos de navegador e rede em tempo real. Inclui detecção de categoria (público/privado/CGNAT), indicadores de confiança, toggle básico/avançado, ações de copiar/compartilhar/exportar, histórico local e um endpoint /api/ip limpo — tudo sem tracking.',
+		techStack: [
+			{ name: 'Next.js 16', color: 'teal' },
+			{ name: 'React 19', color: 'terracotta' },
+			{ name: 'TypeScript', color: 'amber' },
+			{ name: 'Tailwind CSS', color: 'sage' },
+			{ name: 'Vitest', color: 'burgundy' },
+		],
+		demoUrl: 'https://myip.dcesares.dev',
+		repoUrl: 'https://github.com/idcesares/my-ip',
+		status: 'live',
+		featured: false,
 		year: 2026,
 	},
 	// ------------------------------------------------------------------
