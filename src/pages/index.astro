@@ -30,7 +30,7 @@ const posts = (await getCollection('blog'))
 	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
 	.slice(0, 4);
 
-const site = Astro.site ?? new URL('https://dcesares.dev');
+const site = Astro.site ?? new URL('https://www.dcesares.dev');
 const structuredData = getSiteStructuredData(site);
 
 ---

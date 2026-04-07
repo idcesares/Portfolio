@@ -90,7 +90,7 @@ export default defineConfig({
   // Ensure consistent URL format (no trailing slash matches build.format: "file")
   trailingSlash: 'ignore',
 
-  site: 'https://dcesares.dev',
+  site: 'https://www.dcesares.dev',
 
   // Built-in Fonts API (Astro 6) — self-hosted, optimized fallbacks, no external Google requests
   fonts: [

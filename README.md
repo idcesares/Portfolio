@@ -2,7 +2,7 @@
 
 Portfólio profissional, blog técnico e vitrine de projetos de Isaac D'Césares, pesquisador, educador e coordenador de tecnologia educacional. O site reúne produção autoral sobre IA, educação, segurança digital e desenvolvimento, com foco em performance, acessibilidade e uma identidade visual própria baseada no design system Membrane Palette.
 
-[![Website](https://img.shields.io/badge/Website-dcesares.dev-blue?style=for-the-badge)](https://dcesares.dev)
+[![Website](https://img.shields.io/badge/Website-www.dcesares.dev-blue?style=for-the-badge)](https://www.dcesares.dev)
 [![LinkedIn](https://img.shields.io/badge/LinkedIn-isaacdcesares-0077B5?style=for-the-badge&logo=linkedin)](https://www.linkedin.com/in/isaacdcesares)
 [![GitHub](https://img.shields.io/badge/GitHub-idcesares-181717?style=for-the-badge&logo=github)](https://github.com/idcesares)
 
@@ -326,10 +326,10 @@ O código está sob a licença MIT. Consulte [`LICENSE`](./LICENSE).
 
 ## Contato
 
-- Website: [dcesares.dev](https://dcesares.dev)
+- Website: [www.dcesares.dev](https://www.dcesares.dev)
 - LinkedIn: [Isaac D'Césares](https://www.linkedin.com/in/isaacdcesares)
 - GitHub: [@idcesares](https://github.com/idcesares)
-- RSS: [dcesares.dev/rss.xml](https://dcesares.dev/rss.xml)
+- RSS: [www.dcesares.dev/rss.xml](https://www.dcesares.dev/rss.xml)
 
 ---
 

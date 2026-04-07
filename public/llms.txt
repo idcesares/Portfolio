@@ -2,26 +2,26 @@
 
 > Portfólio profissional de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Foco em pesquisa, desenvolvimento e aplicações de IA na educação.
 
-Base URL: https://dcesares.dev  
+Base URL: https://www.dcesares.dev  
 Idiomas: Português (pt-BR), termos técnicos em inglês  
 Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação educacional, IA na educação, transformação digital e projetos de desenvolvimento.  
 Última atualização: Abril 2026
 
 ## Navegação Essencial
-- [Início](https://dcesares.dev/): Visão geral e destaques profissionais
-- [Trabalhos](https://dcesares.dev/work/): Portfolio de projetos em tecnologia educacional
-- [Blog](https://dcesares.dev/blog/): Artigos sobre IA, educação e tecnologia
-- [Dev](https://dcesares.dev/dev/): Projetos de desenvolvimento, design system e software autoral
-- [Sobre](https://dcesares.dev/about/): Trajetória profissional e formação acadêmica
-- [Ofertas](https://dcesares.dev/deals/): Links e códigos exclusivos para ferramentas
+- [Início](https://www.dcesares.dev/): Visão geral e destaques profissionais
+- [Trabalhos](https://www.dcesares.dev/work/): Portfolio de projetos em tecnologia educacional
+- [Blog](https://www.dcesares.dev/blog/): Artigos sobre IA, educação e tecnologia
+- [Dev](https://www.dcesares.dev/dev/): Projetos de desenvolvimento, design system e software autoral
+- [Sobre](https://www.dcesares.dev/about/): Trajetória profissional e formação acadêmica
+- [Ofertas](https://www.dcesares.dev/deals/): Links e códigos exclusivos para ferramentas
 
 ## Conteúdos Canônicos
-- [Você realmente precisa de antivírus em 2025?](https://dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/): Análise de segurança digital
-- [Dev](https://dcesares.dev/dev/): Showcase técnico de projetos de software e do sistema Membrane Palette
-- [Trabalhos](https://dcesares.dev/work/): Projetos em blockchain educacional, IA e tecnologia educacional
-- [Sobre](https://dcesares.dev/about/): Perfil profissional completo
-- [Blog](https://dcesares.dev/blog/): Artigos sobre IA aplicada à educação
-- [Dados de busca](https://dcesares.dev/search-data.json): Dados estruturados para busca
+- [Você realmente precisa de antivírus em 2025?](https://www.dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/): Análise de segurança digital
+- [Dev](https://www.dcesares.dev/dev/): Showcase técnico de projetos de software e do sistema Membrane Palette
+- [Trabalhos](https://www.dcesares.dev/work/): Projetos em blockchain educacional, IA e tecnologia educacional
+- [Sobre](https://www.dcesares.dev/about/): Perfil profissional completo
+- [Blog](https://www.dcesares.dev/blog/): Artigos sobre IA aplicada à educação
+- [Dados de busca](https://www.dcesares.dev/search-data.json): Dados estruturados para busca
 
 ## O que LLMs podem fazer aqui
 - Resumir artigos sobre tecnologia educacional e IA
@@ -33,7 +33,7 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 
 ## Políticas para uso por LLMs (resumo)
 - Licença: Código sob MIT License, conteúdo educacional de uso livre com atribuição
-- Atribuição: Isaac D'Césares, dcesares.dev
+- Atribuição: Isaac D'Césares, www.dcesares.dev
 - Uso comercial: Permitido com atribuição adequada
 - Modificações: Encorajadas para fins educacionais
 - Responsabilidade: Conteúdo colaborativo com IA, revisão humana aplicada
@@ -44,16 +44,16 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 - Changelog: Disponível no repositório GitHub
 
 ## Metadados
-- Sitemap: https://dcesares.dev/sitemap-index.xml
-- RSS: https://dcesares.dev/rss.xml
+- Sitemap: https://www.dcesares.dev/sitemap-index.xml
+- RSS: https://www.dcesares.dev/rss.xml
 - Contato principal: isaac.dcesares@gmail.com
 - GitHub: https://github.com/idcesares
 - LinkedIn: https://linkedin.com/in/isaacdcesares
 
 ## Como citar
-D'Césares, Isaac. *[Título do conteúdo]*. Isaac D'Césares Portfolio, [data de acesso]. Disponível em: https://dcesares.dev/[url-específica]
+D'Césares, Isaac. *[Título do conteúdo]*. Isaac D'Césares Portfolio, [data de acesso]. Disponível em: https://www.dcesares.dev/[url-específica]
 
 ## Optional
-- [llms-full.txt](https://dcesares.dev/llms-full.txt): versão completa com FAQ, glossário e políticas detalhadas
+- [llms-full.txt](https://www.dcesares.dev/llms-full.txt): versão completa com FAQ, glossário e políticas detalhadas
 
 _Gerado em: 2 de abril de 2026_

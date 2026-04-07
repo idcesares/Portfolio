@@ -1,6 +1,6 @@
 # llms-full.txt — Isaac D'Césares Portfolio
 
-**Base URL:** https://dcesares.dev  
+**Base URL:** https://www.dcesares.dev  
 **Idiomas:** Português (pt-BR), termos técnicos em inglês  
 **Descrição:** Portfólio profissional completo de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Especializado em IA na educação, blockchain educacional, inovação tecnológica e projetos autorais de software.
 
@@ -9,7 +9,7 @@
 ## Mapa de Conteúdo Expandido
 
 ```
-dcesares.dev/
+www.dcesares.dev/
 ├── / (Home)
 │   ├── Apresentação profissional
 │   ├── Destaques de projetos (últimos 4)
@@ -161,7 +161,7 @@ dcesares.dev/
 <item>
   <title>Você realmente precisa de antivírus em 2025?</title>
   <description>Análise crítica sobre necessidade de antivírus...</description>
-  <link>https://dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/</link>
+  <link>https://www.dcesares.dev/blog/voce-realmente-precisa-de-antivirus-em-2025/</link>
   <pubDate>Mon, 15 Jan 2025 10:00:00 GMT</pubDate>
 </item>
 ```
@@ -212,7 +212,7 @@ dcesares.dev/
 
 ### Atribuição Obrigatória
 - **Autor**: Isaac D'Césares
-- **Fonte**: dcesares.dev
+- **Fonte**: www.dcesares.dev
 - **Data de acesso**: Incluir quando aplicável
 - **URL específica**: Referenciar página exata quando possível
 
