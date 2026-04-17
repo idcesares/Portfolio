@@ -31,7 +31,7 @@ Conteúdo incluído hoje no repositório:
 
 - **12 posts** em `src/content/blog/`;
 - **18 entries** em `src/content/work/`;
-- **2 projetos de desenvolvimento** em `src/data/dev-projects.ts`.
+- **6 projetos de desenvolvimento** em `src/data/dev-projects.ts`.
 
 Principais entregas já implementadas:
 

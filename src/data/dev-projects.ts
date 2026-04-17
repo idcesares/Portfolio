@@ -134,6 +134,28 @@ export const devProjects: DevProject[] = [
 		featured: false,
 		year: 2026,
 	},
+	{
+		id: 'aprendizagemcriativa-rio',
+		title: 'aprendizagemcriativa.rio',
+		description:
+			'Site institucional e editorial do Núcleo Rio de Janeiro da Rede Brasileira de Aprendizagem Criativa, com foco em conteúdo, acessibilidade, SEO e experiência mobile.',
+		longDescription:
+			'Website criado para apresentar a comunidade do Núcleo Rio de Janeiro da RBAC, divulgar agenda, publicar relatos e reunir recursos em uma experiência clara, acessível e orientada à leitura. O projeto combina arquitetura de conteúdo com identidade local, performance, SEO e navegação fluida em dispositivos móveis.',
+		techStack: [
+			{ name: 'Astro', color: 'teal' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'Markdown/MDX', color: 'amber' },
+			{ name: 'Content Collections', color: 'sage' },
+			{ name: 'Zod', color: 'burgundy' },
+			{ name: 'Tailwind CSS 4', color: 'teal' },
+			{ name: 'Preact', color: 'terracotta' },
+			{ name: 'Vercel', color: 'amber' },
+		],
+		demoUrl: 'https://aprendizagemcriativa.rio',
+		status: 'live',
+		featured: false,
+		year: 2026,
+	},
 	// ------------------------------------------------------------------
 	// Adicione seus projetos abaixo seguindo o mesmo formato.
 	// Exemplos de template para referência rápida:
