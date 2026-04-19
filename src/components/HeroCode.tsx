@@ -1,4 +1,3 @@
-import { Code, Snippet } from "@heroui/react";
 import { Children, isValidElement } from "react";
 import type { ReactElement } from "react";
 
@@ -25,15 +24,12 @@ export function HeroInlineCode({ children, className }: InlineCodeProps) {
       : undefined;
 
   return (
-    <Code
-      as="code"
+    <code
       data-language={language}
       className={joinClassNames("hero-inline-code", className)}
-      radius="sm"
-      size="sm"
     >
       {children}
-    </Code>
+    </code>
   );
 }
 
@@ -66,27 +62,15 @@ export function HeroCodeBlock({ children, className }: CodeBlockProps) {
     .replace(/\n$/, "");
 
   const hasCode = codeText.trim().length > 0;
-  const lines = hasCode ? codeText.split("\n") : [];
-
   return (
-    <Snippet
+    <pre
       data-language={language}
-      hideSymbol
-      disableCopy={!hasCode}
-      hideCopyButton={!hasCode}
-      classNames={{
-        base: joinClassNames("hero-code-block", className),
-        pre: "hero-code-block__pre",
-        content: "hero-code-block__content",
-      }}
-      codeString={hasCode ? codeText : undefined}
-      tooltipProps={{ content: "Copiar", delay: 600, placement: "top" }}
+      className={joinClassNames("hero-code-block", className)}
       translate="no"
-      radius="md"
-      size="md"
-      variant="flat"
     >
-      {hasCode ? lines : codeProps.children ?? childArray}
-    </Snippet>
+      <code className="hero-code-block__content">
+        {hasCode ? codeText : codeProps.children ?? childArray}
+      </code>
+    </pre>
   );
 }
