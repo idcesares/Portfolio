@@ -1,23 +1,42 @@
 ---
 import Icon from './Icon.astro';
+import { University } from '@lucide/astro';
 ---
 
-<section class="box skills">
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="terminal-window" color="var(--color-terracotta)" size="2.5rem" gradient />
-		<h2>Inovação</h2>
-		<p>Expertise em integrar soluções tecnológicas avançadas, especialmente em relacionadas a Dados  e IA, em contextos educacionais para potencializar o ensino e aprendizado.</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="trophy" color="var(--color-teal)" size="2.5rem" gradient />
-		<h2>Confluência</h2>
-		<p>Competência em unir tecnologias digitais com a cognição humana, visando aprimorar os processos de transformação digital.</p>
-	</div>
-	<div class="stack gap-2 lg:gap-4">
-		<Icon icon="strategy" color="var(--color-amber)" size="2.5rem" gradient />
-		<h2>Liderança</h2>
-		<p>Abordagem de liderança que equilibra inovação tecnológica com ética e valores humanos, promovendo um uso responsável e eficaz da tecnologia.</p>
-	</div>
+<section class="box pillars">
+	<article class="pillar">
+		<div class="stack gap-2 lg:gap-4">
+			<Icon icon="book-open" color="var(--color-terracotta)" size="2.5rem" />
+			<h2>Pesquisador</h2>
+			<p>Investigo como tecnologias emergentes, IA, blockchain e sistemas multi-agentes, entram na educação sem desumanizar o processo. Mestrado em Computação na UFRJ, com passagens por Stanford (Educação Inovadora) e FDC (Transformação Digital).</p>
+			<a href="/blog/" class="pillar-link">
+				Ler o blog
+				<Icon icon="arrow-right" size="1em" />
+			</a>
+		</div>
+	</article>
+	<article class="pillar">
+		<div class="stack gap-2 lg:gap-4">
+			<University class="pillar-icon-lucide" size={40} stroke-width={1.75} />
+			<h2>Educador</h2>
+			<p>Formei 2000+ educadores e coordenei programas que alcançaram 5000+ estudantes. Espaços Maker e Labs de Robótica que viraram referência na rede Sesc.</p>
+			<a href="/work/" class="pillar-link">
+				Ver os trabalhos
+				<Icon icon="arrow-right" size="1em" />
+			</a>
+		</div>
+	</article>
+	<article class="pillar">
+		<div class="stack gap-2 lg:gap-4">
+			<Icon icon="terminal-window" color="var(--color-teal)" size="2.5rem" />
+			<h2>Construtor</h2>
+			<p>Escrevo código, desenho programas e monto infraestrutura institucional. 20+ projetos em produção, plataformas com 1,2M acessos. O portfólio é o rastro do que funciona, não uma lista de credenciais.</p>
+			<a href="/dev/" class="pillar-link">
+				Ver os projetos dev
+				<Icon icon="arrow-right" size="1em" />
+			</a>
+		</div>
+	</article>
 </section>
 
 <style>
@@ -29,18 +48,65 @@ import Icon from './Icon.astro';
 		box-shadow: var(--shadow-sm);
 	}
 
-	.skills {
+	.pillars {
 		display: flex;
 		flex-direction: column;
 		gap: var(--space-12);
 	}
 
-	.skills h2 {
-		font-size: var(--text-h3);
+	.pillar {
+		display: flex;
+		flex-direction: column;
 	}
 
-	.skills p {
+	.pillars h2 {
+		font-size: var(--text-h3);
+		font-family: var(--font-serif);
+		color: var(--color-text-primary);
+	}
+
+	.pillars p {
 		color: var(--color-text-secondary);
+		line-height: var(--leading-body);
+	}
+
+	.pillar-icon-lucide {
+		color: var(--color-sage);
+	}
+
+	.pillar-link {
+		display: inline-flex;
+		align-items: center;
+		gap: var(--space-2);
+		margin-top: var(--space-3);
+		color: var(--color-text-secondary);
+		font-family: var(--font-sans);
+		font-weight: var(--weight-medium);
+		font-size: var(--text-small);
+		text-decoration: none;
+		border-bottom: 1px solid transparent;
+		width: fit-content;
+		padding-bottom: 2px;
+		transition:
+			color var(--transition-default),
+			border-color var(--transition-default),
+			transform var(--transition-fast);
+	}
+
+	.pillar-link:hover,
+	.pillar-link:focus-visible {
+		color: var(--color-text-primary);
+		border-bottom-color: var(--color-border-emphasis);
+		transform: translateX(2px);
+	}
+
+	.pillar-link :global(svg) {
+		transition: transform var(--transition-fast);
+	}
+
+	.pillar-link:hover :global(svg),
+	.pillar-link:focus-visible :global(svg) {
+		transform: translateX(2px);
 	}
 
 	@media (min-width: 50em) {
@@ -49,14 +115,14 @@ import Icon from './Icon.astro';
 			padding: var(--space-10);
 		}
 
-		.skills {
+		.pillars {
 			display: grid;
 			grid-template-columns: repeat(3, 1fr);
 			gap: var(--space-20);
 		}
 
-		.skills h2 {
-			font-size: var(--text-h1);
+		.pillars h2 {
+			font-size: var(--text-h2);
 		}
 	}
 </style>

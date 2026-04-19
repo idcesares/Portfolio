@@ -43,7 +43,7 @@ export const devProjects: DevProject[] = [
 		description:
 			'Portfólio profissional e blog técnico com busca inteligente, design system proprietário e deploy contínuo.',
 		longDescription:
-			'Plataforma construída do zero com Astro 6 em modo SSR, sistema de busca com Fuse.js, filtragem dinâmica por tags e categorias, animações CSS com scroll reveal, e o Membrane Palette Design System — um sistema de tokens semânticos que garante consistência visual em light e dark mode.',
+			'Plataforma construída do zero com Astro 6 em modo SSR, sistema de busca com Fuse.js, filtragem dinâmica por tags e categorias, animações CSS com scroll reveal, e o Membrane Palette Design System, um sistema de tokens semânticos que garante consistência visual em light e dark mode.',
 		img: '/assets/blog_imgs/astro.webp',
 		imgAlt: 'Screenshot do portfólio dcesares.dev com o design Membrane Palette',
 		techStack: [
@@ -120,7 +120,7 @@ export const devProjects: DevProject[] = [
 		description:
 			'App privacy-first de diagnóstico de IP e rede, com detecção server-side, exportação de dados e endpoint API público.',
 		longDescription:
-			'Aplicação web que exibe seu IP detectado (IPv4/IPv6) com diagnósticos de navegador e rede em tempo real. Inclui detecção de categoria (público/privado/CGNAT), indicadores de confiança, toggle básico/avançado, ações de copiar/compartilhar/exportar, histórico local e um endpoint /api/ip limpo — tudo sem tracking.',
+			'Aplicação web que exibe seu IP detectado (IPv4/IPv6) com diagnósticos de navegador e rede em tempo real. Inclui detecção de categoria (público/privado/CGNAT), indicadores de confiança, toggle básico/avançado, ações de copiar/compartilhar/exportar, histórico local e um endpoint /api/ip limpo, tudo sem tracking.',
 		techStack: [
 			{ name: 'Next.js 16', color: 'teal' },
 			{ name: 'React 19', color: 'terracotta' },

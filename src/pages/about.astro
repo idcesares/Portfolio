@@ -12,7 +12,7 @@ const structuredData = getSiteStructuredData(site);
 
 <BaseLayout
     title="Sobre | Isaac D'Césares"
-    description="Isaac D'Césares traduz tecnologias emergentes em experiências educacionais transformadoras. Pesquisador, educador e construtor."
+    description="Isaac D'Césares traduz IA, blockchain e sistemas emergentes em prática educacional. Pesquisador, educador e construtor."
     structuredData={structuredData}
 >
     <div class="stack gap-20">
@@ -29,31 +29,17 @@ const structuredData = getSiteStructuredData(site);
                 />
             </Hero>
 
-            <section class="section-card" data-animate="fade-up">
-                <h2 class="section-title">Quem sou</h2>
-                <div class="content">
-                    <p>Trabalho no ponto de confluência entre tecnologia avançada e educação transformadora. Não sou um tecnólogo que se interessa por pessoas, nem um educador que usa ferramentas digitais. A membrana entre esses mundos é onde vivo e de onde nasce meu trabalho mais original.</p>
-                    <p>Atualmente, coordeno a área de Tecnologia Educacional no Sesc Nacional e pesquiso Computação na UFRJ. Antes disso, passei por Stanford estudando Educação Inovadora e pela FDC em Transformação Digital. Mas o que realmente me define é o que construí: plataformas, espaços maker, programas de formação docente e sistemas de IA aplicados ao ensino.</p>
-                </div>
-            </section>
+            <article class="prose" data-animate="fade-up">
+                <p>Trabalho no ponto onde tecnologia avançada e educação se encontram. Mas não daquele jeito que virou clichê, onde tecnólogos descobrem que pessoas existem ou educadores descobrem que há apps. O lugar que me interessa é a membrana entre esses dois mundos: onde IA vira prática docente, onde um protótipo de pesquisa vira programa institucional, onde o que funcionou com 10 pessoas consegue funcionar com 10 mil.</p>
 
-            <section class="section-card" data-animate="fade-up">
-                <h2 class="section-title">O que construo</h2>
-                <div class="content">
-                    <p>Meu trabalho atravessa três dimensões que não se separam:</p>
-                    <p><strong>Pesquisa.</strong> Investigo como tecnologias emergentes, como IA, blockchain e sistemas multi-agentes, podem ser integradas à educação sem perder o que há de mais humano no processo de aprender. Da UFRJ ao Sesc, cada pesquisa aponta para a prática.</p>
-                    <p><strong>Educação.</strong> Formei mais de 1000 professores em tecnologias educacionais, coordenei programas que alcançaram 1700 estudantes e construí plataformas com mais de 600 mil acessos. Minha maior satisfação é ver alguém entender algo que antes não conseguia.</p>
-                    <p><strong>Construção.</strong> Ideias viram ferramentas, ferramentas viram sistemas. Criei Espaços Maker, Labs de Robótica e Mídia que se tornaram referência na rede Sesc. Escrevo código, desenho programas, gero documentação, construo infraestrutura institucional. O portfólio é a prova: não uma lista de credenciais, mas um rastro de coisas que funcionam.</p>
-                </div>
-            </section>
+                <p>Hoje coordeno a área de Tecnologia Educacional no Sesc Nacional e pesquiso Computação na UFRJ, investigando como IA, blockchain e sistemas multi-agentes entram na educação sem apagar o que há de humano no processo de aprender. Antes disso, passei por Stanford estudando Educação Inovadora e pela FDC em Transformação Digital. Essa trajetória não é currículo, é repertório: cada lugar deixou uma forma diferente de olhar pra mesma pergunta.</p>
 
-            <section class="section-card" data-animate="fade-up">
-                <h2 class="section-title">Vamos construir juntos</h2>
-                <div class="content">
-                    <p>Acredito que tecnologia é ferramenta de empoderamento, não de controle. Que a realidade do Brasil é diferente do Vale do Silício. E que as melhores soluções nascem quando juntamos gente que pensa diferente.</p>
-                    <p>Se você trabalha com educação, tecnologia ou transformação institucional, ou se simplesmente quer trocar ideias sobre como a IA está mudando a forma como aprendemos, vamos conversar. Não tenho todas as respostas, mas gosto de descobrir junto.</p>
-                </div>
-            </section>
+                <p>O que realmente me define, no entanto, é o que construí. Formei mais de 2000 educadores em tecnologia educacional, coordenei programas que alcançaram 5000+ estudantes e entreguei plataformas que já somam mais de 1,2 milhão de acessos. Montei Espaços Maker e Labs de Robótica e Mídia que viraram referência dentro da rede Sesc. São 20+ projetos em produção, entre código, programas de formação, sistemas de IA aplicada e infraestrutura institucional. O portfólio é o que prova: cada projeto é um rastro do que funciona fora do slide.</p>
+
+                <p>Acredito que tecnologia é ferramenta de empoderamento, não de controle. Que a realidade do Brasil é diferente do Vale do Silício, e tratar isso como detalhe é o erro mais caro que se pode cometer num projeto educacional. E que as melhores soluções nascem quando gente que pensa diferente se junta pra resolver o mesmo problema.</p>
+
+                <p>Se você trabalha com educação, tecnologia ou transformação institucional, ou se simplesmente quer trocar ideia sobre como a IA está mudando a forma de aprender, vamos conversar. Não tenho todas as respostas. Gosto é de descobrir junto. Vamos cocriar?</p>
+            </article>
         </main>
 
         <ContactCTA />
@@ -64,7 +50,7 @@ const structuredData = getSiteStructuredData(site);
     .about {
         display: flex;
         flex-direction: column;
-        gap: var(--space-14);
+        gap: var(--space-12);
     }
 
     img {
@@ -79,74 +65,45 @@ const structuredData = getSiteStructuredData(site);
         filter: var(--photo-warmth);
     }
 
-    section {
+    .prose {
+        max-width: 65ch;
+        margin-inline: auto;
         display: flex;
         flex-direction: column;
-        gap: var(--space-2);
+        gap: var(--space-6);
         color: var(--color-text-secondary);
+        font-size: var(--text-body-lg);
+        line-height: var(--leading-body);
     }
 
-    section.section-card {
-        background-color: var(--color-bg-secondary);
-        padding: var(--space-8);
-        border-radius: var(--radius-lg);
-        border: 1px solid var(--color-border-default);
+    .prose p {
+        margin: 0;
     }
 
-    section.section-card:nth-of-type(even) {
-        background-color: color-mix(in oklab, var(--color-bg-secondary) 80%, var(--color-bg-primary));
-    }
-
-    .section-title::before {
-        content: '▹';
-        margin-right: var(--space-2);
+    .prose p:first-of-type::first-letter {
+        font-family: var(--font-serif);
+        font-size: 3.5em;
+        float: left;
+        line-height: 0.9;
+        padding-right: var(--space-2);
+        padding-top: 0.15em;
         color: var(--color-terracotta);
     }
 
-    .section-title {
-        grid-column-start: 1;
-        font-size: var(--text-h2);
-        color: var(--color-text-primary);
-        font-family: var(--font-serif);
-    }
-
-    .content {
-        grid-column: 2 / 4;
-    }
-
-    .content :global(a) {
+    .prose :global(a) {
         text-decoration: 1px solid underline transparent;
         text-underline-offset: 0.25em;
         transition: text-decoration-color var(--duration-normal) var(--ease-out);
     }
 
-    .content :global(a:hover),
-    .content :global(a:focus) {
+    .prose :global(a:hover),
+    .prose :global(a:focus) {
         text-decoration-color: currentColor;
     }
 
-    .content ul {
-        list-style-type: disc;
-        padding-left: var(--space-6);
-    }
-
-    .content li {
-        margin-bottom: var(--space-2);
-    }
-
     @media (min-width: 50em) {
-        .about {
-            display: grid;
-            grid-template-columns: 1fr 60% 1fr;
-        }
-
-        .about > :global(:first-child) {
-            grid-column-start: 2;
-        }
-
-        section {
-            display: contents;
-            font-size: var(--text-lg);
+        .prose {
+            gap: var(--space-8);
         }
     }
 </style>

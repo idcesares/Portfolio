@@ -7,33 +7,33 @@ import Grid from '../components/Grid.astro';
 
 const deals = [
   {
-    title: 'Desconto Exclusivo no Perplexity Pro',
-    description: 'Garanta benefícios incríveis ao se inscrever no Perplexity Pro usando o código de referência exclusivo "HEUYI5O6". Melhore sua experiência com ferramentas avançadas de IA.',
+    title: 'Perplexity Pro',
+    description: 'Meu buscador com IA do dia a dia. Use o código de indicação "HEUYI5O6" no cadastro pra ganhar um mês Pro grátis.',
     link: 'https://www.perplexity.ai/pro?referral_code=HEUYI5O6',
   },
   {
-    title: 'Cadastro VIP no Beacons',
-    description: 'Crie sua página personalizada e alcance seu público de forma profissional com o Beacons. Use o código exclusivo "idcesares" e desbloqueie recursos premium.',
+    title: 'Beacons',
+    description: 'Ferramenta simples pra montar página de links personalizada. Usando o código "idcesares" você libera recursos pagos por um tempo.',
     link: 'https://beacons.ai/signup?c=idcesares',
   },
 {
-    title: 'Junte-se ao You.com',
-    description: 'Descubra o You.com e explore uma gama de modelos e agentes de IA. Acesse usando o meu link exclusivo e experimente recursos diferenciados!',
+    title: 'You.com',
+    description: 'Interface de chat com acesso a vários modelos de IA num lugar só. O link de indicação te dá um período estendido pra testar.',
     link: 'https://you.com/join/XWF8WJ5T',
 },
 {
-    title: 'Convite Exclusivo para o Lovable',
-    description: 'Participe do Lovable, a plataforma inovadora para criar apps com IA e sem código. Use meu convite exclusivo para se cadastrar e aproveite todos os benefícios!',
+    title: 'Lovable',
+    description: 'Plataforma pra gerar apps funcionais por prompt. Meu convite abre acesso à fila prioritária.',
     link: 'https://lovable.dev/invite/13eee9bc-6d52-46de-b6af-8f12534a7a42',
 }];
 
 ---
-<BaseLayout title="Ofertas e Cupons | Isaac D'Césares" description="Explore ofertas exclusivas, cupons de desconto e códigos de indicação para aproveitar o melhor das ferramentas digitais e plataformas inovadoras.">
+<BaseLayout title="Indico e uso | Isaac D'Césares" description="Ferramentas digitais que uso e recomendo, com cupons e links de indicação quando disponíveis.">
     <div class="stack gap-20">
         <main class="wrapper stack gap-8">
             <Hero
-                title="Ofertas e Cupons"
-                tagline="Descubra vantagens imperdíveis e aproveite o melhor das plataformas tecnológicas!"
+                title="Indico e uso"
+                tagline="Ferramentas que eu uso no dia a dia. Alguns links dão desconto ou benefício, outros são só registro do que funciona."
                 align="start"
             />
             <Grid variant="offset" data-animate="fade-up">
@@ -42,7 +42,7 @@ const deals = [
                         <li class="deal-item">
                             <h3>{deal.title}</h3>
                             <p>{deal.description}</p>
-                            <a href={deal.link} class="deal-button" target="_blank" rel="noopener">Ver Oferta</a>
+                            <a href={deal.link} class="deal-button" target="_blank" rel="noopener noreferrer">Abrir link</a>
                         </li>
                     ))
                 }

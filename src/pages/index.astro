@@ -52,12 +52,12 @@ const structuredData = getSiteStructuredData(site);
 
 					<div class="hero-actions">
 						<CallToAction href="/work/">
-							Ver projetos
+							O que venho construindo
 							<Icon icon="arrow-right" size="1.2em" />
 						</CallToAction>
-						<a class="ghost-link" href="/about/">Sobre mim</a>
+						<a class="ghost-link" href="/about/">Quem sou e como penso</a>
 					</div>
-					
+
 				</Hero>
 
 				<img
@@ -79,36 +79,8 @@ const structuredData = getSiteStructuredData(site);
 		<main class="wrapper stack gap-20 lg:gap-48">
 			<section class="section with-background with-cta" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Últimas postagens</h3>
-					<p>Leia alguns dos meus artigos mais recentes sobre tecnologia, educação e desenvolvimento.</p>
-				</header>
-
-				<div class="gallery" data-animate-stagger>
-					<Grid variant="offset">
-						{
-							posts.map((post) => (
-								<li data-animate="fade-up">
-									<PostPreview post={post} />
-								</li>
-							))
-						}
-					</Grid>
-				</div>
-
-				<div class="cta">
-					<CallToAction href="/blog/">
-						Ver todas
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
-		</main>
-
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background with-cta" data-animate="fade-up">
-				<header class="section-header stack gap-2 lg:gap-4">
 					<h3>Últimos trabalhos</h3>
-					<p>Veja alguns dos meus mais recentes trabalhos e publicações.</p>
+					<p>Registros recentes de entregas, projetos e colaborações.</p>
 				</header>
 
 				<div class="gallery" data-animate-stagger>
@@ -125,37 +97,34 @@ const structuredData = getSiteStructuredData(site);
 
 				<div class="cta">
 					<CallToAction href="/work/">
-						Ver todos
+						Ver todos os trabalhos
 						<Icon icon="arrow-right" size="1.2em" />
 					</CallToAction>
 				</div>
 			</section>
-		</main>
-
-		<main class="wrapper stack gap-20 lg:gap-48">
-			<section class="section with-background bg-variant" data-animate="fade-up">
+			<section class="section with-background with-cta bg-variant" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Impacto e Alcance</h3>
-					<p>Alguns números que demonstram o impacto do meu trabalho em tecnologia educacional.</p>
+					<h3>Últimas postagens</h3>
+					<p>Notas técnicas e reflexões sobre educação, IA e o que tenho aprendido no caminho.</p>
 				</header>
 
-				<div class="stats-grid" data-animate-stagger>
-					<div class="stat-card" data-animate="scale-up">
-						<div class="stat-number">2000+</div>
-						<div class="stat-label">Educadores Impactados</div>
-					</div>
-					<div class="stat-card" data-animate="scale-up">
-						<div class="stat-number">50+</div>
-						<div class="stat-label">Projetos Desenvolvidos</div>
-					</div>
-					<div class="stat-card" data-animate="scale-up">
-						<div class="stat-number">10+</div>
-						<div class="stat-label">Instituições Parceiras</div>
-					</div>
-					<div class="stat-card" data-animate="scale-up">
-						<div class="stat-number">10+</div>
-						<div class="stat-label">Anos de Experiência</div>
-					</div>
+				<div class="gallery" data-animate-stagger>
+					<Grid variant="offset">
+						{
+							posts.map((post) => (
+								<li data-animate="fade-up">
+									<PostPreview post={post} />
+								</li>
+							))
+						}
+					</Grid>
+				</div>
+
+				<div class="cta">
+					<CallToAction href="/blog/">
+						Ler todas as postagens
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
 				</div>
 			</section>
 		</main>
@@ -336,69 +305,6 @@ const structuredData = getSiteStructuredData(site);
 		.mention-card {
 			border-radius: var(--radius-xl);
 			height: 9.5rem;
-		}
-	}
-
-	.stats-grid {
-		display: grid;
-		grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-		gap: var(--space-8);
-		margin-top: var(--space-8);
-		align-items: stretch;
-		grid-auto-rows: 1fr;
-	}
-
-	.stat-card {
-		text-align: center;
-		padding: var(--space-8) var(--space-4);
-		background: color-mix(in oklab, var(--color-bg-primary) 88%, transparent);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
-		transition: transform var(--transition-default),
-			box-shadow var(--transition-default);
-		width: 100%;
-		display: flex;
-		flex-direction: column;
-		justify-content: center;
-	}
-
-	.stat-card:hover {
-		transform: translateY(-2px);
-		box-shadow: var(--shadow-md);
-	}
-
-	.stat-number {
-		font-size: var(--text-display);
-		font-weight: var(--weight-bold);
-		color: var(--color-terracotta);
-		line-height: var(--leading-display);
-		margin-bottom: var(--space-2);
-		font-family: var(--font-serif);
-	}
-
-	.stat-label {
-		font-size: var(--text-small);
-		color: var(--color-text-secondary);
-		font-weight: var(--weight-medium);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-label);
-	}
-
-	@media (min-width: 50em) {
-		.stats-grid {
-			grid-column: 1 / -1;
-			grid-template-columns: repeat(4, 1fr);
-			gap: var(--space-12);
-		}
-
-		.stat-card {
-			padding: var(--space-12) var(--space-8);
-			max-width: none;
-		}
-
-		.stat-label {
-			font-size: var(--text-body);
 		}
 	}
 </style>
