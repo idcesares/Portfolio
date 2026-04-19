@@ -104,25 +104,25 @@ Silêncio pra decidir sozinho é pior que fricção pra alinhar.
 
 **Tasks:**
 
-- [ ] **1.1 Auditoria de copy**
+- [x] **1.1 Auditoria de copy**
   Varrer todas as páginas públicas (`/`, `/about`, `/work`, `/blog`, `/dev`, footer, 404, CTAs). Produzir `docs/copy-audit.md` classificando cada bloco de texto em: `keep` (mantém), `polish` (pequenos ajustes), `rewrite` (refaz do zero). Entregar a tabela pro Isaac revisar antes de reescrever.
 
-- [ ] **1.2 Reescrever a home**
+- [x] **1.2 Reescrever a home**
   Remover os blocos "Inovação / Confluência / Liderança" (genéricos, violam brand test). Substituir por uma seção única com *uma* tese em prosa, primeira pessoa, mais três sub-seções que apontam pra artefatos concretos (não abstrações). Sugestão de estrutura: tese → "O que venho pesquisando" / "O que venho construindo" / "O que venho ensinando", cada uma com uma frase de contexto e link pra um trabalho específico. Rascunho volta pro Isaac aprovar antes de virar PR.
 
-- [ ] **1.3 Reescrever o Sobre**
+- [x] **1.3 Reescrever o Sobre**
   Substituir a estrutura atual (Perfil / Experiência / Áreas / Visão / Convite) por narrativa em 4 a 5 parágrafos com arco: origem, descoberta, prática atual, porquê. Credenciais ficam numa seção discreta ao final, não abrem a página. Eliminar "paixão", "catalisador", "missão". Rascunho volta pro Isaac aprovar.
 
-- [ ] **1.4 CTAs**
+- [x] **1.4 CTAs**
   Auditar todos os CTAs do site. Trocar "Ver projetos" por algo mais específico (sugestão: "Ver meu trabalho" ou "O que venho fazendo"). Trocar "Sobre mim" por algo com mais tração ("Quem sou e como penso"). Padronizar o CTA final "Vamos cocriar?" em todas as páginas.
 
-- [ ] **1.5 Reconciliar números**
+- [x] **1.5 Reconciliar números**
   Home diz "2000+ educadores", Sobre diz "1000+ professores", "1700 estudantes", "600.000 acessos". Reconciliar com Isaac, definir quais métricas aparecem onde, eliminar duplicidade. Cada número tem que ter contexto mínimo (de quê programa, em que período).
 
-- [ ] **1.6 Varredura anti-LLM-ês e anti-LinkedIn-ês**
+- [x] **1.6 Varredura anti-LLM-ês e anti-LinkedIn-ês**
   Fazer grep em todo copy do site pelos termos proibidos (ver seção 1). Produzir lista, revisar caso a caso, substituir. Commit separado, fácil de revisar.
 
-- [ ] **1.7 Metadata e SEO básico**
+- [x] **1.7 Metadata e SEO básico**
   Title da home "Isaac D'Césares: Inovação e Tecnologia" é genérico. Reescrever para algo com a proposição de valor. Revisar `<meta description>` de cada página. Adicionar Open Graph images consistentes com design system (terracotta/cream, wordmark visível).
 
 **Entrega da fase:** todas as páginas públicas passam no brand test, zero vocabulário proibido, números coerentes, metadata decente.
