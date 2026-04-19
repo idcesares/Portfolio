@@ -1,9 +1,9 @@
 import type { CollectionEntry } from 'astro:content';
 
 export const SITE_NAME = "Isaac D'Césares";
-export const SITE_TITLE = "Isaac D'Césares: Inovação e Tecnologia";
+export const SITE_TITLE = "Isaac D'Césares: pesquisa, educação e tecnologia";
 export const SITE_DESCRIPTION =
-  'Transformando a interseção entre Tecnologia e Educação através de soluções éticas e inovadoras.';
+  'Traduzo IA, blockchain e sistemas emergentes em prática educacional. Pesquisador, educador e construtor entre o humano e o digital.';
 export const SITE_LANGUAGE = 'pt-BR';
 export const SITE_LOCALE = 'pt_BR';
 
