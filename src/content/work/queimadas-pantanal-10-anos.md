@@ -73,7 +73,7 @@ jupyter notebook
 ### Google Colab:
 Para executar os códigos no google colab, basta clicar no botão abaixo:
 <a href="https://colab.research.google.com/github/charlespimentel/DS_queimadas_pantanal/blob/main/exploratory_data_analysis.ipynb" target="_blank" rel="noopener noreferrer">
-  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab (abre em nova aba)" loading="lazy" decoding="async" />
+  <img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open in Colab" loading="lazy" decoding="async" />
 </a>
 
 ### Dashboard dinâmico
