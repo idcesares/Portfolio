@@ -42,7 +42,7 @@
     "rehype-pretty-code": "^0.14.3",
     "sanitize-html": "^2.17.3",
     "shiki": "^4.0.2",
-    "tailwindcss": "^4.2.2"
+    "tailwindcss": "^4.2.4"
   },
   "engines": {
     "node": ">=22 <25",
