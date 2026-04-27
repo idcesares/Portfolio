@@ -22,7 +22,7 @@
     "@heroui/button": "^2.2.32",
     "@heroui/code": "^2.2.25",
     "@heroui/react": "^3.0.3",
-    "@lucide/astro": "^1.8.0",
+    "@lucide/astro": "^1.11.0",
     "@rehype-pretty/transformers": "^0.13.2",
     "@tailwindcss/vite": "^4.2.2",
     "@types/react": "^19.2.14",
