@@ -24,7 +24,7 @@
     "@heroui/react": "^3.0.3",
     "@lucide/astro": "^1.8.0",
     "@rehype-pretty/transformers": "^0.13.2",
-    "@tailwindcss/vite": "^4.2.2",
+    "@tailwindcss/vite": "^4.2.4",
     "@types/react": "^19.2.14",
     "@types/react-dom": "^19.2.3",
     "@vercel/analytics": "^2.0.1",
