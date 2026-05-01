@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders } from 'astro/config';
+import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config';
 import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
@@ -25,17 +25,20 @@ export default defineConfig({
   // Experimental features for better performance
   experimental: {
     // SVGO optimization for smaller SVG files
-    svgo: {
+    svgOptimizer: svgoOptimizer({
       // Run optimization repeatedly until no further improvements are found
       multipass: true,
       plugins: [
-        'preset-default',
         {
-          name: 'removeViewBox',
-          active: false // Preserve viewBox for scaling
-        }
-      ]
-    },
+          name: 'preset-default',
+          params: {
+            overrides: {
+              removeViewBox: false,
+            },
+          },
+        },
+      ],
+    }),
     // Queued rendering: two-pass approach for up to 2x faster rendering (planned default in v7)
     queuedRendering: {
       enabled: true,

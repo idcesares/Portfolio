@@ -35,6 +35,11 @@ www.dcesares.dev/
 │   ├── Experiência e realizações
 │   ├── Áreas de especialização
 │   └── Visão e objetivos
+├── /contact/ (Contato)
+│   ├── Canal principal por email
+│   ├── Tipos de conversa e colaboração
+│   ├── Guia para uma boa primeira mensagem
+│   └── Links profissionais e sociais
 ├── /deals/ (Ofertas e Códigos)
 │   ├── Convites exclusivos para plataformas de IA
 │   └── Códigos de desconto para ferramentas
@@ -61,7 +66,7 @@ www.dcesares.dev/
 **R:** IA aplicada à educação, blockchain educacional, ciência de dados educacionais, metodologias ativas, educação maker e letramento digital.
 
 **P: Como posso colaborar ou me conectar?**  
-**R:** Contato principal via isaac.dcesares@gmail.com, LinkedIn (/in/isaacdcesares), ou GitHub (@idcesares). Aberto a parcerias em pesquisa e projetos educacionais inovadores.
+**R:** Use a página /contact/ ou envie email para isaac.dcesares@gmail.com. LinkedIn (/in/isaacdcesares) e GitHub (@idcesares) também são canais oficiais.
 
 **P: O conteúdo do site pode ser usado comercialmente?**  
 **R:** Sim, sob licença MIT para código e uso livre com atribuição para conteúdo educacional. Consulte o arquivo LICENSE para detalhes completos.
@@ -272,6 +277,7 @@ www.dcesares.dev/
 ## Contato e Governança
 
 ### Contato Principal
+- **Página**: https://www.dcesares.dev/contact/
 - **Email**: isaac.dcesares@gmail.com
 - **Resposta**: 24-48 horas em dias úteis
 - **Idiomas**: Português, inglês

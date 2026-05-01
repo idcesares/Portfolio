@@ -156,6 +156,84 @@ export const devProjects: DevProject[] = [
 		featured: false,
 		year: 2026,
 	},
+	{
+		id: 'prof-gpt',
+		title: 'Prof. GPT',
+		description:
+			'Prompt builder pedagógico para cocriar planos de aula com IA, com foco em BNCC, inclusão, clareza de contexto e saída estruturada.',
+		longDescription:
+			'Aplicação web para professores montarem prompts mais robustos em segundos. O projeto combina formulário guiado, toggles para melhorias avançadas, validação de campos, checklist de boas práticas de prompt engineering e um bloco final pronto para copiar e usar em LLMs modernos.',
+		techStack: [
+			{ name: 'SvelteKit', color: 'teal' },
+			{ name: 'Svelte', color: 'terracotta' },
+			{ name: 'JavaScript', color: 'amber' },
+			{ name: 'Vite', color: 'sage' },
+			{ name: 'Vercel', color: 'burgundy' },
+		],
+		demoUrl: 'https://prof-gpt.vercel.app/',
+		repoUrl: 'https://github.com/idcesares/Prof-GPT',
+		status: 'live',
+		featured: false,
+		year: 2025,
+	},
+	{
+		id: 'learnchain',
+		title: 'LearnChain',
+		description:
+			'Landing page institucional para uma plataforma de educacao descentralizada e colaborativa, com manifesto, captacao de interesse e narrativa de produto.',
+		longDescription:
+			'Site conceitual de produto que apresenta a proposta da LearnChain com hero de marca, secoes de beneficios, narrativa sobre monetizacao de conhecimento via blockchain, formulario Tally embutido e instrumentacao com analytics. O codigo mostra um fork bastante customizado de template, ainda com algumas sobras do boilerplate original.',
+		techStack: [
+			{ name: 'Next.js', color: 'teal' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'Tailwind CSS', color: 'sage' },
+			{ name: 'Tally', color: 'amber' },
+			{ name: 'Vercel Analytics', color: 'burgundy' },
+		],
+		repoUrl: 'https://github.com/idcesares/LearnChain',
+		status: 'development',
+		featured: false,
+		year: 2023,
+	},
+	{
+		id: 'experimentos-de-ia',
+		title: 'Experimentos de IA',
+		description:
+			'Hub curado em portugues com dezenas de experimentos, demos e ferramentas de IA para explorar conceitos e usos praticos sem precisar programar.',
+		longDescription:
+			'Repositorio editorial em formato Markdown que organiza uma colecao de referencias acessiveis sobre IA generativa, visao computacional, musica, voz, busca cientifica e criatividade assistida. Funciona como porta de entrada para estudo, oficinas e descoberta de ferramentas.',
+		techStack: [
+			{ name: 'Markdown', color: 'teal' },
+			{ name: 'GitHub', color: 'terracotta' },
+			{ name: 'No-code', color: 'amber' },
+			{ name: 'OpenAI', color: 'sage' },
+			{ name: 'Google AI Experiments', color: 'burgundy' },
+		],
+		repoUrl: 'https://github.com/idcesares/Experimentos-de-IA',
+		status: 'archived',
+		featured: false,
+		year: 2023,
+	},
+	{
+		id: 'sistema-de-sorteio',
+		title: 'Sistema de Sorteio Eletronico',
+		description:
+			'Sistema web de sorteio auditavel para distribuicao de vagas, com semente manual, primeira chamada, lista de espera e reproducao do resultado.',
+		longDescription:
+			'Aplicacao front-end enxuta para sorteios publicos com foco em transparencia operacional. O fluxo permite informar nome, numero de inscritos, vagas e semente opcional para auditoria, embaralha a lista com base em pseudoaleatoriedade controlada e gera saidas prontas para publicacao e conferencia.',
+		techStack: [
+			{ name: 'JavaScript', color: 'teal' },
+			{ name: 'HTML', color: 'terracotta' },
+			{ name: 'Bootstrap', color: 'sage' },
+			{ name: 'SeedRandom', color: 'amber' },
+			{ name: 'Vercel', color: 'burgundy' },
+		],
+		demoUrl: 'https://sistema-de-sorteio.vercel.app/',
+		repoUrl: 'https://github.com/idcesares/Sistema-de-Sorteio',
+		status: 'live',
+		featured: false,
+		year: 2020,
+	},
 	// ------------------------------------------------------------------
 	// Adicione seus projetos abaixo seguindo o mesmo formato.
 	// Exemplos de template para referência rápida:

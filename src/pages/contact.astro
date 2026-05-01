@@ -1,0 +1,699 @@
+---
+export const prerender = true;
+
+import BaseLayout from '../layouts/BaseLayout.astro';
+import CallToAction from '../components/CallToAction.astro';
+import Icon from '../components/Icon.astro';
+import type { iconPaths } from '../components/IconPaths';
+import { getSiteStructuredData } from '../utils/seo';
+
+const email = 'isaac.dcesares@gmail.com';
+const mailHref =
+	'mailto:isaac.dcesares@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio';
+
+const site = Astro.site ?? new URL('https://www.dcesares.dev');
+const pageUrl = new URL('/contact/', site).toString();
+
+const socialLinks: {
+	label: string;
+	href: string;
+	description: string;
+	icon: keyof typeof iconPaths;
+}[] = [
+	{
+		label: 'LinkedIn',
+		href: 'https://linkedin.com/in/isaacdcesares',
+		description: 'Para conversas profissionais, convites e parcerias institucionais.',
+		icon: 'linkedin-logo',
+	},
+	{
+		label: 'GitHub',
+		href: 'https://github.com/idcesares',
+		description: 'Para acompanhar código, projetos autorais e experimentos técnicos.',
+		icon: 'github-logo',
+	},
+	{
+		label: 'YouTube',
+		href: 'https://www.youtube.com/@idcesares/',
+		description: 'Para aulas, registros, demonstrações e conteúdo em vídeo.',
+		icon: 'youtube-logo',
+	},
+	{
+		label: 'Twitter/X',
+		href: 'https://twitter.com/idcesares',
+		description: 'Para notas rápidas sobre tecnologia, educação e cultura digital.',
+		icon: 'twitter-logo',
+	},
+];
+
+const conversationTypes: {
+	title: string;
+	description: string;
+	icon: keyof typeof iconPaths;
+	accent: 'terracotta' | 'teal' | 'sage' | 'amber';
+}[] = [
+	{
+		title: 'Palestras e eventos',
+		description: 'IA na educação, cultura maker, letramento digital e transformação institucional.',
+		icon: 'microphone-stage',
+		accent: 'terracotta',
+	},
+	{
+		title: 'Projetos e consultoria',
+		description: 'Estratégia, protótipos, desenho de experiências e tecnologia educacional aplicada.',
+		icon: 'strategy',
+		accent: 'teal',
+	},
+	{
+		title: 'Pesquisa e colaboração',
+		description: 'Universidades, grupos de estudo, publicações e investigações em computação e educação.',
+		icon: 'book-open',
+		accent: 'sage',
+	},
+	{
+		title: 'Tecnologia e código',
+		description: 'Produtos digitais, automações, IA aplicada, sistemas web e experimentos autorais.',
+		icon: 'code',
+		accent: 'amber',
+	},
+];
+
+const messageGuide = [
+	'Contexto do projeto, convite ou pergunta.',
+	'Prazo, cidade, formato ou janela desejada.',
+	'Link, briefing, referência ou material de apoio, se existir.',
+];
+
+const structuredData = [
+	...getSiteStructuredData(site),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ContactPage',
+		name: "Contato | Isaac D'Césares",
+		url: pageUrl,
+		description:
+			'Página de contato para projetos, palestras, pesquisa e parcerias com Isaac D\'Césares.',
+		mainEntity: {
+			'@type': 'Person',
+			name: "Isaac D'Césares",
+			email,
+			url: site.href,
+			sameAs: socialLinks.map(({ href }) => href),
+			contactPoint: {
+				'@type': 'ContactPoint',
+				email,
+				contactType: 'professional inquiries',
+				availableLanguage: ['pt-BR', 'en'],
+			},
+		},
+	},
+];
+---
+
+<BaseLayout
+	title="Contato | Isaac D'Césares"
+	description="Fale com Isaac D'Césares sobre tecnologia educacional, IA aplicada, palestras, pesquisa, projetos e colaborações."
+	image="/assets/portrait.webp"
+	imageAlt="Retrato de Isaac D'Césares"
+	structuredData={structuredData}
+>
+	<div class="stack gap-20">
+	<main class="wrapper contact-page">
+		<section class="contact-hero" aria-labelledby="contact-title">
+			<div class="hero-copy" data-animate="fade-up">
+				<p class="eyebrow">Contato</p>
+				<h1 id="contact-title">Vamos abrir uma boa conversa.</h1>
+				<p class="lede">
+					Projetos de tecnologia educacional, IA aplicada, pesquisa, palestras e experiências
+					digitais que precisam ficar de pé no mundo real.
+				</p>
+
+				<div class="hero-actions">
+					<CallToAction href={mailHref}>
+						Enviar email
+						<Icon icon="paper-plane-tilt" size="1.2em" />
+					</CallToAction>
+					<a class="secondary-action" href="#canais">Ver canais</a>
+				</div>
+			</div>
+
+			<figure class="hero-visual" data-animate="scale-up" data-animate-delay="150">
+				<img
+					src="/assets/portrait.webp"
+					alt="Retrato de Isaac D'Césares"
+					width="960"
+					height="1200"
+					loading="eager"
+					decoding="async"
+				/>
+				<figcaption>
+					<span>Humano</span>
+					<strong>educação, pesquisa, presença</strong>
+					<span>Digital</span>
+					<strong>IA, código, sistemas</strong>
+				</figcaption>
+			</figure>
+		</section>
+
+		<section class="contact-ledger" aria-labelledby="direct-title" data-animate="fade-up">
+			<div>
+				<p class="section-kicker section-kicker--teal">Canal principal</p>
+				<h2 id="direct-title">Email direto, contexto claro, conversa sem ruído.</h2>
+			</div>
+			<div class="direct-block">
+				<a href={mailHref}>{email}</a>
+				<p>Respondo melhor quando a mensagem já traz intenção, prazo e um pouco do contexto.</p>
+			</div>
+		</section>
+
+		<section class="conversation-section" aria-labelledby="conversation-title">
+			<header class="section-header" data-animate="fade-up">
+				<p class="section-kicker">Bons motivos para chamar</p>
+				<h2 id="conversation-title" class="section-h2">Se a pauta cruza educação, tecnologia e impacto, provavelmente cabe aqui.</h2>
+			</header>
+
+			<div class="conversation-grid" data-animate-stagger>
+				{
+					conversationTypes.map(({ title, description, icon, accent }) => (
+						<article class:list={['conversation-item', accent]} data-animate="fade-up">
+							<div class="item-icon" aria-hidden="true">
+								<Icon icon={icon} />
+							</div>
+							<div>
+								<h3>{title}</h3>
+								<p>{description}</p>
+							</div>
+						</article>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="message-section" aria-labelledby="message-title" data-animate="fade-up">
+			<div class="message-copy">
+				<p class="section-kicker section-kicker--mute">Para acelerar a resposta</p>
+				<h2 id="message-title" class="section-h2">Uma boa primeira mensagem já desenha o começo do trabalho.</h2>
+			</div>
+
+			<ol class="message-list">
+				{
+					messageGuide.map((item, index) => (
+						<li>
+							<span>{String(index + 1).padStart(2, '0')}</span>
+							<p>{item}</p>
+						</li>
+					))
+				}
+			</ol>
+		</section>
+
+		<section id="canais" class="channels-section" aria-labelledby="channels-title">
+			<header class="section-header" data-animate="fade-up">
+				<p class="section-kicker section-kicker--teal">Outros lugares</p>
+				<h2 id="channels-title" class="section-h2">Cada canal tem uma função. Escolha o caminho mais natural.</h2>
+			</header>
+
+			<div class="channel-grid" data-animate-stagger>
+				{
+					socialLinks.map(({ label, href, description, icon }) => (
+						<a class="channel-card" href={href} target="_blank" rel="noreferrer" data-animate="fade-up">
+							<span class="channel-icon" aria-hidden="true">
+								<Icon icon={icon} />
+							</span>
+							<span class="channel-content">
+								<strong>{label}</strong>
+								<span>{description}</span>
+							</span>
+							<Icon icon="arrow-square-out" size="1.1em" />
+						</a>
+					))
+				}
+			</div>
+		</section>
+
+		<section class="final-cta" aria-labelledby="final-title" data-animate="fade-up">
+			<div class="final-cta-copy">
+				<p class="section-kicker">Próximo passo</p>
+				<h2 id="final-title">Vamos cocriar?</h2>
+				<p class="final-cta-lede">
+					Se a conversa ainda está meio aberta, tudo bem. Comece pelo essencial e a gente desenha o resto junto.
+				</p>
+			</div>
+			<CallToAction href={mailHref}>
+				Enviar email
+				<Icon icon="paper-plane-tilt" size="1.2em" />
+			</CallToAction>
+		</section>
+	</main>
+	</div>
+</BaseLayout>
+
+<style>
+	.contact-page {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-20);
+		padding-bottom: var(--space-12);
+		isolation: isolate;
+	}
+
+	.contact-hero {
+		position: relative;
+		display: grid;
+		gap: var(--space-10);
+		align-items: center;
+		padding-block: var(--space-4) var(--space-12);
+	}
+
+	.contact-hero::before {
+		content: '';
+		position: absolute;
+		inset: -12% 40% auto -10%;
+		pointer-events: none;
+		background:
+			radial-gradient(ellipse at 10% 40%, var(--color-terracotta-10), transparent 70%),
+			radial-gradient(ellipse at 70% 10%, var(--color-teal-12), transparent 65%);
+		z-index: -1;
+	}
+
+	.hero-copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-6);
+		max-width: 44rem;
+	}
+
+	.eyebrow,
+	.section-kicker {
+		margin: 0;
+		color: var(--color-terracotta);
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-label);
+	}
+
+	.section-kicker--teal {
+		color: var(--color-text-accent);
+	}
+
+	.section-kicker--mute {
+		color: var(--color-text-tertiary);
+	}
+
+	.hero-copy h1 {
+		max-width: 11ch;
+		font-size: var(--text-display);
+	}
+
+	.lede {
+		max-width: 44ch;
+		color: var(--color-text-secondary);
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-body-lg);
+	}
+
+	.hero-actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+		align-items: center;
+	}
+
+	.secondary-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		min-height: 44px;
+		padding: var(--space-3) var(--space-6);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--color-bg-primary) 82%, transparent);
+		box-shadow: var(--shadow-sm);
+		color: var(--color-text-secondary);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		transition:
+			border-color var(--transition-default),
+			color var(--transition-default),
+			transform var(--transition-default);
+	}
+
+	.secondary-action:hover,
+	.secondary-action:focus {
+		border-color: var(--color-border-emphasis);
+		color: var(--color-text-primary);
+		transform: translateY(-1px);
+	}
+
+	.hero-visual {
+		position: relative;
+		margin: 0;
+		overflow: hidden;
+		border-radius: var(--radius-xl);
+		box-shadow: var(--shadow-lg);
+		background: var(--color-bg-secondary);
+		isolation: isolate;
+	}
+
+	.hero-visual::after {
+		content: '';
+		position: absolute;
+		inset: 0;
+		background:
+			linear-gradient(180deg, transparent 45%, var(--color-overlay-bg)),
+			linear-gradient(135deg, var(--color-terracotta-20), transparent 42%, var(--color-teal-20));
+		pointer-events: none;
+	}
+
+	.hero-visual img {
+		display: block;
+		width: 100%;
+		aspect-ratio: 4 / 5;
+		object-fit: cover;
+		object-position: center;
+		filter: var(--photo-warmth);
+	}
+
+	.hero-visual figcaption {
+		position: absolute;
+		inset: auto var(--space-5) var(--space-5);
+		z-index: 1;
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: var(--space-1) var(--space-3);
+		align-items: baseline;
+		color: var(--color-cream);
+	}
+
+	.hero-visual figcaption span {
+		font-size: var(--text-xs);
+		text-transform: uppercase;
+		opacity: 0.8;
+	}
+
+	.hero-visual figcaption strong {
+		font-size: var(--text-small);
+		font-weight: var(--weight-medium);
+	}
+
+	.contact-ledger,
+	.message-section,
+	.final-cta {
+		position: relative;
+		display: grid;
+		gap: var(--space-8);
+		padding-block: var(--space-10);
+		border-top: 1px solid var(--color-border-default);
+	}
+
+	.contact-ledger h2,
+	.final-cta h2 {
+		max-width: 16ch;
+		font-size: var(--text-h1);
+	}
+
+	.message-copy h2,
+	.section-h2 {
+		max-width: 22ch;
+		font-size: var(--text-h2);
+	}
+
+	.final-cta {
+		border-top: 0;
+		border-radius: var(--radius-xl);
+		padding: var(--space-10);
+	}
+
+	.final-cta-copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+	}
+
+	.final-cta h2 {
+		font-family: var(--font-serif);
+		letter-spacing: var(--tracking-heading);
+	}
+
+	.final-cta-lede {
+		max-width: 44ch;
+		color: var(--color-text-secondary);
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-body-lg);
+	}
+
+	.direct-block {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		justify-content: center;
+	}
+
+	.direct-block a {
+		color: var(--color-text-accent);
+		font-family: var(--font-mono);
+		font-size: var(--text-body-lg);
+		font-weight: var(--weight-semibold);
+		text-decoration: none;
+		word-break: break-word;
+	}
+
+	.direct-block a:hover,
+	.direct-block a:focus {
+		text-decoration: underline;
+		text-underline-offset: 0.25em;
+	}
+
+	.direct-block p,
+	.conversation-item p,
+	.message-list p,
+	.channel-content span {
+		color: var(--color-text-secondary);
+	}
+
+	.section-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-3);
+		max-width: 48rem;
+	}
+
+	.section-header h2 {
+		font-size: var(--text-h2);
+		max-width: 28ch;
+	}
+
+	.conversation-section,
+	.channels-section {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-8);
+	}
+
+	.conversation-grid {
+		display: grid;
+		gap: var(--space-1);
+		border-top: 1px solid var(--color-border-default);
+	}
+
+	.conversation-item {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: var(--space-5);
+		padding-block: var(--space-6);
+		border-bottom: 1px solid var(--color-border-default);
+	}
+
+	.item-icon,
+	.channel-icon {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		width: 3rem;
+		height: 3rem;
+		border-radius: var(--radius-full);
+		background: var(--color-bg-secondary);
+		color: var(--color-teal);
+		box-shadow: var(--shadow-sm);
+	}
+
+	.conversation-item.terracotta .item-icon {
+		color: var(--color-terracotta);
+	}
+
+	.conversation-item.teal .item-icon {
+		color: var(--color-text-accent);
+	}
+
+	.conversation-item.sage .item-icon {
+		color: var(--color-sage);
+	}
+
+	.conversation-item.amber .item-icon {
+		color: var(--color-amber);
+	}
+
+	.conversation-item h3 {
+		margin-bottom: var(--space-2);
+		font-size: var(--text-h3);
+	}
+
+	.message-section {
+		background: color-mix(in oklab, var(--color-bg-secondary) 60%, transparent);
+		border-radius: var(--radius-xl);
+		padding-inline: var(--space-6);
+		border-top: 0;
+	}
+
+	.message-list {
+		display: grid;
+		gap: var(--space-4);
+		padding: 0;
+		list-style: none;
+	}
+
+	.message-list li {
+		display: grid;
+		grid-template-columns: auto 1fr;
+		gap: var(--space-4);
+		align-items: start;
+		padding-block: var(--space-3);
+		border-bottom: 1px solid var(--color-border-default);
+	}
+
+	.message-list span {
+		color: var(--color-text-tertiary);
+		font-family: var(--font-mono);
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+	}
+
+	.channel-grid {
+		display: grid;
+		gap: var(--space-4);
+	}
+
+	.channel-card {
+		display: grid;
+		grid-template-columns: auto 1fr auto;
+		gap: var(--space-4);
+		align-items: center;
+		padding: var(--space-5);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		background: color-mix(in oklab, var(--color-bg-secondary) 72%, transparent);
+		box-shadow: var(--shadow-sm);
+		color: var(--color-text-primary);
+		text-decoration: none;
+		transition:
+			border-color var(--transition-default),
+			box-shadow var(--transition-default),
+			transform var(--transition-default);
+	}
+
+	.channel-card:hover,
+	.channel-card:focus {
+		border-color: var(--color-border-emphasis);
+		box-shadow: var(--shadow-md);
+		transform: translateY(-2px);
+	}
+
+	.channel-content {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-1);
+	}
+
+	.channel-content strong {
+		font-size: var(--text-h4);
+	}
+
+	.final-cta {
+		align-items: start;
+		background:
+			radial-gradient(ellipse at 0% 0%, var(--color-teal-10), transparent 70%),
+			radial-gradient(ellipse at 90% 10%, var(--color-terracotta-10), transparent 65%),
+			color-mix(in oklab, var(--color-bg-secondary) 60%, transparent);
+		box-shadow: var(--shadow-sm);
+	}
+
+	@media (min-width: 50em) {
+		.contact-page {
+			gap: var(--space-24);
+		}
+
+		.contact-hero {
+			grid-template-columns: minmax(0, 0.95fr) minmax(22rem, 0.8fr);
+			gap: var(--space-16);
+			align-items: start;
+			padding-block: 0 var(--space-16);
+		}
+
+		.hero-copy {
+			padding-top: var(--space-10);
+		}
+
+		.hero-visual {
+			justify-self: end;
+			width: min(100%, var(--container-sm));
+			margin-top: var(--space-2);
+		}
+
+		.hero-visual img {
+			aspect-ratio: 4 / 5;
+		}
+
+		.contact-ledger,
+		.message-section {
+			grid-template-columns: 0.9fr 1fr;
+			gap: var(--space-16);
+			padding-block: var(--space-16);
+		}
+
+		.message-section {
+			padding-inline: var(--space-12);
+		}
+
+		.final-cta {
+			grid-template-columns: 0.9fr auto;
+			gap: var(--space-16);
+			padding: var(--space-16);
+			align-items: center;
+		}
+
+		.conversation-grid,
+		.channel-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+		}
+
+		.conversation-grid {
+			gap: 0 var(--space-8);
+			border-bottom: 1px solid var(--color-border-default);
+		}
+
+		.conversation-item {
+			border-bottom: 0;
+		}
+
+		.conversation-item:nth-child(1),
+		.conversation-item:nth-child(2) {
+			border-bottom: 1px solid var(--color-border-default);
+		}
+	}
+
+	@media (max-width: 34em) {
+		.hero-actions,
+		.hero-actions :global(a) {
+			width: 100%;
+		}
+
+		.channel-card {
+			grid-template-columns: auto 1fr;
+		}
+
+		.channel-card > :global(svg:last-child) {
+			display: none;
+		}
+	}
+</style>

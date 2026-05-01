@@ -13,6 +13,7 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 - [Blog](https://www.dcesares.dev/blog/): Artigos sobre IA, educação e tecnologia
 - [Dev](https://www.dcesares.dev/dev/): Projetos de desenvolvimento, design system e software autoral
 - [Sobre](https://www.dcesares.dev/about/): Trajetória profissional e formação acadêmica
+- [Contato](https://www.dcesares.dev/contact/): Canal principal para projetos, palestras, pesquisa e parcerias
 - [Ofertas](https://www.dcesares.dev/deals/): Links e códigos exclusivos para ferramentas
 
 ## Conteúdos Canônicos
@@ -47,6 +48,7 @@ Descrição: Portfólio profissional de Isaac D'Césares com foco em inovação 
 - Sitemap: https://www.dcesares.dev/sitemap-index.xml
 - RSS: https://www.dcesares.dev/rss.xml
 - Contato principal: isaac.dcesares@gmail.com
+- Página de contato: https://www.dcesares.dev/contact/
 - GitHub: https://github.com/idcesares
 - LinkedIn: https://linkedin.com/in/isaacdcesares
 
