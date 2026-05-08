@@ -1,13 +1,288 @@
 ---
 export const prerender = true;
 
-import Hero from '../components/Hero.astro';
+import Icon from '../components/Icon.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
 <BaseLayout title="Página não encontrada | Isaac D'Césares" description="Erro 404: essa página não existe ou foi movida.">
-	<Hero title="404: rota não encontrada" tagline="Alguma coisa no roteamento quebrou. Pode ser link antigo, typo, ou só um bit teimoso.">
-		<p>Se você veio de um link meu, me avisa. Se veio do Google, o índice ainda não pegou essa mudança. Enquanto isso:</p>
-		<a href="/" class="btn-primary mt-4 inline-block">Voltar pra home</a>
-	</Hero>
+	<main class="not-found wrapper" data-animate="fade-up">
+		<section class="not-found__copy stack gap-8" aria-labelledby="not-found-title">
+			<div class="stack gap-4">
+				<p class="not-found__eyebrow">HTTP 404</p>
+				<h1 id="not-found-title">Rota não encontrada</h1>
+				<p class="not-found__lead">
+					O endereço existe em alguma timeline paralela, mas neste deploy ele não resolveu.
+					Pode ser link antigo, typo ou cache insistente.
+				</p>
+			</div>
+
+			<div class="not-found__actions" aria-label="Próximos caminhos">
+				<a href="/" class="not-found__button not-found__button--primary">
+					<Icon icon="arrow-left" size="1rem" />
+					Voltar pra home
+				</a>
+				<a href="/blog/" class="not-found__button">
+					<Icon icon="book-open" size="1rem" />
+					Ler o blog
+				</a>
+				<a href="/dev/" class="not-found__button">
+					<Icon icon="terminal-window" size="1rem" />
+					Ver /dev
+				</a>
+			</div>
+
+			<p class="not-found__note">
+				Se esse link saiu de algum conteúdo meu, me manda um ping em <a href="/contact/">contato</a>
+				que eu corrijo a rota.
+			</p>
+		</section>
+
+		<aside class="not-found__terminal" aria-label="Diagnóstico da rota">
+			<div class="terminal__bar" aria-hidden="true">
+				<span></span>
+				<span></span>
+				<span></span>
+			</div>
+			<div class="terminal__body">
+				<p><span class="terminal__prompt">$</span> fetch(currentRoute)</p>
+				<p><span class="terminal__muted">status:</span> <strong>404</strong></p>
+				<p><span class="terminal__muted">hint:</span> recalcular rota conhecida</p>
+				<pre><code>&#123;
+  "fallback": ["/", "/work/", "/blog/", "/dev/"],
+  "cause": "resource_not_found",
+  "next": "choose_a_checkpoint"
+&#125;</code></pre>
+				<ul class="terminal__links" aria-label="Checkpoints sugeridos">
+					<li><a href="/work/">/work</a></li>
+					<li><a href="/blog/">/blog</a></li>
+					<li><a href="/dev/">/dev</a></li>
+					<li><a href="/about/">/about</a></li>
+				</ul>
+			</div>
+		</aside>
+	</main>
 </BaseLayout>
+
+<style>
+	.not-found {
+		display: grid;
+		min-height: min(42rem, 72vh);
+		align-items: center;
+		gap: var(--space-10);
+		padding-block: var(--space-16);
+	}
+
+	.not-found__copy {
+		max-width: 44rem;
+		min-width: 0;
+	}
+
+	.not-found__eyebrow {
+		width: fit-content;
+		border: 1px solid var(--color-teal-20);
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--color-teal) 10%, var(--color-bg-primary));
+		color: var(--color-text-accent);
+		font-family: var(--font-mono);
+		font-size: var(--text-small);
+		font-weight: var(--weight-semibold);
+		letter-spacing: var(--tracking-label);
+		line-height: var(--leading-label);
+		padding: var(--space-2) var(--space-3);
+		text-transform: uppercase;
+	}
+
+	.not-found h1 {
+		max-width: 11ch;
+		font-size: clamp(3.5rem, 14vw, 9rem);
+		line-height: 0.9;
+		letter-spacing: 0;
+	}
+
+	.not-found__lead {
+		max-width: 41rem;
+		color: var(--color-text-secondary);
+		font-size: var(--text-body-lg);
+	}
+
+	.not-found__actions {
+		display: flex;
+		flex-wrap: wrap;
+		gap: var(--space-3);
+	}
+
+	.not-found__button {
+		display: inline-flex;
+		min-height: 2.75rem;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-full);
+		background: color-mix(in oklab, var(--color-bg-primary) 78%, transparent);
+		color: var(--color-text-primary);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-label);
+		padding: var(--space-3) var(--space-5);
+		text-decoration: none;
+		transition:
+			transform var(--transition-default),
+			border-color var(--transition-default),
+			background-color var(--transition-default),
+			box-shadow var(--transition-default);
+	}
+
+	.not-found__button:hover {
+		border-color: var(--color-border-emphasis);
+		background: var(--color-bg-secondary);
+		box-shadow: var(--shadow-sm);
+		transform: translateY(-1px);
+	}
+
+	.not-found__button--primary {
+		border-color: var(--color-terracotta-dark);
+		background: var(--color-terracotta);
+		color: var(--color-text-on-accent);
+	}
+
+	.not-found__button--primary:hover {
+		border-color: var(--color-terracotta);
+		background: var(--color-terracotta-light);
+		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+	}
+
+	.not-found__note {
+		max-width: 37rem;
+		color: var(--color-text-tertiary);
+		font-size: var(--text-small);
+	}
+
+	.not-found__note a {
+		color: var(--color-text-accent);
+		font-weight: var(--weight-semibold);
+		text-decoration-thickness: 1px;
+		text-underline-offset: 0.2em;
+	}
+
+	.not-found__terminal {
+		overflow: hidden;
+		min-width: 0;
+		border: 1px solid var(--code-border);
+		border-radius: var(--radius-lg);
+		background:
+			linear-gradient(180deg, rgba(255, 255, 255, 0.04), transparent 36%),
+			var(--code-bg);
+		box-shadow: var(--shadow-lg), var(--shadow-glow-teal);
+		color: var(--code-text);
+		font-family: var(--font-mono);
+	}
+
+	.terminal__bar {
+		display: flex;
+		gap: var(--space-2);
+		border-bottom: 1px solid var(--code-border);
+		padding: var(--space-4);
+	}
+
+	.terminal__bar span {
+		width: 0.7rem;
+		aspect-ratio: 1;
+		border-radius: var(--radius-full);
+		background: var(--color-text-tertiary);
+	}
+
+	.terminal__bar span:nth-child(1) {
+		background: var(--color-terracotta-light);
+	}
+
+	.terminal__bar span:nth-child(2) {
+		background: var(--code-function);
+	}
+
+	.terminal__bar span:nth-child(3) {
+		background: var(--code-string);
+	}
+
+	.terminal__body {
+		display: grid;
+		gap: var(--space-3);
+		padding: var(--space-5);
+	}
+
+	.terminal__body p,
+	.terminal__body pre {
+		font-size: var(--text-code);
+		line-height: var(--leading-code);
+	}
+
+	.terminal__prompt,
+	.terminal__body strong {
+		color: var(--code-number);
+	}
+
+	.terminal__muted {
+		color: var(--code-comment);
+	}
+
+	.terminal__body pre {
+		overflow-x: auto;
+		border: 1px solid var(--code-border);
+		border-radius: var(--radius-md);
+		background: rgba(0, 0, 0, 0.16);
+		color: var(--code-text);
+		padding: var(--space-4);
+	}
+
+	.terminal__links {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-2);
+		list-style: none;
+		padding: 0;
+	}
+
+	.terminal__links a {
+		display: block;
+		border: 1px solid var(--code-border);
+		border-radius: var(--radius-md);
+		color: var(--code-string);
+		padding: var(--space-2) var(--space-3);
+		text-decoration: none;
+		transition:
+			background-color var(--transition-default),
+			color var(--transition-default);
+	}
+
+	.terminal__links a:hover {
+		background: rgba(255, 255, 255, 0.06);
+		color: var(--color-cream);
+	}
+
+	@media (min-width: 56em) {
+		.not-found {
+			grid-template-columns: minmax(0, 1fr) minmax(22rem, 30rem);
+			padding-block: var(--space-20);
+		}
+	}
+
+	@media (max-width: 36em) {
+		.not-found {
+			min-height: auto;
+			padding-block: var(--space-10);
+		}
+
+		.not-found__actions,
+		.not-found__button {
+			width: 100%;
+		}
+
+		.not-found h1 {
+			font-size: clamp(3.25rem, 22vw, 5rem);
+		}
+
+		.terminal__links {
+			grid-template-columns: 1fr;
+		}
+	}
+</style>
