@@ -57,7 +57,6 @@ export const devProjects: DevProject[] = [
 		demoUrl: 'https://dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Portfolio',
 		status: 'live',
-		featured: true,
 		year: 2025,
 	},
 	{
@@ -72,9 +71,11 @@ export const devProjects: DevProject[] = [
 			{ name: 'Design Tokens', color: 'amber' },
 			{ name: 'Tailwind v4', color: 'sage' },
 		],
-		demoUrl: 'https://dcesares.dev/design-system-showcase.html',
+		img: '/assets/blog_imgs/membrane-palette.webp',
+		demoUrl: 'https://membrane-palette.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/idcesares-design-system',
 		status: 'live',
+		featured: true,
 		year: 2026,
 	},
 	{
