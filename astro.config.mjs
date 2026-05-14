@@ -11,6 +11,13 @@ import { remarkReadingTime } from './remark-reading-time.mjs';
 
 import tailwindcss from '@tailwindcss/vite';
 
+const copyIcon = `data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#E2DCD2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="10" height="10" rx="2"/><path d="M6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>'
+)}`;
+const successIcon = `data:image/svg+xml,${encodeURIComponent(
+  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#7BC494" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
+)}`;
+
 // https://astro.build/config
 export default defineConfig({
   // Keep server output to preserve Vercel runtime image optimization and analytics integration.
@@ -143,13 +150,15 @@ export default defineConfig({
       [
         rehypePrettyCode,
         {
-          theme: 'dracula',
-          keepBackground: true,
+          theme: 'github-dark-dimmed',
+          keepBackground: false,
           wrap: true,
           transformers: [
             transformerCopyButton({
               visibility: 'hover',
               feedbackDuration: 2000,
+              copyIcon,
+              successIcon,
             }),
           ],
         },
