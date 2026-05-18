@@ -40,8 +40,8 @@ importers:
         specifier: ^2.2.25
         version: 2.2.25(@heroui/theme@2.4.26(tailwindcss@4.3.0))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@heroui/react':
-        specifier: ^3.0.4
-        version: 3.0.4(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)
+        specifier: ^3.0.5
+        version: 3.0.5(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)
       '@lucide/astro':
         specifier: ^1.14.0
         version: 1.14.0(astro@6.3.1(@types/node@25.0.3)(@vercel/functions@3.5.1)(jiti@2.7.0)(lightningcss@1.32.0)(rollup@4.60.3)(yaml@2.9.0))
@@ -589,8 +589,8 @@ packages:
     peerDependencies:
       react: '>=18 || >=19.0.0-rc.0'
 
-  '@heroui/react@3.0.4':
-    resolution: {integrity: sha512-6y6aXZ9v8W/dNDKA3yP0+VnY3OQUeg8164YnOXVaFd1U8+WbXka1hwPgi3PK/qmMv8W81SdiVnmEZUXjHbXpfw==}
+  '@heroui/react@3.0.5':
+    resolution: {integrity: sha512-kBb3aUcSAJOraPOb2MbOS1yNUcSCc6vnl0zTtzuWvJZabWgSff5Y9FNyXNjk/d56vm2ermfXa/gfBYqTUtRTzA==}
     peerDependencies:
       react: '>=19.0.0'
       react-dom: '>=19.0.0'
@@ -615,8 +615,8 @@ packages:
       react: '>=18 || >=19.0.0-rc.0'
       react-dom: '>=18 || >=19.0.0-rc.0'
 
-  '@heroui/styles@3.0.4':
-    resolution: {integrity: sha512-3zi0cu8PPmMbUdRg7AO486w9uA7ZHuV6m8ab23RQHChJ97q3s/tM13r74l7A963Dif+0ZWpQRiicsUvWuaAcDg==}
+  '@heroui/styles@3.0.5':
+    resolution: {integrity: sha512-5DI5sa7GGe1Uw8PCBhooAIGoqZbcR0ilamPjzgv94qVgolGs9+FqbeNp2bcbyoHJn9+HLKQMYiIa44LwH0VLww==}
     peerDependencies:
       tailwindcss: '>=4.0.0'
 
@@ -3926,9 +3926,9 @@ snapshots:
       '@heroui/shared-utils': 2.1.12
       react: 19.2.6
 
-  '@heroui/react@3.0.4(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)':
+  '@heroui/react@3.0.5(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)(tailwindcss@4.3.0)':
     dependencies:
-      '@heroui/styles': 3.0.4(tailwind-merge@3.4.0)(tailwindcss@4.3.0)
+      '@heroui/styles': 3.0.5(tailwind-merge@3.4.0)(tailwindcss@4.3.0)
       '@radix-ui/react-avatar': 1.1.11(@types/react-dom@19.2.3(@types/react@19.2.14))(@types/react@19.2.14)(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/i18n': 3.13.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/ssr': 3.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
@@ -3972,7 +3972,7 @@ snapshots:
       - '@react-spectrum/provider'
       - framer-motion
 
-  '@heroui/styles@3.0.4(tailwind-merge@3.4.0)(tailwindcss@4.3.0)':
+  '@heroui/styles@3.0.5(tailwind-merge@3.4.0)(tailwindcss@4.3.0)':
     dependencies:
       tailwind-variants: 3.2.2(tailwind-merge@3.4.0)(tailwindcss@4.3.0)
       tailwindcss: 4.3.0
@@ -4295,7 +4295,7 @@ snapshots:
     dependencies:
       '@react-aria/interactions': 3.27.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/utils': 3.34.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       '@swc/helpers': 0.5.21
       clsx: 2.1.1
       react: 19.2.6
@@ -4308,8 +4308,8 @@ snapshots:
       '@internationalized/number': 3.6.6
       '@internationalized/string': 3.2.8
       '@react-aria/ssr': 3.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-aria/utils': 3.33.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-aria/utils': 3.34.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       '@swc/helpers': 0.5.21
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
@@ -4329,7 +4329,7 @@ snapshots:
       '@react-aria/ssr': 3.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/utils': 3.34.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-stately/flags': 3.2.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       '@swc/helpers': 0.5.21
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
@@ -4337,16 +4337,16 @@ snapshots:
   '@react-aria/overlays@3.31.2(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@react-aria/focus': 3.21.5(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-aria/i18n': 3.12.16(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@react-aria/i18n': 3.13.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/interactions': 3.27.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/ssr': 3.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-aria/utils': 3.33.1(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
+      '@react-aria/utils': 3.34.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-aria/visually-hidden': 3.9.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-stately/flags': 3.2.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-stately/overlays': 3.7.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-types/button': 3.16.0(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-types/overlays': 3.10.0(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       '@swc/helpers': 0.5.21
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
@@ -4372,7 +4372,7 @@ snapshots:
       '@react-aria/ssr': 3.10.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-stately/flags': 3.2.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       '@react-stately/utils': 3.12.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       '@swc/helpers': 0.5.21
       clsx: 2.1.1
       react: 19.2.6
@@ -4452,7 +4452,7 @@ snapshots:
 
   '@react-types/button@3.15.1(react@19.2.6)':
     dependencies:
-      '@react-types/shared': 3.33.1(react@19.2.6)
+      '@react-types/shared': 3.34.0(react@19.2.6)
       react: 19.2.6
 
   '@react-types/button@3.16.0(@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6))(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
