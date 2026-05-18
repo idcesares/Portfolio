@@ -32,7 +32,7 @@
     "astro": "^6.3.1",
     "astro-embed": "^0.13.0",
     "astro-seo": "^1.1.0",
-    "framer-motion": "^12.38.0",
+    "framer-motion": "^12.39.0",
     "fuse.js": "^7.3.0",
     "markdown-it": "^14.1.1",
     "mdast-util-to-string": "^4.0.0",
