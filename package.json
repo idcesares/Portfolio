@@ -41,7 +41,7 @@
     "reading-time": "^1.5.0",
     "rehype-pretty-code": "^0.14.3",
     "sanitize-html": "^2.17.4",
-    "shiki": "^4.0.2",
+    "shiki": "^4.1.0",
     "tailwindcss": "^4.3.0"
   },
   "engines": {
