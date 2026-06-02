@@ -76,8 +76,8 @@ importers:
         specifier: ^12.39.0
         version: 12.39.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
       fuse.js:
-        specifier: ^7.3.0
-        version: 7.3.0
+        specifier: ^7.4.1
+        version: 7.4.1
       markdown-it:
         specifier: ^14.1.1
         version: 14.1.1
@@ -1299,6 +1299,9 @@ packages:
   '@swc/helpers@0.5.21':
     resolution: {integrity: sha512-jI/VAmtdjB/RnI8GTnokyX7Ug8c+g+ffD6QRLa6XQewtnGyukKkKSk3wLTM3b5cjt1jNh9x0jfVlagdN2gDKQg==}
 
+  '@swc/helpers@0.5.23':
+    resolution: {integrity: sha512-5lSsMOTXURePglDfvuAQUqkGek9Hg2kksOYay2m0+XR++b2NWYL/4sWyuvVBIs8oKnJaxkdi9whaL/sqN13afw==}
+
   '@tailwindcss/node@4.3.0':
     resolution: {integrity: sha512-aFb4gUhFOgdh9AXo4IzBEOzBkkAxm9VigwDJnMIYv3lcfXCJVesNfbEaBl4BNgVRyid92AmdviqwBUBRKSeY3g==}
 
@@ -2052,8 +2055,8 @@ packages:
     engines: {node: ^8.16.0 || ^10.6.0 || >=11.0.0}
     os: [darwin]
 
-  fuse.js@7.3.0:
-    resolution: {integrity: sha512-plz8RVjfcDedTGfVngWH1jmJvBvAwi1v2jecfDerbEnMcmOYUEEwKFTHbNoCiYyzaK2Ws8lABkTCcRSqCY1q4w==}
+  fuse.js@7.4.1:
+    resolution: {integrity: sha512-AY7lKAXK71hi3WgUvDy6oZL67UEHOOtvCAwVdOXHyJd6ZzftBy7QqxuXt4HxmmAhYjmp/YCuOELZtIvAdlZ+fw==}
     engines: {node: '>=10'}
 
   gensync@1.0.0-beta.2:
@@ -4424,7 +4427,7 @@ snapshots:
   '@react-spectrum/provider@3.11.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)':
     dependencies:
       '@adobe/react-spectrum': 3.47.0(react-dom@19.2.6(react@19.2.6))(react@19.2.6)
-      '@swc/helpers': 0.5.21
+      '@swc/helpers': 0.5.23
       react: 19.2.6
       react-dom: 19.2.6(react@19.2.6)
 
@@ -4643,6 +4646,10 @@ snapshots:
   '@standard-schema/spec@1.1.0': {}
 
   '@swc/helpers@0.5.21':
+    dependencies:
+      tslib: 2.8.1
+
+  '@swc/helpers@0.5.23':
     dependencies:
       tslib: 2.8.1
 
@@ -5419,7 +5426,7 @@ snapshots:
   fsevents@2.3.3:
     optional: true
 
-  fuse.js@7.3.0: {}
+  fuse.js@7.4.1: {}
 
   gensync@1.0.0-beta.2: {}
 
