@@ -1,9 +1,9 @@
 import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config';
+import { unified } from '@astrojs/markdown-remark';
 import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
-import embeds from 'astro-embed/integration';
 import react from "@astrojs/react";
 import rehypePrettyCode from 'rehype-pretty-code';
 import { transformerCopyButton } from '@rehype-pretty/transformers';
@@ -38,11 +38,6 @@ export default defineConfig({
       plugins: [
         {
           name: 'preset-default',
-          params: {
-            overrides: {
-              removeViewBox: false,
-            },
-          },
         },
       ],
     }),
@@ -134,36 +129,38 @@ export default defineConfig({
     config: {
       forward: ["dataLayer.push"]
     }
-  }), embeds(), mdx(), react()],
+  }), mdx(), react()],
 
   markdown: {
-    // SmartyPants configured for Brazilian Portuguese typography (Astro 6.1)
-    smartypants: {
-      openingQuotes: { double: '\u201C', single: '\u2018' },
-      closingQuotes: { double: '\u201D', single: '\u2019' },
-      dashes: true,
-      ellipses: true,
-    },
     syntaxHighlight: false,
-    remarkPlugins: [remarkReadingTime],
-    rehypePlugins: [
-      [
-        rehypePrettyCode,
-        {
-          theme: 'github-dark-dimmed',
-          keepBackground: false,
-          wrap: true,
-          transformers: [
-            transformerCopyButton({
-              visibility: 'hover',
-              feedbackDuration: 2000,
-              copyIcon,
-              successIcon,
-            }),
-          ],
-        },
+    processor: unified({
+      // SmartyPants configured for Brazilian Portuguese typography.
+      smartypants: {
+        openingQuotes: { double: '\u201C', single: '\u2018' },
+        closingQuotes: { double: '\u201D', single: '\u2019' },
+        dashes: true,
+        ellipses: true,
+      },
+      remarkPlugins: [remarkReadingTime],
+      rehypePlugins: [
+        [
+          rehypePrettyCode,
+          {
+            theme: 'github-dark-dimmed',
+            keepBackground: false,
+            wrap: true,
+            transformers: [
+              transformerCopyButton({
+                visibility: 'hover',
+                feedbackDuration: 2000,
+                copyIcon,
+                successIcon,
+              }),
+            ],
+          },
+        ],
       ],
-    ],
+    }),
   },
 
   vite: {
