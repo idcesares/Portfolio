@@ -1,0 +1,1032 @@
+---
+import MainHead from '../components/MainHead.astro';
+import {
+  AUTHOR_NAME,
+  SITE_DESCRIPTION,
+  SITE_NAME,
+  SOCIAL_LINKS,
+} from '../utils/seo';
+
+export const prerender = true;
+
+const title = "Tech Signal Stack | Isaac D'Césares";
+const description =
+  'A curated, opinionated reference of high signal-to-noise technology, AI, engineering, business, policy, and newsletter sources for daily intelligence practice.';
+const canonicalPath = '/tech-signal/';
+const baseUrl = Astro.site ?? Astro.url;
+const pageUrl = new URL(canonicalPath, baseUrl);
+const siteUrl = new URL('/', baseUrl);
+const image = '/favicon.svg';
+const structuredData = {
+  '@context': 'https://schema.org',
+  '@type': 'CollectionPage',
+  name: 'Tech Signal Stack',
+  headline: 'Tech Signal Stack',
+  description,
+  url: pageUrl.toString(),
+  inLanguage: 'en',
+  dateModified: '2026-06-14',
+  isPartOf: {
+    '@type': 'WebSite',
+    name: SITE_NAME,
+    url: siteUrl.toString(),
+    description: SITE_DESCRIPTION,
+  },
+  author: {
+    '@type': 'Person',
+    name: AUTHOR_NAME,
+    url: siteUrl.toString(),
+    sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github],
+  },
+  publisher: {
+    '@type': 'Person',
+    name: AUTHOR_NAME,
+    url: siteUrl.toString(),
+  },
+  about: [
+    'Technology intelligence',
+    'Artificial intelligence',
+    'Software engineering',
+    'Technology business strategy',
+    'Technology policy',
+    'Newsletters',
+  ],
+  mainEntity: {
+    '@type': 'ItemList',
+    name: 'Curated technology intelligence sources',
+    description: 'A ranked directory of technology sources organized by category, priority tier, cadence, and access model.',
+    numberOfItems: 35,
+    itemListOrder: 'https://schema.org/ItemListOrderDescending',
+  },
+};
+---
+
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<MainHead
+  title={title}
+  description={description}
+  image={image}
+  imageAlt="Isaac D'Césares icon used as social preview for Tech Signal Stack"
+  locale="en_US"
+  structuredData={structuredData}
+/>
+<meta name="language" content="en">
+<link rel="alternate" hreflang="en" href={pageUrl.toString()}>
+<link rel="alternate" hreflang="x-default" href={pageUrl.toString()}>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style is:global>
+/* ═══════════════════════════════════════════════
+   MEMBRANE PALETTE — design tokens
+   Source: idcesares/idcesares-design-system v1.1
+═══════════════════════════════════════════════ */
+:root {
+  --color-terracotta:    #B35530;
+  --color-terracotta-10: rgba(179,85,48,0.10);
+  --color-terracotta-20: rgba(179,85,48,0.20);
+  --color-teal:          #1B756D;
+  --color-teal-10:       rgba(27,117,109,0.10);
+  --color-teal-20:       rgba(27,117,109,0.20);
+  --color-cream:         #FAF6EE;
+  --color-charcoal:      #1A1B1F;
+  --color-amber:         #D49A3A;
+  --color-burgundy:      #7A3345;
+  --color-sage:          #5A8A6E;
+
+  --neutral-100: #F0EBE1;
+  --neutral-200: #E2DCD2;
+  --neutral-300: #C8C1B5;
+  --neutral-400: #A39D93;
+  --neutral-500: #7D776E;
+  --neutral-600: #5C564E;
+  --neutral-700: #3D3832;
+  --neutral-800: #2A2622;
+
+  --color-bg-primary:      var(--color-cream);
+  --color-bg-secondary:    var(--neutral-100);
+  --color-bg-tertiary:     var(--neutral-200);
+  --color-border-default:  var(--neutral-200);
+  --color-border-emphasis: var(--neutral-300);
+  --color-text-primary:    var(--neutral-800);
+  --color-text-secondary:  var(--neutral-600);
+  --color-text-tertiary:   var(--neutral-400);
+
+  --font-serif: 'Fraunces', Georgia, serif;
+  --font-sans:  'Instrument Sans', Inter, 'Helvetica Neue', sans-serif;
+  --font-mono:  'JetBrains Mono', 'Fira Code', Consolas, monospace;
+
+  --text-display: clamp(2.25rem, 3.5vw + 1rem, 3.75rem);
+  --text-h2:      clamp(1.5rem, 2vw + 0.75rem, 2rem);
+  --text-h3:      clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
+  --text-h4:      clamp(1.125rem, 1vw, 1.25rem);
+
+  --space-1: 0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
+  --space-4: 1rem;     --space-5: 1.25rem;  --space-6: 1.5rem;
+  --space-8: 2rem;     --space-10: 2.5rem;  --space-12: 3rem;
+  --space-16: 4rem;    --space-20: 5rem;    --space-24: 6rem;
+
+  --radius-sm: 4px;  --radius-md: 8px;  --radius-lg: 12px;
+  --radius-xl: 16px; --radius-full: 999px;
+
+  --shadow-sm: 0 1px 3px rgba(26,27,31,0.06), 0 1px 2px rgba(26,27,31,0.04);
+  --shadow-md: 0 4px 12px rgba(26,27,31,0.08), 0 2px 4px rgba(26,27,31,0.04);
+  --shadow-glow-warm: 0 0 24px rgba(179,85,48,0.15);
+  --shadow-glow-teal: 0 0 24px rgba(27,117,109,0.15);
+
+  --duration-fast: 150ms; --duration-normal: 250ms; --duration-slow: 400ms;
+  --ease-default: cubic-bezier(0.25,0.1,0.25,1);
+  --ease-out:     cubic-bezier(0,0,0.2,1);
+
+  --gradient-membrane: linear-gradient(135deg, #B35530 0%, #1B756D 100%);
+  --gradient-warmth:   radial-gradient(ellipse at 15% 0%, rgba(179,85,48,0.08) 0%, transparent 70%);
+
+  --container: 1140px;
+  --site-margin: clamp(1.25rem, 4vw, 4rem);
+}
+
+[data-theme="dark"] {
+  --color-bg-primary:      #1A1B1F;
+  --color-bg-secondary:    #242429;
+  --color-bg-tertiary:     #2E2E34;
+  --color-border-default:  #3D3842;
+  --color-border-emphasis: #5C564E;
+  --color-text-primary:    #F0EBE1;
+  --color-text-secondary:  #A39D93;
+  --color-text-tertiary:   #7D776E;
+  --color-terracotta:      #D4724F;
+  --color-teal:            #3AAFA8;
+  --color-amber:           #E8B44A;
+  --color-sage:            #6FBF8A;
+  --color-terracotta-10:   rgba(212,114,79,0.12);
+  --color-teal-10:         rgba(58,175,168,0.12);
+  --shadow-sm: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.18);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
+  --gradient-warmth: radial-gradient(ellipse at 15% 0%, rgba(212,114,79,0.06) 0%, transparent 70%);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    transition-duration: 0ms !important;
+    animation-duration: 0ms !important;
+    animation-delay: 0ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════ MOTION ═══════════ */
+@keyframes rise-in {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+@keyframes header-in {
+  from { opacity: 0; transform: translateY(16px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes line-grow {
+  from { transform: scaleX(0); }
+  to   { transform: scaleX(1); }
+}
+
+/* ═══════════ RESET & BASE ═══════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html { font-size: 16px; scroll-behavior: smooth; }
+body {
+  font-family: var(--font-sans);
+  background: var(--color-bg-primary);
+  background-image: var(--gradient-warmth);
+  background-attachment: fixed;
+  color: var(--color-text-primary);
+  line-height: 1.6;
+  min-height: 100vh;
+  transition: background-color var(--duration-normal) var(--ease-default),
+              color var(--duration-normal) var(--ease-default);
+}
+a { color: inherit; text-decoration: none; }
+button { cursor: pointer; font-family: var(--font-sans); border: none; background: none; }
+
+.skip-link {
+  position: absolute; left: -999px; top: 0; z-index: 999;
+  background: var(--color-terracotta); color: #fff;
+  padding: var(--space-3) var(--space-5); border-radius: 0 0 var(--radius-md) 0;
+  font-size: 0.875rem; font-weight: 500;
+}
+.skip-link:focus { left: 0; }
+
+/* ═══════════ HEADER ═══════════ */
+.site-header {
+  background: var(--color-charcoal);
+  position: relative; overflow: hidden;
+  padding: var(--space-16) var(--site-margin) var(--space-12);
+}
+[data-theme="dark"] .site-header { background: #111217; }
+.header-ambient {
+  position: absolute; inset: 0; pointer-events: none;
+  background:
+    radial-gradient(ellipse at 8% 60%, rgba(179,85,48,0.20) 0%, transparent 50%),
+    radial-gradient(ellipse at 88% 15%, rgba(27,117,109,0.16) 0%, transparent 48%);
+}
+.header-wordmark {
+  position: absolute; bottom: -0.12em; right: -0.02em;
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: clamp(5rem, 19vw, 13rem); line-height: 1;
+  color: rgba(255,255,255,0.035); letter-spacing: -0.04em;
+  pointer-events: none; user-select: none;
+  font-variation-settings: "WONK" 1;
+}
+.header-inner {
+  position: relative; z-index: 2;
+  max-width: var(--container); margin: 0 auto;
+  display: flex; flex-direction: column; gap: var(--space-5);
+}
+.header-inner > * { animation: header-in var(--duration-slow) var(--ease-out) both; }
+.header-eyebrow   { animation-delay: 60ms; }
+.header-headline  { animation-delay: 140ms; }
+.header-meta      { animation-delay: 240ms; }
+.header-eyebrow {
+  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--color-terracotta);
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.header-eyebrow::before {
+  content: ''; width: 24px; height: 1px;
+  background: var(--color-terracotta); opacity: 0.55;
+}
+.header-headline {
+  font-family: var(--font-serif); font-weight: 700;
+  font-size: var(--text-display); line-height: 1.04;
+  letter-spacing: -0.025em; color: var(--color-cream);
+  font-variation-settings: "WONK" 1; max-width: 16ch;
+}
+.header-headline em { font-style: italic; color: var(--color-amber); }
+.header-meta {
+  display: flex; align-items: flex-end; justify-content: space-between;
+  gap: var(--space-10); flex-wrap: wrap;
+}
+.header-desc {
+  font-size: 1.0625rem; color: rgba(240,235,225,0.6);
+  max-width: 54ch; line-height: 1.65;
+}
+.header-stats { display: flex; gap: var(--space-8); flex-shrink: 0; }
+.stat { display: flex; flex-direction: column; gap: 2px; }
+.stat-num {
+  font-family: var(--font-serif); font-size: 1.875rem; font-weight: 700;
+  color: var(--color-cream); line-height: 1; font-variation-settings: "WONK" 1;
+}
+.stat-label {
+  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: rgba(240,235,225,0.4);
+}
+.membrane-line {
+  height: 3px; background: var(--gradient-membrane);
+  transform-origin: left center;
+  animation: line-grow var(--duration-slower, 600ms) var(--ease-out) 360ms both;
+}
+
+/* ═══════════ CONTROLS (sticky) ═══════════ */
+.controls {
+  position: sticky; top: 0; z-index: 100;
+  background: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  border-bottom: 1px solid var(--color-border-default);
+  transition: background-color var(--duration-normal), border-color var(--duration-normal);
+}
+.controls-inner {
+  max-width: var(--container); margin: 0 auto;
+  padding: var(--space-3) var(--site-margin);
+  display: flex; flex-direction: column; gap: var(--space-3);
+}
+.controls-top {
+  display: flex; align-items: center; gap: var(--space-3);
+}
+/* Search */
+.search-wrap {
+  flex: 1; position: relative; display: flex; align-items: center;
+  min-width: 0;
+}
+.search-icon {
+  position: absolute; left: var(--space-3); color: var(--color-text-tertiary);
+  pointer-events: none; display: flex;
+}
+.search-input {
+  width: 100%; font-family: var(--font-sans); font-size: 0.9375rem;
+  color: var(--color-text-primary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-full);
+  padding: var(--space-2) var(--space-10) var(--space-2) 2.5rem;
+  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
+}
+.search-input::placeholder { color: var(--color-text-tertiary); }
+.search-input:focus {
+  outline: none; border-color: var(--color-teal);
+  box-shadow: 0 0 0 3px var(--color-teal-10);
+}
+.search-clear {
+  position: absolute; right: var(--space-2);
+  width: 24px; height: 24px; border-radius: 50%;
+  display: none; align-items: center; justify-content: center;
+  color: var(--color-text-tertiary);
+  transition: background var(--duration-fast), color var(--duration-fast);
+}
+.search-clear:hover { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.search-clear.visible { display: flex; }
+.theme-toggle {
+  width: 38px; height: 38px; flex-shrink: 0;
+  border: 1px solid var(--color-border-default); border-radius: var(--radius-md);
+  color: var(--color-text-secondary);
+  display: flex; align-items: center; justify-content: center;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+.theme-toggle:hover { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.theme-toggle:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+
+/* Filter pills */
+.filter-row {
+  display: flex; gap: var(--space-2); overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+  padding-bottom: 2px;
+}
+.filter-row::-webkit-scrollbar { display: none; }
+.filter-pill {
+  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.01em;
+  color: var(--color-text-secondary);
+  background: var(--color-bg-primary);
+  border: 1px solid var(--color-border-default);
+  padding: var(--space-2) var(--space-4);
+  border-radius: var(--radius-full); white-space: nowrap;
+  display: flex; align-items: center; gap: var(--space-2);
+  transition: all var(--duration-fast) var(--ease-default);
+}
+.filter-pill:hover {
+  border-color: var(--color-border-emphasis);
+  color: var(--color-text-primary);
+}
+.filter-pill.active {
+  background: var(--color-terracotta); border-color: var(--color-terracotta);
+  color: #fff;
+}
+.filter-pill .pill-count {
+  font-family: var(--font-mono); font-size: 0.62rem;
+  opacity: 0.65; font-weight: 400;
+}
+.filter-pill.active .pill-count { opacity: 0.85; }
+.filter-pill:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+
+/* ═══════════ MAIN ═══════════ */
+main { max-width: var(--container); margin: 0 auto; padding: var(--space-10) var(--site-margin) var(--space-24); }
+
+/* Strategy panel */
+.strategy {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-xl);
+  padding: var(--space-6) var(--space-8);
+  animation: rise-in var(--duration-slow) var(--ease-out) 440ms both;
+  margin-bottom: var(--space-10);
+  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);
+  position: relative; overflow: hidden;
+}
+.strategy::before {
+  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+  background: var(--gradient-membrane);
+}
+.strat-item { display: flex; flex-direction: column; gap: var(--space-1); }
+.strat-label {
+  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-text-tertiary);
+}
+.strat-title {
+  font-family: var(--font-serif); font-size: 1.0625rem; font-weight: 600;
+  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
+  display: flex; align-items: center; gap: var(--space-2);
+}
+.strat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.dot-t { background: var(--color-terracotta); }
+.dot-a { background: var(--color-amber); }
+.dot-d { background: var(--color-teal); }
+.strat-desc { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.5; }
+
+/* Result meta line */
+.result-meta {
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-4); margin-bottom: var(--space-5); flex-wrap: wrap;
+}
+.result-meta-left { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
+.result-title {
+  font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 600;
+  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
+}
+.result-count {
+  font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-tertiary);
+}
+
+/* Tier segmented control */
+.tier-control {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  min-width: 0;
+}
+.tier-control-label {
+  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
+  text-transform: uppercase; color: var(--color-text-tertiary);
+  margin-right: var(--space-1); flex-shrink: 0;
+}
+.tier-seg {
+  display: inline-flex; background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
+  padding: 3px; max-width: 100%; overflow-x: auto;
+  scrollbar-width: none; -ms-overflow-style: none;
+}
+.tier-seg::-webkit-scrollbar { display: none; }
+.tier-btn {
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
+  color: var(--color-text-secondary);
+  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: var(--space-1);
+  transition: all var(--duration-fast) var(--ease-default);
+  white-space: nowrap;
+}
+.tier-btn:hover { color: var(--color-text-primary); }
+.tier-btn .tier-tick { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+.tier-btn[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
+.tier-btn[data-tier="2"] .tier-tick { background: var(--color-teal); }
+.tier-btn[data-tier="3"] .tier-tick { background: var(--neutral-300); }
+.tier-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
+.tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
+.tier-btn:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+
+/* ═══════════ CARD GRID ═══════════ */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: var(--space-4);
+}
+.card {
+  background: var(--color-bg-secondary);
+  border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg);
+  padding: var(--space-5) var(--space-6);
+  display: flex; flex-direction: column; gap: var(--space-3);
+  position: relative; overflow: hidden;
+  transition: transform var(--duration-slow) var(--ease-out),
+              box-shadow var(--duration-slow) var(--ease-out),
+              border-color var(--duration-normal) var(--ease-default),
+              background-color var(--duration-normal) var(--ease-default);
+  animation: rise-in var(--duration-slow) var(--ease-out) both;
+  animation-delay: calc(var(--i, 0) * 28ms);
+}
+.card::before {
+  content: ''; position: absolute; top: 0; left: 0;
+  width: 3px; height: 100%;
+}
+.card.t1::before { background: var(--color-terracotta); }
+.card.t2::before { background: var(--color-teal); }
+.card.t3::before { background: var(--neutral-300); }
+.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-border-emphasis); }
+.card.t1:hover { box-shadow: var(--shadow-md), var(--shadow-glow-warm); }
+.card.t2:hover { box-shadow: var(--shadow-md), var(--shadow-glow-teal); }
+.card:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.card:hover .card-arrow { opacity: 1; color: var(--color-terracotta); transform: translate(3px,-3px); }
+
+.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
+.card-title-wrap { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; min-width: 0; }
+.card-tier {
+  align-self: flex-start;
+  font-family: var(--font-sans); font-size: 0.64rem; font-weight: 500;
+  letter-spacing: 0.02em;
+  padding: 2px var(--space-2); border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: 5px;
+  cursor: pointer; border: 1px solid transparent;
+  transition: all var(--duration-fast) var(--ease-default);
+}
+.card-tier .tier-tick { width: 6px; height: 6px; border-radius: 50%; }
+.card-tier[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
+.card-tier[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
+.card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
+.card-tier[data-tier="2"] .tier-tick { background: var(--color-teal); }
+.card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-tertiary); }
+.card-tier[data-tier="3"] .tier-tick { background: var(--neutral-300); }
+.card-tier:hover { border-color: currentColor; }
+.card-tier:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
+.card-title {
+  font-family: var(--font-serif); font-size: var(--text-h4); font-weight: 600;
+  color: var(--color-text-primary); line-height: 1.2;
+  font-variation-settings: "WONK" 1;
+}
+.card-arrow {
+  font-size: 12px; color: var(--color-text-tertiary); flex-shrink: 0; margin-top: 3px;
+  opacity: 0; transition: opacity var(--duration-fast), transform var(--duration-fast), color var(--duration-fast);
+}
+.card-url { font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-tertiary); letter-spacing: 0.01em; }
+.card-desc { font-size: 0.84rem; color: var(--color-text-secondary); line-height: 1.55; flex: 1; }
+.card-foot { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-top: var(--space-1); }
+.tag {
+  font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 2px var(--space-3); border-radius: var(--radius-full); line-height: 1.7;
+}
+.tag-cadence { background: var(--color-terracotta-10); color: var(--color-terracotta); }
+.tag-deep    { background: var(--color-teal-10);       color: var(--color-teal); }
+.tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-tertiary); }
+.tag-region  { background: rgba(90,138,110,0.14);      color: var(--color-sage); }
+.access {
+  margin-left: auto; font-family: var(--font-mono); font-size: 0.6rem;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  padding: 2px var(--space-2); border-radius: var(--radius-sm);
+}
+.access-free { background: rgba(90,138,110,0.15); color: var(--color-sage); }
+.access-paid { background: rgba(212,154,58,0.16); color: var(--color-amber); }
+
+/* Highlight (search match) */
+mark { background: var(--color-amber); color: var(--color-charcoal); border-radius: 2px; padding: 0 1px; }
+
+/* Empty state */
+.empty {
+  display: none; text-align: center; padding: var(--space-20) var(--space-4);
+  color: var(--color-text-tertiary);
+}
+.empty.visible { display: block; }
+.empty-glyph {
+  font-family: var(--font-serif); font-size: 3rem; font-weight: 700;
+  color: var(--color-border-emphasis); font-variation-settings: "WONK" 1;
+  margin-bottom: var(--space-4);
+}
+.empty-text { font-size: 1rem; margin-bottom: var(--space-2); color: var(--color-text-secondary); }
+.empty-sub { font-size: 0.875rem; }
+.empty-reset {
+  margin-top: var(--space-5); font-size: 0.875rem; font-weight: 500;
+  color: var(--color-teal); border-bottom: 1px solid transparent;
+  transition: border-color var(--duration-fast);
+}
+.empty-reset:hover { border-bottom-color: var(--color-teal); }
+
+/* ═══════════ FOOTER ═══════════ */
+.site-footer { border-top: 1px solid var(--color-border-default); padding: var(--space-8) var(--site-margin); }
+.footer-inner {
+  max-width: var(--container); margin: 0 auto;
+  display: flex; justify-content: space-between; align-items: center;
+  gap: var(--space-4); flex-wrap: wrap;
+}
+.footer-brand {
+  font-family: var(--font-serif); font-weight: 700; font-size: 1rem;
+  font-variation-settings: "WONK" 1; color: var(--color-terracotta);
+}
+.footer-brand .sep { color: var(--color-teal); }
+.footer-brand .sub { font-family: var(--font-sans); font-weight: 400; font-size: 0.75rem; color: var(--color-text-tertiary); margin-left: var(--space-2); }
+.footer-note { font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-tertiary); letter-spacing: 0.03em; }
+
+/* ═══════════ RESPONSIVE ═══════════ */
+@media (max-width: 820px) {
+  .strategy { grid-template-columns: 1fr; gap: var(--space-5); }
+  .header-meta { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
+}
+@media (max-width: 560px) {
+  .header-stats { gap: var(--space-6); }
+  .grid { grid-template-columns: 1fr; }
+  .footer-inner { flex-direction: column; align-items: flex-start; }
+  .controls-top { flex-wrap: wrap; }
+}
+</style>
+</head>
+<body>
+<a href="#main" class="skip-link">Skip to sources</a>
+
+<header class="site-header">
+  <div class="header-ambient" aria-hidden="true"></div>
+  <div class="header-wordmark" aria-hidden="true">Signal</div>
+  <div class="header-inner">
+    <p class="header-eyebrow">Daily Intelligence Stack · 2026</p>
+    <h1 class="header-headline">Tech <em>Signal</em> Stack.</h1>
+    <div class="header-meta">
+      <p class="header-desc">A curated, opinionated reference of the highest signal-to-noise sources in tech. Built for daily practice, not passive scrolling. Every source earns its place.</p>
+      <div class="header-stats">
+        <div class="stat"><span class="stat-num" id="statSources">27</span><span class="stat-label">sources</span></div>
+        <div class="stat"><span class="stat-num">8</span><span class="stat-label">categories</span></div>
+        <div class="stat"><span class="stat-num">3</span><span class="stat-label">tiers</span></div>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="membrane-line"></div>
+
+<nav class="controls" aria-label="Search and filter">
+  <div class="controls-inner">
+    <div class="controls-top">
+      <div class="search-wrap">
+        <span class="search-icon" aria-hidden="true">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        </span>
+        <input type="search" id="search" class="search-input" placeholder="Search sources, topics, names…" aria-label="Search sources" autocomplete="off">
+        <button class="search-clear" id="searchClear" aria-label="Clear search">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode" title="Toggle theme"></button>
+    </div>
+    <div class="filter-row" id="filterRow" role="group" aria-label="Filter by category"></div>
+  </div>
+</nav>
+
+<main id="main">
+  <div class="strategy" aria-label="Recommended reading strategy">
+    <div class="strat-item">
+      <span class="strat-label">Morning scan · 15 min</span>
+      <span class="strat-title"><span class="strat-dot dot-t"></span>Stay current</span>
+      <p class="strat-desc">Hacker News, TLDR, The Verge, TechCrunch. 80% of what matters, near-zero redundancy.</p>
+    </div>
+    <div class="strat-item">
+      <span class="strat-label">Weekly synthesis · Sunday</span>
+      <span class="strat-title"><span class="strat-dot dot-a"></span>Think strategically</span>
+      <p class="strat-desc">Stratechery, Benedict Evans, Exponential View. The layer daily news can't reach.</p>
+    </div>
+    <div class="strat-item">
+      <span class="strat-label">On-demand · when it matters</span>
+      <span class="strat-title"><span class="strat-dot dot-d"></span>Go deep</span>
+      <p class="strat-desc">Ars Technica, MIT Tech Review, IEEE Spectrum, Rest of World. The truth behind headlines.</p>
+    </div>
+  </div>
+
+  <div class="result-meta">
+    <div class="result-meta-left">
+      <h2 class="result-title" id="resultTitle">All sources</h2>
+      <span class="result-count" id="resultCount"></span>
+    </div>
+    <div class="tier-control">
+      <span class="tier-control-label">Priority</span>
+      <div class="tier-seg" id="tierSeg" role="group" aria-label="Filter by priority">
+        <button class="tier-btn active" data-tier="all" aria-pressed="true">All</button>
+        <button class="tier-btn" data-tier="1" aria-pressed="false" title="Non-negotiable daily reads"><span class="tier-tick"></span>Essential</button>
+        <button class="tier-btn" data-tier="2" aria-pressed="false" title="Excellent — depends on your role"><span class="tier-tick"></span>Strong</button>
+        <button class="tier-btn" data-tier="3" aria-pressed="false" title="Reach for when you need it"><span class="tier-tick"></span>Situational</button>
+      </div>
+    </div>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="empty" id="empty">
+    <div class="empty-glyph" aria-hidden="true">∅</div>
+    <p class="empty-text">No sources match.</p>
+    <p class="empty-sub">Try a different term, category, or tier.</p>
+    <button class="empty-reset" id="emptyReset">Clear filters</button>
+  </div>
+</main>
+
+<footer class="site-footer">
+  <div class="footer-inner">
+    <span class="footer-brand">d<span class="sep">'</span>c<span class="sub">Signal Stack</span></span>
+    <p class="footer-note" id="footerCount">27 sources · curated June 2026</p>
+    <p class="footer-note" style="color:var(--color-text-tertiary)">Built on The Membrane Palette · no trackers</p>
+  </div>
+</footer>
+
+<script is:inline>
+/* ═══════════════════════════════════════════════
+   DATA — single source of truth, zero duplication
+   tier: 1 = non-negotiable, 2 = strong, 3 = situational
+   cats: drive the filters
+═══════════════════════════════════════════════ */
+const CATEGORIES = [
+  { id: 'all',         label: 'All' },
+  { id: 'general',     label: 'General Tech' },
+  { id: 'ai',          label: 'AI & Research' },
+  { id: 'dev',         label: 'Dev & Eng' },
+  { id: 'business',    label: 'Business' },
+  { id: 'global',      label: 'Global & Policy' },
+  { id: 'newsletter',  label: 'Newsletters' },
+  { id: 'deep',        label: 'Deep Dives' },
+];
+
+const SOURCES = [
+  // ── General / Tier 1 ──
+  { name: 'Hacker News', url: 'https://news.ycombinator.com', tier: 1, cats: ['general','dev'],
+    desc: "The tech internet's town square. Community-curated links ranked by practitioners. The comments often carry more signal than the articles — and debates surface here weeks before they become articles.",
+    cadence: 'Daily', access: 'free', topics: ['Community','Dev'] },
+  { name: 'TechCrunch', url: 'https://techcrunch.com', tier: 1, cats: ['general','business'],
+    desc: 'Startup ecosystem, funding rounds, product launches, and company breakdowns. The pulse of Silicon Valley and global tech, with exclusive VC sourcing.',
+    cadence: 'Daily', access: 'free', topics: ['Startups','VC'] },
+  { name: 'The Verge', url: 'https://www.theverge.com', tier: 1, cats: ['general'],
+    desc: 'Consumer tech, platform policy, culture, and big-tech behavior. High editorial quality with sharp analysis of hardware, AI regulation, and the human cost of tech decisions.',
+    cadence: 'Daily', access: 'free', topics: ['Consumer','Policy'] },
+  { name: 'Ars Technica', url: 'https://arstechnica.com', tier: 1, cats: ['general','dev','deep'],
+    desc: 'The gold standard for technical depth. Science, engineering, law, and computing covered with rigorous accuracy. Essential for understanding the "why" behind any major story.',
+    cadence: 'Daily', access: 'free', deep: true, topics: ['Science','Law'] },
+  { name: 'Wired', url: 'https://www.wired.com', tier: 1, cats: ['general','deep'],
+    desc: 'Tech as culture and power. Long-form investigations, AI coverage with human stakes, and the best writing on what technology means for society.',
+    cadence: 'Daily', access: 'paid', deep: true, topics: ['Culture','AI'] },
+  { name: 'Bloomberg Technology', url: 'https://www.bloomberg.com/technology', tier: 1, cats: ['general','business'],
+    desc: 'The business layer beneath the tech layer. M&A, market shifts, big-tech earnings, and exclusive corporate sourcing. Best financial intelligence on the industry.',
+    cadence: 'Daily', access: 'paid', topics: ['Finance','M&A'] },
+
+  // ── AI & Research ──
+  { name: 'MIT Technology Review', url: 'https://www.technologyreview.com', tier: 1, cats: ['ai','deep'],
+    desc: 'Where lab research meets real-world consequence. Indispensable for AI, biotech, and climate tech — explained without sacrificing accuracy. The "10 Breakthrough Technologies" list is a useful annual anchor.',
+    cadence: 'Weekly', access: 'paid', deep: true, topics: ['AI','Research'] },
+  { name: 'HuggingFace Daily Papers', url: 'https://huggingface.co/papers', tier: 2, cats: ['ai','deep'],
+    desc: 'Community-curated top ML papers from arXiv, every day. To track what is actually moving in AI research — not PR — this is ground zero for the research-aware practitioner.',
+    cadence: 'Daily', access: 'free', deep: true, topics: ['ML Papers','Research'] },
+  { name: 'The Decoder', url: 'https://the-decoder.com', tier: 2, cats: ['ai'],
+    desc: 'AI-focused publication covering model releases, research, and enterprise deployment with unusual clarity. More rigorous than most, less prone to hype cycles. Underrated.',
+    cadence: 'Daily', access: 'free', topics: ['Models','Enterprise'] },
+  { name: 'AI as Normal Technology', url: 'https://www.normaltech.ai', tier: 2, cats: ['ai','deep'],
+    desc: "Narayanan and Kapoor's rigorous, skeptical newsletter (formerly AI Snake Oil). Critical signal for institutional and research contexts — frames AI as normal technology and separates substance from hype.",
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['AI Ethics','Critical'] },
+  { name: 'Latent Space', url: 'https://www.latent.space', tier: 2, cats: ['ai','dev','newsletter'],
+    desc: "Swyx's canonical publication for the AI engineering community. Daily AINews plus weekly long-form. Top-10 US tech podcast on Spotify. The reference for AI-as-engineering-discipline.",
+    cadence: 'Daily', access: 'free', topics: ['AI Eng','Podcast'] },
+  { name: 'VentureBeat AI', url: 'https://venturebeat.com/ai/', tier: 3, cats: ['ai','business'],
+    desc: 'Enterprise AI, generative AI launches, and business adoption stories. Good for tracking real-world implementation beyond announcements — how companies actually deploy AI.',
+    cadence: 'Daily', access: 'free', topics: ['GenAI','Enterprise'] },
+
+  // ── Dev & Engineering ──
+  { name: 'The New Stack', url: 'https://thenewstack.io', tier: 2, cats: ['dev'],
+    desc: 'Cloud-native, Kubernetes, DevOps, observability, and developer experience. Where platform engineers and architects read for signal on what the industry is building.',
+    cadence: 'Daily', access: 'free', topics: ['Cloud','DevOps'] },
+  { name: 'GitHub Blog', url: 'https://github.blog', tier: 2, cats: ['dev'],
+    desc: 'Copilot updates, platform features, OSS insights, and engineering posts from the team running the largest code host. Essential for tracking AI-assisted development.',
+    cadence: 'Weekly', access: 'free', topics: ['Copilot','OSS'] },
+  { name: 'InfoQ', url: 'https://www.infoq.com', tier: 2, cats: ['dev','deep'],
+    desc: 'Architecture, software development, and emerging tech with strong editorial curation. Heavier and more practitioner-oriented than most tech news. Good for architecture patterns.',
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['Architecture','Eng'] },
+  { name: 'Stack Overflow Blog', url: 'https://stackoverflow.blog', tier: 3, cats: ['dev'],
+    desc: "Developer ecosystem trends, annual surveys, and engineering culture. Grounded in real developer behavior data from the world's largest programming Q&A platform.",
+    cadence: 'Weekly', access: 'free', topics: ['Dev Culture','Surveys'] },
+  { name: 'Lobsters', url: 'https://lobste.rs', tier: 3, cats: ['dev'],
+    desc: 'Invite-only tech link aggregator with a more technical, OSS-focused audience than HN. Less noise, more signal for programming, security, and systems. Catches what HN misses.',
+    cadence: 'Daily', access: 'free', topics: ['OSS','Security'] },
+  { name: 'Changelog', url: 'https://changelog.com', tier: 3, cats: ['dev'],
+    desc: 'Podcast and newsletter for developers. Long-running interviews with OSS maintainers and engineering leaders. Go-to for what developer culture actually cares about right now.',
+    cadence: 'Weekly', access: 'free', topics: ['Podcast','OSS'] },
+
+  // ── Business & Strategy ──
+  { name: 'Stratechery', url: 'https://stratechery.com', tier: 1, cats: ['business','deep','newsletter'],
+    desc: "Ben Thompson's analysis of tech business strategy is the best in the field. Free weekly essay plus paid daily updates. Aggregation Theory and his frameworks are essential vocabulary.",
+    cadence: 'Daily', access: 'paid', deep: true, topics: ['Strategy','Analysis'] },
+  { name: 'The Information', url: 'https://www.theinformation.com', tier: 2, cats: ['business','deep'],
+    desc: 'The best original sourcing in Silicon Valley, period. Breaks major stories weeks before anyone else. Paywalled, but if you work in strategy, the context pays for itself.',
+    cadence: 'Daily', access: 'paid', deep: true, topics: ['Scoops','Strategy'] },
+  { name: 'Platformer', url: 'https://www.platformer.news', tier: 2, cats: ['business','newsletter'],
+    desc: "Casey Newton's insider reporting on social platforms, big-tech culture, and content moderation. Best sourcing in the platforms beat — often weeks ahead of mainstream outlets.",
+    cadence: 'Weekly', access: 'paid', topics: ['Platforms','Social'] },
+  { name: 'Axios Tech', url: 'https://www.axios.com/technology', tier: 3, cats: ['business','general'],
+    desc: 'Compressed, high-signal news bites in the "Smart Brevity" format. Ideal for scanning business and policy moves quickly — a good complement to longer-form reading.',
+    cadence: 'Daily', access: 'free', topics: ['Policy','Business'] },
+
+  // ── Global & Policy ──
+  { name: 'Rest of World', url: 'https://restofworld.org', tier: 1, cats: ['global','deep'],
+    desc: "Tech's global story beyond the Silicon Valley bubble. Latin America, Africa, Southeast Asia, India. Exceptional on how technology lands where most of humanity lives. Essential for BR/LATAM context.",
+    cadence: 'Weekly', access: 'free', deep: true, region: 'LATAM/BR', topics: ['Global'] },
+  { name: 'Tech Policy Press', url: 'https://www.techpolicy.press', tier: 2, cats: ['global','deep'],
+    desc: 'Independent, non-partisan journalism on technology policy, governance, and regulation. The go-to for understanding AI regulation, antitrust, and the policy layer most outlets undercover.',
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['Policy','Governance'] },
+  { name: 'NYT Technology', url: 'https://www.nytimes.com/section/technology', tier: 2, cats: ['global','deep'],
+    desc: 'Investigations, profiles, and editorial depth. Best for AI ethics, regulatory stories, and the human dimension of tech. The investigative reporting on major companies is first-rate.',
+    cadence: 'Daily', access: 'paid', deep: true, topics: ['Investigations','AI Ethics'] },
+  { name: '404 Media', url: 'https://www.404media.co', tier: 2, cats: ['global','general','deep'],
+    desc: 'Journalist-owned, reporter-led investigative tech outlet founded by ex-Motherboard staff. Breaks stories on hacking, surveillance, AI, and platform abuse that no one else touches. EFF-award-winning, fiercely independent.',
+    cadence: 'Daily', access: 'free', deep: true, topics: ['Investigations','Privacy'] },
+
+  // ── Newsletters ──
+  { name: 'TLDR', url: 'https://tldr.tech', tier: 1, cats: ['newsletter','ai','dev'],
+    desc: 'Free daily newsletter covering tech, AI, science, and dev in five minutes. Extremely efficient. Specialized editions: TLDR AI (technical-first), TLDR DevOps, TLDR Security, and more.',
+    cadence: 'Daily', access: 'free', topics: ['AI','Dev'] },
+  { name: 'Exponential View', url: 'https://www.exponentialview.co', tier: 2, cats: ['newsletter','deep','ai'],
+    desc: "Azeem Azhar's long-game analysis of AI, geopolitics, climate, and economics in one weekly package. High signal, low noise. Trusted by policymakers and executives.",
+    cadence: 'Weekly', access: 'paid', deep: true, topics: ['Policy','Macro'] },
+  { name: 'Benedict Evans', url: 'https://www.ben-evans.com', tier: 2, cats: ['newsletter','deep','business'],
+    desc: 'Strategic macro views on tech, AI, and media. Essays and the annual mega-deck are reference-grade reading on where the industry is heading. Free newsletter worth every second.',
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['Strategy','Macro'] },
+  { name: 'The Batch — DeepLearning.AI', url: 'https://www.deeplearning.ai/the-batch/', tier: 2, cats: ['newsletter','ai'],
+    desc: "Andrew Ng's weekly digest. The only general AI newsletter with genuine ML practitioner credibility at the editorial level. Prioritizes technical substance over product announcements.",
+    cadence: 'Weekly', access: 'free', topics: ['ML','Research'] },
+  { name: 'One Useful Thing', url: 'https://www.oneusefulthing.org', tier: 2, cats: ['newsletter','deep','ai'],
+    desc: "Ethan Mollick's Substack on AI and its implications for work, education, and society. Wharton professor bringing empirical rigor to how AI changes what humans do. Essential for EdTech.",
+    cadence: 'Weekly', access: 'free', deep: true, region: 'EdTech', topics: ['AI','Work'] },
+  { name: 'Import AI', url: 'https://jack-clark.net', tier: 2, cats: ['newsletter','ai','deep'],
+    desc: "Jack Clark's (Anthropic co-founder) weekly newsletter. Research-grade coverage with policy depth. One of the few that accurately tracks the frontier-lab view on AI development.",
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['Research','Policy'] },
+  { name: 'The Rundown AI', url: 'https://www.therundown.ai', tier: 3, cats: ['newsletter','ai'],
+    desc: "World's largest AI newsletter. Daily AI news plus a 'how to use this' tutorial that turns model releases into workflows the same morning. Pick one daily AI digest — this or TLDR AI, not both.",
+    cadence: 'Daily', access: 'free', topics: ['AI','Tools'] },
+  { name: 'Morning Brew', url: 'https://www.morningbrew.com/daily', tier: 3, cats: ['newsletter','business'],
+    desc: 'Business + tech news in a tight daily email. Light tone, broad coverage. Best as a five-minute morning warmup before heavier reading.',
+    cadence: 'Daily', access: 'free', topics: ['Brief','Business'] },
+
+  // ── Deep / Reference ──
+  { name: 'IEEE Spectrum', url: 'https://spectrum.ieee.org', tier: 2, cats: ['deep','ai','dev'],
+    desc: "Engineering and technology from the practitioner's view. AI, robotics, semiconductors, and infrastructure at a level of technical honesty few publications match.",
+    cadence: 'Weekly', access: 'free', deep: true, topics: ['Robotics','Semiconductors'] },
+];
+
+/* ═══════════════════════════════════════════════
+   RENDER + STATE
+═══════════════════════════════════════════════ */
+const grid        = document.getElementById('grid');
+const filterRow   = document.getElementById('filterRow');
+const searchInput = document.getElementById('search');
+const searchClear = document.getElementById('searchClear');
+const emptyState  = document.getElementById('empty');
+const resultTitle = document.getElementById('resultTitle');
+const resultCount = document.getElementById('resultCount');
+const tierSeg     = document.getElementById('tierSeg');
+
+let activeFilter = 'all';
+let activeTier   = 'all';
+let searchTerm   = '';
+
+const TIER_NAME  = { 1: 'Essential', 2: 'Strong', 3: 'Situational' };
+const TIER_LABEL = {
+  1: 'Essential — non-negotiable daily read',
+  2: 'Strong — excellent, depends on your role',
+  3: 'Situational — reach for when you need it'
+};
+
+const escapeHTML = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
+
+function highlight(text, term) {
+  const safe = escapeHTML(text);
+  if (!term) return safe;
+  const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
+  return safe.replace(re, '<mark>$1</mark>');
+}
+
+function countFor(catId) {
+  if (catId === 'all') return SOURCES.length;
+  return SOURCES.filter(s => s.cats.includes(catId)).length;
+}
+
+// Build filter pills
+CATEGORIES.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-pill' + (cat.id === 'all' ? ' active' : '');
+  btn.dataset.filter = cat.id;
+  btn.setAttribute('aria-pressed', cat.id === 'all' ? 'true' : 'false');
+  btn.innerHTML = `${cat.label} <span class="pill-count">${countFor(cat.id)}</span>`;
+  btn.addEventListener('click', () => {
+    activeFilter = cat.id;
+    document.querySelectorAll('.filter-pill').forEach(p => {
+      const on = p.dataset.filter === cat.id;
+      p.classList.toggle('active', on);
+      p.setAttribute('aria-pressed', on ? 'true' : 'false');
+    });
+    render();
+  });
+  filterRow.appendChild(btn);
+});
+
+function matchesSearch(s, term) {
+  if (!term) return true;
+  const hay = (s.name + ' ' + s.desc + ' ' + (s.topics||[]).join(' ') + ' ' + (s.region||'') + ' ' + s.url).toLowerCase();
+  return hay.includes(term);
+}
+
+function cardHTML(s, i) {
+  const tierClass = 't' + s.tier;
+  const accessLabel = s.access === 'free' ? 'Free' : 'Paid';
+  const accessClass = s.access === 'free' ? 'access-free' : 'access-paid';
+  const topicTags = (s.topics || []).map(t => `<span class="tag tag-topic">${escapeHTML(t)}</span>`).join('');
+  const regionTag = s.region ? `<span class="tag tag-region">${escapeHTML(s.region)}</span>` : '';
+  const deepTag   = s.deep ? `<span class="tag tag-deep">Deep</span>` : '';
+  const cleanUrl  = s.url.replace(/^https?:\/\//, '').replace(/\/$/, '');
+  // Cap stagger index so a 34-card view still finishes quickly
+  const stagger = Math.min(i, 14);
+  return `
+    <a class="card ${tierClass}" href="${s.url}" target="_blank" rel="noopener noreferrer" style="--i:${stagger}">
+      <div class="card-head">
+        <div class="card-title-wrap">
+          <button class="card-tier" data-tier="${s.tier}" title="${TIER_LABEL[s.tier]} — click to filter" aria-label="${TIER_LABEL[s.tier]}, filter by this priority"><span class="tier-tick"></span>${TIER_NAME[s.tier]}</button>
+          <h3 class="card-title">${highlight(s.name, searchTerm)}</h3>
+        </div>
+        <span class="card-arrow" aria-hidden="true">↗</span>
+      </div>
+      <p class="card-url">${escapeHTML(cleanUrl)}</p>
+      <p class="card-desc">${highlight(s.desc, searchTerm)}</p>
+      <div class="card-foot">
+        <span class="tag tag-cadence">${escapeHTML(s.cadence)}</span>
+        ${deepTag}${regionTag}${topicTags}
+        <span class="access ${accessClass}">${accessLabel}</span>
+      </div>
+    </a>`;
+}
+
+function setTier(tier) {
+  activeTier = tier;
+  tierSeg.querySelectorAll('.tier-btn').forEach(b => {
+    const on = b.dataset.tier === tier;
+    b.classList.toggle('active', on);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  render();
+}
+
+function render() {
+  const term = searchTerm.trim().toLowerCase();
+  let list = SOURCES.filter(s => activeFilter === 'all' || s.cats.includes(activeFilter));
+  list = list.filter(s => activeTier === 'all' || String(s.tier) === activeTier);
+  list = list.filter(s => matchesSearch(s, term));
+
+  // Sort: tier first, then alphabetical — keeps the strongest sources up top
+  list.sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name));
+
+  grid.innerHTML = list.map((s, i) => cardHTML(s, i)).join('');
+
+  const catLabel = CATEGORIES.find(c => c.id === activeFilter).label;
+  let title = activeFilter === 'all' ? 'All sources' : catLabel;
+  if (activeTier !== 'all') title += ' · ' + TIER_NAME[activeTier];
+  resultTitle.textContent = title;
+  resultCount.textContent = list.length + (list.length === 1 ? ' source' : ' sources');
+
+  const isEmpty = list.length === 0;
+  emptyState.classList.toggle('visible', isEmpty);
+  grid.style.display = isEmpty ? 'none' : 'grid';
+}
+
+// Tier segmented control
+tierSeg.querySelectorAll('.tier-btn').forEach(btn => {
+  btn.addEventListener('click', () => setTier(btn.dataset.tier));
+});
+
+// Clickable tier badges on cards (event delegation — cards are re-rendered)
+grid.addEventListener('click', e => {
+  const badge = e.target.closest('.card-tier');
+  if (!badge) return;
+  e.preventDefault();   // don't follow the card's link
+  e.stopPropagation();
+  // Toggle: clicking the active tier again clears it
+  setTier(activeTier === badge.dataset.tier ? 'all' : badge.dataset.tier);
+  window.scrollTo({ top: document.querySelector('.result-meta').offsetTop - 80, behavior: 'smooth' });
+});
+
+// Search wiring (debounced)
+let searchTimer;
+searchInput.addEventListener('input', e => {
+  searchTerm = e.target.value;
+  searchClear.classList.toggle('visible', searchTerm.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(render, 120);
+});
+searchClear.addEventListener('click', () => {
+  searchTerm = '';
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  searchInput.focus();
+  render();
+});
+searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') searchClear.click(); });
+
+document.getElementById('emptyReset').addEventListener('click', () => {
+  activeFilter = 'all';
+  searchTerm = '';
+  searchInput.value = '';
+  searchClear.classList.remove('visible');
+  document.querySelectorAll('.filter-pill').forEach(p => {
+    const on = p.dataset.filter === 'all';
+    p.classList.toggle('active', on);
+    p.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  setTier('all');   // also re-renders
+});
+
+// Keyboard shortcut: "/" focuses search
+document.addEventListener('keydown', e => {
+  if (e.key === '/' && document.activeElement !== searchInput) {
+    e.preventDefault();
+    searchInput.focus();
+  }
+});
+
+// Stats
+document.getElementById('statSources').textContent = SOURCES.length;
+document.getElementById('footerCount').textContent = SOURCES.length + ' sources · curated June 2026';
+
+/* ═══════════ THEME ═══════════ */
+const html = document.documentElement;
+const themeToggle = document.getElementById('themeToggle');
+const moon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
+const sun  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
+
+function setTheme(mode) {
+  html.setAttribute('data-theme', mode);
+  themeToggle.innerHTML = mode === 'dark' ? sun : moon;
+  themeToggle.setAttribute('aria-label', mode === 'dark' ? 'Switch to light mode' : 'Switch to dark mode');
+}
+const stored = localStorage.getItem('membrane-theme');
+setTheme(stored === 'dark' || (!stored && window.matchMedia('(prefers-color-scheme: dark)').matches) ? 'dark' : 'light');
+themeToggle.addEventListener('click', () => {
+  const next = html.getAttribute('data-theme') === 'dark' ? 'light' : 'dark';
+  localStorage.setItem('membrane-theme', next);
+  setTheme(next);
+});
+
+// Initial render
+render();
+</script>
+</body>
+</html>

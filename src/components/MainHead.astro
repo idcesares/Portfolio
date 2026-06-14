@@ -16,6 +16,7 @@ interface Props {
   description?: string | undefined;
   image?: string | undefined;
   imageAlt?: string | undefined;
+  locale?: string | undefined;
   ogType?: 'website' | 'article';
   article?: {
     publishedTime?: string;
@@ -33,6 +34,7 @@ const {
   description = SITE_DESCRIPTION,
   image = '/assets/favicon.svg',
   imageAlt,
+  locale = SITE_LOCALE,
   ogType = 'website',
   article,
   structuredData,
@@ -58,7 +60,7 @@ const openGraph = {
   optional: {
     description,
     siteName: SITE_NAME,
-    locale: SITE_LOCALE,
+    locale,
   },
   image: {
     alt: resolvedImageAlt,

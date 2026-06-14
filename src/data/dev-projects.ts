@@ -99,6 +99,25 @@ export const devProjects: DevProject[] = [
 		year: 2026,
 	},
 	{
+		id: 'tech-signal-stack',
+		title: 'Tech Signal Stack',
+		description:
+			'Diretório pessoal interativo e curado de fontes de tecnologia, IA, engenharia, negócios e política para leitura diária de alto sinal.',
+		longDescription:
+			'Página standalone integrada ao portfólio com busca, filtros por categoria, tiers de prioridade e metadados SEO próprios. A curadoria organiza fontes essenciais para acompanhar tecnologia com foco, contexto e baixo ruído informacional.',
+		techStack: [
+			{ name: 'Astro', color: 'teal' },
+			{ name: 'HTML', color: 'terracotta' },
+			{ name: 'CSS', color: 'sage' },
+			{ name: 'JavaScript', color: 'amber' },
+			{ name: 'SEO', color: 'burgundy' },
+		],
+		demoUrl: '/tech-signal/',
+		status: 'live',
+		featured: false,
+		year: 2026,
+	},
+	{
 		id: 'base64-encoder-decoder',
 		title: 'Base64 Encoder/Decoder',
 		description:

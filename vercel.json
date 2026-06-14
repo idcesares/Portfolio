@@ -3,6 +3,13 @@
   "buildCommand": "pnpm build",
   "outputDirectory": "dist",
   "installCommand": "pnpm install",
+  "redirects": [
+    {
+      "source": "/tech-signal.html",
+      "destination": "/tech-signal/",
+      "permanent": true
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
