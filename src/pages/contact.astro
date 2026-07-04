@@ -5,9 +5,9 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
 import type { iconPaths } from '../components/IconPaths';
-import { getSiteStructuredData } from '../utils/seo';
+import { AUTHOR_EMAIL, getPersonId, getSiteStructuredData } from '../utils/seo';
 
-const email = 'isaac.dcesares@gmail.com';
+const email = AUTHOR_EMAIL;
 const mailHref =
 	'mailto:isaac.dcesares@gmail.com?subject=Contato%20pelo%20portf%C3%B3lio';
 
@@ -94,11 +94,7 @@ const structuredData = [
 		description:
 			'Página de contato para projetos, palestras, pesquisa e parcerias com Isaac D\'Césares.',
 		mainEntity: {
-			'@type': 'Person',
-			name: "Isaac D'Césares",
-			email,
-			url: site.href,
-			sameAs: socialLinks.map(({ href }) => href),
+			'@id': getPersonId(site),
 			contactPoint: {
 				'@type': 'ContactPoint',
 				email,
@@ -111,7 +107,7 @@ const structuredData = [
 ---
 
 <BaseLayout
-	title="Contato | Isaac D'Césares"
+	title="Contato"
 	description="Fale com Isaac D'Césares sobre tecnologia educacional, IA aplicada, palestras, pesquisa, projetos e colaborações."
 	image="/assets/portrait.webp"
 	imageAlt="Retrato de Isaac D'Césares"

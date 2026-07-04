@@ -11,13 +11,19 @@ export const AUTHOR_NAME = SITE_NAME;
 export const AUTHOR_JOB_TITLE = 'Coordenador de Tecnologia Educacional';
 export const AUTHOR_ORG = 'Sesc Nacional';
 export const AUTHOR_PROFILE_PATH = '/about/';
+export const AUTHOR_EMAIL = 'isaac.dcesares@gmail.com';
 
 export const SOCIAL_LINKS = {
   github: 'https://github.com/idcesares',
   linkedin: 'https://www.linkedin.com/in/isaacdcesares',
+  youtube: 'https://www.youtube.com/@idcesares/',
+  twitter: 'https://twitter.com/idcesares',
 };
 
+export const DEFAULT_OG_IMAGE = '/assets/portrait.webp';
+
 const getSiteHref = (site: URL) => site.href;
+export const getPersonId = (site: URL) => new URL('/about/#person', site).toString();
 
 export const getSiteStructuredData = (site: URL) => [
   {
@@ -27,25 +33,52 @@ export const getSiteStructuredData = (site: URL) => [
     url: getSiteHref(site),
     description: SITE_DESCRIPTION,
     inLanguage: SITE_LANGUAGE,
-    publisher: {
-      '@type': 'Person',
-      name: AUTHOR_NAME,
-      url: getSiteHref(site),
-    },
+    publisher: { '@id': getPersonId(site) },
   },
   {
     '@context': 'https://schema.org',
     '@type': 'Person',
+    '@id': getPersonId(site),
     name: AUTHOR_NAME,
     url: getSiteHref(site),
+    image: new URL('/assets/portrait.webp', site).toString(),
+    email: AUTHOR_EMAIL,
     jobTitle: AUTHOR_JOB_TITLE,
     worksFor: {
       '@type': 'Organization',
       name: AUTHOR_ORG,
     },
-    sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github],
+    alumniOf: [
+      { '@type': 'CollegeOrUniversity', name: 'Universidade Federal do Rio de Janeiro (UFRJ)' },
+      { '@type': 'CollegeOrUniversity', name: 'Stanford University' },
+      { '@type': 'CollegeOrUniversity', name: 'The Hebrew University of Jerusalem' },
+      { '@type': 'CollegeOrUniversity', name: 'Fundação Dom Cabral' },
+      { '@type': 'CollegeOrUniversity', name: 'Fundação Getulio Vargas (FGV)' },
+    ],
+    knowsAbout: [
+      'Inteligência Artificial na Educação',
+      'Blockchain Educacional',
+      'Tecnologia Educacional',
+      'Aprendizagem Criativa',
+      'Transformação Digital',
+    ],
+    sameAs: [SOCIAL_LINKS.linkedin, SOCIAL_LINKS.github, SOCIAL_LINKS.youtube, SOCIAL_LINKS.twitter],
   },
 ];
+
+export const getBreadcrumbStructuredData = (
+  site: URL,
+  items: { name: string; path: string }[]
+) => ({
+  '@context': 'https://schema.org',
+  '@type': 'BreadcrumbList',
+  itemListElement: items.map(({ name, path }, index) => ({
+    '@type': 'ListItem',
+    position: index + 1,
+    name,
+    item: new URL(path, site).toString(),
+  })),
+});
 
 export const getBlogPostingStructuredData = (
   entry: CollectionEntry<'blog'>,
@@ -61,16 +94,8 @@ export const getBlogPostingStructuredData = (
     headline: entry.data.title,
     description: entry.data.description,
     image: imageUrl,
-    author: {
-      '@type': 'Person',
-      name: AUTHOR_NAME,
-      url: getSiteHref(site),
-    },
-    publisher: {
-      '@type': 'Person',
-      name: AUTHOR_NAME,
-      url: getSiteHref(site),
-    },
+    author: { '@id': getPersonId(site) },
+    publisher: { '@id': getPersonId(site) },
     datePublished: entry.data.publishDate.toISOString(),
     dateModified: updatedDate.toISOString(),
     mainEntityOfPage: pageUrl,
@@ -94,16 +119,8 @@ export const getWorkStructuredData = (
     description: entry.data.description,
     image: imageUrl,
     url: pageUrl,
-    author: {
-      '@type': 'Person',
-      name: AUTHOR_NAME,
-      url: getSiteHref(site),
-    },
-    publisher: {
-      '@type': 'Person',
-      name: AUTHOR_NAME,
-      url: getSiteHref(site),
-    },
+    author: { '@id': getPersonId(site) },
+    publisher: { '@id': getPersonId(site) },
     datePublished: entry.data.publishDate.toISOString(),
     dateModified: updatedDate.toISOString(),
     inLanguage: SITE_LANGUAGE,

@@ -4,16 +4,14 @@ Guia operacional para Claude Code trabalhando neste repo (`dcesares.dev`).
 
 ---
 
-## 0. Playbook é a fonte primária
+## 0. Referências obrigatórias
 
-Toda sessão de trabalho começa lendo [dcesares-brand-overhaul-playbook.md](dcesares-brand-overhaul-playbook.md). O playbook define as fases, tasks, Definition of Done e anti-patterns. Este arquivo é apenas o resumo operacional para orientação rápida — se houver conflito, o playbook ganha.
-
-Arquivos de referência obrigatórios (ler junto antes de cada sessão):
+O overhaul de marca (playbook de fases) foi concluído e o arquivo de playbook foi removido do repo. Este CLAUDE.md é a fonte primária de orientação operacional agora. Ler junto antes de cada sessão:
 - [design-system/BRAND-VOICE.md](design-system/BRAND-VOICE.md) — voz, tom, vocabulário proibido
 - [design-system/DESIGN-SYSTEM.md](design-system/DESIGN-SYSTEM.md) — sistema visual em prosa
 - [design-system/tokens/design-tokens.css](design-system/tokens/design-tokens.css) — fonte de verdade visual
 
-Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesignguide.pdf` mencionados no playbook vivem no repo de marca, não aqui. Se precisar deles, peça ao Isaac.
+Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesignguide.pdf` vivem no repo de marca, não aqui. Se precisar deles, peça ao Isaac.
 
 ---
 
@@ -77,26 +75,26 @@ Nunca rodar `pnpm build` ou deploy automaticamente. Deploy é decisão do Isaac.
 - `design-system/` — spec somente leitura (voice, design system, tokens).
 - `public/assets/` — imagens. Paths absolutos em markdown (`/assets/...`), WebP preferido, `loading="lazy"`.
 
-Stack: Astro 6 SSR em Vercel, Tailwind v4 via `@tailwindcss/vite`, HeroUI React, Fuse.js client-side search.
+Stack: Astro 6 SSR em Vercel, Tailwind v4 via `@tailwindcss/vite`, Fuse.js client-side search. Sem React/UI kits: o site é intencionalmente Astro puro com pouco JS.
 
-Convenções: TS strict, sem `any`. Commits em inglês (`feat:`, `fix:`, `docs:`). Uma branch por fase do playbook (`phase-1-copy`, `phase-2-visual`, etc.). PRs pequenos.
+Convenções: TS strict, sem `any`. Commits em inglês (`feat:`, `fix:`, `docs:`). PRs pequenos e focados em um escopo.
 
 ---
 
-## 5. Fluxo de trabalho (do playbook §3 e §5)
+## 5. Fluxo de trabalho
 
-1. Ler a task no [playbook](dcesares-brand-overhaul-playbook.md) e os arquivos de referência relevantes.
+1. Ler a task e os arquivos de referência relevantes (seção 0).
 2. Se tem ambiguidade, **perguntar antes de escrever código**.
 3. Apresentar plano curto (3–5 linhas) e aguardar confirmação do Isaac.
 4. Executar a task (uma por vez — se descobrir dependência, parar e discutir).
-5. Validar contra o DoD da seção 7 do playbook.
-6. Abrir PR pequeno com "o que" e "porquê". Marcar a task como `[x]` no playbook no mesmo PR.
+5. Validar contra as regras de voz (seção 1) e design (seção 2).
+6. Abrir PR pequeno com "o que" e "porquê".
 
 **Quando parar e perguntar:** decisão de posicionamento fora do brand essence; token faltando; mudança afeta mais páginas que a task descreve; arquivos de referência se contradizem.
 
 ---
 
-## 6. Anti-patterns (do playbook §6)
+## 6. Anti-patterns
 
 - Adicionar deps JS sem discutir. Site é Astro com pouco JS; manter assim.
 - Criar componentes genéricos sem verificar se já existem.

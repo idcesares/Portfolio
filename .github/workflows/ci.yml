@@ -32,5 +32,8 @@ jobs:
       - name: Type and content checks
         run: pnpm astro check
 
+      - name: Check content asset references
+        run: pnpm run check:assets
+
       - name: Build
         run: pnpm build

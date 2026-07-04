@@ -21,7 +21,7 @@ Um dos principais diferenciais do Astro.js é a sua abordagem de renderização 
 
 Além disso, a performance foi uma consideração crucial. O Astro.js permite gerar páginas estáticas no momento da construção, minimizando a quantidade de JavaScript necessário no cliente. Isso se traduz em menos solicitações de rede e pontuações de desempenho melhoradas – um aspecto essencial para manter os visitantes engajados e satisfeitos com a velocidade do site.
 
-![A sleek, modern website interface showcasing a futuristic technology theme. The design should have a high-tech, innovative feel, incorporating element](/assets/blog_imgs/astro-2.png)
+![A sleek, modern website interface showcasing a futuristic technology theme. The design should have a high-tech, innovative feel, incorporating element](/assets/blog_imgs/astro-2.webp)
 
 ## Flexibilidade e Integração
 
@@ -37,7 +37,7 @@ Desenvolver um site com o Astro.js foi uma experiência surpreendentemente simpl
 
 Do ponto de vista do SEO, a arquitetura única do Astro.js, inspirada no conceito de 'ilhas', foi um grande benefício. Cada página no Astro.js é tratada como uma ilha isolada, permitindo uma abordagem mais detalhada na hidratação de conteúdo. Isso significa que posso ter partes do meu site renderizadas no servidor, garantindo que os motores de busca possam rastrear e indexar meu conteúdo eficientemente, ao mesmo tempo em que mantenho a capacidade de ter interações dinâmicas onde necessário.
 
-![A sleek, modern website interface showcasing a futuristic technology theme. The design should have a high-tech, innovative feel, incorporating element](/assets/blog_imgs/astro-1.png)
+![A sleek, modern website interface showcasing a futuristic technology theme. The design should have a high-tech, innovative feel, incorporating element](/assets/blog_imgs/astro-1.webp)
 
 Experiência de Desenvolvimento e Comunidade
 Desenvolver meu website com o Astro.js não foi apenas sobre aproveitar uma tecnologia avançada; foi também uma experiência enriquecedora. O Astro.js se destaca por proporcionar uma experiência de desenvolvimento excepcional, oferecendo um rico ecossistema de plugins e temas. Isso me permitiu estender a funcionalidade do meu projeto com facilidade, integrando recursos como otimização de imagens e pré-processamento de CSS.

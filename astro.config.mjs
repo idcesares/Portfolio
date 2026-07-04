@@ -4,10 +4,11 @@ import vercel from "@astrojs/vercel";
 import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
-import react from "@astrojs/react";
 import rehypePrettyCode from 'rehype-pretty-code';
 import { transformerCopyButton } from '@rehype-pretty/transformers';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import { readdirSync, readFileSync } from 'node:fs';
+import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 
@@ -17,6 +18,27 @@ const copyIcon = `data:image/svg+xml,${encodeURIComponent(
 const successIcon = `data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#7BC494" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
 )}`;
+
+// Read `updatedDate` straight from content frontmatter so the sitemap can advertise
+// per-page lastmod without depending on the astro:content virtual module at config time.
+function readUpdatedDates(collection) {
+  const dir = fileURLToPath(new URL(`./src/content/${collection}/`, import.meta.url));
+  const dates = new Map();
+  for (const file of readdirSync(dir)) {
+    if (!/\.mdx?$/.test(file)) continue;
+    const raw = readFileSync(`${dir}${file}`, 'utf-8');
+    const match = raw.match(/^updatedDate:\s*(.+)$/m);
+    if (!match) continue;
+    const id = file.replace(/\.mdx?$/, '');
+    dates.set(id, new Date(match[1].trim()));
+  }
+  return dates;
+}
+
+const sitemapLastmod = new Map([
+  ...[...readUpdatedDates('blog')].map(([id, date]) => [`/blog/${id}/`, date]),
+  ...[...readUpdatedDates('work')].map(([id, date]) => [`/work/${id}/`, date]),
+]);
 
 // https://astro.build/config
 export default defineConfig({
@@ -92,8 +114,9 @@ export default defineConfig({
     format: "file",
   },
 
-  // Ensure consistent URL format (no trailing slash matches build.format: "file")
-  trailingSlash: 'ignore',
+  // Enforce a single canonical URL shape (with trailing slash) so pages don't
+  // exist at two indexable addresses; requests to the other form get a 308.
+  trailingSlash: 'always',
 
   site: 'https://www.dcesares.dev',
 
@@ -125,11 +148,17 @@ export default defineConfig({
     },
   ],
 
-  integrations: [sitemap(), partytown({
+  integrations: [sitemap({
+    serialize(item) {
+      const pathname = new URL(item.url).pathname;
+      const lastmod = sitemapLastmod.get(pathname);
+      return lastmod ? { ...item, lastmod: lastmod.toISOString() } : item;
+    },
+  }), partytown({
     config: {
       forward: ["dataLayer.push"]
     }
-  }), mdx(), react()],
+  }), mdx()],
 
   markdown: {
     syntaxHighlight: false,

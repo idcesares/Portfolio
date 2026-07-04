@@ -11,7 +11,7 @@ import GridEnhanced from '../components/GridEnhanced.astro';
 import FilterBar from '../components/FilterBar.astro';
 import ViewToggle from '../components/ViewToggle.astro';
 
-const projects = (await getCollection('work')).sort(
+const projects = (await getCollection('work', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
 
@@ -20,7 +20,7 @@ const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sor
 ---
 
 <BaseLayout
-	title="Trabalho | Isaac D'Césares"
+	title="Trabalho"
 	description="Registros de entregas, projetos e programas em tecnologia educacional, pesquisa e construção de produtos."
 >
 	<div class="stack gap-20" data-page-type="work">

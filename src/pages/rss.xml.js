@@ -7,7 +7,7 @@ const parser = new MarkdownIt();
 export const prerender = true;
 
 export async function GET(context) {
-  const blog = (await getCollection('blog')).sort(
+  const blog = (await getCollection('blog', ({ data }) => !data.draft)).sort(
     (a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
   );
   return rss({
@@ -17,16 +17,17 @@ export async function GET(context) {
     xmlns: {
       atom: 'http://www.w3.org/2005/Atom',
     },
+    customData: '<language>pt-BR</language>',
     items: blog.map((post) => ({
       title: post.data.title,
       pubDate: post.data.publishDate,
       description: post.data.description,
       link: `/blog/${post.id}/`,
+      categories: post.data.tags,
       content: sanitizeHtml(parser.render(post.body), {
         allowedTags: sanitizeHtml.defaults.allowedTags.concat(['img'])
       }),
       customData: `<atom:updated>${post.data.updatedDate.toISOString()}</atom:updated>`,
-      ...post.data,
     })),
   });
 }

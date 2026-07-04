@@ -10,7 +10,7 @@ tags:
   - Educação Inovadora
   - Inteligência Artificial
   - Educação Digital
-  - Tecnologias na Educação
+  - Tecnologia na Educação
 ---
 
 ## Aprendizagem Criativa e Tecnologia: caminhos para uma educação transformadora

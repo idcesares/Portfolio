@@ -10,14 +10,14 @@ import Pill from '../../components/Pill.astro';
 import ContentImage from '../../components/ContentImage.astro';
 import ContentDateMeta from '../../components/ContentDateMeta.astro';
 import { render } from 'astro:content';
-import { AUTHOR_PROFILE_PATH, getWorkStructuredData } from '../../utils/seo';
+import { AUTHOR_PROFILE_PATH, getBreadcrumbStructuredData, getWorkStructuredData } from '../../utils/seo';
 
 interface Props {
 	entry: CollectionEntry<'work'>;
 }
 
 export async function getStaticPaths() {
-	const work = await getCollection('work');
+	const work = await getCollection('work', ({ data }) => !data.draft);
 	return work.map((entry) => ({
 		params: { slug: entry.id },
 		props: { entry },
@@ -30,7 +30,14 @@ const { entry } = Astro.props;
 const { Content, remarkPluginFrontmatter } = await render(entry);
 
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
-const structuredData = getWorkStructuredData(entry, site);
+const structuredData = [
+	getWorkStructuredData(entry, site),
+	getBreadcrumbStructuredData(site, [
+		{ name: 'Início', path: '/' },
+		{ name: 'Trabalhos', path: '/work/' },
+		{ name: entry.data.title, path: `/work/${entry.id}/` },
+	]),
+];
 const article = {
 	publishedTime: entry.data.publishDate.toISOString(),
 	modifiedTime: entry.data.updatedDate.toISOString(),

@@ -11,7 +11,7 @@ import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
 import FilterBar from '../components/FilterBar.astro';
 import ViewToggle from '../components/ViewToggle.astro';
 
-const posts = (await getCollection('blog')).sort(
+const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
 
@@ -20,7 +20,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 ---
 
 <BaseLayout
-	title="Blog | Isaac D'Césares"
+	title="Blog"
 	description="Notas técnicas, reflexões e guias sobre educação, IA e desenvolvimento."
 >
 	<div class="stack gap-20" data-page-type="blog">

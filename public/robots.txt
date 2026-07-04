@@ -1,22 +1,51 @@
 User-agent: *
 Allow: /
 
+# Anthropic (Claude)
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-User
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+# OpenAI (ChatGPT)
 User-agent: GPTBot
 Allow: /
 
-User-agent: Google-Extended
+User-agent: OAI-SearchBot
 Allow: /
 
 User-agent: ChatGPT-User
 Allow: /
 
-User-agent: CCBot
+# Perplexity
+User-agent: PerplexityBot
 Allow: /
 
-User-agent: Claude-Web
+User-agent: Perplexity-User
+Allow: /
+
+# Other AI and search crawlers
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: CCBot
 Allow: /
 
 User-agent: Baiduspider
 Allow: /
 
+# Machine-readable summary for LLMs: https://www.dcesares.dev/llms.txt
 Sitemap: https://www.dcesares.dev/sitemap-index.xml
