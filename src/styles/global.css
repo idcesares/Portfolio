@@ -1,5 +1,5 @@
 @import "tailwindcss";
-@import "./design-tokens.css";
+@import "../../design-system/tokens/design-tokens.css";
 
 /* ============================================================
    SHORTHAND ALIASES

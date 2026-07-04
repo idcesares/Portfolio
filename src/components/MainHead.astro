@@ -5,6 +5,7 @@ import SpeedInsights from '@vercel/speed-insights/astro';
 import { SEO } from 'astro-seo';
 import {
   AUTHOR_NAME,
+  DEFAULT_OG_IMAGE,
   SITE_DESCRIPTION,
   SITE_LOCALE,
   SITE_NAME,
@@ -12,6 +13,7 @@ import {
 } from '../utils/seo';
 
 interface Props {
+  /** Page-specific title. Rendered as "{title} | Isaac D'Césares". Omit to use the site default title. */
   title?: string | undefined;
   description?: string | undefined;
   image?: string | undefined;
@@ -30,9 +32,9 @@ interface Props {
 }
 
 const {
-  title = SITE_TITLE,
+  title,
   description = SITE_DESCRIPTION,
-  image = '/assets/favicon.svg',
+  image = DEFAULT_OG_IMAGE,
   imageAlt,
   locale = SITE_LOCALE,
   ogType = 'website',
@@ -40,10 +42,12 @@ const {
   structuredData,
 } = Astro.props;
 
+const displayTitle = title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
+
 const baseUrl = Astro.site ?? Astro.url;
-const canonicalUrl = new URL(Astro.url.pathname + Astro.url.search, baseUrl).toString();
+const canonicalUrl = new URL(Astro.url.pathname, baseUrl).toString();
 const ogImage = new URL(image, baseUrl).toString();
-const resolvedImageAlt = imageAlt || title;
+const resolvedImageAlt = imageAlt || displayTitle;
 const structuredItems = structuredData
   ? Array.isArray(structuredData)
     ? structuredData
@@ -52,7 +56,7 @@ const structuredItems = structuredData
 
 const openGraph = {
   basic: {
-    title,
+    title: displayTitle,
     type: ogType,
     image: ogImage,
     url: canonicalUrl,
@@ -70,7 +74,7 @@ const openGraph = {
 
 const twitter = {
   card: 'summary_large_image' as const,
-  title,
+  title: displayTitle,
   description,
   image: ogImage,
   imageAlt: resolvedImageAlt,
@@ -80,6 +84,8 @@ const twitter = {
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width" />
 <meta name="generator" content={Astro.generator} />
+<meta name="theme-color" content="#FAF6EE" media="(prefers-color-scheme: light)" />
+<meta name="theme-color" content="#1A1B1F" media="(prefers-color-scheme: dark)" />
 
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
@@ -94,7 +100,7 @@ const twitter = {
 />
 <SpeedInsights />
 <SEO
-  title={title}
+  title={displayTitle}
   description={description}
   canonical={canonicalUrl}
   openGraph={openGraph}
@@ -138,19 +144,6 @@ const twitter = {
       document.documentElement.classList.add('theme-ready');
     });
   });
-
-  if (typeof localStorage !== 'undefined') {
-    // Watch the document element and persist user preference when it changes.
-    const observer = new MutationObserver(() => {
-      const isDark = document.documentElement.classList.contains('theme-dark');
-      document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-      localStorage.setItem('theme', isDark ? 'dark' : 'light');
-    });
-    observer.observe(document.documentElement, {
-      attributes: true,
-      attributeFilter: ['class'],
-    });
-  }
 </script>
 
 <!-- Search fallback script for production compatibility -->

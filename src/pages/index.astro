@@ -2,19 +2,20 @@
 export const prerender = true;
 
 import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 import CallToAction from '../components/CallToAction.astro';
-import Grid from '../components/Grid.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
-import PortfolioPreview from '../components/PortfolioPreview.astro';
+import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
 
 import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
-import PostPreview from '../components/PostPreview.astro';
+import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
 
 import Portrait from '../assets/portrait.webp';
 
@@ -22,11 +23,11 @@ import { University } from '@lucide/astro';
 import { getSiteStructuredData } from '../utils/seo';
 
 
-const projects = (await getCollection('work'))
+const projects = (await getCollection('work', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
 	.slice(0, 4);
 
-const posts = (await getCollection('blog'))
+const posts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
 	.slice(0, 4);
 
@@ -60,13 +61,13 @@ const structuredData = getSiteStructuredData(site);
 
 				</Hero>
 
-				<img
+				<Image
 					class="portrait"
-					alt="Isaac D'Césares profile picture"
-					src={Portrait.src}
+					alt="Isaac D'Césares, retrato de perfil"
+					src={Portrait}
 					loading="eager"
-					width="400"
-					height="300"
+					width={400}
+					height={300}
 					decoding="async"
 					data-animate="scale-up"
 					data-animate-delay="200"
@@ -79,20 +80,16 @@ const structuredData = getSiteStructuredData(site);
 		<main class="wrapper stack gap-20 lg:gap-48">
 			<section class="section with-background with-cta" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Últimos trabalhos</h3>
+					<h2>Últimos trabalhos</h2>
 					<p>Registros recentes de entregas, projetos e colaborações.</p>
 				</header>
 
-				<div class="gallery" data-animate-stagger>
-					<Grid variant="offset">
-						{
-							projects.map((project) => (
-								<li data-animate="fade-up">
-									<PortfolioPreview project={project} />
-								</li>
-							))
-						}
-					</Grid>
+				<div class="gallery">
+					<GridEnhanced variant="offset">
+						{projects.map((project) => (
+							<PortfolioPreviewEnhanced project={project} />
+						))}
+					</GridEnhanced>
 				</div>
 
 				<div class="cta">
@@ -104,20 +101,16 @@ const structuredData = getSiteStructuredData(site);
 			</section>
 			<section class="section with-background with-cta bg-variant" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h3>Últimas postagens</h3>
+					<h2>Últimas postagens</h2>
 					<p>Notas técnicas e reflexões sobre educação, IA e o que tenho aprendido no caminho.</p>
 				</header>
 
-				<div class="gallery" data-animate-stagger>
-					<Grid variant="offset">
-						{
-							posts.map((post) => (
-								<li data-animate="fade-up">
-									<PostPreview post={post} />
-								</li>
-							))
-						}
-					</Grid>
+				<div class="gallery">
+					<GridEnhanced variant="offset">
+						{posts.map((post) => (
+							<PostPreviewEnhanced post={post} />
+						))}
+					</GridEnhanced>
 				</div>
 
 				<div class="cta">
@@ -247,7 +240,7 @@ const structuredData = getSiteStructuredData(site);
 		color: var(--color-text-secondary);
 	}
 
-	.section-header h3 {
+	.section-header h2 {
 		font-size: var(--text-h1);
 		letter-spacing: var(--tracking-heading);
 	}
@@ -268,7 +261,7 @@ const structuredData = getSiteStructuredData(site);
 			font-size: var(--text-h3);
 		}
 
-		.section-header h3 {
+		.section-header h2 {
 			font-size: var(--text-display);
 		}
 

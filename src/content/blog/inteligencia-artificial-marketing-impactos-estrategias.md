@@ -7,7 +7,7 @@ img_alt: Article Image.
 description: Artigo sobre a Inteligência Artificial no marketing, seus impactos e benefícios, ferramentas de IA mais impactantes e como implementar IA em estratégias de marketing.
 tags:
   - Inteligência Artificial
-  - Makerting
+  - Marketing
   - Growth
   - Estratégias
   - Automação

@@ -7,11 +7,20 @@ import Hero from '../components/Hero.astro';
 import { getSiteStructuredData } from '../utils/seo';
 
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
-const structuredData = getSiteStructuredData(site);
+const pageUrl = new URL('/about/', site).toString();
+const structuredData = [
+	...getSiteStructuredData(site),
+	{
+		'@context': 'https://schema.org',
+		'@type': 'ProfilePage',
+		url: pageUrl,
+		mainEntity: { '@id': new URL('/about/#person', site).toString() },
+	},
+];
 ---
 
 <BaseLayout
-    title="Sobre | Isaac D'Césares"
+    title="Sobre"
     description="Isaac D'Césares traduz IA, blockchain e sistemas emergentes em prática educacional. Pesquisador, educador e construtor."
     structuredData={structuredData}
 >
@@ -22,9 +31,12 @@ const structuredData = getSiteStructuredData(site);
                 tagline="Pesquiso, ensino e construo tecnologias que ampliam a forma como aprendemos."
             >
                 <img
-                    width="auto"
+                    width="873"
+                    height="1553"
                     src="/assets/at-work.webp"
                     alt="Isaac D'Césares em uma palestra"
+                    loading="eager"
+                    decoding="async"
                     data-animate="scale-up"
                 />
             </Hero>

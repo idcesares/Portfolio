@@ -3,7 +3,7 @@ export const prerender = true;
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
-import Grid from '../components/Grid.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
 
 const deals = [
   {
@@ -28,7 +28,7 @@ const deals = [
 }];
 
 ---
-<BaseLayout title="Indico e uso | Isaac D'Césares" description="Ferramentas digitais que uso e recomendo, com cupons e links de indicação quando disponíveis.">
+<BaseLayout title="Indico e uso" description="Ferramentas digitais que uso e recomendo, com cupons e links de indicação quando disponíveis.">
     <div class="stack gap-20">
         <main class="wrapper stack gap-8">
             <Hero
@@ -36,7 +36,7 @@ const deals = [
                 tagline="Ferramentas que eu uso no dia a dia. Alguns links dão desconto ou benefício, outros são só registro do que funciona."
                 align="start"
             />
-            <Grid variant="offset" data-animate="fade-up">
+            <GridEnhanced variant="offset" data-animate="fade-up">
                 {
                     deals.map((deal) => (
                         <li class="deal-item">
@@ -46,7 +46,7 @@ const deals = [
                         </li>
                     ))
                 }
-            </Grid>
+            </GridEnhanced>
         </main>
     </div>
 </BaseLayout>

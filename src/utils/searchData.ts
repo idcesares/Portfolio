@@ -26,8 +26,8 @@ function prepareContent(body: string | undefined, limit = 500): string {
 }
 
 export async function generateSearchData(): Promise<SearchItem[]> {
-  const blogPosts = await getCollection('blog');
-  const workProjects = await getCollection('work');
+  const blogPosts = await getCollection('blog', ({ data }) => !data.draft);
+  const workProjects = await getCollection('work', ({ data }) => !data.draft);
 
   const searchItems: SearchItem[] = [];
 
@@ -38,7 +38,7 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       title: post.data.title,
       description: post.data.description || '',
       content: prepareContent(post.body),
-      url: `/blog/${post.id}`,
+      url: `/blog/${post.id}/`,
       type: 'blog',
       tags: post.data.tags || [],
       publishDate: post.data.publishDate,
@@ -53,7 +53,7 @@ export async function generateSearchData(): Promise<SearchItem[]> {
       title: project.data.title,
       description: project.data.description || '',
       content: prepareContent(project.body),
-      url: `/work/${project.id}`,
+      url: `/work/${project.id}/`,
       type: 'work',
       tags: project.data.tags || [],
       publishDate: project.data.publishDate,
