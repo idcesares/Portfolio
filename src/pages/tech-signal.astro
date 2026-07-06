@@ -75,99 +75,7 @@ const structuredData = {
 <meta name="language" content="en">
 <link rel="alternate" hreflang="en" href={pageUrl.toString()}>
 <link rel="alternate" hreflang="x-default" href={pageUrl.toString()}>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght@0,9..144,400;0,9..144,600;0,9..144,700;1,9..144,400;1,9..144,600&family=Instrument+Sans:wght@400;500;600&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
-
 <style is:global>
-/* ═══════════════════════════════════════════════
-   MEMBRANE PALETTE — design tokens
-   Source: idcesares/idcesares-design-system v1.1
-═══════════════════════════════════════════════ */
-:root {
-  --color-terracotta:    #B35530;
-  --color-terracotta-10: rgba(179,85,48,0.10);
-  --color-terracotta-20: rgba(179,85,48,0.20);
-  --color-teal:          #1B756D;
-  --color-teal-10:       rgba(27,117,109,0.10);
-  --color-teal-20:       rgba(27,117,109,0.20);
-  --color-cream:         #FAF6EE;
-  --color-charcoal:      #1A1B1F;
-  --color-amber:         #D49A3A;
-  --color-burgundy:      #7A3345;
-  --color-sage:          #5A8A6E;
-
-  --neutral-100: #F0EBE1;
-  --neutral-200: #E2DCD2;
-  --neutral-300: #C8C1B5;
-  --neutral-400: #A39D93;
-  --neutral-500: #7D776E;
-  --neutral-600: #5C564E;
-  --neutral-700: #3D3832;
-  --neutral-800: #2A2622;
-
-  --color-bg-primary:      var(--color-cream);
-  --color-bg-secondary:    var(--neutral-100);
-  --color-bg-tertiary:     var(--neutral-200);
-  --color-border-default:  var(--neutral-200);
-  --color-border-emphasis: var(--neutral-300);
-  --color-text-primary:    var(--neutral-800);
-  --color-text-secondary:  var(--neutral-600);
-  --color-text-tertiary:   var(--neutral-400);
-
-  --font-serif: 'Fraunces', Georgia, serif;
-  --font-sans:  'Instrument Sans', Inter, 'Helvetica Neue', sans-serif;
-  --font-mono:  'JetBrains Mono', 'Fira Code', Consolas, monospace;
-
-  --text-display: clamp(2.25rem, 3.5vw + 1rem, 3.75rem);
-  --text-h2:      clamp(1.5rem, 2vw + 0.75rem, 2rem);
-  --text-h3:      clamp(1.25rem, 1.5vw + 0.5rem, 1.5rem);
-  --text-h4:      clamp(1.125rem, 1vw, 1.25rem);
-
-  --space-1: 0.25rem;  --space-2: 0.5rem;   --space-3: 0.75rem;
-  --space-4: 1rem;     --space-5: 1.25rem;  --space-6: 1.5rem;
-  --space-8: 2rem;     --space-10: 2.5rem;  --space-12: 3rem;
-  --space-16: 4rem;    --space-20: 5rem;    --space-24: 6rem;
-
-  --radius-sm: 4px;  --radius-md: 8px;  --radius-lg: 12px;
-  --radius-xl: 16px; --radius-full: 999px;
-
-  --shadow-sm: 0 1px 3px rgba(26,27,31,0.06), 0 1px 2px rgba(26,27,31,0.04);
-  --shadow-md: 0 4px 12px rgba(26,27,31,0.08), 0 2px 4px rgba(26,27,31,0.04);
-  --shadow-glow-warm: 0 0 24px rgba(179,85,48,0.15);
-  --shadow-glow-teal: 0 0 24px rgba(27,117,109,0.15);
-
-  --duration-fast: 150ms; --duration-normal: 250ms; --duration-slow: 400ms;
-  --ease-default: cubic-bezier(0.25,0.1,0.25,1);
-  --ease-out:     cubic-bezier(0,0,0.2,1);
-
-  --gradient-membrane: linear-gradient(135deg, #B35530 0%, #1B756D 100%);
-  --gradient-warmth:   radial-gradient(ellipse at 15% 0%, rgba(179,85,48,0.08) 0%, transparent 70%);
-
-  --container: 1140px;
-  --site-margin: clamp(1.25rem, 4vw, 4rem);
-}
-
-[data-theme="dark"] {
-  --color-bg-primary:      #1A1B1F;
-  --color-bg-secondary:    #242429;
-  --color-bg-tertiary:     #2E2E34;
-  --color-border-default:  #3D3842;
-  --color-border-emphasis: #5C564E;
-  --color-text-primary:    #F0EBE1;
-  --color-text-secondary:  #A39D93;
-  --color-text-tertiary:   #7D776E;
-  --color-terracotta:      #D4724F;
-  --color-teal:            #3AAFA8;
-  --color-amber:           #E8B44A;
-  --color-sage:            #6FBF8A;
-  --color-terracotta-10:   rgba(212,114,79,0.12);
-  --color-teal-10:         rgba(58,175,168,0.12);
-  --shadow-sm: 0 1px 3px rgba(0,0,0,0.25), 0 1px 2px rgba(0,0,0,0.18);
-  --shadow-md: 0 4px 12px rgba(0,0,0,0.3), 0 2px 4px rgba(0,0,0,0.2);
-  --gradient-warmth: radial-gradient(ellipse at 15% 0%, rgba(212,114,79,0.06) 0%, transparent 70%);
-}
-
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     transition-duration: 0ms !important;
@@ -237,13 +145,13 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
   position: absolute; bottom: -0.12em; right: -0.02em;
   font-family: var(--font-serif); font-weight: 700;
   font-size: clamp(5rem, 19vw, 13rem); line-height: 1;
-  color: rgba(255,255,255,0.035); letter-spacing: -0.04em;
+  color: rgba(255,255,255,0.035); letter-spacing: 0;
   pointer-events: none; user-select: none;
   font-variation-settings: "WONK" 1;
 }
 .header-inner {
   position: relative; z-index: 2;
-  max-width: var(--container); margin: 0 auto;
+  max-width: var(--container-xl); margin: 0 auto;
   display: flex; flex-direction: column; gap: var(--space-5);
 }
 .header-inner > * { animation: header-in var(--duration-slow) var(--ease-out) both; }
@@ -262,7 +170,7 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
 .header-headline {
   font-family: var(--font-serif); font-weight: 700;
   font-size: var(--text-display); line-height: 1.04;
-  letter-spacing: -0.025em; color: var(--color-cream);
+  letter-spacing: 0; color: var(--color-cream);
   font-variation-settings: "WONK" 1; max-width: 16ch;
 }
 .header-headline em { font-style: italic; color: var(--color-amber); }
@@ -299,7 +207,7 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
   transition: background-color var(--duration-normal), border-color var(--duration-normal);
 }
 .controls-inner {
-  max-width: var(--container); margin: 0 auto;
+  max-width: var(--container-xl); margin: 0 auto;
   padding: var(--space-3) var(--site-margin);
   display: flex; flex-direction: column; gap: var(--space-3);
 }
@@ -381,7 +289,7 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
 .filter-pill:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 
 /* ═══════════ MAIN ═══════════ */
-main { max-width: var(--container); margin: 0 auto; padding: var(--space-10) var(--site-margin) var(--space-24); }
+main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) var(--site-margin) var(--space-24); }
 
 /* Strategy panel */
 .strategy {
@@ -457,7 +365,7 @@ main { max-width: var(--container); margin: 0 auto; padding: var(--space-10) var
 .tier-btn .tier-tick { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
 .tier-btn[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
 .tier-btn[data-tier="2"] .tier-tick { background: var(--color-teal); }
-.tier-btn[data-tier="3"] .tier-tick { background: var(--neutral-300); }
+.tier-btn[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
 .tier-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
 .tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
 .tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
@@ -489,7 +397,7 @@ main { max-width: var(--container); margin: 0 auto; padding: var(--space-10) var
 }
 .card.t1::before { background: var(--color-terracotta); }
 .card.t2::before { background: var(--color-teal); }
-.card.t3::before { background: var(--neutral-300); }
+.card.t3::before { background: var(--color-neutral-300); }
 .card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-border-emphasis); }
 .card.t1:hover { box-shadow: var(--shadow-md), var(--shadow-glow-warm); }
 .card.t2:hover { box-shadow: var(--shadow-md), var(--shadow-glow-teal); }
@@ -513,7 +421,7 @@ main { max-width: var(--container); margin: 0 auto; padding: var(--space-10) var
 .card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
 .card-tier[data-tier="2"] .tier-tick { background: var(--color-teal); }
 .card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-tertiary); }
-.card-tier[data-tier="3"] .tier-tick { background: var(--neutral-300); }
+.card-tier[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
 .card-tier:hover { border-color: currentColor; }
 .card-tier:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 2px; }
 .card-title {
@@ -570,7 +478,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
 /* ═══════════ FOOTER ═══════════ */
 .site-footer { border-top: 1px solid var(--color-border-default); padding: var(--space-8) var(--site-margin); }
 .footer-inner {
-  max-width: var(--container); margin: 0 auto;
+  max-width: var(--container-xl); margin: 0 auto;
   display: flex; justify-content: space-between; align-items: center;
   gap: var(--space-4); flex-wrap: wrap;
 }

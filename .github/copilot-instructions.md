@@ -2,7 +2,7 @@
 
 ## Contexto rápido
 
-- Stack: Astro 6 (`output: 'server'`, adapter Vercel), deployed on Vercel. Tailwind v4 + HeroUI + Membrane Palette design tokens (ex.: `var(--color-neutral-100)`, `var(--shadow-md)`, `var(--gradient-membrane)`). Tokens definidos em `src/styles/design-tokens.css`; spec em `design-system/`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
+- Stack: Astro 7 (`output: 'server'`, adapter Vercel), deployed on Vercel. Tailwind v4 via `@tailwindcss/vite` + Membrane Palette design tokens (ex.: `var(--color-neutral-100)`, `var(--shadow-md)`, `var(--gradient-membrane)`). Tokens definidos em `design-system/tokens/design-tokens.css`, com base layer em `design-system/tokens/base.css`; spec em `design-system/`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
 - Rendering: páginas públicas, feed RSS e índice de busca usam `export const prerender = true`. MPA mode (sem view transitions/ClientRouter) com prefetch nativo do Astro.
 - Conteúdo: Collections `blog/` e `work/` com schema idêntico (title, description, publishDate, updatedDate, tags[], img, img_alt?) definido em `src/content.config.ts`. Suporta `.md` e `.mdx`. Use `getCollection('blog' | 'work')` tipado como `CollectionEntry<'blog' | 'work'>`.
 - Variantes: Componentes como `PostPreviewEnhanced.astro` e `PortfolioPreviewEnhanced.astro` aceitam `variant?: 'default' | 'compact'` via `class:list={['base-class', variant]}`.
