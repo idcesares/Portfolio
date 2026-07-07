@@ -2,7 +2,7 @@
 title: Você realmente precisa de um antivírus em 2026?
 publishDate: 2025-07-21 08:00:00
 updatedDate: 2026-02-03 08:00:00
-img: /assets/blog_imgs/antivirus-2025.webp
+img: ../../assets/covers/antivirus-2025.webp
 img_alt: Ícones de antivírus e proteção digital em 2026
 description: Descubra se ainda é necessário usar um antivírus em 2026, conheça as proteções nativas de Windows, Android e iOS e melhore sua segurança digital.
 tags:

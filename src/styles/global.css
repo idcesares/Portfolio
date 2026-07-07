@@ -1,20 +1,11 @@
 @import "tailwindcss";
 @import "../../design-system/tokens/design-tokens.css";
+@import "../../design-system/tokens/base.css";
 
-/* ============================================================
-   SHORTHAND ALIASES
-   Convenient shorthand names that map to canonical design tokens.
-   ============================================================ */
 :root {
-	/* Text-size shorthands → canonical fluid scale */
-	--text-sm:   var(--text-small);
-	--text-base: var(--text-body);
-	--text-md:   var(--text-h4);
-	--text-lg:   var(--text-h3);
-	--text-xl:   var(--text-h2);
-
-	/* Gradient shorthand */
-	--gradient-subtle: linear-gradient(150deg, var(--color-bg-secondary) 8%, var(--color-bg-primary) 92%);
+	--tracking-display: 0;
+	--tracking-heading: 0;
+	--tracking-subheading: 0;
 }
 
 /* ============================================================
@@ -109,24 +100,6 @@ h5 {
 code,
 pre {
 	font-family: var(--font-mono);
-}
-
-/* ============================================================
-   SELECTION
-   ============================================================ */
-
-::selection {
-	background: var(--color-terracotta-20);
-	color: var(--color-text-primary);
-}
-
-/* ============================================================
-   FOCUS STATES (Accessibility — WCAG AA)
-   ============================================================ */
-
-:focus-visible {
-	outline: var(--focus-ring);
-	outline-offset: var(--focus-ring-offset);
 }
 
 /* ============================================================

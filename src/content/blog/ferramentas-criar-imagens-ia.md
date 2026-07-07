@@ -2,7 +2,7 @@
 title: Geração de imagem por IA em 2026 - Mapa atualizado de modelos e pipelines
 publishDate: 2026-05-14 08:00:00
 updatedDate: 2026-05-14 08:00:00
-img: /assets/blog_imgs/tool_ai_art.webp
+img: ../../assets/covers/tool_ai_art.webp
 img_alt: Mapa visual dos principais modelos de geração de imagem por IA em 2026.
 description: Mapa atualizado das ferramentas de geração de imagem por IA em maio de 2026. Midjourney V8, GPT Image 2, FLUX 2, Imagen 4, Nano Banana 2, Ideogram V3, Recraft V4, Adobe Firefly, Stable Diffusion 3.5. Qual modelo para qual tarefa, pipelines profissionais, custo e licenciamento.
 tags:

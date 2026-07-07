@@ -2,7 +2,7 @@
 title: "ECA Digital: mais proteção para crianças e adolescentes"
 publishDate: 2026-04-16 09:00:00
 updatedDate: 2026-04-16 09:00:00
-img: /assets/blog_imgs/eca-digital.png
+img: ../../assets/covers/eca-digital.png
 img_alt: Ilustração sobre o ECA Digital e a proteção de crianças e adolescentes no ambiente online
 description: A Lei nº 15.211/2025 atualiza o Estatuto da Criança e do Adolescente para o ambiente online e convida a educação a habitar esse território com mais autoria, crítica e cuidado.
 tags:

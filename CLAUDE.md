@@ -75,7 +75,7 @@ Nunca rodar `pnpm build` ou deploy automaticamente. Deploy é decisão do Isaac.
 - `design-system/` — spec somente leitura (voice, design system, tokens).
 - `public/assets/` — imagens. Paths absolutos em markdown (`/assets/...`), WebP preferido, `loading="lazy"`.
 
-Stack: Astro 6 SSR em Vercel, Tailwind v4 via `@tailwindcss/vite`, Fuse.js client-side search. Sem React/UI kits: o site é intencionalmente Astro puro com pouco JS.
+Stack: Astro 7 SSR em Vercel, Tailwind v4 via `@tailwindcss/vite`, Fuse.js client-side search. Sem React/UI kits: o site é intencionalmente Astro puro com pouco JS.
 
 Convenções: TS strict, sem `any`. Commits em inglês (`feat:`, `fix:`, `docs:`). PRs pequenos e focados em um escopo.
 

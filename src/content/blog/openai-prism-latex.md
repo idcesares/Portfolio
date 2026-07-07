@@ -2,7 +2,7 @@
 title: PRISM - primeiras impressões de um workspace LaTeX com IA
 publishDate: 2026-02-04 08:00:00
 updatedDate: 2026-02-04 08:00:00
-img: /assets/blog_imgs/prism-openai.webp
+img: ../../assets/covers/prism-openai.webp
 img_alt: Interface de escrita científica em LaTeX com IA integrada
 description: Impressões iniciais sobre o PRISM, workspace LaTeX da OpenAI com GPT-5.2 integrado, e reflexões sobre o uso crítico de IA na escrita científica.
 tags:

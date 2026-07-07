@@ -10,7 +10,7 @@ import Pill from '../../components/Pill.astro';
 import ContentImage from '../../components/ContentImage.astro';
 import ContentDateMeta from '../../components/ContentDateMeta.astro';
 import { render } from 'astro:content';
-import { AUTHOR_PROFILE_PATH, getBreadcrumbStructuredData, getWorkStructuredData } from '../../utils/seo';
+import { AUTHOR_PROFILE_PATH, getBreadcrumbStructuredData, getWorkStructuredData, resolveImageSrc } from '../../utils/seo';
 
 interface Props {
 	entry: CollectionEntry<'work'>;
@@ -50,7 +50,7 @@ const article = {
 <BaseLayout
         title={entry.data.title}
         description={entry.data.description}
-        image={entry.data.img}
+        image={resolveImageSrc(entry.data.img)}
         imageAlt={entry.data.img_alt}
 		ogType="article"
 		article={article}

@@ -8,7 +8,7 @@ Portfólio profissional, blog técnico e vitrine de projetos de Isaac D'Césares
 
 ## Visão Geral
 
-O projeto está atualmente em **Astro 6** com `output: 'server'`, deploy na **Vercel** e páginas públicas prerenderizadas no build. A navegação é MPA, com prefetch nativo do Astro e superfícies interativas pontuais para filtros, busca, toggle de visualização, troca de tema e cards com microinterações.
+O projeto está atualmente em **Astro 7** com `output: 'server'`, deploy na **Vercel** e páginas públicas prerenderizadas no build. A navegação é MPA, com prefetch nativo do Astro e superfícies interativas pontuais para filtros, busca, toggle de visualização, troca de tema e cards com microinterações.
 
 Além do conteúdo editorial, o repositório também documenta:
 
@@ -47,11 +47,10 @@ Principais entregas já implementadas:
 
 ### Core
 
-- **Astro 6.1**
-- **React 19**
+- **Astro 7**
+- **Astro components + TypeScript**
 - **TypeScript strict**
 - **Tailwind CSS v4**
-- **HeroUI**
 
 ### Conteúdo e rendering
 
@@ -120,7 +119,7 @@ Esse índice alimenta a experiência client-side com Fuse.js e é entregue com c
 
 ### Design system
 
-O site usa o **Membrane Palette**, com tokens semânticos em [`src/styles/design-tokens.css`](./src/styles/design-tokens.css) e documentação em:
+O site usa o **Membrane Palette**, com tokens semânticos em [`design-system/tokens/design-tokens.css`](./design-system/tokens/design-tokens.css), base layer em [`design-system/tokens/base.css`](./design-system/tokens/base.css) e documentação em:
 
 - [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md)
 - [`design-system/BRAND-VOICE.md`](./design-system/BRAND-VOICE.md)

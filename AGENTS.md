@@ -2,7 +2,7 @@
 
 ## Visão Geral
 
-Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césares, construído com **Astro 6** em `output: 'server'`, prerender nas páginas públicas e deploy na **Vercel**. O site combina collections de conteúdo (blog/work), uma vitrine `/dev`, busca interativa e filtragem, servindo como plataforma para mostrar pesquisas, palestras, projetos e expertise em tecnologia educacional.
+Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césares, construído com **Astro 7** em `output: 'server'`, prerender nas páginas públicas e deploy na **Vercel**. O site combina collections de conteúdo (blog/work), uma vitrine `/dev`, busca interativa e filtragem, servindo como plataforma para mostrar pesquisas, palestras, projetos e expertise em tecnologia educacional.
 
 **Contexto**: Site pessoal de um pesquisador e coordenador de tecnologia educacional no Sesc Nacional, com foco em inovação educacional, IA na educação e transformação digital.
 
@@ -41,7 +41,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 ├── docker-compose.prod.yml # Compose preview de produção
 ├── Dockerfile              # Imagem dev/prod
 ├── remark-reading-time.mjs # Plugin custom de reading time (PT-BR)
-├── tailwind.config.cjs     # Tailwind + HeroUI
+├── tailwind.config.cjs     # Tailwind content scan fallback
 ├── vercel.json             # Deploy config + security headers + caching
 └── tsconfig.json           # TypeScript strict mode
 ```
@@ -167,8 +167,8 @@ pnpm audit
 - Dynamic routes: `[...slug].astro` com `getStaticPaths()` e `prerender = true`
 
 **Styling**: 
-- Tailwind v4 + HeroUI components
-- Membrane Palette design tokens: `var(--color-*)`, `var(--space-*)`, `var(--font-*)` (definidos em `src/styles/design-tokens.css`; spec em `design-system/`)
+- Tailwind v4 via `@tailwindcss/vite`
+- Membrane Palette design tokens: `var(--color-*)`, `var(--space-*)`, `var(--font-*)` (definidos em `design-system/tokens/design-tokens.css`; base layer em `design-system/tokens/base.css`; spec em `design-system/`)
 - Utility class `stack` para layouts verticais com gaps consistentes
 - Pattern `class:list={['base-class', variant]}` para variantes de componentes
 
@@ -362,4 +362,4 @@ img_alt: "Alt text descritivo" # opcional, mas recomendado
 - Manter sincronizado com `README.md` 
 - PRs que alteram workflow devem atualizar seções relevantes
 
-_Atualizado em: 31/03/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._
+_Atualizado em: 06/07/2026 — Este `AGENTS.md` é documentação viva; mantenha-o coeso com README/CI._

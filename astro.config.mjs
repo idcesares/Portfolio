@@ -51,7 +51,7 @@ export default defineConfig({
     defaultStrategy: 'viewport',
   },
 
-  // Experimental features for better performance
+  // Experimental features
   experimental: {
     // SVGO optimization for smaller SVG files
     svgOptimizer: svgoOptimizer({
@@ -63,12 +63,6 @@ export default defineConfig({
         },
       ],
     }),
-    // Queued rendering: two-pass approach for up to 2x faster rendering (planned default in v7)
-    queuedRendering: {
-      enabled: true,
-      // Reuse rendered string values across content collection pages (blog/work)
-      contentCache: true,
-    },
   },
 
   adapter: vercel({
@@ -87,7 +81,7 @@ export default defineConfig({
     layout: 'constrained',
     // Enable responsive styles for proper image resizing
     responsiveStyles: true,
-    // Sharp codec-specific defaults (Astro 6.1) for consistent image encoding
+    // Sharp codec-specific defaults for consistent image encoding
     service: {
       config: {
         jpeg: { mozjpeg: true },
@@ -120,7 +114,7 @@ export default defineConfig({
 
   site: 'https://www.dcesares.dev',
 
-  // Built-in Fonts API (Astro 6) — self-hosted, optimized fallbacks, no external Google requests
+  // Built-in Fonts API: self-hosted, optimized fallbacks, no external Google requests
   fonts: [
     {
       provider: fontProviders.google(),
@@ -148,7 +142,23 @@ export default defineConfig({
     },
   ],
 
-  integrations: [sitemap({
+  integrations: [{
+    // Dev-only workaround for an Astro 7 mismatch: with trailingSlash 'always'
+    // the /_image endpoint only matches WITH a trailing slash, but generated
+    // URLs omit it, so every dev image request 404s. Rewrite before routing.
+    // Production is unaffected (Vercel's image service handles all images).
+    name: 'image-endpoint-trailing-slash-fix',
+    hooks: {
+      'astro:server:setup': ({ server }) => {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url?.startsWith('/_image?')) {
+            req.url = req.url.replace('/_image?', '/_image/?');
+          }
+          next();
+        });
+      },
+    },
+  }, sitemap({
     serialize(item) {
       const pathname = new URL(item.url).pathname;
       const lastmod = sitemapLastmod.get(pathname);

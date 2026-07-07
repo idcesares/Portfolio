@@ -46,15 +46,6 @@
       ]
     },
     {
-      "source": "/search-fallback.js",
-      "headers": [
-        {
-          "key": "Cache-Control",
-          "value": "public, max-age=86400"
-        }
-      ]
-    },
-    {
       "source": "/_astro/(.*)",
       "headers": [
         {
@@ -82,7 +73,7 @@
       ]
     },
     {
-      "source": "/favicon.svg",
+      "source": "/(favicon.svg|apple-touch-icon.png)",
       "headers": [
         {
           "key": "Cache-Control",
