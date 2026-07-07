@@ -48,19 +48,20 @@ Este documento substitui a revisão original de julho, que listava bugs, SEO, GE
 - **Barra final:** a revisão sugeria `trailingSlash: 'never'`; o site adotou `'always'`, com canonical e links internos unificados nesse formato. O problema de conteúdo duplicado está igualmente resolvido; não reabrir.
 - **OG image:** a revisão pedia uma arte dedicada 1200×630; o retrato resolve o caso base. Uma arte OG com identidade Membrane continua sendo um upgrade possível, mas deixou de ser bug.
 
-## 3. Aberto
+## 3. Resolvido (segunda passada)
 
-Em ordem de retorno sobre esforço:
+- **Capas de conteúdo no pipeline de imagens.** `img` no schema das collections agora é `z.union([image(), z.url()])`: capas locais (19 arquivos movidos de `public/assets/blog_imgs/` para `src/assets/covers/`) passam pelo Sharp de verdade (srcset, AVIF/WebP, sem CLS); capas remotas (thumbnails do YouTube, Spotify, GitHub) seguem como string. `seo.ts` ganhou `resolveImageSrc()` para desembrulhar os dois casos nos metadados OG e no structured data.
+- **Consent banner para o GA4.** Os scripts do GA4 saíram do `<head>` incondicional do `BaseLayout`. Um componente `CookieConsent` (mesmo padrão do `ThemeToggle`, custom element + localStorage) mostra um card discreto no canto inferior após a página assentar; só injeta o script do GA4 (via Partytown) se o visitante aceitar, e a recusa é lembrada sem nenhuma requisição a `googletagmanager.com`. Vercel Web Analytics e Speed Insights não usam cookies, então ficam de fora do gate.
+- **`/tech-signal/` confirmada como órfã intencional.** Não é um bug: é uma página de referência pessoal do Isaac (agregador de fontes de tech news), propositalmente fora do Nav/Footer. Já é descoberta via `/dev` (listada como projeto). Nada a mudar na estrutura; llms.txt e llms-full.txt já não a citam como navegação essencial.
+- **`search-fallback.js` removido.** O script do `SearchBox` já rodava como módulo Astro (deferred por natureza), então as três camadas de fallback e o arquivo separado em `public/` eram redundantes. Init colapsado para uma única chamada direta; o listener de `searchOverlayOpened` (warmup do Fuse.js antes do primeiro clique) continua.
+- **`apple-touch-icon` adicionado.** PNG 180×180 gerado a partir do `favicon.svg` via Sharp, linkado no `MainHead`.
 
-1. **Capas de conteúdo fora do pipeline de imagens.** O campo `img` do schema ainda é string apontando para `public/`. Migrar para o helper `image()` do `astro:content` colocaria todas as capas no Sharp (AVIF/WebP, dimensões automáticas, sem CLS). É a maior alavanca de performance restante.
-2. **Três camadas de analytics.** GA4 (via Partytown), Vercel Web Analytics e Speed Insights rodam juntos. GA4 usa cookies sem aviso de consentimento (LGPD, audiência majoritariamente brasileira). Decisão do Isaac: se o Vercel Analytics atende, remover GA4 e Partytown simplifica o site e elimina a questão; se GA4 fica, considerar consent banner.
-3. **`/tech-signal/` é página órfã.** Não aparece em Nav, Footer nem em nenhuma outra página (`/deals/` já está no Footer como "Indico e uso"). Decidir: linkar ou manter como página de link direto, e refletir a decisão no llms.txt.
-4. **`search-fallback.js` + evento customizado.** Funciona, mas o init do SearchBox como módulo normal do Astro eliminaria o arquivo em `public/` e o header de cache dedicado no `vercel.json`.
-5. **`apple-touch-icon` ausente.** Só existe o favicon SVG.
-6. **Retrofit editorial de voz nos posts de 2024.** Travessões longos e vocabulário vetado pelo BRAND-VOICE.md ainda aparecem em textos antigos de `content/`. Passada editorial com o Isaac (Claude edita, não substitui a voz).
+## 4. Aberto
+
+- **Retrofit editorial de voz nos posts de 2024.** Travessões longos e vocabulário vetado pelo BRAND-VOICE.md ainda aparecem em textos antigos de `content/`. Passada editorial com o Isaac (Claude edita, não substitui a voz).
 
 ## 4. Internacionalização (plano mantido)
 
 O plano de i18n da revisão original continua válido e não foi iniciado: inglês como segundo locale via i18n nativo do Astro (`/en/`, português na raiz, zero mudança de URL existente), em três fases: fundação (dicionários de UI, `lang` dinâmico, `seo.ts` por locale), páginas institucionais em inglês (Home, About, Dev, Contact, com hreflang e sitemap i18n, absorvendo `/tech-signal/` como `/en/tech-signal/`), e conteúdo seletivo (campos `lang` e `translationKey` no schema, tradução sob demanda dos conteúdos com apelo internacional).
 
-O que não fazer segue igual: subdomínio separado, tradução automática em massa, ou traduzir antes de fechar os itens abertos da seção 3.
+O que não fazer segue igual: subdomínio separado, tradução automática em massa, ou traduzir antes de fechar os itens abertos da seção 4.
