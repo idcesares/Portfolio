@@ -2,7 +2,7 @@
 title: "ReFi: transformando finanças para um futuro sustentável"
 publishDate: 2026-03-26 19:00:00
 updatedDate: 2026-03-26 19:00:00
-img: /assets/blog_imgs/refi-ufrj-capa.jpg
+img: ../../assets/covers/refi-ufrj-capa.jpg
 img_alt: Cartaz da palestra ReFi apresentada na Semana da Computação da UFRJ em março de 2026
 description: Relato da palestra na 8ª Semana da Computação da UFRJ sobre greenwashing, blockchain e finanças regenerativas como infraestrutura de confiança.
 tags:

@@ -25,6 +25,10 @@ export const DEFAULT_OG_IMAGE = '/assets/portrait.webp';
 const getSiteHref = (site: URL) => site.href;
 export const getPersonId = (site: URL) => new URL('/about/#person', site).toString();
 
+/** Cover images are either a local ImageMetadata (from the image() schema helper) or a remote URL string. */
+export const resolveImageSrc = (img: string | { src: string }) =>
+  typeof img === 'string' ? img : img.src;
+
 export const getSiteStructuredData = (site: URL) => [
   {
     '@context': 'https://schema.org',
@@ -85,7 +89,7 @@ export const getBlogPostingStructuredData = (
   site: URL
 ) => {
   const pageUrl = new URL(`/blog/${entry.id}/`, site).toString();
-  const imageUrl = new URL(entry.data.img, site).toString();
+  const imageUrl = new URL(resolveImageSrc(entry.data.img), site).toString();
   const updatedDate = entry.data.updatedDate ?? entry.data.publishDate;
 
   return {
@@ -109,7 +113,7 @@ export const getWorkStructuredData = (
   site: URL
 ) => {
   const pageUrl = new URL(`/work/${entry.id}/`, site).toString();
-  const imageUrl = new URL(entry.data.img, site).toString();
+  const imageUrl = new URL(resolveImageSrc(entry.data.img), site).toString();
   const updatedDate = entry.data.updatedDate ?? entry.data.publishDate;
 
   return {
