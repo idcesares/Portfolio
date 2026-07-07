@@ -207,9 +207,6 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     }
 
     setupSearchInstance(searchInput: HTMLInputElement, searchResults: HTMLElement, searchClear: HTMLElement) {
-      // Mark as initialized to prevent double initialization
-      searchInput.setAttribute('data-search-initialized', 'true');
-      
       searchInput.addEventListener('input', async (e: Event) => {
         const query = (e.target as HTMLInputElement).value;
         await this.performSearch(query, searchResults);
@@ -388,55 +385,12 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     }
   }
 
-  let searchManager: SearchManager | null = null;
-
-  // Initialize search when DOM is loaded
-  function initializeSearch() {
-    if (searchManager) return;
-
-    // Wait a bit more to ensure all components are loaded
-    setTimeout(() => {
-      if (!searchManager) {
-        searchManager = new SearchManager();
-      }
-    }, 100);
-  }
-
-  // Multiple initialization strategies for better compatibility
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', initializeSearch);
-  } else if (document.readyState === 'interactive') {
-    // DOM is loaded but resources may still be loading
-    initializeSearch();
-  } else {
-    // Document and resources are fully loaded
-    initializeSearch();
-  }
-
-  // Fallback initialization for any edge cases
-  window.addEventListener('load', () => {
-    // Check if search manager was already initialized
-    const searchInput = document.querySelector('#search-input');
-    if (searchInput && !searchInput.hasAttribute('data-search-initialized')) {
-      initializeSearch();
-    }
-  });
-
-  // Listen for custom fallback event
-  document.addEventListener('initializeSearch', () => {
-    const searchInput = document.querySelector('#search-input');
-    if (searchInput && !searchInput.hasAttribute('data-search-initialized')) {
-      initializeSearch();
-    }
-  });
+  // Astro module scripts run after the DOM is parsed, so #search-input
+  // already exists by the time this executes — no readiness dance needed.
+  const searchManager = new SearchManager();
 
   // Warm up search assets when the overlay opens for a snappy first query.
   document.addEventListener('searchOverlayOpened', () => {
-    if (!searchManager) {
-      initializeSearch();
-    }
-    setTimeout(() => {
-      searchManager?.warmup();
-    }, 0);
+    searchManager.warmup();
   });
 </script>
