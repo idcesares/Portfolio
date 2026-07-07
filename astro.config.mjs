@@ -142,7 +142,23 @@ export default defineConfig({
     },
   ],
 
-  integrations: [sitemap({
+  integrations: [{
+    // Dev-only workaround for an Astro 7 mismatch: with trailingSlash 'always'
+    // the /_image endpoint only matches WITH a trailing slash, but generated
+    // URLs omit it, so every dev image request 404s. Rewrite before routing.
+    // Production is unaffected (Vercel's image service handles all images).
+    name: 'image-endpoint-trailing-slash-fix',
+    hooks: {
+      'astro:server:setup': ({ server }) => {
+        server.middlewares.use((req, _res, next) => {
+          if (req.url?.startsWith('/_image?')) {
+            req.url = req.url.replace('/_image?', '/_image/?');
+          }
+          next();
+        });
+      },
+    },
+  }, sitemap({
     serialize(item) {
       const pathname = new URL(item.url).pathname;
       const lastmod = sitemapLastmod.get(pathname);
