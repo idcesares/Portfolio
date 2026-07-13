@@ -44,7 +44,7 @@ export const devProjects: DevProject[] = [
 			'Portfólio profissional e blog técnico com busca inteligente, design system proprietário e deploy contínuo.',
 		longDescription:
 			'Plataforma construída do zero com Astro 7 em modo SSR, sistema de busca com Fuse.js, filtragem dinâmica por tags e categorias, animações CSS com scroll reveal, e o Membrane Palette Design System, um sistema de tokens semânticos que garante consistência visual em light e dark mode.',
-		img: '/assets/blog_imgs/astro.webp',
+		img: '/assets/blog_imgs/what-is-astro-cover-image.webp',
 		imgAlt: 'Screenshot do portfólio dcesares.dev com o design Membrane Palette',
 		techStack: [
 			{ name: 'Astro 7', color: 'teal' },
