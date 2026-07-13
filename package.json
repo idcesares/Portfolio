@@ -24,7 +24,7 @@
     "@rehype-pretty/transformers": "^0.13.2",
     "@tailwindcss/vite": "^4.3.2",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.0.6",
+    "astro": "^7.0.7",
     "astro-embed": "^0.13.1",
     "astro-seo": "^1.1.0",
     "fuse.js": "^7.4.2",
