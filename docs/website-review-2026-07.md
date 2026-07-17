@@ -55,6 +55,7 @@ Este documento substitui a revisão original de julho, que listava bugs, SEO, GE
 - **`/tech-signal/` confirmada como órfã intencional.** Não é um bug: é uma página de referência pessoal do Isaac (agregador de fontes de tech news), propositalmente fora do Nav/Footer. Já é descoberta via `/dev` (listada como projeto). Nada a mudar na estrutura; llms.txt e llms-full.txt já não a citam como navegação essencial.
 - **`search-fallback.js` removido.** O script do `SearchBox` já rodava como módulo Astro (deferred por natureza), então as três camadas de fallback e o arquivo separado em `public/` eram redundantes. Init colapsado para uma única chamada direta; o listener de `searchOverlayOpened` (warmup do Fuse.js antes do primeiro clique) continua.
 - **`apple-touch-icon` adicionado.** PNG 180×180 gerado a partir do `favicon.svg` via Sharp, linkado no `MainHead`.
+- **Busca global e navegação acessíveis por teclado.** O overlay agora expõe semântica de diálogo modal, recebe e contém o foco, fecha com `Esc`, devolve o foco ao gatilho e bloqueia o scroll de fundo. Campo, controles e regiões têm nomes em português; leitores de tela recebem a contagem de resultados. Links de Blog e Trabalhos também mantêm `aria-current="page"` nas rotas internas.
 
 ## 4. Aberto
 

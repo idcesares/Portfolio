@@ -12,21 +12,30 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	{ label: 'Sobre', href: '/about/' },
 	{ label: 'Contato', href: '/contact/' },
 ];
+
+const isCurrentPath = (href: string) =>
+	Astro.url.pathname === href || (href !== '/' && Astro.url.pathname.startsWith(href));
 ---
 
-<nav>
+<nav aria-label="Navegação principal">
 	<div class="nav-shell">
 		<div class="menu-header">
 			<a href="/" class="site-title" aria-label="Isaac D'Césares">
 				<span class="monogram" aria-hidden="true"><span class="monogram-d">d</span><span class="monogram-c">c</span></span>
 			</a>
 			<div class="nav-actions">
-				<button class="search-toggle" id="search-toggle" type="button" aria-label="Open search">
+				<button class="search-toggle" id="search-toggle" type="button" aria-label="Abrir busca">
 					<Icon icon="magnifying-glass" />
 				</button>
 				<menu-button>
 					<template>
-						<button class="menu-button" aria-expanded="false">
+						<button
+							class="menu-button"
+							type="button"
+							aria-controls="menu-content"
+							aria-expanded="false"
+							aria-label="Abrir menu"
+						>
 							<span class="sr-only">Menu</span>
 							<Icon icon="list" />
 						</button>
@@ -40,13 +49,11 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 					textLinks.map(({ label, href, prefetch }) => (
 						<li>
 							<a
-								aria-current={Astro.url.pathname === href}
+								aria-current={isCurrentPath(href) ? 'page' : undefined}
 								class:list={[
 									'link',
 									{
-										active:
-											Astro.url.pathname === href ||
-											(href !== '/' && Astro.url.pathname.startsWith(href)),
+										active: isCurrentPath(href),
 									},
 								]}
 								href={href}
@@ -66,13 +73,11 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 					textLinks.map(({ label, href, prefetch }) => (
 						<li>
 							<a
-								aria-current={Astro.url.pathname === href}
+								aria-current={isCurrentPath(href) ? 'page' : undefined}
 								class:list={[
 									'link',
 									{
-										active:
-											Astro.url.pathname === href ||
-											(href !== '/' && Astro.url.pathname.startsWith(href)),
+										active: isCurrentPath(href),
 									},
 								]}
 								href={href}
@@ -85,7 +90,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 				}
 			</ul>
 			<div class="menu-footer">
-				<button class="search-toggle desktop-search-btn" id="search-toggle-desktop" type="button" aria-label="Open search">
+				<button class="search-toggle desktop-search-btn" id="search-toggle-desktop" type="button" aria-label="Abrir busca">
 					<Icon icon="magnifying-glass" />
 				</button>
 
@@ -95,11 +100,18 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			</div>
 		</div>
 	</div>
-	<div class="search-overlay" id="search-overlay" hidden>
+	<div
+		class="search-overlay"
+		id="search-overlay"
+		role="dialog"
+		aria-modal="true"
+		aria-labelledby="search-dialog-title"
+		hidden
+	>
 		<div class="search-overlay-content">
 			<div class="search-modal-header">
-				<h2>Busca</h2>
-				<button class="search-close" id="search-close" type="button" aria-label="Close search">
+				<h2 id="search-dialog-title">Busca</h2>
+				<button class="search-close" id="search-close" type="button" aria-label="Fechar busca">
 					<Icon icon="arrow-left" />
 				</button>
 			</div>
@@ -126,6 +138,7 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			/** Set whether the menu is currently expanded or collapsed. */
 			const setExpanded = (expand: boolean) => {
 				btn.setAttribute('aria-expanded', expand ? 'true' : 'false');
+				btn.setAttribute('aria-label', expand ? 'Fechar menu' : 'Abrir menu');
 				menu.hidden = !expand;
 			};
 
@@ -156,11 +169,46 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			const searchOverlay = document.getElementById('search-overlay');
 			const searchClose = document.getElementById('search-close');
 			const searchInput = document.getElementById('search-input');
+			let previousFocus: HTMLElement | null = null;
+			let inertElements: HTMLElement[] = [];
 
 			if (!searchOverlay || !searchClose) return;
 
+			const makeBackgroundInert = () => {
+				const backgroundElements = [
+					...Array.from(document.body.children).filter(
+						(element) => !element.contains(searchOverlay)
+					),
+					...Array.from(searchOverlay.parentElement?.children ?? []).filter(
+						(element) => element !== searchOverlay
+					),
+				];
+
+				inertElements = backgroundElements.filter(
+					(element): element is HTMLElement =>
+						element instanceof HTMLElement && !element.inert
+				);
+				inertElements.forEach((element) => {
+					element.inert = true;
+				});
+			};
+
+			const restoreBackground = () => {
+				inertElements.forEach((element) => {
+					element.inert = false;
+				});
+				inertElements = [];
+			};
+
 			const openSearch = () => {
+				if (!searchOverlay.hidden) return;
+
+				previousFocus = document.activeElement instanceof HTMLElement
+					? document.activeElement
+					: null;
 				searchOverlay.hidden = false;
+				document.documentElement.classList.add('search-open');
+				makeBackgroundInert();
 				document.dispatchEvent(new CustomEvent('searchOverlayOpened'));
 				// Focus the input after a small delay to ensure the modal is rendered
 				setTimeout(() => {
@@ -169,7 +217,37 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 			};
 
 			const closeSearch = () => {
+				if (searchOverlay.hidden) return;
+
 				searchOverlay.hidden = true;
+				document.documentElement.classList.remove('search-open');
+				restoreBackground();
+				previousFocus?.focus();
+				previousFocus = null;
+			};
+
+			const trapFocus = (event: KeyboardEvent) => {
+				const focusableElements = Array.from(
+					searchOverlay.querySelectorAll<HTMLElement>(
+						'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])'
+					)
+				).filter((element) => !element.hidden && element.getClientRects().length > 0);
+
+				if (focusableElements.length === 0) {
+					event.preventDefault();
+					return;
+				}
+
+				const first = focusableElements[0];
+				const last = focusableElements[focusableElements.length - 1];
+
+				if (event.shiftKey && document.activeElement === first) {
+					event.preventDefault();
+					last.focus();
+				} else if (!event.shiftKey && document.activeElement === last) {
+					event.preventDefault();
+					first.focus();
+				}
 			};
 
 			// Mobile search toggle
@@ -187,8 +265,12 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 
 			// Close on escape key
 			document.addEventListener('keydown', (e) => {
-				if (e.key === 'Escape' && !searchOverlay.hidden) {
+				if (searchOverlay.hidden) return;
+
+				if (e.key === 'Escape') {
 					closeSearch();
+				} else if (e.key === 'Tab') {
+					trapFocus(e);
 				}
 			});
 
@@ -340,6 +422,10 @@ const textLinks: { label: string; href: string; prefetch?: 'load' | 'hover' | 'v
 	.search-overlay[hidden] {
 		display: none;
 		opacity: 0;
+	}
+
+	:global(html.search-open) {
+		overflow: hidden;
 	}
 
 	.search-overlay-content {
