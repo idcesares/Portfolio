@@ -7,19 +7,23 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 ---
 
 <div class="search-container">
+  <label for="search-input" class="sr-only">Buscar em posts e projetos</label>
   <div class="search-box">
     <input
-      type="text"
+      type="search"
       id="search-input"
       placeholder={placeholder}
       class="search-input"
+      autocomplete="off"
+      aria-controls="search-results"
     />
     <button type="button" class="search-clear" id="search-clear">
       <span class="sr-only">Limpar busca</span>
       ×
     </button>
   </div>
-  <div id="search-results" class="search-results hidden"></div>
+  <span id="search-status" class="sr-only" aria-live="polite"></span>
+  <div id="search-results" class="search-results hidden" aria-label="Resultados da busca"></div>
 </div>
 
 <style>
@@ -60,6 +64,10 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
     color: var(--color-text-tertiary);
   }
 
+  .search-input::-webkit-search-cancel-button {
+    appearance: none;
+  }
+
   .search-clear {
     position: absolute;
     right: var(--space-2);
@@ -75,6 +83,12 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
 
   .search-clear:hover {
     color: var(--color-text-primary);
+  }
+
+  .search-clear:focus-visible,
+  :global(.search-result-item:focus-visible) {
+    outline: 2px solid var(--color-teal);
+    outline-offset: 2px;
   }
 
   .search-results {
@@ -200,28 +214,34 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       const searchInput = document.querySelector('#search-input') as HTMLInputElement;
       const searchResults = document.querySelector('#search-results') as HTMLElement;
       const searchClear = document.querySelector('#search-clear') as HTMLElement;
+      const searchStatus = document.querySelector('#search-status') as HTMLElement;
       
-      if (searchInput && searchResults && searchClear) {
-        this.setupSearchInstance(searchInput, searchResults, searchClear);
+      if (searchInput && searchResults && searchClear && searchStatus) {
+        this.setupSearchInstance(searchInput, searchResults, searchClear, searchStatus);
       }
     }
 
-    setupSearchInstance(searchInput: HTMLInputElement, searchResults: HTMLElement, searchClear: HTMLElement) {
+    setupSearchInstance(
+      searchInput: HTMLInputElement,
+      searchResults: HTMLElement,
+      searchClear: HTMLElement,
+      searchStatus: HTMLElement
+    ) {
       searchInput.addEventListener('input', async (e: Event) => {
         const query = (e.target as HTMLInputElement).value;
-        await this.performSearch(query, searchResults);
+        await this.performSearch(query, searchResults, searchStatus);
       });
 
       searchInput.addEventListener('focus', async (e: Event) => {
         this.warmup();
         const query = (e.target as HTMLInputElement).value;
         if (query.length >= 2) {
-          await this.performSearch(query, searchResults);
+          await this.performSearch(query, searchResults, searchStatus);
         }
       });
 
       searchClear.addEventListener('click', () => {
-        this.clearSearch(searchInput, searchResults);
+        this.clearSearch(searchInput, searchResults, searchStatus);
       });
 
       // Handle Escape key
@@ -241,25 +261,30 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       });
     }
 
-    async performSearch(query: string, searchResults: HTMLElement) {
+    async performSearch(
+      query: string,
+      searchResults: HTMLElement,
+      searchStatus: HTMLElement
+    ) {
       if (query.length < 2) {
         this.hideResults(searchResults);
+        searchStatus.textContent = '';
         return;
       }
 
       if (!this.fuse) {
-        this.displayNoResults(searchResults, 'Carregando busca...');
+        this.displayNoResults(searchResults, searchStatus, 'Carregando busca...');
       }
 
       await this.ensureSearchLoaded();
 
       if (!this.fuse) {
-        this.displayNoResults(searchResults, 'Busca indisponível no momento');
+        this.displayNoResults(searchResults, searchStatus, 'Busca indisponível no momento');
         return;
       }
 
       const results = this.fuse.search(query);
-      this.displayResults(results.slice(0, 8), searchResults); // Limit to 8 results
+      this.displayResults(results.slice(0, 8), searchResults, searchStatus); // Limit to 8 results
     }
 
     warmup() {
@@ -309,14 +334,23 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       }
     }
 
-    displayNoResults(searchResults: HTMLElement, message: string = 'No results found') {
+    displayNoResults(
+      searchResults: HTMLElement,
+      searchStatus: HTMLElement,
+      message: string = 'Nenhum resultado encontrado'
+    ) {
       searchResults.innerHTML = `<div class="search-no-results">${message}</div>`;
+      searchStatus.textContent = message;
       this.showResults(searchResults);
     }
 
-    displayResults(results: FuseResult[], searchResults: HTMLElement) {
+    displayResults(
+      results: FuseResult[],
+      searchResults: HTMLElement,
+      searchStatus: HTMLElement
+    ) {
       if (results.length === 0) {
-        this.displayNoResults(searchResults);
+        this.displayNoResults(searchResults, searchStatus);
         return;
       }
 
@@ -334,6 +368,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       }).join('');
 
       searchResults.innerHTML = resultsHTML;
+      searchStatus.textContent = `${results.length} ${results.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}`;
       this.showResults(searchResults);
     }
 
@@ -371,9 +406,15 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
       return truncated + '...';
     }
 
-    clearSearch(searchInput: HTMLInputElement, searchResults: HTMLElement) {
+    clearSearch(
+      searchInput: HTMLInputElement,
+      searchResults: HTMLElement,
+      searchStatus: HTMLElement
+    ) {
       searchInput.value = '';
+      searchStatus.textContent = '';
       this.hideResults(searchResults);
+      searchInput.focus();
     }
 
     showResults(searchResults: HTMLElement) {
