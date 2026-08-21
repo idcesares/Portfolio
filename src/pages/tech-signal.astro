@@ -10,10 +10,13 @@ import {
   CATEGORIES,
   CURATED_AT,
   CURATED_LABEL,
+  KIND_DESC,
+  KIND_NAME,
   SOURCES,
   TIER_DESC,
   TIER_NAME,
   countByCategory,
+  type SignalKind,
   type SignalSource,
 } from '../data/tech-signal-sources';
 
@@ -38,7 +41,17 @@ const orderedSources: SignalSource[] = [...SOURCES].sort(
 const brazilianCount = SOURCES.filter(
   (source) => source.region === 'Brasil' || source.region === 'LATAM'
 ).length;
-const categoryCount = CATEGORIES.length - 1;
+
+const KIND_ORDER: SignalKind[] = ['jornalismo', 'analise', 'pesquisa', 'primaria', 'descoberta'];
+const kindCounts = KIND_ORDER.map((kind) => ({
+  kind,
+  label: KIND_NAME[kind],
+  title: KIND_DESC[kind],
+  count: SOURCES.filter((source) => source.kind === kind).length,
+}));
+const primaryCount = SOURCES.filter(
+  (source) => source.kind === 'primaria' || source.kind === 'pesquisa'
+).length;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -360,7 +373,7 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 /* Result meta line */
 .result-meta {
   display: flex; align-items: center; justify-content: space-between;
-  gap: var(--space-4); margin-bottom: var(--space-5); flex-wrap: wrap;
+  gap: var(--space-4) var(--space-6); margin-bottom: var(--space-5); flex-wrap: wrap;
 }
 .result-meta-left { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
 .result-title {
@@ -406,6 +419,22 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
 .tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
 .tier-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+
+/* Controle de natureza da fonte: mesma anatomia do de prioridade,
+   sem os pontos coloridos, que ali significam tier. */
+.kind-btn {
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
+  min-height: calc(var(--size-touch-target) - 8px);
+  color: var(--color-text-secondary);
+  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  transition: all var(--duration-fast) var(--ease-default);
+  white-space: nowrap;
+}
+.kind-btn:hover { color: var(--color-text-primary); }
+.kind-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.kind-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.kind-btn .pill-count { font-family: var(--font-mono); font-size: 0.62rem; opacity: 0.65; }
 
 /* ═══════════ CARD GRID ═══════════ */
 .grid {
@@ -486,6 +515,8 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 }
 .tag-cadence { background: var(--color-terracotta-10); color: var(--color-terracotta); }
 .tag-deep    { background: var(--color-teal-10);       color: var(--color-teal); }
+.tag-kind    { background: var(--color-bg-primary);    color: var(--color-text-secondary);
+               border: 1px solid var(--color-border-default); }
 .tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-tertiary); }
 .tag-region  { background: var(--color-sage-10);       color: var(--color-success-text); }
 .access {
@@ -606,7 +637,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
       <div class="header-stats">
         <div class="stat"><span class="stat-num">{orderedSources.length}</span><span class="stat-label">fontes</span></div>
         <div class="stat"><span class="stat-num">{brazilianCount}</span><span class="stat-label">do Brasil</span></div>
-        <div class="stat"><span class="stat-num">{categoryCount}</span><span class="stat-label">categorias</span></div>
+        <div class="stat"><span class="stat-num">{primaryCount}</span><span class="stat-label">primárias</span></div>
       </div>
     </div>
   </div>
@@ -667,6 +698,17 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
       <span class="result-count" id="resultCount" role="status" aria-live="polite"></span>
     </div>
     <div class="tier-control">
+      <span class="tier-control-label">Natureza</span>
+      <div class="tier-seg" id="kindSeg" role="group" aria-label="Filtrar por natureza da fonte">
+        <button type="button" class="kind-btn active" data-kind="todas" aria-pressed="true">Todas</button>
+        {kindCounts.map((item) => (
+          <button type="button" class="kind-btn" data-kind={item.kind} aria-pressed="false" title={item.title}>
+            {item.label} <span class="pill-count">{item.count}</span>
+          </button>
+        ))}
+      </div>
+    </div>
+    <div class="tier-control">
       <span class="tier-control-label">Prioridade</span>
       <div class="tier-seg" id="tierSeg" role="group" aria-label="Filtrar por prioridade">
         <button type="button" class="tier-btn active" data-tier="todas" aria-pressed="true">Todas</button>
@@ -683,7 +725,8 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
         class:list={['card', `t${source.tier}`]}
         data-tier={source.tier}
         data-cats={source.cats.join(' ')}
-        data-haystack={[source.name, source.desc, source.topics.join(' '), source.region, source.url].join(' ').toLowerCase()}
+        data-kind={source.kind}
+        data-haystack={[source.name, source.desc, source.topics.join(' '), source.region, KIND_NAME[source.kind], source.url].join(' ').toLowerCase()}
         style={`--i:${Math.min(index, 14)}`}
       >
         <div class="card-head">
@@ -708,9 +751,10 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
           <p class="card-desc" data-original={source.desc}>{source.desc}</p>
         </div>
         <div class="card-foot">
+          <span class="tag tag-kind" title={KIND_DESC[source.kind]}>{KIND_NAME[source.kind]}</span>
           <span class="tag tag-cadence">{source.cadence}</span>
           {source.deep && <span class="tag tag-deep">Aprofundado</span>}
-          <span class="tag tag-region">{source.region}</span>
+          {source.region !== 'Global' && <span class="tag tag-region">{source.region}</span>}
           {source.topics.map((topic) => <span class="tag tag-topic">{topic}</span>)}
           <span class:list={['access', source.access === 'aberto' ? 'access-free' : 'access-paid']}>{accessLabel(source.access)}</span>
         </div>
@@ -727,10 +771,12 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
 
   <section class="method" aria-labelledby="methodTitle">
     <h2 id="methodTitle" class="result-title" style="font-size: var(--text-h3)">Como esta lista é feita</h2>
-    <p>Uma fonte entra aqui quando passa em três perguntas. Ela publica apuração própria, ou só recircula o que outros publicaram? Ela sustenta o que afirma com dado, documento ou fonte que dá para conferir? E ela me faz mudar de ideia sobre alguma coisa com alguma frequência, ou apenas confirma o que eu já pensava?</p>
-    <p>A prioridade não mede qualidade, mede frequência de uso. Essencial é o que eu leio de forma recorrente. Forte é excelente, e o peso depende do papel de quem lê. Situacional é o que eu procuro quando o assunto específico aparece. Um veículo excelente pode ser situacional, e isso não é demérito.</p>
-    <p>Veículos brasileiros de alto volume e baixa apuração ficaram de fora de propósito. A lista prioriza quem produz reportagem, pesquisa ou dado primário sobre tecnologia no Brasil, porque essa camada quase não aparece na cobertura internacional e é justamente onde eu trabalho.</p>
-    <p>A curadoria é revisada periodicamente e cada revisão tira fontes, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
+    <p>Uma fonte entra aqui quando passa em três perguntas. Ela sustenta o que afirma com dado, documento ou apuração que dá para conferir? Ela cobre alguma coisa que as outras da lista não cobrem? E ela me faz mudar de ideia com alguma frequência, ou só confirma o que eu já pensava?</p>
+    <p>Cada card diz qual é a natureza da fonte, e essa é a distinção que mais muda a leitura. Jornalismo é redação com apuração própria. Análise é interpretação assinada, com tese à mostra. Pesquisa é produção acadêmica ou institucional com metodologia pública. Fonte primária é a organização falando de si mesma, o que a torna parcial e indispensável ao mesmo tempo: o comunicado de um laboratório de IA ou a sanção de um regulador são o fato, não a cobertura do fato. Descoberta não publica nada de original, revela o que outros publicaram, e serve para medir o tamanho de um assunto, não para formar opinião sobre ele.</p>
+    <p>A prioridade não mede qualidade, mede frequência de uso. Essencial é o que eu leio de forma recorrente. Forte é excelente, e o peso depende do papel de quem lê. Situacional é o que eu procuro quando o assunto aparece. Um veículo excelente pode ser situacional, e isso não é demérito: a ANPD e o Cetic.br publicam algumas vezes por ano, e quando publicam valem mais que um mês de notícia.</p>
+    <p>A camada brasileira de reguladores e institutos é a parte que uma curadoria de tecnologia quase nunca tem. ANPD, Anatel, CADE, Banco Central e MCTI publicam o documento original dias antes de a imprensa interpretá-lo, e a interpretação erra com frequência. Junto com Cetic.br, InternetLab e Data Privacy Brasil, é onde se descobre o que de fato está sendo decidido sobre tecnologia no país.</p>
+    <p>Ficaram de fora, de propósito, os portais brasileiros de alto volume e baixa apuração. Num agregador com pontuação dá para incluir e reduzir o peso deles; numa lista curada, incluir o que se pretende ignorar contradiz a promessa da lista. Pelo mesmo motivo, esta revisão tirou quatro fontes que tinham virado redundantes.</p>
+    <p>A curadoria é revisada periodicamente e cada revisão corta, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
   </section>
 </main>
 
@@ -755,6 +801,7 @@ const emptyState  = document.getElementById('empty');
 const resultTitle = document.getElementById('resultTitle');
 const resultCount = document.getElementById('resultCount');
 const tierSeg     = document.getElementById('tierSeg');
+const kindSeg     = document.getElementById('kindSeg');
 const cards       = Array.from(grid.querySelectorAll('.card'));
 
 const CATEGORY_LABELS = {};
@@ -765,7 +812,13 @@ const TIER_NAME = { 1: 'Essencial', 2: 'Forte', 3: 'Situacional' };
 
 let activeFilter = 'todas';
 let activeTier   = 'todas';
+let activeKind   = 'todas';
 let searchTerm   = '';
+
+const KIND_LABELS = {};
+kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
+  KIND_LABELS[btn.dataset.kind] = btn.textContent.replace(/\s*\d+\s*$/, '').trim();
+});
 
 const escapeHTML = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 
@@ -792,8 +845,9 @@ function render() {
   cards.forEach(card => {
     const matchesCat  = activeFilter === 'todas' || card.dataset.cats.split(' ').includes(activeFilter);
     const matchesTier = activeTier === 'todas' || card.dataset.tier === activeTier;
+    const matchesKind = activeKind === 'todas' || card.dataset.kind === activeKind;
     const matchesTerm = !term || card.dataset.haystack.includes(term);
-    const show = matchesCat && matchesTier && matchesTerm;
+    const show = matchesCat && matchesTier && matchesKind && matchesTerm;
 
     card.hidden = !show;
     if (show) {
@@ -803,6 +857,7 @@ function render() {
   });
 
   let title = activeFilter === 'todas' ? 'Todas as fontes' : CATEGORY_LABELS[activeFilter];
+  if (activeKind !== 'todas') title += ' · ' + KIND_LABELS[activeKind];
   if (activeTier !== 'todas') title += ' · ' + TIER_NAME[activeTier];
   resultTitle.textContent = title;
   resultCount.textContent = visible === 1 ? '1 fonte' : visible + ' fontes';
@@ -818,6 +873,16 @@ function setCategory(id) {
     const on = pill.dataset.filter === id;
     pill.classList.toggle('active', on);
     pill.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  render();
+}
+
+function setKind(kind) {
+  activeKind = kind;
+  kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
+    const on = btn.dataset.kind === kind;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   render();
 }
@@ -838,6 +903,10 @@ filterRow.querySelectorAll('.filter-pill').forEach(pill => {
 
 tierSeg.querySelectorAll('.tier-btn').forEach(btn => {
   btn.addEventListener('click', () => setTier(btn.dataset.tier));
+});
+
+kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
+  btn.addEventListener('click', () => setKind(btn.dataset.kind));
 });
 
 // Selo de prioridade dentro do card também filtra. Clicar de novo no ativo limpa.
@@ -869,6 +938,7 @@ document.getElementById('emptyReset').addEventListener('click', () => {
   searchInput.value = '';
   searchClear.classList.remove('visible');
   setCategory('todas');
+  setKind('todas');
   setTier('todas');
 });
 
