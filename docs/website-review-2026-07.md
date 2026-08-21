@@ -59,6 +59,8 @@ Este documento substitui a revisão original de julho, que listava bugs, SEO, GE
 
 ## 4. Aberto
 
+- **Feeds ausentes na curadoria do Tech Signal.** 14 das 69 fontes não entram no `/tech-signal.opml` porque não publicam feed utilizável: Reuters e Anthropic não expõem RSS público, o Banco Central serve JSON, o único feed do Hugging Face Daily Papers é espelho de terceiro, o do ITS Rio responde vazio, e os do gov.br (CADE, MCTI) são listagem de pasta do Plone com metade dos itens sendo arquivo de imagem. Vale reconferir a cada revisão da curadoria: se algum passar a publicar feed limpo, é só preencher o campo `feed` em `src/data/tech-signal-sources.ts`.
+
 - **Retrofit editorial de voz nos posts de 2024.** Travessões longos e vocabulário vetado pelo BRAND-VOICE.md ainda aparecem em textos antigos de `content/`. Passada editorial com o Isaac (Claude edita, não substitui a voz).
 
 ## 4. Internacionalização (plano mantido)

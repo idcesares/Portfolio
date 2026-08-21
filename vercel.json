@@ -64,6 +64,15 @@
       ]
     },
     {
+      "source": "/tech-signal.opml",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=3600, s-maxage=43200"
+        }
+      ]
+    },
+    {
       "source": "/llms(-full)?.txt",
       "headers": [
         {

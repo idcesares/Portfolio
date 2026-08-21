@@ -52,6 +52,7 @@ const kindCounts = KIND_ORDER.map((kind) => ({
 const primaryCount = SOURCES.filter(
   (source) => source.kind === 'primaria' || source.kind === 'pesquisa'
 ).length;
+const feedCount = SOURCES.filter((source) => source.feed).length;
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -570,6 +571,29 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   line-height: 1.7; max-width: 68ch;
 }
 .method p + p { margin-top: var(--space-3); }
+.method-export {
+  margin-top: var(--space-6); padding-top: var(--space-5);
+  border-top: 1px solid var(--color-border-default);
+  display: flex; align-items: center; justify-content: space-between;
+  gap: var(--space-6); flex-wrap: wrap;
+}
+.method-export-text { flex: 1; min-width: 22rem; }
+.method-export-link {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  min-height: var(--size-touch-target); flex-shrink: 0;
+  padding: var(--space-2) var(--space-5);
+  font-size: 0.875rem; font-weight: 500;
+  color: var(--color-text-on-accent); background: var(--color-terracotta);
+  border-radius: var(--radius-full);
+  transition: background-color var(--duration-fast) var(--ease-default),
+              transform var(--duration-fast) var(--ease-default);
+}
+.method-export-link:hover { background: var(--color-burgundy); transform: translateY(-1px); }
+.method-export-link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+@media (max-width: 560px) {
+  .method-export-text { min-width: 0; }
+  .method-export-link { width: 100%; justify-content: center; }
+}
 
 /* Highlight (search match) */
 mark { background: var(--color-amber); color: var(--color-charcoal); border-radius: 2px; padding: 0 1px; }
@@ -777,6 +801,16 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
     <p>A camada brasileira de reguladores e institutos é a parte que uma curadoria de tecnologia quase nunca tem. ANPD, Anatel, CADE, Banco Central e MCTI publicam o documento original dias antes de a imprensa interpretá-lo, e a interpretação erra com frequência. Junto com Cetic.br, InternetLab e Data Privacy Brasil, é onde se descobre o que de fato está sendo decidido sobre tecnologia no país.</p>
     <p>Ficaram de fora, de propósito, os portais brasileiros de alto volume e baixa apuração. Num agregador com pontuação dá para incluir e reduzir o peso deles; numa lista curada, incluir o que se pretende ignorar contradiz a promessa da lista. Pelo mesmo motivo, esta revisão tirou quatro fontes que tinham virado redundantes.</p>
     <p>A curadoria é revisada periodicamente e cada revisão corta, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
+
+    <div class="method-export">
+      <p class="method-export-text">
+        <strong>Leve a lista para o seu leitor de feeds.</strong> {feedCount} das {orderedSources.length} fontes publicam RSS ou Atom, e cada endereço foi conferido por requisição real antes de entrar no arquivo. As outras {orderedSources.length - feedCount} não têm feed próprio e ficaram de fora: endereço chutado quebra em silêncio dentro do leitor de quem importou. O arquivo vem organizado em pastas por categoria.
+      </p>
+      <a class="method-export-link" href="/tech-signal.opml" download>
+        Baixar OPML
+        <span aria-hidden="true">↓</span>
+      </a>
+    </div>
   </section>
 </main>
 
