@@ -102,9 +102,9 @@ export const devProjects: DevProject[] = [
 		id: 'tech-signal-stack',
 		title: 'Tech Signal Stack',
 		description:
-			'Diretório pessoal interativo e curado de fontes de tecnologia, IA, engenharia, negócios e política para leitura diária de alto sinal.',
+			'Diretório pessoal interativo e curado de fontes de tecnologia, IA, engenharia, negócios, política e educação, com peso real para o que se publica no Brasil.',
 		longDescription:
-			'Página standalone integrada ao portfólio com busca, filtros por categoria, tiers de prioridade e metadados SEO próprios. A curadoria organiza fontes essenciais para acompanhar tecnologia com foco, contexto e baixo ruído informacional.',
+			'Página standalone integrada ao portfólio com busca, filtros por categoria e região, prioridades de leitura e metadados SEO próprios. Os cards são renderizados no servidor a partir de uma coleção tipada, então a curadoria inteira existe no HTML mesmo sem JavaScript. A seleção equilibra veículos internacionais e fontes brasileiras de apuração e pesquisa primária.',
 		techStack: [
 			{ name: 'Astro', color: 'teal' },
 			{ name: 'HTML', color: 'terracotta' },
