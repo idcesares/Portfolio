@@ -19,7 +19,7 @@
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/vercel": "^11.0.2",
+    "@astrojs/vercel": "^11.0.3",
     "@lucide/astro": "^1.23.0",
     "@rehype-pretty/transformers": "^0.13.2",
     "@tailwindcss/vite": "^4.3.2",
