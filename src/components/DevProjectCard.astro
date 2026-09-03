@@ -1,6 +1,6 @@
 ---
 import type { DevProject } from '../data/dev-projects';
-import { statusLabels, statusColors } from '../data/dev-projects';
+import { categoryLabels, statusLabels, statusColors } from '../data/dev-projects';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -17,9 +17,20 @@ const description =
 
 const statusLabel = statusLabels[project.status];
 const statusColor = statusColors[project.status];
+const categoryLabel = categoryLabels[project.category];
 const maxTags = variant === 'featured' ? project.techStack.length : 4;
 const visibleTech = project.techStack.slice(0, maxTags);
 const remainingCount = project.techStack.length - maxTags;
+
+const placeholderIcons = {
+	product: 'rocket-launch',
+	system: 'code',
+	research: 'book-open',
+	education: 'pencil-line',
+	experiment: 'terminal-window',
+} as const;
+
+const placeholderIcon = placeholderIcons[project.category];
 
 const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 	teal:       { bg: 'var(--color-teal-10)', border: 'var(--color-teal-20)', text: 'var(--color-teal)' },
@@ -30,7 +41,11 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 };
 ---
 
-<article class:list={['dev-card', variant]} data-animate="fade-up">
+<article
+	class:list={['dev-card', variant]}
+	data-category={project.category}
+	data-animate="fade-up"
+>
 	<div class="card-image">
 		{project.img ? (
 			<img
@@ -41,17 +56,21 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 			/>
 		) : (
 			<div class="img-placeholder" aria-hidden="true">
-				<Icon icon="code" size="3rem" />
+				<Icon icon={placeholderIcon} size="3rem" />
 			</div>
 		)}
 	</div>
 
 	<div class="card-body">
 		<div class="card-meta">
-			<span class="status" style={`--status-color: ${statusColor}`}>
-				<span class="status-dot" aria-hidden="true"></span>
-				{statusLabel}
-			</span>
+			<div class="card-meta-main">
+				<span class="status" style={`--status-color: ${statusColor}`}>
+					<span class="status-dot" aria-hidden="true"></span>
+					{statusLabel}
+				</span>
+				<span class="meta-separator" aria-hidden="true">/</span>
+				<span class="category">{categoryLabel}</span>
+			</div>
 			<span class="year">{project.year}</span>
 		</div>
 
@@ -75,6 +94,13 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 			)}
 		</div>
 
+		{project.availability && (
+			<p class="availability">
+				<Icon icon="terminal-window" size="1em" />
+				{project.availability}
+			</p>
+		)}
+
 		<div class="card-actions">
 			{project.demoUrl && (
 				<a
@@ -84,7 +110,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 					rel="noopener noreferrer"
 				>
 					<Icon icon="globe" size="1.1em" />
-					Ver projeto
+					{project.primaryActionLabel || 'Abrir projeto'}
 					<Icon icon="arrow-square-out" size="0.9em" />
 				</a>
 			)}
@@ -96,7 +122,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 					rel="noopener noreferrer"
 				>
 					<Icon icon="github-logo" size="1.1em" />
-					Código
+					{project.repoActionLabel || 'Ver no GitHub'}
 				</a>
 			)}
 		</div>
@@ -136,7 +162,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 	}
 
 	.dev-card.default .card-image {
-		aspect-ratio: 16 / 9;
+		aspect-ratio: 16 / 7;
 		overflow: hidden;
 		position: relative;
 	}
@@ -234,9 +260,29 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		display: flex;
 		align-items: center;
 		justify-content: center;
-		background: var(--gradient-membrane);
+		background:
+			radial-gradient(circle at 28% 25%, var(--color-terracotta-20), transparent 45%),
+			var(--gradient-membrane);
 		color: var(--color-text-on-accent);
 		opacity: var(--opacity-heavy);
+	}
+
+	.dev-card[data-category='research'] .img-placeholder {
+		background:
+			radial-gradient(circle at 28% 25%, var(--color-burgundy-10), transparent 48%),
+			linear-gradient(135deg, var(--color-teal), var(--color-burgundy));
+	}
+
+	.dev-card[data-category='education'] .img-placeholder {
+		background:
+			radial-gradient(circle at 28% 25%, var(--color-amber-10), transparent 48%),
+			linear-gradient(135deg, var(--color-sage), var(--color-teal));
+	}
+
+	.dev-card[data-category='experiment'] .img-placeholder {
+		background:
+			radial-gradient(circle at 28% 25%, var(--color-terracotta-20), transparent 48%),
+			linear-gradient(135deg, var(--color-burgundy), var(--color-terracotta));
 	}
 
 	/* ========================================
@@ -248,6 +294,13 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		align-items: center;
 		justify-content: space-between;
 		gap: var(--space-3);
+	}
+
+	.card-meta-main {
+		display: flex;
+		align-items: center;
+		flex-wrap: wrap;
+		gap: var(--space-2);
 	}
 
 	.status {
@@ -267,6 +320,19 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		border-radius: var(--radius-full);
 		background: var(--status-color);
 		box-shadow: 0 0 6px var(--status-color);
+	}
+
+	.meta-separator,
+	.category {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-medium);
+		color: var(--color-text-tertiary);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-label);
+	}
+
+	.meta-separator {
+		opacity: var(--opacity-medium);
 	}
 
 	.year {
@@ -294,10 +360,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		color: var(--color-text-secondary);
 		line-height: var(--leading-body);
 		margin: 0;
-		display: -webkit-box;
-		-webkit-line-clamp: 3;
-		-webkit-box-orient: vertical;
-		overflow: hidden;
+		text-wrap: pretty;
 	}
 
 	/* ========================================
@@ -329,6 +392,26 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		--pill-bg: var(--color-bg-secondary);
 		--pill-border: var(--color-border-default);
 		--pill-text: var(--color-text-tertiary);
+	}
+
+	.availability {
+		display: flex;
+		align-items: flex-start;
+		gap: var(--space-2);
+		margin: var(--space-1) 0 0;
+		padding: var(--space-3) var(--space-4);
+		border-left: 2px solid var(--color-amber);
+		background: var(--color-amber-10);
+		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
+		color: var(--color-text-secondary);
+		font-size: var(--text-small);
+		line-height: var(--leading-body);
+	}
+
+	.availability :global(svg) {
+		flex: 0 0 auto;
+		margin-top: 0.2em;
+		color: var(--color-amber);
 	}
 
 	/* ========================================
