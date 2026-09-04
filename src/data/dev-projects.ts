@@ -3,6 +3,20 @@ export interface TechItem {
 	color: 'teal' | 'terracotta' | 'amber' | 'sage' | 'burgundy';
 }
 
+export type DevProjectCategory =
+	| 'product'
+	| 'system'
+	| 'research'
+	| 'education'
+	| 'experiment';
+
+export type DevProjectStatus =
+	| 'live'
+	| 'development'
+	| 'published'
+	| 'reference'
+	| 'archived';
+
 export interface DevProject {
 	id: string;
 	title: string;
@@ -13,78 +27,184 @@ export interface DevProject {
 	techStack: TechItem[];
 	demoUrl?: string;
 	repoUrl?: string;
-	status: 'live' | 'development' | 'archived';
+	primaryActionLabel?: string;
+	repoActionLabel?: string;
+	availability?: string;
+	status: DevProjectStatus;
+	category: DevProjectCategory;
 	featured?: boolean;
 	year: number;
 }
 
-const statusLabels: Record<DevProject['status'], string> = {
+export interface ProjectCategoryMeta {
+	id: DevProjectCategory;
+	title: string;
+	description: string;
+}
+
+export const projectCategories: ProjectCategoryMeta[] = [
+	{
+		id: 'product',
+		title: 'Produtos e ferramentas',
+		description:
+			'Coisas que começaram com uma fricção concreta e terminaram como software que alguém pode abrir e usar.',
+	},
+	{
+		id: 'system',
+		title: 'Sistemas e métodos',
+		description:
+			'Infraestruturas para dar coerência ao que costuma ficar disperso: memória, identidade visual, escrita e decisão.',
+	},
+	{
+		id: 'research',
+		title: 'Pesquisa que vira sistema',
+		description:
+			'Hipóteses que não ficaram apenas no texto: ganharam regras, dados, interfaces e uma trilha que outras pessoas podem examinar.',
+	},
+	{
+		id: 'education',
+		title: 'Aprender construindo',
+		description:
+			'Notebooks, protótipos e acervos feitos para aproximar ideias técnicas de estudantes, educadores e comunidades.',
+	},
+	{
+		id: 'experiment',
+		title: 'Playground',
+		description:
+			'Projetos menores, provas de conceito e algumas ideias que simplesmente precisavam existir para eu descobrir aonde levavam.',
+	},
+];
+
+export const categoryLabels: Record<DevProjectCategory, string> = {
+	product: 'Produto',
+	system: 'Sistema',
+	research: 'Pesquisa',
+	education: 'Educação',
+	experiment: 'Experimento',
+};
+
+export const statusLabels: Record<DevProjectStatus, string> = {
 	live: 'Online',
 	development: 'Em construção',
+	published: 'Publicado',
+	reference: 'Acervo vivo',
 	archived: 'Arquivado',
 };
 
-const statusColors: Record<DevProject['status'], string> = {
+export const statusColors: Record<DevProjectStatus, string> = {
 	live: 'var(--color-teal)',
 	development: 'var(--color-amber)',
+	published: 'var(--color-burgundy)',
+	reference: 'var(--color-sage)',
 	archived: 'var(--color-neutral-400)',
 };
 
-export { statusLabels, statusColors };
-
 /**
- * Dev projects showcase data.
- * Add, remove or reorder entries to update the /dev page.
+ * Curadoria da página /dev.
+ *
+ * O GitHub continua sendo o inventário completo. Esta lista destaca os
+ * artefatos que ajudam a explicar como pesquisa, educação e engenharia se
+ * encontram no trabalho do Isaac — sem transformar a página em um dump de
+ * repositórios.
  */
 export const devProjects: DevProject[] = [
+	{
+		id: 'greenrisk',
+		title: 'GreenRisk',
+		description:
+			'Instrumento explicável para estimar risco de greenwashing em divulgações climáticas — com regras, evidências e proveniência abertas à inspeção.',
+		longDescription:
+			'Pesquisa aplicada que combina sinais fixados do ClimateBERT com lógica fuzzy Mamdani para produzir um escore auditável de 0 a 100. Cada resultado preserva o rastro das regras acionadas e um grafo de proveniência W3C PROV-O; artigo, testes, decisões metodológicas e artefatos reprodutíveis vivem no mesmo repositório.',
+		techStack: [
+			{ name: 'Python', color: 'teal' },
+			{ name: 'ClimateBERT', color: 'terracotta' },
+			{ name: 'Lógica fuzzy', color: 'amber' },
+			{ name: 'W3C PROV-O', color: 'sage' },
+			{ name: 'NLP', color: 'burgundy' },
+		],
+		demoUrl: 'https://doi.org/10.5281/zenodo.21122389',
+		repoUrl: 'https://github.com/idcesares/GreenRisk',
+		primaryActionLabel: 'Artigo e versão',
+		repoActionLabel: 'Método e código',
+		status: 'published',
+		category: 'research',
+		featured: true,
+		year: 2026,
+	},
+	{
+		id: 'padline',
+		title: 'Padline',
+		description:
+			'Um pad colaborativo em tempo real no qual a própria URL já é o espaço de escrita. Sem conta, sem onboarding, sem cerimônia.',
+		longDescription:
+			'Editor colaborativo inspirado na simplicidade do Dontpad: abra uma URL, escreva e compartilhe. Blocos ricos, presença, histórico, resiliência offline, links somente leitura e proteção por PIN são sustentados por Yjs, Durable Objects e SQLite — sem enviar o conteúdo para modelos de IA.',
+		techStack: [
+			{ name: 'React 19', color: 'teal' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'Yjs', color: 'amber' },
+			{ name: 'Cloudflare Workers', color: 'sage' },
+			{ name: 'Durable Objects', color: 'burgundy' },
+			{ name: 'SQLite', color: 'teal' },
+		],
+		demoUrl: 'https://padline.page',
+		repoUrl: 'https://github.com/idcesares/padline',
+		primaryActionLabel: 'Abrir um pad',
+		repoActionLabel: 'Ver arquitetura',
+		status: 'live',
+		category: 'product',
+		featured: true,
+		year: 2026,
+	},
+	{
+		id: 'membrane-design-system',
+		title: 'The Membrane Palette',
+		description:
+			'Design system em tokens que mantém calor humano e precisão digital na mesma interface — com dark mode e acessibilidade como estrutura, não remendo.',
+		longDescription:
+			'Sistema de design orientado por uma metáfora simples: a interface como membrana entre o humano e o digital. A fonte de verdade usa tokens DTCG; o CSS gerado trabalha com OKLCH e light-dark(), enquanto gates automatizados verificam contraste WCAG AA e consistência entre os artefatos.',
+		img: '/assets/blog_imgs/membrane-palette.webp',
+		imgAlt: 'Showcase visual do design system The Membrane Palette',
+		techStack: [
+			{ name: 'Design Tokens', color: 'teal' },
+			{ name: 'DTCG', color: 'terracotta' },
+			{ name: 'OKLCH', color: 'amber' },
+			{ name: 'CSS', color: 'sage' },
+			{ name: 'WCAG AA', color: 'burgundy' },
+		],
+		demoUrl: 'https://membrane-palette.dcesares.dev',
+		repoUrl: 'https://github.com/idcesares/The-Membrane-Palette',
+		primaryActionLabel: 'Explorar o sistema',
+		repoActionLabel: 'Usar os tokens',
+		status: 'live',
+		category: 'system',
+		featured: true,
+		year: 2026,
+	},
 	{
 		id: 'portfolio-dcesares',
 		title: 'dcesares.dev',
 		description:
-			'Portfólio profissional e blog técnico com busca inteligente, design system proprietário e deploy contínuo.',
-		longDescription:
-			'Plataforma construída do zero com Astro 7 em modo SSR, sistema de busca com Fuse.js, filtragem dinâmica por tags e categorias, animações CSS com scroll reveal, e o Membrane Palette Design System, um sistema de tokens semânticos que garante consistência visual em light e dark mode.',
-		img: '/assets/blog_imgs/what-is-astro-cover-image.webp',
-		imgAlt: 'Screenshot do portfólio dcesares.dev com o design Membrane Palette',
+			'Este portfólio: uma base editorial para reunir pesquisa, prática profissional e código sem fingir que são vidas separadas.',
 		techStack: [
 			{ name: 'Astro 7', color: 'teal' },
 			{ name: 'TypeScript', color: 'terracotta' },
 			{ name: 'Tailwind CSS', color: 'sage' },
 			{ name: 'Fuse.js', color: 'amber' },
 			{ name: 'Vercel', color: 'burgundy' },
-			{ name: 'Docker', color: 'teal' },
 		],
+		img: '/assets/blog_imgs/what-is-astro-cover-image.webp',
+		imgAlt: 'Página inicial do portfólio dcesares.dev',
 		demoUrl: 'https://dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Portfolio',
 		status: 'live',
-		year: 2025,
-	},
-	{
-		id: 'membrane-design-system',
-		title: 'Membrane Palette',
-		description:
-			'Design system completo com tokens semânticos, paleta inspirada em membranas biológicas e suporte nativo a dark mode.',
-		longDescription:
-			'Sistema de design que une a calidez humana à precisão digital. Inclui mais de 100 tokens CSS, tipografia fluida com clamp(), escala de espaçamento em base 4, sombras com tonalidade quente e suporte completo a dark mode automático e manual.',
-		techStack: [
-			{ name: 'CSS Custom Properties', color: 'teal' },
-			{ name: 'Design Tokens', color: 'amber' },
-			{ name: 'Tailwind v4', color: 'sage' },
-		],
-		img: '/assets/blog_imgs/membrane-palette.webp',
-		demoUrl: 'https://membrane-palette.dcesares.dev',
-		repoUrl: 'https://github.com/idcesares/idcesares-design-system',
-		status: 'live',
-		featured: true,
+		category: 'product',
 		year: 2026,
 	},
 	{
 		id: 'cloud-dancer',
 		title: 'Cloud Dancer',
 		description:
-			'Template open-source de portfólio dev com layout bento, motion ambient, temas light/dark e otimização LLM/GEO.',
-		longDescription:
-			'Landing page de alto desempenho inspirada no Pantone 11-4201 Cloud Dancer. Arquitetura content-driven com seções bento-style, animações ambient com Framer Motion, testes Playwright, assets prontos para LLMs (llms.txt, JSON-LD) e personalização em 5 minutos.',
+			'Template open source de portfólio com layout bento, movimento ambiental e uma arquitetura de conteúdo preparada para pessoas, buscadores e LLMs.',
 		techStack: [
 			{ name: 'Next.js 16', color: 'teal' },
 			{ name: 'TypeScript', color: 'terracotta' },
@@ -95,33 +215,82 @@ export const devProjects: DevProject[] = [
 		demoUrl: 'https://cloud-dancer.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Cloud-Dancer',
 		status: 'live',
-		featured: false,
+		category: 'product',
+		year: 2026,
+	},
+	{
+		id: 'my-ip',
+		title: "What's My IP",
+		description:
+			'Diagnóstico de IP e rede com explicações legíveis, exportação local e nenhum rastreador acompanhando a consulta.',
+		techStack: [
+			{ name: 'Next.js 16', color: 'teal' },
+			{ name: 'React 19', color: 'terracotta' },
+			{ name: 'TypeScript', color: 'amber' },
+			{ name: 'Vitest', color: 'burgundy' },
+		],
+		demoUrl: 'https://myip.dcesares.dev',
+		repoUrl: 'https://github.com/idcesares/my-ip',
+		status: 'live',
+		category: 'product',
 		year: 2026,
 	},
 	{
 		id: 'tech-signal-stack',
 		title: 'Tech Signal Stack',
 		description:
-			'Diretório pessoal interativo e curado de fontes de tecnologia, IA, engenharia, negócios, política e educação, com peso real para o que se publica no Brasil.',
-		longDescription:
-			'Página standalone integrada ao portfólio com busca, filtros por categoria e região, prioridades de leitura e metadados SEO próprios. Os cards são renderizados no servidor a partir de uma coleção tipada, então a curadoria inteira existe no HTML mesmo sem JavaScript. A seleção equilibra veículos internacionais e fontes brasileiras de apuração e pesquisa primária.',
+			'Curadoria navegável de fontes sobre tecnologia, IA, engenharia, negócios, política e educação — com espaço real para quem apura no Brasil.',
 		techStack: [
 			{ name: 'Astro', color: 'teal' },
-			{ name: 'HTML', color: 'terracotta' },
-			{ name: 'CSS', color: 'sage' },
-			{ name: 'JavaScript', color: 'amber' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'RSS/OPML', color: 'amber' },
 			{ name: 'SEO', color: 'burgundy' },
 		],
 		demoUrl: '/tech-signal/',
+		repoUrl: 'https://github.com/idcesares/Portfolio',
 		status: 'live',
-		featured: false,
+		category: 'product',
 		year: 2026,
+	},
+	{
+		id: 'aprendizagemcriativa-rio',
+		title: 'aprendizagemcriativa.rio',
+		description:
+			'Casa digital do Núcleo Rio da Rede Brasileira de Aprendizagem Criativa, organizada para leitura, memória da comunidade e descoberta de recursos.',
+		techStack: [
+			{ name: 'Astro', color: 'teal' },
+			{ name: 'TypeScript', color: 'terracotta' },
+			{ name: 'Markdown/MDX', color: 'amber' },
+			{ name: 'Content Collections', color: 'sage' },
+			{ name: 'Vercel', color: 'burgundy' },
+		],
+		demoUrl: 'https://aprendizagemcriativa.rio',
+		status: 'live',
+		category: 'product',
+		year: 2026,
+	},
+	{
+		id: 'prof-gpt',
+		title: 'Prof. GPT',
+		description:
+			'Construtor de prompts pedagógicos para cocriar planos de aula com contexto, inclusão, BNCC e critérios claros de saída.',
+		techStack: [
+			{ name: 'SvelteKit', color: 'teal' },
+			{ name: 'Svelte', color: 'terracotta' },
+			{ name: 'JavaScript', color: 'amber' },
+			{ name: 'Vite', color: 'sage' },
+		],
+		demoUrl: 'https://prof-gpt.vercel.app/',
+		repoUrl: 'https://github.com/idcesares/Prof-GPT',
+		status: 'live',
+		category: 'product',
+		year: 2025,
 	},
 	{
 		id: 'base64-encoder-decoder',
 		title: 'Base64 Encoder/Decoder',
 		description:
-			'Ferramenta web para codificar e decodificar texto em Base64 com suporte a Unicode, feedback em tempo real e API server-side.',
+			'Utilitário web para codificar e decodificar Base64 com Unicode, feedback imediato e uma API server-side pequena e direta.',
 		techStack: [
 			{ name: 'Next.js', color: 'teal' },
 			{ name: 'React', color: 'terracotta' },
@@ -131,149 +300,273 @@ export const devProjects: DevProject[] = [
 		demoUrl: 'https://base64.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Base64-Encoder-Decoder',
 		status: 'live',
-		featured: false,
+		category: 'product',
 		year: 2024,
 	},
 	{
-		id: 'my-ip',
-		title: "What's My IP",
+		id: 'qr-code-analyzer',
+		title: 'QR Code Analyzer',
 		description:
-			'App privacy-first de diagnóstico de IP e rede, com detecção server-side, exportação de dados e endpoint API público.',
-		longDescription:
-			'Aplicação web que exibe seu IP detectado (IPv4/IPv6) com diagnósticos de navegador e rede em tempo real. Inclui detecção de categoria (público/privado/CGNAT), indicadores de confiança, toggle básico/avançado, ações de copiar/compartilhar/exportar, histórico local e um endpoint /api/ip limpo, tudo sem tracking.',
+			'Leitor de QR Code para imagem, colagem ou câmera, criado como uma experiência curta de utilidade imediata.',
 		techStack: [
-			{ name: 'Next.js 16', color: 'teal' },
-			{ name: 'React 19', color: 'terracotta' },
-			{ name: 'TypeScript', color: 'amber' },
-			{ name: 'Tailwind CSS', color: 'sage' },
-			{ name: 'Vitest', color: 'burgundy' },
-		],
-		demoUrl: 'https://myip.dcesares.dev',
-		repoUrl: 'https://github.com/idcesares/my-ip',
-		status: 'live',
-		featured: false,
-		year: 2026,
-	},
-	{
-		id: 'aprendizagemcriativa-rio',
-		title: 'aprendizagemcriativa.rio',
-		description:
-			'Site institucional e editorial do Núcleo Rio de Janeiro da Rede Brasileira de Aprendizagem Criativa, com foco em conteúdo, acessibilidade, SEO e experiência mobile.',
-		longDescription:
-			'Website criado para apresentar a comunidade do Núcleo Rio de Janeiro da RBAC, divulgar agenda, publicar relatos e reunir recursos em uma experiência clara, acessível e orientada à leitura. O projeto combina arquitetura de conteúdo com identidade local, performance, SEO e navegação fluida em dispositivos móveis.',
-		techStack: [
-			{ name: 'Astro', color: 'teal' },
+			{ name: 'React', color: 'teal' },
 			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Markdown/MDX', color: 'amber' },
-			{ name: 'Content Collections', color: 'sage' },
-			{ name: 'Zod', color: 'burgundy' },
-			{ name: 'Tailwind CSS 4', color: 'teal' },
-			{ name: 'Preact', color: 'terracotta' },
-			{ name: 'Vercel', color: 'amber' },
+			{ name: 'Vite', color: 'amber' },
+			{ name: 'Gemini API', color: 'sage' },
 		],
-		demoUrl: 'https://aprendizagemcriativa.rio',
-		status: 'live',
-		featured: false,
+		repoUrl: 'https://github.com/idcesares/QR-Code-Analyzer',
+		status: 'development',
+		category: 'product',
+		year: 2025,
+	},
+	{
+		id: 'predictive-mnemonic-ecology',
+		title: 'Predictive Mnemonic Ecology',
+		description:
+			'Memória local-first para agentes: lembra contexto útil, lida com contradições, respeita orçamento de tokens e explica por que recuperou cada registro.',
+		techStack: [
+			{ name: 'Python', color: 'teal' },
+			{ name: 'MCP', color: 'terracotta' },
+			{ name: 'SQLite', color: 'amber' },
+			{ name: 'Svelte', color: 'sage' },
+			{ name: 'Local AI', color: 'burgundy' },
+		],
+		availability: 'Alpha privado durante a fase de consolidação e dogfooding.',
+		status: 'development',
+		category: 'system',
 		year: 2026,
 	},
 	{
-		id: 'prof-gpt',
-		title: 'Prof. GPT',
+		id: 'rse-design-system',
+		title: 'Design System da Rede Sesc de Educação',
 		description:
-			'Prompt builder pedagógico para cocriar planos de aula com IA, com foco em BNCC, inclusão, clareza de contexto e saída estruturada.',
-		longDescription:
-			'Aplicação web para professores montarem prompts mais robustos em segundos. O projeto combina formulário guiado, toggles para melhorias avançadas, validação de campos, checklist de boas práticas de prompt engineering e um bloco final pronto para copiar e usar em LLMs modernos.',
+			'Blueprint técnico da identidade da Rede: tokens semânticos, componentes, guidelines e artefatos reutilizáveis para manter uma presença nacional coerente.',
 		techStack: [
-			{ name: 'SvelteKit', color: 'teal' },
-			{ name: 'Svelte', color: 'terracotta' },
-			{ name: 'JavaScript', color: 'amber' },
-			{ name: 'Vite', color: 'sage' },
-			{ name: 'Vercel', color: 'burgundy' },
+			{ name: 'Design Tokens', color: 'teal' },
+			{ name: 'DTCG', color: 'terracotta' },
+			{ name: 'CSS', color: 'amber' },
+			{ name: 'JavaScript', color: 'sage' },
+			{ name: 'SVG', color: 'burgundy' },
 		],
-		demoUrl: 'https://prof-gpt.vercel.app/',
-		repoUrl: 'https://github.com/idcesares/Prof-GPT',
-		status: 'live',
-		featured: false,
-		year: 2025,
+		demoUrl: 'https://rse-design-showcase.idcesares.chatgpt.site/showcase/',
+		primaryActionLabel: 'Abrir o showcase',
+		status: 'development',
+		category: 'system',
+		year: 2026,
+	},
+	{
+		id: 'remove-ai-writing-signs',
+		title: 'Remove AI Writing Signs',
+		description:
+			'Método de edição reconstrutiva que desmonta padrões previsíveis de texto gerado por IA antes de reconstruir voz, ritmo e especificidade.',
+		techStack: [
+			{ name: 'Agent Skills', color: 'teal' },
+			{ name: 'Prompt Engineering', color: 'terracotta' },
+			{ name: 'Edição', color: 'amber' },
+			{ name: 'LLMs', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/remove-ai-writing-signs',
+		repoActionLabel: 'Conhecer o método',
+		status: 'published',
+		category: 'system',
+		year: 2026,
 	},
 	{
 		id: 'learnchain',
 		title: 'LearnChain',
 		description:
-			'Landing page institucional para uma plataforma de educacao descentralizada e colaborativa, com manifesto, captacao de interesse e narrativa de produto.',
-		longDescription:
-			'Site conceitual de produto que apresenta a proposta da LearnChain com hero de marca, secoes de beneficios, narrativa sobre monetizacao de conhecimento via blockchain, formulario Tally embutido e instrumentacao com analytics. O codigo mostra um fork bastante customizado de template, ainda com algumas sobras do boilerplate original.',
+			'Exploração de uma infraestrutura descentralizada para aprendizagem, credenciais e circulação de valor — a origem de perguntas que ainda atravessam minha pesquisa.',
 		techStack: [
 			{ name: 'Next.js', color: 'teal' },
 			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Tailwind CSS', color: 'sage' },
-			{ name: 'Tally', color: 'amber' },
-			{ name: 'Vercel Analytics', color: 'burgundy' },
+			{ name: 'Blockchain', color: 'amber' },
+			{ name: 'Vercel', color: 'sage' },
 		],
 		repoUrl: 'https://github.com/idcesares/LearnChain',
 		status: 'development',
-		featured: false,
+		category: 'research',
+		year: 2023,
+	},
+	{
+		id: 'sparql-ipfs',
+		title: 'SPARQL + IPFS',
+		description:
+			'Série de provas de conceito sobre consultas semânticas em dados distribuídos, reunindo SPARQL, Comunica, Next.js e IPFS.',
+		techStack: [
+			{ name: 'SPARQL', color: 'teal' },
+			{ name: 'IPFS', color: 'terracotta' },
+			{ name: 'Comunica', color: 'amber' },
+			{ name: 'Next.js', color: 'sage' },
+		],
+		demoUrl: 'https://sparql-next-ipfs.vercel.app',
+		repoUrl: 'https://github.com/idcesares/sparql-next-ipfs',
+		status: 'reference',
+		category: 'research',
 		year: 2023,
 	},
 	{
 		id: 'experimentos-de-ia',
-		title: 'Experimentos de IA',
+		title: 'Experimentos Práticos de IA',
 		description:
-			'Hub curado em portugues com dezenas de experimentos, demos e ferramentas de IA para explorar conceitos e usos praticos sem precisar programar.',
-		longDescription:
-			'Repositorio editorial em formato Markdown que organiza uma colecao de referencias acessiveis sobre IA generativa, visao computacional, musica, voz, busca cientifica e criatividade assistida. Funciona como porta de entrada para estudo, oficinas e descoberta de ferramentas.',
+			'Acervo em português com experiências de IA que podem ser testadas sem programação — revisado para continuar útil em vez de virar um cemitério de links.',
 		techStack: [
 			{ name: 'Markdown', color: 'teal' },
-			{ name: 'GitHub', color: 'terracotta' },
-			{ name: 'No-code', color: 'amber' },
-			{ name: 'OpenAI', color: 'sage' },
-			{ name: 'Google AI Experiments', color: 'burgundy' },
+			{ name: 'Curadoria', color: 'terracotta' },
+			{ name: 'IA generativa', color: 'amber' },
+			{ name: 'No-code', color: 'sage' },
 		],
 		repoUrl: 'https://github.com/idcesares/Experimentos-de-IA',
-		status: 'archived',
-		featured: false,
-		year: 2023,
+		repoActionLabel: 'Explorar o acervo',
+		status: 'reference',
+		category: 'education',
+		year: 2026,
+	},
+	{
+		id: 'clube-stem-ia',
+		title: 'Clube de IA da Escola Sesc',
+		description:
+			'Notebooks usados em experiências de letramento em IA, aprendizagem de máquina e robótica com estudantes do Ensino Médio.',
+		techStack: [
+			{ name: 'Python', color: 'teal' },
+			{ name: 'Jupyter', color: 'terracotta' },
+			{ name: 'Machine Learning', color: 'amber' },
+			{ name: 'Robótica', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/Clube-de-STEM-IA-ESEM',
+		status: 'reference',
+		category: 'education',
+		year: 2020,
+	},
+	{
+		id: 'arduino-iot-ia',
+		title: 'Arduino, IoT e IA',
+		description:
+			'Prova de conceito em que protótipos conectados percebem contexto e reagem usando Arduino, sensores, serviços de nuvem e bots.',
+		techStack: [
+			{ name: 'Arduino', color: 'teal' },
+			{ name: 'C++', color: 'terracotta' },
+			{ name: 'IoT', color: 'amber' },
+			{ name: 'Cloud', color: 'sage' },
+		],
+		repoUrl:
+			'https://github.com/idcesares/Arduino--IoT-e-IA--prototipos-inteligentes-e-reativos',
+		status: 'reference',
+		category: 'education',
+		year: 2021,
+	},
+	{
+		id: 'open-digital-fabrication',
+		title: 'Open Digital Fabrication Projects',
+		description:
+			'Repositório aberto para projetos de fabricação digital, cultura maker, modelagem 3D e corte a laser em contextos de aprendizagem.',
+		techStack: [
+			{ name: 'Fabricação digital', color: 'teal' },
+			{ name: 'Modelagem 3D', color: 'terracotta' },
+			{ name: 'Corte a laser', color: 'amber' },
+			{ name: 'Maker', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/Open-Digital-Fabrication-Projects',
+		status: 'reference',
+		category: 'education',
+		year: 2021,
+	},
+	{
+		id: 'data-science-mini-projects',
+		title: 'Data Science Mini Projects',
+		description:
+			'Coleção de pequenos estudos com datasets, visualizações e algoritmos — um registro do aprendizado pela investigação dos dados.',
+		techStack: [
+			{ name: 'Python', color: 'teal' },
+			{ name: 'Jupyter', color: 'terracotta' },
+			{ name: 'Data Science', color: 'amber' },
+			{ name: 'Machine Learning', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/Data-Science-Mini-Projects',
+		status: 'reference',
+		category: 'education',
+		year: 2021,
+	},
+	{
+		id: 'queimadas-pantanal',
+		title: 'Queimadas no Pantanal',
+		description:
+			'Análise exploratória de uma década de queimadas no Pantanal, transformando séries ambientais em uma narrativa visual verificável.',
+		techStack: [
+			{ name: 'Python', color: 'teal' },
+			{ name: 'Jupyter', color: 'terracotta' },
+			{ name: 'Visualização de dados', color: 'amber' },
+			{ name: 'Análise exploratória', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/DS_queimadas_pantanal',
+		status: 'published',
+		category: 'education',
+		year: 2022,
+	},
+	{
+		id: 'disposable-pods',
+		title: 'Disposable Pods',
+		description:
+			'Salas temporárias para compartilhar textos, links e arquivos sem conta; o conteúdo desaparece quando a sala esvazia ou após 24 horas.',
+		techStack: [
+			{ name: 'TypeScript', color: 'teal' },
+			{ name: 'Socket.IO', color: 'terracotta' },
+			{ name: 'Node.js', color: 'amber' },
+			{ name: 'Privacidade', color: 'sage' },
+		],
+		repoUrl: 'https://github.com/idcesares/Disposable-Pods',
+		status: 'development',
+		category: 'experiment',
+		year: 2026,
 	},
 	{
 		id: 'sistema-de-sorteio',
-		title: 'Sistema de Sorteio Eletronico',
+		title: 'Sistema de Sorteio Eletrônico',
 		description:
-			'Sistema web de sorteio auditavel para distribuicao de vagas, com semente manual, primeira chamada, lista de espera e reproducao do resultado.',
-		longDescription:
-			'Aplicacao front-end enxuta para sorteios publicos com foco em transparencia operacional. O fluxo permite informar nome, numero de inscritos, vagas e semente opcional para auditoria, embaralha a lista com base em pseudoaleatoriedade controlada e gera saidas prontas para publicacao e conferencia.',
+			'Sorteio web reproduzível para distribuir vagas, com semente opcional, primeira chamada, lista de espera e saída pronta para conferência.',
 		techStack: [
 			{ name: 'JavaScript', color: 'teal' },
 			{ name: 'HTML', color: 'terracotta' },
 			{ name: 'Bootstrap', color: 'sage' },
 			{ name: 'SeedRandom', color: 'amber' },
-			{ name: 'Vercel', color: 'burgundy' },
 		],
 		demoUrl: 'https://sistema-de-sorteio.vercel.app/',
 		repoUrl: 'https://github.com/idcesares/Sistema-de-Sorteio',
 		status: 'live',
-		featured: false,
+		category: 'experiment',
 		year: 2020,
 	},
-	// ------------------------------------------------------------------
-	// Adicione seus projetos abaixo seguindo o mesmo formato.
-	// Exemplos de template para referência rápida:
-	// ------------------------------------------------------------------
-	// {
-	// 	id: 'meu-projeto',
-	// 	title: 'Nome do Projeto',
-	// 	description: 'Descrição curta do projeto em uma ou duas frases.',
-	// 	longDescription: 'Descrição detalhada opcional para o card featured.',
-	// 	img: '/assets/blog_imgs/minha-imagem.webp',
-	// 	imgAlt: 'Descrição da imagem',
-	// 	techStack: [
-	// 		{ name: 'React', color: 'teal' },
-	// 		{ name: 'Node.js', color: 'sage' },
-	// 		{ name: 'PostgreSQL', color: 'amber' },
-	// 	],
-	// 	demoUrl: 'https://exemplo.com',
-	// 	repoUrl: 'https://github.com/usuario/repo',
-	// 	status: 'live',
-	// 	featured: false,
-	// 	year: 2025,
-	// },
+	{
+		id: 'ai-quiz',
+		title: 'AI Quiz',
+		description:
+			'Quiz sobre a história da inteligência artificial com animações, feedback contextual e compartilhamento de resultados.',
+		techStack: [
+			{ name: 'Next.js', color: 'teal' },
+			{ name: 'React', color: 'terracotta' },
+			{ name: 'Framer Motion', color: 'amber' },
+			{ name: 'Lottie', color: 'sage' },
+		],
+		demoUrl: 'https://ai-quiz.idcesares.vercel.app',
+		repoUrl: 'https://github.com/idcesares/AiQuiz',
+		status: 'live',
+		category: 'experiment',
+		year: 2021,
+	},
+	{
+		id: 'isaac-or-not-isaac',
+		title: 'Isaac or Not Isaac',
+		description:
+			'Um classificador no navegador que responde à pergunta científica definitiva: a pessoa diante da câmera é Isaac ou não?',
+		techStack: [
+			{ name: 'Teachable Machine', color: 'teal' },
+			{ name: 'TensorFlow.js', color: 'terracotta' },
+			{ name: 'HTML', color: 'amber' },
+			{ name: 'Computer Vision', color: 'sage' },
+		],
+		demoUrl: 'https://isaac-or-not-isaac.vercel.app',
+		repoUrl: 'https://github.com/idcesares/ISAAC-OR-NOT-ISAAC',
+		status: 'live',
+		category: 'experiment',
+		year: 2024,
+	},
 ];

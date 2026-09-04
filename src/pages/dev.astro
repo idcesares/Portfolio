@@ -7,74 +7,150 @@ import ContactCTA from '../components/ContactCTA.astro';
 import DevProjectCard from '../components/DevProjectCard.astro';
 import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
-import { devProjects } from '../data/dev-projects';
+import { devProjects, projectCategories } from '../data/dev-projects';
 
-const featured = devProjects.filter((p) => p.featured);
-const others = devProjects.filter((p) => !p.featured);
+const featured = devProjects.filter((project) => project.featured);
+const groups = projectCategories
+	.map((meta) => ({
+		meta,
+		projects: devProjects.filter(
+			(project) => project.category === meta.id && !project.featured
+		),
+	}))
+	.filter((group) => group.projects.length > 0);
 
-const allTech = [
-	...new Set(devProjects.flatMap((p) => p.techStack.map((t) => t.name))),
-];
+const repositoryCount = new Set(
+	devProjects.flatMap((project) => (project.repoUrl ? [project.repoUrl] : []))
+).size;
+
+const technologyFrequency = new Map<string, number>();
+devProjects.forEach((project) => {
+	project.techStack.forEach((technology) => {
+		technologyFrequency.set(
+			technology.name,
+			(technologyFrequency.get(technology.name) ?? 0) + 1
+		);
+	});
+});
+
+const coreTechnologies = [...technologyFrequency.entries()]
+	.filter(([, count]) => count > 1)
+	.sort(([nameA, countA], [nameB, countB]) =>
+		countB - countA || nameA.localeCompare(nameB, 'pt-BR')
+	)
+	.slice(0, 20)
+	.map(([name]) => name);
 ---
 
 <BaseLayout
-	title="Dev"
-	description="Projetos de desenvolvimento de Isaac D'Césares: código, design systems e ferramentas construídas com propósito."
+	title="Projetos em código"
+	description="Produtos, pesquisas aplicadas, sistemas e experimentos de Isaac D'Césares — artefatos em que educação, IA e engenharia se encontram."
 >
 	<div class="stack gap-20" data-page-type="dev">
-		<main class="wrapper stack gap-16">
+		<main class="wrapper stack gap-20">
 			<Hero
-				title="Dev"
-				tagline="Código que resolve problemas reais. Open source, design systems e ferramentas de uso próprio."
+				title="Projetos em código"
+				tagline="Algumas ideias viram produtos. Outras viram instrumentos de pesquisa, métodos ou protótipos. Aqui está o rastro das que chegaram ao mundo em forma de código."
 				align="start"
 			>
 				<div class="hero-pills" data-animate="fade-up">
-					<Pill color="teal"><Icon icon="terminal-window" size="1.2em" /> Full Stack</Pill>
-					<Pill color="terracotta"><Icon icon="code" size="1.2em" /> Open Source</Pill>
-					<Pill color="sage"><Icon icon="rocket-launch" size="1.2em" /> Deploy</Pill>
+					<Pill color="teal"><Icon icon="book-open" size="1.2em" /> Pesquisa aplicada</Pill>
+					<Pill color="terracotta"><Icon icon="code" size="1.2em" /> Código aberto</Pill>
+					<Pill color="sage"><Icon icon="pencil-line" size="1.2em" /> Educação pelo fazer</Pill>
 				</div>
 			</Hero>
 
-			{featured.length > 0 && (
-				<section class="featured-section" data-animate="fade-up">
-					<div class="section-label">
-						<span class="label-line" aria-hidden="true"></span>
-						<span class="label-text">Destaque</span>
-						<span class="label-line" aria-hidden="true"></span>
-					</div>
-					{featured.map((project) => (
-						<DevProjectCard project={project} variant="featured" />
+			<nav class="project-index" aria-label="Trilhas de projetos" data-animate="fade-up">
+				<div class="index-intro">
+					<span class="index-eyebrow">Mapa do laboratório</span>
+					<strong>{devProjects.length} artefatos em {groups.length} trilhas</strong>
+				</div>
+				<div class="index-links">
+					{groups.map(({ meta, projects }) => (
+						<a href={`#${meta.id}`}>
+							<span>{meta.title}</span>
+							<small>{projects.length}</small>
+						</a>
 					))}
-				</section>
-			)}
+				</div>
+			</nav>
 
-			{others.length > 0 && (
-				<section class="projects-section" data-animate="fade-up">
-					<div class="section-label">
-						<span class="label-line" aria-hidden="true"></span>
-						<span class="label-text">Projetos</span>
-						<span class="label-line" aria-hidden="true"></span>
-					</div>
-					<div class="projects-grid">
-						{others.map((project) => (
-							<DevProjectCard project={project} variant="default" />
+			{featured.length > 0 && (
+				<section class="featured-section" aria-labelledby="featured-title" data-animate="fade-up">
+					<header class="section-heading featured-heading">
+						<div>
+							<span class="section-eyebrow">Agora em foco</span>
+							<h2 id="featured-title">Três projetos, três maneiras de construir</h2>
+							<p>
+								Um instrumento de pesquisa auditável, um espaço colaborativo sem fricção e um sistema visual que conecta o humano ao digital.
+							</p>
+						</div>
+						<span class="section-count">{featured.length.toString().padStart(2, '0')}</span>
+					</header>
+					<div class="featured-grid">
+						{featured.map((project, index) => (
+							<DevProjectCard project={project} variant={index === 0 ? 'featured' : 'default'} />
 						))}
 					</div>
 				</section>
 			)}
 
-			<section class="tech-section" data-animate="fade-up">
-				<div class="section-label">
-					<span class="label-line" aria-hidden="true"></span>
-					<span class="label-text">Tecnologias</span>
-					<span class="label-line" aria-hidden="true"></span>
+			{groups.map(({ meta, projects }, index) => (
+				<section
+					class="projects-section"
+					id={meta.id}
+					aria-labelledby={`${meta.id}-title`}
+					data-animate="fade-up"
+				>
+					<header class="section-heading">
+						<div>
+							<span class="section-eyebrow">Trilha {(index + 1).toString().padStart(2, '0')}</span>
+							<h2 id={`${meta.id}-title`}>{meta.title}</h2>
+							<p>{meta.description}</p>
+						</div>
+						<span class="section-count">{projects.length.toString().padStart(2, '0')}</span>
+					</header>
+					<div class="projects-grid">
+						{projects.map((project) => (
+							<DevProjectCard project={project} variant="default" />
+						))}
+					</div>
+				</section>
+			))}
+
+			<section class="github-section" data-animate="fade-up">
+				<div class="github-icon" aria-hidden="true">
+					<Icon icon="github-logo" size="2.25rem" />
 				</div>
-				<p class="tech-intro">
-					Ferramentas e frameworks que uso para transformar ideias em código que funciona.
-				</p>
-				<div class="tech-cloud">
-					{allTech.map((tech) => (
-						<span class="tech-tag">{tech}</span>
+				<div class="github-copy">
+					<span class="section-eyebrow">Arquivo aberto</span>
+					<h2>O restante do laboratório está no GitHub</h2>
+					<p>
+						Esta página é curadoria, não inventário. No GitHub ficam também notebooks, forks, testes e pequenos artefatos que não precisam disputar protagonismo, mas ajudam a mostrar como o trabalho amadurece.
+					</p>
+				</div>
+				<a
+					class="github-action"
+					href="https://github.com/idcesares?tab=repositories"
+					target="_blank"
+					rel="noopener noreferrer"
+				>
+					Explorar {repositoryCount} repositórios representados
+					<Icon icon="arrow-square-out" size="1em" />
+				</a>
+			</section>
+
+			<section class="tech-section" data-animate="fade-up">
+				<header class="tech-header">
+					<span class="section-eyebrow">Caixa de ferramentas</span>
+					<h2>A stack acompanha a pergunta</h2>
+					<p>
+						Não coleciono frameworks: escolho o conjunto que mantém a ideia legível, testável e possível de sustentar.
+					</p>
+				</header>
+				<div class="tech-cloud" aria-label="Tecnologias recorrentes nos projetos">
+					{coreTechnologies.map((technology) => (
+						<span class="tech-tag">{technology}</span>
 					))}
 				</div>
 			</section>
@@ -91,75 +167,197 @@ const allTech = [
 		gap: var(--space-2);
 	}
 
-	/* ========================================
-	   Section Labels
-	   ======================================== */
-
-	.section-label {
-		display: flex;
-		align-items: center;
-		gap: var(--space-4);
-		margin-bottom: var(--space-8);
+	.project-index {
+		display: grid;
+		gap: var(--space-5);
+		padding: var(--space-6);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-xl);
+		background: color-mix(in oklab, var(--color-bg-primary) 86%, transparent);
+		box-shadow: var(--shadow-sm);
 	}
 
-	.label-line {
-		flex: 1;
-		height: 1px;
-		background: var(--gradient-divider);
-	}
-
-	.label-text {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-semibold);
-		color: var(--color-text-tertiary);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-label);
-		white-space: nowrap;
-	}
-
-	/* ========================================
-	   Featured Section
-	   ======================================== */
-
-	.featured-section {
+	.index-intro {
 		display: flex;
 		flex-direction: column;
+		gap: var(--space-1);
+		color: var(--color-text-secondary);
 	}
 
-	/* ========================================
-	   Projects Grid
-	   ======================================== */
+	.index-intro strong {
+		font-family: var(--font-serif);
+		font-size: var(--text-h4);
+		color: var(--color-text-primary);
+	}
 
+	.index-eyebrow,
+	.section-eyebrow {
+		font-size: var(--text-xs);
+		font-weight: var(--weight-semibold);
+		color: var(--color-teal);
+		text-transform: uppercase;
+		letter-spacing: var(--tracking-label);
+	}
+
+	.index-links {
+		display: grid;
+		grid-template-columns: repeat(2, minmax(0, 1fr));
+		gap: var(--space-2);
+	}
+
+	.index-links a {
+		display: flex;
+		align-items: center;
+		justify-content: space-between;
+		gap: var(--space-2);
+		min-height: 44px;
+		padding: var(--space-2) var(--space-3);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-md);
+		background: var(--color-bg-primary);
+		color: var(--color-text-secondary);
+		font-size: var(--text-small);
+		text-decoration: none;
+		transition:
+			transform var(--transition-fast),
+			border-color var(--transition-default),
+			color var(--transition-default);
+	}
+
+	.index-links a:hover {
+		transform: translateY(-1px);
+		border-color: var(--color-border-emphasis);
+		color: var(--color-text-primary);
+	}
+
+	.index-links small {
+		display: grid;
+		place-items: center;
+		min-width: 1.65rem;
+		height: 1.65rem;
+		border-radius: var(--radius-full);
+		background: var(--color-teal-10);
+		color: var(--color-teal);
+		font-family: var(--font-mono);
+		font-size: var(--text-xs);
+	}
+
+	.featured-section,
 	.projects-section {
 		display: flex;
 		flex-direction: column;
+		gap: var(--space-8);
+		scroll-margin-top: var(--space-24);
 	}
 
+	.section-heading {
+		display: grid;
+		grid-template-columns: minmax(0, 1fr) auto;
+		gap: var(--space-6);
+		align-items: start;
+		padding-top: var(--space-6);
+		border-top: 1px solid var(--color-border-default);
+	}
+
+	.section-heading > div {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		max-width: 64ch;
+	}
+
+	.section-heading h2,
+	.tech-header h2,
+	.github-copy h2 {
+		margin: 0;
+		font-size: var(--text-h1);
+		letter-spacing: var(--tracking-heading);
+		text-wrap: balance;
+	}
+
+	.section-heading p,
+	.tech-header p,
+	.github-copy p {
+		margin: 0;
+		color: var(--color-text-secondary);
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-body);
+		text-wrap: pretty;
+	}
+
+	.section-count {
+		font-family: var(--font-mono);
+		font-size: var(--text-h3);
+		color: var(--color-text-tertiary);
+	}
+
+	.featured-grid,
 	.projects-grid {
 		display: grid;
-		grid-template-columns: 1fr;
+		grid-template-columns: minmax(0, 1fr);
 		gap: var(--space-8);
 	}
 
-	@media (min-width: 50em) {
-		.projects-grid {
-			grid-template-columns: repeat(2, 1fr);
-			gap: var(--space-10);
-		}
+	.github-section {
+		display: grid;
+		gap: var(--space-6);
+		align-items: center;
+		padding: var(--space-8);
+		border-radius: var(--radius-xl);
+		border: 1px solid var(--color-border-default);
+		background:
+			radial-gradient(circle at 92% 15%, var(--color-teal-12), transparent 36%),
+			color-mix(in oklab, var(--color-bg-primary) 90%, transparent);
+		box-shadow: var(--shadow-sm);
 	}
 
-	@media (min-width: 75em) {
-		.projects-grid {
-			grid-template-columns: repeat(3, 1fr);
-		}
+	.github-icon {
+		display: grid;
+		place-items: center;
+		width: 4rem;
+		height: 4rem;
+		border-radius: var(--radius-lg);
+		background: var(--gradient-membrane);
+		color: var(--color-text-on-accent);
+		box-shadow: var(--shadow-md);
 	}
 
-	/* ========================================
-	   Tech Cloud Section
-	   ======================================== */
+	.github-copy {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		max-width: 64ch;
+	}
+
+	.github-action {
+		display: inline-flex;
+		align-items: center;
+		justify-content: center;
+		gap: var(--space-2);
+		min-height: 44px;
+		padding: var(--space-3) var(--space-5);
+		border-radius: var(--radius-full);
+		background: var(--color-terracotta);
+		border: 1px solid var(--color-terracotta-dark);
+		color: var(--color-text-on-accent);
+		font-weight: var(--weight-medium);
+		text-decoration: none;
+		box-shadow: var(--shadow-sm);
+		transition:
+			transform var(--transition-fast),
+			box-shadow var(--transition-default);
+	}
+
+	.github-action:hover {
+		transform: translateY(-1px);
+		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+	}
 
 	.tech-section {
 		position: relative;
+		display: grid;
+		gap: var(--space-8);
+		padding-block: var(--space-8);
 	}
 
 	.tech-section::before {
@@ -168,8 +366,8 @@ const allTech = [
 		pointer-events: none;
 		left: 50%;
 		width: 100vw;
-		height: 160%;
-		top: -30%;
+		height: 170%;
+		top: -35%;
 		transform: translateX(-50%);
 		background:
 			radial-gradient(700px 350px at 50% 30%, var(--color-teal-08), transparent 65%),
@@ -178,18 +376,16 @@ const allTech = [
 		z-index: -1;
 	}
 
-	.tech-intro {
-		text-align: center;
-		color: var(--color-text-secondary);
-		font-size: var(--text-body-lg);
-		max-width: 50ch;
-		margin: 0 auto var(--space-8);
+	.tech-header {
+		display: flex;
+		flex-direction: column;
+		gap: var(--space-2);
+		max-width: 60ch;
 	}
 
 	.tech-cloud {
 		display: flex;
 		flex-wrap: wrap;
-		justify-content: center;
 		gap: var(--space-3);
 	}
 
@@ -203,16 +399,50 @@ const allTech = [
 		background: color-mix(in oklab, var(--color-bg-primary) 85%, transparent);
 		border: 1px solid var(--color-border-default);
 		border-radius: var(--radius-full);
-		transition:
-			border-color var(--transition-default),
-			color var(--transition-default),
-			transform var(--transition-fast);
 		min-height: 44px;
 	}
 
-	.tech-tag:hover {
-		color: var(--color-teal);
-		border-color: var(--color-teal-20);
-		transform: translateY(-2px);
+	@media (min-width: 50em) {
+		.project-index {
+			grid-template-columns: minmax(15rem, 0.7fr) minmax(0, 1.3fr);
+			align-items: center;
+			padding: var(--space-8);
+		}
+
+		.index-links {
+			grid-template-columns: repeat(3, minmax(0, 1fr));
+		}
+
+		.featured-grid,
+		.projects-grid {
+			grid-template-columns: repeat(2, minmax(0, 1fr));
+			gap: var(--space-10);
+		}
+
+		.featured-grid > :global(:first-child) {
+			grid-column: 1 / -1;
+		}
+
+		.github-section {
+			grid-template-columns: auto minmax(0, 1fr) auto;
+			padding: var(--space-10);
+		}
+
+		.github-action {
+			max-width: 15rem;
+			text-align: center;
+		}
+	}
+
+	@media (max-width: 32em) {
+		.index-links {
+			grid-template-columns: 1fr;
+		}
+
+		.section-heading h2,
+		.tech-header h2,
+		.github-copy h2 {
+			font-size: var(--text-h2);
+		}
 	}
 </style>
