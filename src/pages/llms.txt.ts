@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { devProjects, statusLabels } from '../data/dev-projects';
 import { AUTHOR_EMAIL, SITE_DESCRIPTION, SOCIAL_LINKS } from '../utils/seo';
 
 export const prerender = true;
@@ -36,16 +37,19 @@ Descrição: ${SITE_DESCRIPTION}
 - [Início](${baseUrl}/): Visão geral e destaques profissionais
 - [Trabalhos](${baseUrl}/work/): Portfolio de projetos em tecnologia educacional
 - [Blog](${baseUrl}/blog/): Artigos sobre IA, educação e tecnologia
-- [Dev](${baseUrl}/dev/): Projetos de desenvolvimento, design system e software autoral
+- [Projetos](${baseUrl}/dev/): Projetos de desenvolvimento, design system e software autoral
 - [Sobre](${baseUrl}/about/): Trajetória profissional e formação acadêmica
 - [Contato](${baseUrl}/contact/): Canal principal para projetos, palestras, pesquisa e parcerias
 - [Ofertas](${baseUrl}/deals/): Links e códigos exclusivos para ferramentas
 
 ## Conteúdos Canônicos
-${canonicalWork ? `- [${canonicalWork.data.title}](${baseUrl}/work/${canonicalWork.id}/): ${canonicalWork.data.description}\n` : ''}${canonicalPost ? `- [${canonicalPost.data.title}](${baseUrl}/blog/${canonicalPost.id}/): ${canonicalPost.data.description}\n` : ''}- [Dev](${baseUrl}/dev/): Showcase técnico de projetos de software e do sistema Membrane Palette
+${canonicalWork ? `- [${canonicalWork.data.title}](${baseUrl}/work/${canonicalWork.id}/): ${canonicalWork.data.description}\n` : ''}${canonicalPost ? `- [${canonicalPost.data.title}](${baseUrl}/blog/${canonicalPost.id}/): ${canonicalPost.data.description}\n` : ''}- [Projetos](${baseUrl}/dev/): Showcase técnico de projetos de software e do sistema Membrane Palette
 - [Trabalhos](${baseUrl}/work/): ${work.length} projetos em blockchain educacional, IA e tecnologia educacional
 - [Blog](${baseUrl}/blog/): ${posts.length} artigos sobre IA aplicada à educação
 - [Dados de busca](${baseUrl}/search-data.json): Dados estruturados para busca
+
+## Projetos em código
+${devProjects.map(project => `- [${project.title}](${baseUrl}/dev/#project-${project.id}): ${project.description} Estado: ${statusLabels[project.status]}.`).join('\n')}
 
 ## O que LLMs podem fazer aqui
 - Resumir artigos sobre tecnologia educacional e IA

@@ -360,7 +360,7 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
         
         return `
           <a href="${item.url}" class="search-result-item">
-            <div class="search-result-type">${item.type === 'blog' ? 'Blog' : 'Trabalho'}</div>
+            <div class="search-result-type">${({ blog: 'Blog', work: 'Trabalho', dev: 'Projeto' })[item.type]}</div>
             <div class="search-result-title">${highlightedTitle}</div>
             <div class="search-result-description">${this.truncateText(item.description, 120)}</div>
           </a>

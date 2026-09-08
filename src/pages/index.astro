@@ -16,6 +16,8 @@ import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.ast
 import ContactCTA from '../components/ContactCTA.astro';
 import Skills from '../components/Skills.astro';
 import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
+import DevProjectCard from '../components/DevProjectCard.astro';
+import { devProjects } from '../data/dev-projects';
 
 import Portrait from '../assets/portrait.webp';
 
@@ -33,6 +35,7 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
 const structuredData = getSiteStructuredData(site);
+const featuredProjects = devProjects.filter(project => project.featured).slice(0, 3);
 
 ---
 
@@ -42,7 +45,7 @@ const structuredData = getSiteStructuredData(site);
 			<header class="hero" data-animate="fade-up">
 				<Hero
 					title="Isaac D'Césares"
-					tagline="Traduzo tecnologias emergentes em experiências que resignificam como pessoas e instituições aprendem."
+					tagline="Traduzo tecnologias emergentes em experiências que ressignificam como pessoas e instituições aprendem."
 					align="start"
 				>
 					<div class="roles" data-animate-stagger>
@@ -52,7 +55,7 @@ const structuredData = getSiteStructuredData(site);
 					</div>
 
 					<div class="hero-actions">
-						<CallToAction href="/work/">
+						<CallToAction href="/dev/">
 							O que venho construindo
 							<Icon icon="arrow-right" size="1.2em" />
 						</CallToAction>
@@ -78,6 +81,16 @@ const structuredData = getSiteStructuredData(site);
 		</div>
 
 		<main class="wrapper stack gap-20 lg:gap-48">
+			<section class="project-highlights stack gap-8" aria-labelledby="projects-title">
+				<header class="stack gap-2">
+					<h2 id="projects-title">Da pergunta ao código</h2>
+					<p>Pesquisa, ferramentas e sistemas que venho desenvolvendo. Cada projeto é um jeito de testar uma ideia no mundo.</p>
+				</header>
+				<div class="projects-grid">
+					{featuredProjects.map(project => <DevProjectCard project={project} />)}
+				</div>
+				<CallToAction href="/dev/">Explorar todos os projetos <Icon icon="arrow-right" size="1.2em" /></CallToAction>
+			</section>
 			<section class="section with-background with-cta" data-animate="fade-up">
 				<header class="section-header stack gap-2 lg:gap-4">
 					<h2>Últimos trabalhos</h2>
@@ -127,6 +140,12 @@ const structuredData = getSiteStructuredData(site);
 </BaseLayout>
 
 <style>
+	.project-highlights h2 { font-size: var(--text-h1); }
+	.project-highlights p { color: var(--color-text-secondary); max-width: 65ch; }
+	.projects-grid { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1fr); }
+	@media (min-width: 65em) {
+		.projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	}
 	.hero {
 		display: flex;
 		flex-direction: column;

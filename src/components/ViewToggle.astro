@@ -12,6 +12,7 @@ const { currentView = 'default' } = Astro.props;
 		<button 
 			class:list={['view-button', { active: currentView === 'default' }]}
 			data-view="default"
+			aria-pressed={currentView === 'default'}
 			title="Visualização em cards grandes"
 		>
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -24,6 +25,7 @@ const { currentView = 'default' } = Astro.props;
 		<button 
 			class:list={['view-button', { active: currentView === 'compact' }]}
 			data-view="compact"
+			aria-pressed={currentView === 'compact'}
 			title="Visualização compacta"
 		>
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -41,6 +43,7 @@ const { currentView = 'default' } = Astro.props;
 		<button 
 			class:list={['view-button', { active: currentView === 'list' }]}
 			data-view="list"
+			aria-pressed={currentView === 'list'}
 			title="Visualização em lista"
 		>
 			<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
@@ -140,7 +143,8 @@ const { currentView = 'default' } = Astro.props;
 			this.items = document.querySelectorAll('[data-filterable-item]');
 			
 			// Check if there's a saved preference
-			const savedView = localStorage.getItem('preferred-view');
+			let savedView: string | null = null;
+			try { savedView = localStorage.getItem('preferred-view'); } catch { /* Storage is optional. */ }
 			if (savedView && ['default', 'compact', 'list'].includes(savedView)) {
 				this.changeView(savedView);
 			}
@@ -150,6 +154,7 @@ const { currentView = 'default' } = Astro.props;
 			// Update active button
 			document.querySelectorAll('.view-button').forEach(btn => {
 				btn.classList.remove('active');
+				btn.setAttribute('aria-pressed', String(btn.getAttribute('data-view') === view));
 				if (btn.getAttribute('data-view') === view) {
 					btn.classList.add('active');
 				}
@@ -189,7 +194,7 @@ const { currentView = 'default' } = Astro.props;
 			}
 
 			// Save preference
-			localStorage.setItem('preferred-view', view);
+			try { localStorage.setItem('preferred-view', view); } catch { /* Keep the view usable without storage. */ }
 
 			// Trigger a custom event for other components that might need to know
 			document.dispatchEvent(new CustomEvent('viewChanged', { 

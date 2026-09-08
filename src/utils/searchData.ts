@@ -1,4 +1,5 @@
 import { getCollection } from 'astro:content';
+import { devProjects, categoryLabels, statusLabels } from '../data/dev-projects';
 
 export interface SearchItem {
   id: string;
@@ -6,10 +7,10 @@ export interface SearchItem {
   description: string;
   content: string;
   url: string;
-  type: 'blog' | 'work';
+  type: 'blog' | 'work' | 'dev';
   tags: string[];
-  publishDate: Date;
-  updatedDate: Date;
+  publishDate?: Date;
+  updatedDate?: Date;
 }
 
 /** Strip markdown syntax and truncate to limit for search indexing */
@@ -61,5 +62,18 @@ export async function generateSearchData(): Promise<SearchItem[]> {
     });
   }
 
-  return searchItems.sort((a, b) => b.updatedDate.getTime() - a.updatedDate.getTime());
+  // A project year is not a publication date. Keep dates absent for the catalog.
+  for (const project of devProjects) {
+    searchItems.push({
+      id: `dev:${project.id}`,
+      title: project.title,
+      description: project.description,
+      content: [project.longDescription, project.availability, statusLabels[project.status]].filter(Boolean).join(' '),
+      url: `/dev/#project-${project.id}`,
+      type: 'dev',
+      tags: [categoryLabels[project.category], ...project.techStack.map(tech => tech.name)],
+    });
+  }
+
+  return searchItems.sort((a, b) => (b.updatedDate?.getTime() ?? 0) - (a.updatedDate?.getTime() ?? 0));
 }

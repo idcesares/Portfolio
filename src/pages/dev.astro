@@ -63,7 +63,7 @@ const coreTechnologies = [...technologyFrequency.entries()]
 			<nav class="project-index" aria-label="Trilhas de projetos" data-animate="fade-up">
 				<div class="index-intro">
 					<span class="index-eyebrow">Mapa do laboratório</span>
-					<strong>{devProjects.length} artefatos em {groups.length} trilhas</strong>
+					<strong>{featured.length} destaques + {devProjects.length - featured.length} projetos em {groups.length} trilhas</strong>
 				</div>
 				<div class="index-links">
 					{groups.map(({ meta, projects }) => (
