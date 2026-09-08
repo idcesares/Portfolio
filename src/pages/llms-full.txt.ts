@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { devProjects, statusLabels } from '../data/dev-projects';
 import { AUTHOR_EMAIL, SITE_DESCRIPTION, SOCIAL_LINKS } from '../utils/seo';
 
 export const prerender = true;
@@ -24,7 +25,7 @@ export const GET: APIRoute = async ({ site }) => {
 ${baseUrl.replace('https://', '')}/
 ├── / (Home)
 │   ├── Apresentação profissional
-│   ├── Destaques de projetos (últimos 4)
+│   ├── Projetos em código em destaque e últimos 4 trabalhos
 │   ├── Posts recentes do blog (últimos 4)
 │   └── Skills e competências
 ├── /work/ (Portfolio de Trabalhos, ${work.length} itens)
@@ -69,6 +70,9 @@ ${posts.slice(0, 4).map((p) => `│   ├── /blog/${p.id}/`).join('\n')}
 ${contentTree}
 
 ---
+
+## Projetos em código
+${devProjects.map(project => `- [${project.title}](${baseUrl}/dev/#project-${project.id}): ${project.description} Estado: ${statusLabels[project.status]}.`).join('\n')}
 
 ## FAQ (Perguntas Frequentes)
 
