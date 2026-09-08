@@ -87,7 +87,7 @@ export const statusLabels: Record<DevProjectStatus, string> = {
 	live: 'Online',
 	development: 'Em construção',
 	published: 'Publicado',
-	reference: 'Acervo vivo',
+	reference: 'Acervo',
 	archived: 'Arquivado',
 };
 
@@ -114,7 +114,7 @@ export const devProjects: DevProject[] = [
 		description:
 			'Instrumento explicável para estimar risco de greenwashing em divulgações climáticas — com regras, evidências e proveniência abertas à inspeção.',
 		longDescription:
-			'Pesquisa aplicada que combina sinais fixados do ClimateBERT com lógica fuzzy Mamdani para produzir um escore auditável de 0 a 100. Cada resultado preserva o rastro das regras acionadas e um grafo de proveniência W3C PROV-O; artigo, testes, decisões metodológicas e artefatos reprodutíveis vivem no mesmo repositório.',
+			'Instrumento de pesquisa para estimar risco de greenwashing em divulgações climáticas: quando o discurso ambiental merece uma análise mais cuidadosa? Combina sinais do ClimateBERT e regras fuzzy em um escore auditável, com registro das regras acionadas e da proveniência. O resultado apoia a investigação humana; não é uma certificação nem uma conclusão de fraude.',
 		techStack: [
 			{ name: 'Python', color: 'teal' },
 			{ name: 'ClimateBERT', color: 'terracotta' },
@@ -358,7 +358,7 @@ export const devProjects: DevProject[] = [
 		id: 'remove-ai-writing-signs',
 		title: 'Remove AI Writing Signs',
 		description:
-			'Método de edição reconstrutiva que desmonta padrões previsíveis de texto gerado por IA antes de reconstruir voz, ritmo e especificidade.',
+			'Método de edição reconstrutiva para textos em inglês: desmonta padrões previsíveis de texto gerado por IA antes de reconstruir voz, ritmo e especificidade.',
 		techStack: [
 			{ name: 'Agent Skills', color: 'teal' },
 			{ name: 'Prompt Engineering', color: 'terracotta' },
