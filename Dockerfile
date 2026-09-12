@@ -5,13 +5,13 @@
 FROM node:22-alpine AS base
 
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
-RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 # Set working directory
 WORKDIR /app
 
 # Copy package files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Development stage
 FROM base AS development
@@ -44,14 +44,14 @@ RUN pnpm build
 FROM node:22-alpine AS production
 
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
-RUN corepack enable && corepack prepare pnpm@10.30.1 --activate
+RUN corepack enable && corepack prepare pnpm@10.33.0 --activate
 
 WORKDIR /app
 
 ENV NODE_ENV=production
 
 # Copy package files
-COPY package.json pnpm-lock.yaml ./
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 
 # Install only production dependencies
 RUN pnpm install --prod --frozen-lockfile

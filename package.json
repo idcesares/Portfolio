@@ -14,32 +14,32 @@
     "audit:full": "pnpm audit --audit-level moderate"
   },
   "dependencies": {
-    "@astrojs/markdown-remark": "^7.2.1",
-    "@astrojs/mdx": "^7.0.2",
+    "@astrojs/markdown-remark": "^7.3.1",
+    "@astrojs/mdx": "^8.0.1",
     "@astrojs/partytown": "^2.1.7",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
-    "@astrojs/vercel": "^11.0.2",
-    "@lucide/astro": "^1.23.0",
+    "@astrojs/sitemap": "^3.7.4",
+    "@astrojs/vercel": "^11.0.10",
+    "@lucide/astro": "^1.45.0",
     "@rehype-pretty/transformers": "^0.13.2",
-    "@tailwindcss/vite": "^4.3.2",
+    "@tailwindcss/vite": "^4.3.3",
     "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.0.6",
-    "astro-embed": "^0.13.1",
-    "astro-seo": "^1.1.0",
-    "fuse.js": "^7.4.2",
-    "markdown-it": "^14.3.0",
+    "astro": "^7.3.2",
+    "astro-embed": "^0.14.0",
+    "astro-seo": "^1.2.0",
+    "fuse.js": "^7.5.0",
+    "markdown-it": "^14.3.1",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
-    "rehype-pretty-code": "^0.14.4",
-    "sanitize-html": "^2.17.5",
-    "sharp": "^0.35.3",
-    "shiki": "^4.3.1",
-    "tailwindcss": "^4.3.2"
+    "rehype-pretty-code": "^0.14.5",
+    "sanitize-html": "^2.17.7",
+    "sharp": "^0.35.4",
+    "shiki": "^4.4.3",
+    "tailwindcss": "^4.3.3"
   },
   "engines": {
-    "node": ">=22 <25",
-    "pnpm": ">=9 <11"
+    "node": ">=22.12.0 <25",
+    "pnpm": ">=10 <11"
   },
   "packageManager": "pnpm@10.33.0",
   "pnpm": {
@@ -54,5 +54,9 @@
       "devalue": ">=5.6.4",
       "yaml": "^2.9.0"
     }
+  },
+  "devDependencies": {
+    "@astrojs/check": "0.9.10",
+    "typescript": "~5.9.3"
   }
 }

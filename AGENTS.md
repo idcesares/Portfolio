@@ -73,9 +73,11 @@ docker compose up -d
 ### Opção 2: Instalação Local
 
 **Versões**:
-- Node.js >= 22 <25
-- pnpm >= 9 <11 (package manager obrigatório)
+- Node.js >= 22.12.0 <25
+- pnpm >= 10 <11 (package manager obrigatório)
 - TypeScript strict mode habilitado
+
+Use `pnpm@10.33.0`, fixado em `packageManager` e no Dockerfile. Se necessário, use `corepack pnpm` para evitar conflitos com o pnpm global. Mantenha o `pnpm-workspace.yaml` local: ele isola instalações e auditorias de workspaces ancestrais. `@astrojs/check` e TypeScript são dependências de desenvolvimento explícitas.
 
 **Variáveis de Ambiente** (opcional):
 - Não há secrets críticos (analytics são públicos)
