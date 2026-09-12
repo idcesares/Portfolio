@@ -179,6 +179,7 @@ pnpm audit
 ## Testes e Qualidade
 
 **Validação Automática**:
+- CI Docker: valida Compose em Linux/Windows; builds e execução dos containers Linux usam runners Ubuntu.
 - `astro check` valida TypeScript + content collections
 - Build sem erros é gate obrigatório para deploy
 - Vercel executa `pnpm build` automaticamente

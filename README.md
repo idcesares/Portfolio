@@ -203,6 +203,8 @@ pnpm audit:full   # Auditoria moderate+
 
 ### Observação para Windows
 
+O CI valida os arquivos Compose em Linux e Windows. Os builds e testes dos containers Linux rodam em Ubuntu; o runner Windows não executa as imagens Alpine/BuildKit usadas pelo projeto.
+
 Em máquinas Windows, `pnpm build` pode falhar com erro de symlink ao gerar `.vercel/output`. Isso acontece por restrições do sistema em torno de links simbólicos. As alternativas recomendadas são:
 
 - habilitar **Developer Mode**;
