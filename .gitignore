@@ -34,3 +34,6 @@ docker-compose.override.yml
 
 # Claude
 .claude
+
+# Serena
+.serena
