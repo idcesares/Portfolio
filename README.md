@@ -173,8 +173,10 @@ Portfolio/
 
 ### Pré-requisitos
 
-- **Node.js** `>=22 <25`
-- **pnpm** `>=9 <11`
+- **Node.js** `>=22.12.0 <25`
+- **pnpm** `>=10 <11`
+
+Use a versão fixada em `packageManager` (`pnpm@10.33.0`). Se o `pnpm` global for de outra versão, execute `corepack pnpm install` e `corepack pnpm check`. O `pnpm-workspace.yaml` delimita este repositório para evitar que um workspace ancestral controle o lockfile e a auditoria. Docker e CI usam a mesma versão de pnpm.
 
 Instalação e uso:
 
@@ -194,12 +196,14 @@ pnpm dev          # Desenvolvimento
 pnpm build        # Build de produção
 pnpm preview      # Preview do build
 pnpm astro check  # TypeScript + content collections
-pnpm check        # astro check + build
+pnpm check        # astro check + validação de assets + build
 pnpm audit        # Auditoria high/critical
 pnpm audit:full   # Auditoria moderate+
 ```
 
 ### Observação para Windows
+
+O CI valida os arquivos Compose em Linux e Windows. Os builds e testes dos containers Linux rodam em Ubuntu; o runner Windows não executa as imagens Alpine/BuildKit usadas pelo projeto.
 
 Em máquinas Windows, `pnpm build` pode falhar com erro de symlink ao gerar `.vercel/output`. Isso acontece por restrições do sistema em torno de links simbólicos. As alternativas recomendadas são:
 

@@ -47,7 +47,8 @@ docker.ps1
 
 # Documentation (not needed in image)
 docs/
-design-system/
+# Design tokens are imported by src/styles/global.css and required at build time.
+design-system/*.md
 AGENTS.md
 CLAUDE.md
 README.md
