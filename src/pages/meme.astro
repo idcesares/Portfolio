@@ -1,0 +1,108 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+export const prerender = true;
+---
+
+<BaseLayout title="Você encontrou uma coisa" description="Uma pequena descoberta fora do roteiro. A curiosidade trouxe você até aqui.">
+  <main class="meme wrapper">
+    <section id="invitation" aria-labelledby="secret-title">
+      <p class="eyebrow">Arquivo confidencial · edição 1987</p>
+      <h1 id="secret-title">Já que você<br />chegou <em>até aqui.</em></h1>
+      <p class="lead">Tem uma coisa que eu precisava compartilhar com você.<br />Confia. É conteúdo de altíssimo nível.</p>
+      <div class="envelope" aria-hidden="true"><span>↗</span><small>UM LINK. INFINITAS POSSIBILIDADES.</small></div>
+      <a id="reveal" class="button primary" href="https://www.youtube.com/watch?v=dQw4w9WgXcQ">Pode abrir. Eu confio em você. <span aria-hidden="true">↗</span></a>
+      <p class="fine-print">Última atualização: aparentemente, a internet nunca superou isso.</p>
+    </section>
+
+    <section id="surprise" hidden aria-labelledby="reveal-title">
+      <p class="eyebrow">Experimento concluído · curiosidade confirmada</p>
+      <h2 id="reveal-title" tabindex="-1">Você caiu.<br /><em>Com elegância.</em></h2>
+      <p class="lead">Anos de evolução da internet. Inteligência artificial. Computação quântica.<br />E a gente continua clicando no link.</p>
+      <div id="player" class="player"></div>
+      <p class="play-help">Se o vídeo não começar, aperte o play. <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ" target="_blank" rel="noopener noreferrer">Abrir no YouTube ↗</a></p>
+      <div class="certificate">
+        <span class="seal" aria-hidden="true">R.</span>
+        <div><p class="eyebrow">Certificado de curiosidade excessiva</p><p>Concedido a quem viu um botão suspeito e pensou: <strong>“por que não?”</strong></p><small>Assinado: Isaac. Com uma pequena participação de Rick Astley.</small></div>
+      </div>
+      <div class="actions">
+        <button id="share" class="button primary" type="button">Passar a curiosidade adiante ↗</button>
+        <a class="button" href="/">Voltar ao portfólio, com dignidade</a>
+      </div>
+      <p id="share-status" role="status" aria-live="polite"></p>
+      <div id="copy-fallback" hidden><label for="share-link">Copie este link para compartilhar:</label><input id="share-link" type="url" readonly /></div>
+      <p class="fine-print">Nenhuma IA foi necessária para enganar você. Só um clássico.</p>
+    </section>
+  </main>
+</BaseLayout>
+
+<script>
+  const reveal = document.querySelector<HTMLAnchorElement>('#reveal');
+  const invitation = document.querySelector<HTMLElement>('#invitation');
+  const surprise = document.querySelector<HTMLElement>('#surprise');
+  const player = document.querySelector<HTMLElement>('#player');
+
+  reveal?.addEventListener('click', (event) => {
+    if (!invitation || !surprise || !player || event.ctrlKey || event.metaKey || event.shiftKey || event.altKey) return;
+    event.preventDefault();
+    if (player.childElementCount) return;
+    const iframe = document.createElement('iframe');
+    iframe.src = 'https://www.youtube-nocookie.com/embed/dQw4w9WgXcQ?autoplay=1&playsinline=1&rel=0';
+    iframe.title = 'Rick Astley — Never Gonna Give You Up (videoclipe oficial)';
+    iframe.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen';
+    iframe.allowFullscreen = true;
+    iframe.referrerPolicy = 'strict-origin-when-cross-origin';
+    player.append(iframe);
+    invitation.hidden = true;
+    surprise.hidden = false;
+    document.querySelector<HTMLElement>('#reveal-title')?.focus();
+  });
+
+  document.querySelector<HTMLButtonElement>('#share')?.addEventListener('click', async () => {
+    const url = new URL('/meme/', window.location.origin).href;
+    const status = document.querySelector<HTMLElement>('#share-status');
+    try {
+      await navigator.clipboard.writeText(url);
+      if (status) status.textContent = 'Link copiado. Escolha sua próxima vítima com carinho.';
+    } catch {
+      const fallback = document.querySelector<HTMLElement>('#copy-fallback');
+      const input = document.querySelector<HTMLInputElement>('#share-link');
+      if (fallback && input) {
+        fallback.hidden = false;
+        input.value = url;
+        input.focus();
+        input.select();
+      }
+      if (status) status.textContent = 'A cópia automática não funcionou. O link está disponível abaixo.';
+    }
+  });
+</script>
+
+<style>
+  .meme { max-width: 66rem; padding-block: clamp(3rem, 8vw, 7rem); text-align: center; }
+  [hidden] { display: none !important; }
+  .eyebrow { font: 600 0.7rem/1.7 var(--font-mono); text-transform: uppercase; letter-spacing: 0.13em; color: var(--color-text-accent); }
+  h1, h2 { margin-block: 1.4rem; font-family: var(--font-serif); font-size: clamp(3rem, 9vw, 6.7rem); line-height: 1.03; font-weight: 500; letter-spacing: -0.045em; }
+  h1 em, h2 em { color: var(--color-action-primary); }
+  .lead { color: var(--color-text-secondary); font-size: clamp(1rem, 2vw, 1.2rem); line-height: 1.8; }
+  .envelope { display: grid; place-content: center; gap: 1rem; width: min(100%, 25rem); min-height: 12rem; margin: 2.5rem auto; border: 1px solid var(--color-border-emphasis); border-radius: 1rem; background: linear-gradient(145deg, var(--color-teal-10), var(--color-terracotta-10)); transform: rotate(-3deg); box-shadow: 0 1rem 3rem var(--color-teal-08); }
+  .envelope span { font: 4rem/1 var(--font-serif); color: var(--color-text-accent); }
+  .envelope small { font: 0.6rem var(--font-mono); letter-spacing: 0.1em; }
+  .button { display: inline-flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem 1.4rem; border: 1px solid var(--color-border-emphasis); border-radius: 0.7rem; font: 600 0.95rem/1.5 var(--font-sans); color: var(--color-text-primary); text-decoration: none; cursor: pointer; }
+  .primary { background: var(--color-action-secondary); color: var(--color-text-on-accent); border-color: transparent; }
+  .button:hover { filter: brightness(1.1); }
+  .button:focus-visible, input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 5px; }
+  .fine-print { margin-top: 1.5rem; color: var(--color-text-secondary); font-size: 0.8rem; }
+  .player { margin-top: 2rem; aspect-ratio: 16 / 9; border: 1px solid var(--color-border-default); border-radius: 1rem; overflow: hidden; background: var(--color-charcoal); }
+  .player :global(iframe) { display: block; width: 100%; height: 100%; border: 0; }
+  .play-help { margin-top: 0.8rem; font-size: 0.85rem; color: var(--color-text-secondary); }
+  .play-help a { color: var(--color-text-accent); text-decoration: underline; }
+  .certificate { display: flex; align-items: center; gap: 1.5rem; text-align: left; margin-block: 2rem; padding: clamp(1rem, 3vw, 2rem); border: 1px dashed var(--color-border-emphasis); border-radius: 0.8rem; background: var(--color-bg-secondary); }
+  .certificate p + p { margin-block: 0.5rem; }
+  .certificate small { color: var(--color-text-secondary); }
+  .seal { flex-shrink: 0; display: grid; place-items: center; width: 4rem; height: 4rem; border: 1px solid var(--color-action-primary); border-radius: 50%; font: italic 2rem var(--font-serif); color: var(--color-action-primary); transform: rotate(-12deg); }
+  .actions { display: flex; flex-wrap: wrap; justify-content: center; gap: 0.8rem; }
+  #share-status { margin-top: 1rem; color: var(--color-text-accent); }
+  #copy-fallback input { display: block; width: 100%; margin-top: 0.5rem; padding: 0.8rem; color: var(--color-text-primary); background: var(--color-bg-secondary); border: 1px solid var(--color-border-emphasis); border-radius: 0.5rem; }
+  @media (max-width: 480px) { .certificate { align-items: flex-start; gap: 0.8rem; } .seal { width: 2.5rem; height: 2.5rem; font-size: 1.4rem; } .button { width: 100%; } }
+</style>
