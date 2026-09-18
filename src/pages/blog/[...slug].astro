@@ -10,7 +10,7 @@ import Pill from '../../components/Pill.astro';
 import ContentImage from '../../components/ContentImage.astro';
 import ContentDateMeta from '../../components/ContentDateMeta.astro';
 import { render } from 'astro:content';
-import { AUTHOR_PROFILE_PATH, getBlogPostingStructuredData, getBreadcrumbStructuredData, resolveImageSrc } from '../../utils/seo';
+import { AUTHOR_PROFILE_PATH, getBlogPostingStructuredData, getBreadcrumbStructuredData, getFaqStructuredData, resolveImageSrc } from '../../utils/seo';
 
 interface Props {
 	entry: CollectionEntry<'blog'>;
@@ -37,6 +37,7 @@ const structuredData = [
 		{ name: 'Blog', path: '/blog/' },
 		{ name: entry.data.title, path: `/blog/${entry.id}/` },
 	]),
+	...(entry.data.faq?.length ? [getFaqStructuredData(entry.data.faq)] : []),
 ];
 const article = {
         publishedTime: entry.data.publishDate.toISOString(),
