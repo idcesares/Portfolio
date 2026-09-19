@@ -17,6 +17,17 @@ const entrySchema = ({ image }: SchemaContext) =>
 			img: z.union([image(), z.url()]),
 			img_alt: z.string().optional(),
 			draft: z.boolean().default(false),
+			// Perguntas frequentes para o JSON-LD de FAQPage. Opcional: entradas sem
+			// `faq` não emitem o nó. As respostas aqui precisam repetir o texto visível
+			// da seção de FAQ do conteúdo, senão o markup contradiz a página.
+			faq: z
+				.array(
+					z.object({
+						question: z.string(),
+						answer: z.string(),
+					})
+				)
+				.optional(),
 		})
 		.transform((data) => ({
 			...data,

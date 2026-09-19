@@ -131,3 +131,24 @@ export const getWorkStructuredData = (
     keywords: entry.data.tags.join(', '),
   };
 };
+
+/**
+ * FAQPage a partir do campo `faq` do frontmatter. Só emitir quando as mesmas
+ * perguntas e respostas aparecem no corpo do conteúdo: markup que não bate com
+ * o texto visível é motivo de penalização, não de rich result.
+ */
+export const getFaqStructuredData = (
+  faq: { question: string; answer: string }[]
+) => ({
+  '@context': 'https://schema.org',
+  '@type': 'FAQPage',
+  inLanguage: SITE_LANGUAGE,
+  mainEntity: faq.map(({ question, answer }) => ({
+    '@type': 'Question',
+    name: question,
+    acceptedAnswer: {
+      '@type': 'Answer',
+      text: answer,
+    },
+  })),
+});
