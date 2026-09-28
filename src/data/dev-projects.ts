@@ -132,6 +132,27 @@ export const devProjects: DevProject[] = [
 		year: 2026,
 	},
 	{
+		id: 'fetchpath',
+		title: 'Fetchpath',
+		description:
+			'Gerenciador de downloads para Windows 11 que reúne fila, retomada após reinício e verificação SHA-256 em uma só interface.',
+		longDescription:
+			'Aplicativo de desktop com um motor de downloads em Rust compartilhado com a linha de comando, o terminal e a extensão para navegador. Permite pausar e retomar transferências, verificar arquivos por SHA-256, baixar vídeo e áudio e manter a fila ativa mesmo após fechar a janela.',
+		techStack: [
+			{ name: 'Rust', color: 'teal' },
+			{ name: 'Tauri 2', color: 'terracotta' },
+			{ name: 'TypeScript', color: 'amber' },
+			{ name: 'Windows 11', color: 'sage' },
+		],
+		demoUrl: 'https://github.com/idcesares/fetchpath/releases/latest',
+		repoUrl: 'https://github.com/idcesares/fetchpath',
+		primaryActionLabel: 'Baixar para Windows',
+		repoActionLabel: 'Ver código',
+		status: 'published',
+		category: 'product',
+		year: 2026,
+	},
+	{
 		id: 'padline',
 		title: 'Padline',
 		description:
@@ -570,3 +591,4 @@ export const devProjects: DevProject[] = [
 		year: 2024,
 	},
 ];
+
