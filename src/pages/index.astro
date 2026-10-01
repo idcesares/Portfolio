@@ -18,6 +18,7 @@ import Skills from '../components/Skills.astro';
 import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
 import DevProjectCard from '../components/DevProjectCard.astro';
 import { devProjects } from '../data/dev-projects';
+import { SOURCES } from '../data/tech-signal-sources';
 
 import Portrait from '../assets/portrait.webp';
 
@@ -35,6 +36,8 @@ const posts = (await getCollection('blog', ({ data }) => !data.draft))
 
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
 const structuredData = getSiteStructuredData(site);
+const signalCount = SOURCES.length;
+const signalBrazilCount = SOURCES.filter(source => source.region === 'Brasil' || source.region === 'LATAM').length;
 const featuredProjects = devProjects.filter(project => project.featured).slice(0, 3);
 
 ---
@@ -133,6 +136,17 @@ const featuredProjects = devProjects.filter(project => project.featured).slice(0
 					</CallToAction>
 				</div>
 			</section>
+			<section class="signal-band stack gap-4" data-animate="fade-up" aria-labelledby="signal-title">
+				<p class="signal-eyebrow">Dieta de informação</p>
+				<h2 id="signal-title">Tech Signal Stack</h2>
+				<p>As {signalCount} fontes que acompanho para entender tecnologia, IA e política, {signalBrazilCount} delas do Brasil e da América Latina. A ordem muda a cada visita, para ninguém ficar preso nas mesmas.</p>
+				<div class="signal-cta">
+					<CallToAction href="/tech-signal/">
+						Explorar as fontes
+						<Icon icon="arrow-right" size="1.2em" />
+					</CallToAction>
+				</div>
+			</section>
 		</main>
 
 		<ContactCTA />
@@ -145,6 +159,26 @@ const featuredProjects = devProjects.filter(project => project.featured).slice(0
 	.projects-grid { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1fr); }
 	@media (min-width: 65em) {
 		.projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+	}
+	.signal-band {
+		padding: var(--space-8);
+		border: 1px solid var(--color-border-default);
+		border-radius: var(--radius-xl);
+		background: var(--gradient-subtle);
+		box-shadow: var(--shadow-sm);
+	}
+	.signal-cta { display: grid; justify-items: start; }
+	.signal-band h2 { font-size: var(--text-h1); }
+	.signal-band p { color: var(--color-text-secondary); max-width: 65ch; }
+	.signal-band .signal-eyebrow {
+		font-family: var(--font-mono);
+		font-size: var(--text-small);
+		letter-spacing: 0.08em;
+		text-transform: uppercase;
+		color: var(--color-terracotta);
+	}
+	@media (min-width: 50em) {
+		.signal-band { padding: var(--space-12) var(--space-16); }
 	}
 	.hero {
 		display: flex;

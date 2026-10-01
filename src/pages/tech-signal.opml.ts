@@ -28,8 +28,8 @@ const escapeXml = (value: string) =>
 	});
 
 /**
- * Só entram fontes com feed conferido por requisição real. Dez fontes da
- * curadoria não publicam RSS próprio e ficam de fora: um OPML com endereço
+ * Só entram fontes com feed conferido por requisição real. Parte da
+ * curadoria não publica RSS próprio e fica de fora: um OPML com endereço
  * chutado quebra em silêncio dentro do leitor de quem importou.
  */
 const withFeed = SOURCES.filter(
