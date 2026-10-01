@@ -146,6 +146,10 @@ const accessLabel = (access: SignalSource['access']) =>
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+@keyframes spin-once {
+  from { transform: rotate(0); }
+  to   { transform: rotate(360deg); }
+}
 @keyframes line-grow {
   from { transform: scaleX(0); }
   to   { transform: scaleX(1); }
@@ -437,6 +441,49 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .kind-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .kind-btn .pill-count { font-family: var(--font-mono); font-size: 0.62rem; opacity: 0.65; }
 
+/* Controle de ordem: mesma anatomia dos outros, o ícone gira ao embaralhar. */
+.order-btn {
+  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
+  min-height: calc(var(--size-touch-target) - 8px);
+  color: var(--color-text-secondary);
+  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  transition: all var(--duration-fast) var(--ease-default);
+  white-space: nowrap;
+}
+.order-btn:hover { color: var(--color-text-primary); }
+.order-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
+.order-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.order-btn.spin svg { animation: spin-once var(--duration-slow) var(--ease-out); }
+.tier-control[hidden] { display: none; }
+
+/* Sorteio: três fontes que não são o essencial de sempre. */
+.picks {
+  margin-bottom: var(--space-10);
+  animation: rise-in var(--duration-slow) var(--ease-out) 500ms both;
+}
+.picks[hidden] { display: none; }
+.picks-head {
+  display: flex; align-items: baseline; justify-content: space-between;
+  gap: var(--space-2) var(--space-6); flex-wrap: wrap; margin-bottom: var(--space-4);
+}
+.picks-title {
+  font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 600;
+  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
+}
+.picks-sub { font-size: 0.8125rem; color: var(--color-text-secondary); margin-top: var(--space-1); max-width: 60ch; }
+.picks-reroll {
+  display: inline-flex; align-items: center; gap: var(--space-2);
+  min-height: var(--size-touch-target); padding: var(--space-2) var(--space-5);
+  font-size: 0.8125rem; font-weight: 500; color: var(--color-teal);
+  border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
+  background: var(--color-bg-secondary);
+  transition: border-color var(--duration-fast) var(--ease-default);
+}
+.picks-reroll:hover { border-color: var(--color-teal); }
+.picks-reroll:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.picks .card-tier { cursor: default; }
+
 /* ═══════════ CARD GRID ═══════════ */
 .grid {
   display: grid;
@@ -653,7 +700,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
   <div class="header-ambient" aria-hidden="true"></div>
   <div class="header-wordmark" aria-hidden="true">Signal</div>
   <div class="header-inner">
-    <a href="/dev/" class="header-back">← Voltar para o portfólio</a>
+    <a href="/" class="header-back">← Voltar para o portfólio</a>
     <p class="header-eyebrow">Dieta de informação · {CURATED_LABEL}</p>
     <h1 class="header-headline">Tech <em>Signal</em> Stack.</h1>
     <div class="header-meta">
@@ -716,6 +763,19 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
     </div>
   </div>
 
+  <section class="picks" id="picks" aria-labelledby="picksTitle" hidden>
+    <div class="picks-head">
+      <div>
+        <h2 class="picks-title" id="picksTitle">Para descobrir hoje</h2>
+        <p class="picks-sub">Três fontes sorteadas fora do núcleo essencial, sempre com pelo menos uma brasileira e uma global. Muda a cada visita.</p>
+      </div>
+      <button type="button" class="picks-reroll" id="picksReroll">
+        <span aria-hidden="true">↻</span> Sortear de novo
+      </button>
+    </div>
+    <div class="grid" id="picksGrid"></div>
+  </section>
+
   <div class="result-meta">
     <div class="result-meta-left">
       <h2 class="result-title" id="resultTitle">Todas as fontes</h2>
@@ -730,6 +790,16 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
             {item.label} <span class="pill-count">{item.count}</span>
           </button>
         ))}
+      </div>
+    </div>
+    <div class="tier-control" id="orderControl" hidden>
+      <span class="tier-control-label">Ordem</span>
+      <div class="tier-seg" id="orderSeg" role="group" aria-label="Ordem das fontes">
+        <button type="button" class="order-btn active" data-order="shuffle" aria-pressed="true" title="Muda a cada visita. Clique de novo para embaralhar outra vez.">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+          Embaralhada
+        </button>
+        <button type="button" class="order-btn" data-order="tier" aria-pressed="false" title="Essencial primeiro, depois ordem alfabética">Por prioridade</button>
       </div>
     </div>
     <div class="tier-control">
@@ -750,6 +820,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
         data-tier={source.tier}
         data-cats={source.cats.join(' ')}
         data-kind={source.kind}
+        data-order={index}
         data-haystack={[source.name, source.desc, source.topics.join(' '), source.region, KIND_NAME[source.kind], source.url].join(' ').toLowerCase()}
         style={`--i:${Math.min(index, 14)}`}
       >
@@ -799,7 +870,8 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
     <p>Cada card diz qual é a natureza da fonte, e essa é a distinção que mais muda a leitura. Jornalismo é redação com apuração própria. Análise é interpretação assinada, com tese à mostra. Pesquisa é produção acadêmica ou institucional com metodologia pública. Fonte primária é a organização falando de si mesma, o que a torna parcial e indispensável ao mesmo tempo: o comunicado de um laboratório de IA ou a sanção de um regulador são o fato, não a cobertura do fato. Descoberta não publica nada de original, revela o que outros publicaram, e serve para medir o tamanho de um assunto, não para formar opinião sobre ele.</p>
     <p>A prioridade não mede qualidade, mede frequência de uso. Essencial é o que eu leio de forma recorrente. Forte é excelente, e o peso depende do papel de quem lê. Situacional é o que eu procuro quando o assunto aparece. Um veículo excelente pode ser situacional, e isso não é demérito: a ANPD e o Cetic.br publicam algumas vezes por ano, e quando publicam valem mais que um mês de notícia.</p>
     <p>A camada brasileira de reguladores e institutos é a parte que uma curadoria de tecnologia quase nunca tem. ANPD, Anatel, CADE, Banco Central e MCTI publicam o documento original dias antes de a imprensa interpretá-lo, e a interpretação erra com frequência. Junto com Cetic.br, InternetLab e Data Privacy Brasil, é onde se descobre o que de fato está sendo decidido sobre tecnologia no país.</p>
-    <p>Ficaram de fora, de propósito, os portais brasileiros de alto volume e baixa apuração. Num agregador com pontuação dá para incluir e reduzir o peso deles; numa lista curada, incluir o que se pretende ignorar contradiz a promessa da lista. Pelo mesmo motivo, esta revisão tirou quatro fontes que tinham virado redundantes.</p>
+    <p>Ficaram de fora, de propósito, os portais brasileiros de alto volume e baixa apuração. Num agregador com pontuação dá para incluir e reduzir o peso deles; numa lista curada, incluir o que se pretende ignorar contradiz a promessa da lista. Pelo mesmo motivo, a revisão de outubro tirou três fontes: duas cujo próprio texto já admitia mais anúncio que apuração, e uma que repetia a pauta de outra da lista. Entraram treze, a maioria para cobrir o que faltava fora do eixo Estados Unidos e Europa Ocidental: América Latina, África, China e a pesquisa brasileira em ciência e direitos digitais.</p>
+    <p>A ordem dos cards muda a cada visita, de propósito. Uma lista fixa ensina a ler sempre as mesmas cinco fontes do topo, e o objetivo aqui é o contrário: esbarrar com algo que eu ainda não li. O sorteio de cima evita o núcleo essencial e a ordem por prioridade continua a um clique de distância.</p>
     <p>A curadoria é revisada periodicamente e cada revisão corta, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
 
     <div class="method-export">
@@ -818,7 +890,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
   <div class="footer-inner">
     <span class="footer-brand">d<span class="sep">'</span>c<span class="sub">Signal Stack</span></span>
     <p class="footer-note">{orderedSources.length} fontes · revisado em {CURATED_LABEL}</p>
-    <a class="footer-back" href="/dev/">Ver o resto do portfólio</a>
+    <a class="footer-back" href="/">Ver o resto do portfólio</a>
   </div>
 </footer>
 
@@ -836,6 +908,10 @@ const resultTitle = document.getElementById('resultTitle');
 const resultCount = document.getElementById('resultCount');
 const tierSeg     = document.getElementById('tierSeg');
 const kindSeg     = document.getElementById('kindSeg');
+const orderSeg    = document.getElementById('orderSeg');
+const orderCtl    = document.getElementById('orderControl');
+const picks       = document.getElementById('picks');
+const picksGrid   = document.getElementById('picksGrid');
 const cards       = Array.from(grid.querySelectorAll('.card'));
 
 const CATEGORY_LABELS = {};
@@ -1008,6 +1084,86 @@ themeToggle.addEventListener('click', () => {
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   paintToggle(isDark);
 });
+
+/* ═══════════ EMBARALHAR ═══════════
+   O HTML sai ordenado por prioridade (sem JS, é isso que se vê). No cliente,
+   cada visita sorteia uma ordem nova e três fontes fora do núcleo essencial.
+═══════════════════════════════ */
+function randomInt(max) {
+  const buf = new Uint32Array(1);
+  crypto.getRandomValues(buf);
+  return buf[0] % max;
+}
+
+function shuffled(list) {
+  const out = list.slice();
+  for (let i = out.length - 1; i > 0; i--) {
+    const j = randomInt(i + 1);
+    [out[i], out[j]] = [out[j], out[i]];
+  }
+  return out;
+}
+
+function placeCards(ordered) {
+  ordered.forEach((card, i) => card.style.setProperty('--i', Math.min(i, 14)));
+  grid.append(...ordered);
+}
+
+function setOrder(order, reshuffle) {
+  orderSeg.querySelectorAll('.order-btn').forEach(btn => {
+    const on = btn.dataset.order === order;
+    btn.classList.toggle('active', on);
+    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
+  });
+  if (order === 'tier') {
+    placeCards(cards.slice().sort((a, b) => a.dataset.order - b.dataset.order));
+  } else if (reshuffle) {
+    placeCards(shuffled(cards));
+  }
+}
+
+const isBrazil = card => card.dataset.cats.split(' ').includes('brasil');
+
+function pickFresh() {
+  const pool = cards.filter(card => card.dataset.tier !== '1');
+  const local = shuffled(pool.filter(isBrazil));
+  const world = shuffled(pool.filter(card => !isBrazil(card)));
+  const chosen = [local[0], world[0]];
+  const rest = shuffled(pool.filter(card => !chosen.includes(card)));
+  chosen.push(rest[0]);
+
+  picksGrid.replaceChildren(...shuffled(chosen).map((card, i) => {
+    const copy = card.cloneNode(true);
+    copy.hidden = false;
+    copy.removeAttribute('data-order');
+    copy.style.setProperty('--i', i * 3);
+    const badge = copy.querySelector('.card-tier');
+    const label = document.createElement('span');
+    label.className = badge.className;
+    label.dataset.tier = badge.dataset.tier;
+    label.innerHTML = badge.innerHTML;
+    badge.replaceWith(label);
+    return copy;
+  }));
+  picks.hidden = false;
+}
+
+orderCtl.hidden = false;
+orderSeg.querySelectorAll('.order-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    const order = btn.dataset.order;
+    if (order === 'shuffle') {
+      btn.classList.remove('spin');
+      void btn.offsetWidth;
+      btn.classList.add('spin');
+    }
+    setOrder(order, true);
+  });
+});
+document.getElementById('picksReroll').addEventListener('click', pickFresh);
+
+setOrder('shuffle', true);
+pickFresh();
 
 render();
 </script>
