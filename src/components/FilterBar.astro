@@ -50,7 +50,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 				))}
 			</select>
 
-			<button id="advanced-toggle" class="advanced-toggle" title="Filtros avançados">
+			<button id="advanced-toggle" class="advanced-toggle" title="Filtros avançados" aria-controls="advanced-filters" aria-expanded="false">
 				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
 					<path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
 				</svg>
@@ -59,7 +59,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 	</div>
 
 	<!-- Advanced Filters (Collapsible) -->
-	<div class="advanced-filters" id="advanced-filters">
+	<div class="advanced-filters" id="advanced-filters" inert>
 		<div class="advanced-content">
 			<div class="filter-group">
 				<label for="category-select" class="filter-label">Categoria:</label>
@@ -81,7 +81,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 
 	<!-- Results Count -->
 	<div class="results-info">
-		<span id="results-text">Mostrando todos os resultados</span>
+		<span id="results-text" role="status" aria-atomic="true">Mostrando todos os resultados</span>
 	</div>
 </div>
 
@@ -366,6 +366,8 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 			if (!advancedFilters || !advancedToggle) return;
 
 			this.advancedExpanded = !this.advancedExpanded;
+			advancedToggle.setAttribute('aria-expanded', String(this.advancedExpanded));
+			advancedFilters.inert = !this.advancedExpanded;
 			
 			if (this.advancedExpanded) {
 				advancedFilters.classList.add('expanded');
