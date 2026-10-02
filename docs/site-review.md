@@ -21,7 +21,7 @@ A organização do site deve tornar claros três caminhos: conhecer a pessoa, ex
 
 ## Identidade e experiência
 
-A referência visual é o [design system Membrane Palette](../design-system/DESIGN-SYSTEM.md); a escrita segue o [guia de voz](../design-system/BRAND-VOICE.md). A revisão editorial deve preservar a autoria, a precisão e a relação entre pesquisa, educação e prática.
+A referência visual é o [design system Membrane Palette](../design-system/DESIGN-SYSTEM.md); a escrita segue o [guia de voz](../design-system/BRAND-VOICE.md). A autenticidade da escrita de Isaac é o critério principal. A revisão editorial preserva relatos, opiniões, ritmo e expressões pessoais; descrições e ajustes de clareza devem partir do texto publicado, sem acrescentar experiências ou resultados.
 
 A experiência deve funcionar em mobile, com teclado e com preferências de movimento reduzido. Busca, filtros e tema precisam continuar utilizáveis quando o navegador restringe armazenamento. O visitante pode rever as preferências de cookies no rodapé; a recusa impede o carregamento do Google Analytics.
 

@@ -5,7 +5,7 @@ updatedDate: 2025-06-26 19:00:00
 slug: segredo-universitarios-ia-mercado-trabalho
 img: https://i.ytimg.com/vi/lfPnW0PIi6s/sddefault.jpg
 img_alt: Capa da live sobre IA para universitários e mercado de trabalho, mostrando estudantes utilizando tecnologia em um ambiente moderno.
-description: Descubra como universitários estão usando Inteligência Artificial de forma estratégica para se destacar nos estudos e conquistar espaço no mercado de trabalho. Veja dados atualizados, aplicações práticas de IA e um passo a passo para transformar sua rotina acadêmica com tecnologia!
+description: Aplicações práticas de Inteligência Artificial nos estudos e no mercado de trabalho, com um passo a passo para pensar seu uso na rotina acadêmica.
 tags:
     - Inteligência Artificial
     - Mercado de Trabalho

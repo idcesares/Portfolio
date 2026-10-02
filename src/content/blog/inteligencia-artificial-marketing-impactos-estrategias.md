@@ -3,7 +3,7 @@ title: Como a Inteligência Artificial está Mudando o Marketing - Impactos e Es
 publishDate: 2024-04-17 22:00:00
 updatedDate: 2024-04-17 22:00:00
 img: ../../assets/covers/ai-marketing.webp
-img_alt: Article Image.
+img_alt: Ilustração de uma equipe reunida à mesa, com computadores e uma representação digital de IA ao centro.
 description: Artigo sobre a Inteligência Artificial no marketing, seus impactos e benefícios, ferramentas de IA mais impactantes e como implementar IA em estratégias de marketing.
 tags:
   - Inteligência Artificial

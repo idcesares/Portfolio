@@ -3,8 +3,8 @@ title: Como gerar imagens com IA - Um sistema de prompts agnóstico de ferrament
 publishDate: 2025-08-30 08:00:00
 updatedDate: 2026-09-08 00:00:00
 img: ../../assets/covers/ai_art.webp
-img_alt: Imagem gerada por IA seguindo o blueprint de prompts deste guia.
-description: Um sistema reprodutível para gerar imagens consistentes com IA, independente da ferramenta. Blueprint de 7 peças, receita base, exemplos por caso de uso, técnicas avançadas, debugging e proveniência. Funciona em ChatGPT Images, Midjourney, FLUX, Firefly, Stable Diffusion, Ideogram e similares.
+img_alt: Ilustração de uma mão segurando uma caneta, com formas abstratas em azul, creme e laranja.
+description: "Um sistema reprodutível para gerar imagens consistentes com IA: blueprint de 7 peças, receita base, exemplos, técnicas avançadas e proveniência."
 tags:
     - IA Generativa
     - Inteligência Artificial

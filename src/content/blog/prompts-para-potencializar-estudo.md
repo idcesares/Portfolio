@@ -3,7 +3,7 @@ title: Prompts que vão potencializar o seu estudo!
 publishDate: 2024-10-14 20:00:00
 updatedDate: 2024-10-14 20:00:00
 img: ../../assets/covers/ai_estudo.webp
-img_alt: Imagem gerada de IA potencializando o estudo
+img_alt: Ilustração de um cérebro colorido cercado por livros, um relógio e um celular com a sigla AI.
 description: Artigo sobre como utilizar prompts para potencializar o seu estudo através da inteligência artificial generativa.
 tags:
   - IA
