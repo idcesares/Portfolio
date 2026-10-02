@@ -4,7 +4,7 @@ publishDate: 2025-07-14 21:00:00
 updatedDate: 2025-07-14 21:00:00
 img: ../../assets/covers/aprendizagem-criativa-firjan.webp
 img_alt: Apresentação sobre Aprendizagem Criativa no Encontro de Educadores do Século XXI
-description: Neste artigo, reflito sobre como a Aprendizagem Criativa, aliada à Inteligência Artificial, pode transformar a educação em uma experiência mais significativa, engajadora e inclusiva, a partir da experiência vivida no Encontro de Educadores do Século XXI promovido pela Casa Firjan.
+description: Reflito sobre Aprendizagem Criativa e Inteligência Artificial a partir da experiência no Encontro de Educadores do Século XXI, promovido pela Casa Firjan.
 tags:
   - Aprendizagem Criativa
   - Educação Inovadora

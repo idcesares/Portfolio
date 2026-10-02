@@ -4,7 +4,7 @@ publishDate: 2025-05-07 09:00:00
 updatedDate: 2025-05-07 09:00:00
 img: ../../assets/covers/palestra-cei-seguranca-digital.webp
 img_alt: Foto da Palestra sobre Segurança Digital
-description: Este artigo consolida a palestra que apresentei para pais e responsáveis sobre Segurança Digital de crianças e adolescentes. Aqui você encontra a proposta pedagógica, principais conceitos, ferramentas de proteção, e um Super Guia com todos os links e recursos práticos para continuar aprendendo.
+description: A palestra que apresentei para pais e responsáveis sobre Segurança Digital, com a proposta pedagógica, ferramentas de proteção e recursos para continuar aprendendo.
 tags:
   - Segurança Digital
   - Crianças e Adolescentes

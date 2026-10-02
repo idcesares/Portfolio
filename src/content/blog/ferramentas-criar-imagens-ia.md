@@ -3,7 +3,7 @@ title: Geração de imagem por IA em 2026 - Como escolher modelos e montar seu f
 publishDate: 2026-05-14 08:00:00
 updatedDate: 2026-09-08 00:00:00
 img: ../../assets/covers/tool_ai_art.webp
-img_alt: Mapa visual de ferramentas de geração de imagem por IA.
+img_alt: Ilustração de uma mão robótica tocando formas luminosas em azul e rosa.
 description: Um mapa de ferramentas de imagem por tarefa, com fontes oficiais, critérios de comparação e um roteiro para escolher sem depender de rankings.
 tags:
     - IA Generativa
