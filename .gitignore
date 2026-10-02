@@ -27,6 +27,10 @@ pnpm-debug.log*
 # vercel build output
 .vercel
 
+# Browser test artifacts
+test-results/
+playwright-report/
+
 # Docker
 .docker/
 docker-compose.override.yml

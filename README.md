@@ -199,7 +199,21 @@ pnpm astro check  # TypeScript + content collections
 pnpm check        # astro check + validação de assets + build
 pnpm audit        # Auditoria high/critical
 pnpm audit:full   # Auditoria moderate+
+pnpm test:browser # Regressão de consentimento e Analytics no Chromium
 ```
+
+Para os testes de navegador, instale o Chromium do Playwright uma vez:
+
+```bash
+pnpm exec playwright install chromium
+pnpm test:browser
+```
+
+Os testes iniciam um servidor isolado na porta 4322 e substituem o script do
+Google Analytics para validar o Partytown sem enviar visitas de teste ao Google.
+É possível usar um Chromium já instalado definindo
+`PLAYWRIGHT_CHROMIUM_EXECUTABLE_PATH` com o caminho do executável.
+A CI executa esses testes e bloqueia alertas de segurança high/critical.
 
 ### Observação para Windows
 

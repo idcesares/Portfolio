@@ -27,13 +27,18 @@ jobs:
 
       - name: Dependency security audit (high+critical)
         run: pnpm run audit
-        continue-on-error: true
 
       - name: Type and content checks
         run: pnpm astro check
 
       - name: Check content asset references
         run: pnpm run check:assets
+
+      - name: Install browser for regression tests
+        run: pnpm exec playwright install --with-deps chromium
+
+      - name: Cookie consent browser regression tests
+        run: pnpm run test:browser
 
       - name: Build
         run: pnpm build
