@@ -194,7 +194,8 @@ Site local:
 ```bash
 pnpm dev          # Desenvolvimento
 pnpm build        # Build de produção
-pnpm preview      # Preview do build
+pnpm build:preview # Build Node standalone em dist-preview/
+pnpm preview      # Servir o build Node local (após build:preview)
 pnpm astro check  # TypeScript + content collections
 pnpm check        # astro check + validação de assets + build
 pnpm audit        # Auditoria high/critical
@@ -230,6 +231,12 @@ Em máquinas Windows, `pnpm build` pode falhar com erro de symlink ao gerar `.ve
 ## Desenvolvimento com Docker
 
 O repositório inclui ambiente Docker multi-stage para desenvolvimento e preview de produção.
+
+O deploy usa `pnpm build` com o adapter Vercel. Para uma prévia local, execute
+`pnpm build:preview` e depois `pnpm preview`. Esse build usa o adapter Node e
+grava em `dist-preview/`, preservando o artefato Vercel em `dist/`.
+O container de produção também usa esse servidor Node standalone; a CI inicia
+o container e verifica rotas, busca, 404 e imagens otimizadas.
 
 ### Início rápido
 

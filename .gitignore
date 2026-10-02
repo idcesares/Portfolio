@@ -3,6 +3,7 @@
 
 # build output
 dist/
+dist-preview/
 # generated types
 .astro/
 

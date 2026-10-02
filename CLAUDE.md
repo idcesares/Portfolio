@@ -48,7 +48,8 @@ Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesigngu
 pnpm dev                  # Dev server em http://localhost:4321
 pnpm astro check          # TypeScript + schemas das content collections
 pnpm build                # SSR build para Vercel (EPERM no Windows é esperado; Vercel builda no Git)
-pnpm preview              # Testar SSR build local
+pnpm build:preview        # Build Node standalone em dist-preview/
+pnpm preview              # Servir o build Node local
 pnpm check                # Gate pré-commit (astro check + build)
 pnpm audit                # Dependências high+critical
 ```

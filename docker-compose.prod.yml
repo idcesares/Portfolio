@@ -1,5 +1,5 @@
 services:
-  # Production preview service - tests SSR build
+  # Standalone Node preview; the default deploy build still targets Vercel.
   portfolio-preview:
     build:
       context: .

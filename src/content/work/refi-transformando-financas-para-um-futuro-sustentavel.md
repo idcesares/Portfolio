@@ -14,7 +14,7 @@ tags:
   - Finanças Regenerativas
 ---
 
-# Dá para confiar quando uma empresa diz que está ajudando o planeta?
+## Dá para confiar quando uma empresa diz que está ajudando o planeta?
 
 *Relato e reflexões sobre minha palestra na 8ª Semana da Computação da UFRJ, onde falei sobre greenwashing, blockchain e finanças regenerativas.*
 

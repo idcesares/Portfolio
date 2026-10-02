@@ -140,8 +140,13 @@ pnpm build
 
 **Preview** (testar build localmente):
 ```bash
+pnpm build:preview
 pnpm preview
 ```
+
+O preview usa o adapter Node standalone e `dist-preview/`; `pnpm build` continua
+gerando o deploy Vercel em `dist/`. O container de produção inicia diretamente
+`node dist-preview/server/entry.mjs` e a CI verifica seu funcionamento real.
 
 **Validação TypeScript + Content**:
 ```bash
@@ -237,7 +242,7 @@ pnpm dev --port 3000        # Porta customizada
 **Debug de Build**:
 ```bash
 pnpm build --verbose        # Output detalhado
-pnpm preview               # Testar build SSR localmente
+pnpm build:preview && pnpm preview # Testar o build Node localmente
 ```
 
 **Health Checks**:

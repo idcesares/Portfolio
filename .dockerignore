@@ -5,6 +5,10 @@ node_modules/
 
 # Build output
 dist/
+dist-preview/
+test-results/
+playwright-report/
+tests/
 .astro/
 .vercel/
 

@@ -38,7 +38,11 @@ docker compose down
 
 **Acesso**: http://localhost:4321
 
-### Preview de Produção (SSR Build)
+### Preview de Produção (Node standalone)
+
+O build do container usa `pnpm build:preview` e o adapter Node, com saída em
+`dist-preview/`. O deploy Vercel continua usando o build padrão. O servidor do
+container é iniciado por `node dist-preview/server/entry.mjs`.
 
 ```bash
 # Build e preview da versão de produção
@@ -370,4 +374,3 @@ docker compose exec portfolio-dev pnpm run <script>
 **Atualizado**: 12/11/2025  
 **Documentação Principal**: README.md  
 **Arquitetura**: AGENTS.md
-

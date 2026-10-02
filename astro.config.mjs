@@ -1,6 +1,7 @@
 import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import vercel from "@astrojs/vercel";
+import node from '@astrojs/node';
 import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
@@ -41,7 +42,10 @@ const sitemapLastmod = new Map([
 ]);
 
 // https://astro.build/config
+const nodePreview = process.env.ASTRO_BUILD_TARGET === 'node';
+
 export default defineConfig({
+  outDir: nodePreview ? './dist-preview' : './dist',
   // Keep server output to preserve Vercel runtime image optimization and analytics integration.
   output: 'server',
 
@@ -65,7 +69,7 @@ export default defineConfig({
     }),
   },
 
-  adapter: vercel({
+  adapter: nodePreview ? node({ mode: 'standalone' }) : vercel({
     webAnalytics: {
       enabled: true
     },
@@ -105,7 +109,7 @@ export default defineConfig({
   },
 
   build: {
-    format: "file",
+    format: nodePreview ? 'directory' : 'file',
   },
 
   // Enforce a single canonical URL shape (with trailing slash) so pages don't

@@ -4,7 +4,7 @@
 <cookie-consent>
 	<div class="cc-card" role="region" aria-label="Preferências de cookies" hidden>
 		<p class="cc-text">
-			Uso <strong>Google Analytics</strong> pra entender quais posts e projetos rendem mais leitura por aqui. Nenhum dado vai pra anúncio nem é repassado a terceiros.
+			Com sua permissão, uso <strong>Google Analytics</strong> pra entender quais posts e projetos rendem mais leitura por aqui. Os dados de uso são processados pelo Google. Você pode rever sua escolha nas preferências de cookies no rodapé.
 		</p>
 		<div class="cc-actions">
 			<button type="button" class="cc-btn cc-btn-ghost" data-cc="reject">Recusar</button>
@@ -113,13 +113,70 @@
 <script>
 	const GA_ID = 'G-0XZV7NBH4E';
 	const STORAGE_KEY = 'cookie-consent';
+	const FALLBACK_COOKIE = 'portfolio-consent';
+	const DENIAL_MARKER = `[portfolio-consent-denied:${window.location.origin}]`;
+	const readFallbackCookie = () => {
+		try {
+			return document.cookie.split('; ').find((cookie) => cookie.startsWith(`${FALLBACK_COOKIE}=`))?.split('=')[1] ?? null;
+		} catch { return null; }
+	};
 
 	class CookieConsent extends HTMLElement {
+		private dismissTimer: number | undefined;
 		constructor() {
 			super();
 
 			const card = this.querySelector<HTMLElement>('.cc-card')!;
-			const consent = localStorage.getItem(STORAGE_KEY);
+			let consent: string | null = null;
+			try { consent = localStorage.getItem(STORAGE_KEY); } catch { /* Ask on this visit. */ }
+			if (readFallbackCookie() === 'denied') consent = 'denied';
+			if (window.name.endsWith(DENIAL_MARKER)) consent = 'denied';
+			const saveConsent = (value: string) => {
+				let saved = false;
+				try {
+					localStorage.setItem(STORAGE_KEY, value);
+					saved = true;
+					try { document.cookie = `${FALLBACK_COOKIE}=; Max-Age=0; Path=/; SameSite=Lax`; } catch { /* Optional fallback. */ }
+				} catch {
+					// Quota/read-only storage can retain an old grant. Prefer the
+					// denial via an essential first-party session cookie.
+					try {
+						document.cookie = value === 'denied'
+							? `${FALLBACK_COOKIE}=denied; Path=/; SameSite=Lax${location.protocol === 'https:' ? '; Secure' : ''}`
+							: `${FALLBACK_COOKIE}=; Max-Age=0; Path=/; SameSite=Lax`;
+						saved = value === 'denied' && readFallbackCookie() === 'denied';
+					} catch { /* Preserve denial within this tab below. */ }
+				}
+				if (window.name.endsWith(DENIAL_MARKER)) window.name = window.name.slice(0, -DENIAL_MARKER.length);
+				// If all persistent storage is blocked, window.name survives a
+				// same-tab reload. Scope the non-sensitive denial to this origin
+				// and preserve any pre-existing window name.
+				if (value === 'denied' && !saved) window.name += DENIAL_MARKER;
+			};
+			const showCard = () => {
+				window.clearTimeout(this.dismissTimer);
+				card.classList.remove('cc-leaving');
+				card.hidden = false;
+				card.classList.add('cc-visible');
+			};
+			document.querySelectorAll<HTMLButtonElement>('[data-cookie-preferences]').forEach((button) => {
+				button.hidden = false;
+				button.addEventListener('click', () => {
+					showCard();
+					card.querySelector<HTMLButtonElement>('[data-cc="reject"]')?.focus();
+				});
+			});
+			this.querySelector('[data-cc="accept"]')?.addEventListener('click', () => {
+				saveConsent('granted');
+				this.loadAnalytics();
+				this.dismiss(card);
+			});
+			this.querySelector('[data-cc="reject"]')?.addEventListener('click', () => {
+				saveConsent('denied');
+				this.dismiss(card);
+				// End the current worker and prevent Analytics on the next page.
+				if ((window as any).__gaLoaded) window.location.reload();
+			});
 
 			if (consent === 'granted') {
 				this.loadAnalytics();
@@ -134,22 +191,13 @@
 			card.removeAttribute('hidden');
 			window.setTimeout(() => card.classList.add('cc-visible'), 1200);
 
-			this.querySelector('[data-cc="accept"]')?.addEventListener('click', () => {
-				localStorage.setItem(STORAGE_KEY, 'granted');
-				this.loadAnalytics();
-				this.dismiss(card);
-			});
-
-			this.querySelector('[data-cc="reject"]')?.addEventListener('click', () => {
-				localStorage.setItem(STORAGE_KEY, 'denied');
-				this.dismiss(card);
-			});
 		}
 
 		dismiss(card: HTMLElement) {
 			card.classList.remove('cc-visible');
 			card.classList.add('cc-leaving');
-			window.setTimeout(() => card.setAttribute('hidden', ''), 400);
+			window.clearTimeout(this.dismissTimer);
+			this.dismissTimer = window.setTimeout(() => card.setAttribute('hidden', ''), 400);
 		}
 
 		loadAnalytics() {
