@@ -83,7 +83,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		border: 1px solid var(--color-teal-20);
 		border-radius: var(--radius-full);
 		background: color-mix(in oklab, var(--color-teal) 10%, var(--color-bg-primary));
-		color: var(--color-text-accent);
+		color: light-dark(var(--color-teal-dark), var(--color-teal-light));
 		font-family: var(--font-mono);
 		font-size: var(--text-small);
 		font-weight: var(--weight-semibold);
@@ -142,13 +142,13 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 
 	.not-found__button--primary {
 		border-color: var(--color-terracotta-dark);
-		background: var(--color-terracotta);
+		background: var(--color-action-primary);
 		color: var(--color-text-on-accent);
 	}
 
 	.not-found__button--primary:hover {
 		border-color: var(--color-terracotta);
-		background: var(--color-terracotta-light);
+		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
 		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
 	}
 
