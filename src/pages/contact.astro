@@ -1,6 +1,8 @@
 ---
 export const prerender = true;
 
+import { Image } from 'astro:assets';
+import portrait from '../assets/portrait.webp';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import CallToAction from '../components/CallToAction.astro';
 import Icon from '../components/Icon.astro';
@@ -116,7 +118,7 @@ const structuredData = [
 	<div class="stack gap-20">
 	<main id="main-content" tabindex="-1" class="wrapper contact-page">
 		<section class="contact-hero" aria-labelledby="contact-title">
-			<div class="hero-copy" data-animate="fade-up">
+			<div class="hero-copy">
 				<p class="eyebrow">Contato</p>
 				<h1 id="contact-title">Vamos abrir uma boa conversa.</h1>
 				<p class="lede">
@@ -133,12 +135,14 @@ const structuredData = [
 				</div>
 			</div>
 
-			<figure class="hero-visual" data-animate="scale-up" data-animate-delay="150">
-				<img
-					src="/assets/portrait.webp"
+			<figure class="hero-visual">
+				<Image
+					src={portrait}
 					alt="Retrato de Isaac D'Césares"
-					width="960"
-					height="1200"
+					width={960}
+					height={1200}
+					quality={80}
+					sizes="(min-width: 800px) 40vw, calc(100vw - 48px)"
 					loading="eager"
 					decoding="async"
 				/>
