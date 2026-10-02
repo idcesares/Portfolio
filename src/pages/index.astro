@@ -26,9 +26,17 @@ import { University } from '@lucide/astro';
 import { getSiteStructuredData } from '../utils/seo';
 
 
-const projects = (await getCollection('work', ({ data }) => !data.draft))
-	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
-	.slice(0, 4);
+const work = await getCollection('work', ({ data }) => !data.draft);
+const highlightedWorkIds = [
+	'papert-mindstorms-construcionismo-aprendizagem-criativa',
+	'learnchain-educacao-festival-ufrj-2024',
+	'ia-personalizacao-educacao',
+];
+const projects = highlightedWorkIds.map((id) => {
+	const project = work.find((entry) => entry.id === id);
+	if (!project) throw new Error(`Trabalho em destaque não encontrado: ${id}`);
+	return project;
+});
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
@@ -94,10 +102,10 @@ const featuredProjects = devProjects.filter(project => project.featured).slice(0
 				</div>
 				<CallToAction href="/dev/">Explorar todos os projetos <Icon icon="arrow-right" size="1.2em" /></CallToAction>
 			</section>
-			<section class="section with-background with-cta" data-animate="fade-up">
+			<section class="section with-background with-cta" data-animate="fade-up" aria-labelledby="work-highlights-title">
 				<header class="section-header stack gap-2 lg:gap-4">
-					<h2>Últimos trabalhos</h2>
-					<p>Registros recentes de entregas, projetos e colaborações.</p>
+					<h2 id="work-highlights-title">Trabalhos em destaque</h2>
+					<p>Aprendizagem, IA na educação e autonomia sobre dados e conhecimento.</p>
 				</header>
 
 				<div class="gallery">
