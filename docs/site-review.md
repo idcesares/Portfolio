@@ -37,9 +37,9 @@ O caminho da vitrine ao artigo e ao contato tem cobertura em teste de navegador.
 
 ## Estado técnico verificado
 
-A auditoria de dependências não encontrou vulnerabilidades conhecidas. Astro Check passou em 59 arquivos, sem erros, warnings ou hints; referências de assets e builds Vercel e Node foram aprovados. Os 13 testes Chromium passaram. A CI também inicia o preview Docker e confere páginas, busca, feeds, 404 e imagens.
+A auditoria de dependências não encontrou vulnerabilidades conhecidas. Astro Check passou em 61 arquivos, sem erros, warnings ou hints; referências de assets e builds Vercel e Node foram aprovados. Os 17 testes Chromium passaram. A CI também inicia o preview Docker e confere páginas, busca, feeds, 404 e imagens.
 
-Os testes de navegador cobrem consentimento e revogação de Analytics com armazenamento restrito, renderização segura da busca, vitrine e contato, e metadados no `head` após o HTML ser interpretado pelo navegador. Os testes de Analytics usam um script substituto, sem enviar visitas reais ao Google.
+Os testes de navegador cobrem consentimento e revogação de Analytics com armazenamento restrito, renderização segura da busca, vitrine e contato, introdução legível sem módulos JavaScript, menu mobile com Escape, filtros recolhidos fora da árvore de acessibilidade, anúncios de resultados, e metadados no `head` após o HTML ser interpretado pelo navegador. Os testes de Analytics usam um script substituto, sem enviar visitas reais ao Google.
 
 A auditoria identificou que o componente Speed Insights no `head` deslocava os metadados para o corpo da página. O componente foi movido para o `body`, preservando as descrições, URLs canônicas e dados de compartilhamento existentes.
 
@@ -47,26 +47,28 @@ A auditoria identificou que o componente Speed Insights no `head` deslocava os m
 
 A curadoria contém 79 fontes e 62 feeds. O OPML gerado contém exatamente os 62 endereços únicos cadastrados. A conferência externa confirmou 60 feeds com XML RSS ou Atom e entradas utilizáveis.
 
-Os feeds de **The New York Times** e **ChinAI** ficaram sem confirmação por bloqueio do túnel de rede no ambiente de auditoria. Alguns sites também responderam com restrições de acesso. Isso não comprova que os endereços estejam quebrados; os cadastros foram mantidos. A data de curadoria não foi avançada com uma verificação parcial.
+Os feeds de **The New York Times** e **ChinAI** continuam sem confirmação após nova tentativa, por bloqueio do túnel de rede no ambiente de auditoria. Alguns sites também responderam com restrições de acesso. Isso não comprova que os endereços estejam quebrados; os cadastros foram mantidos. A data de curadoria não foi avançada com uma verificação parcial.
 
 ## Mobile, acessibilidade e desempenho
 
 Home, Trabalhos, Blog, Contato, Papert e Tech Signal foram avaliados com Chromium e axe-core em 390 e 1280 pixels, nos temas claro e escuro, com movimento reduzido. A amostra não apresentou rolagem horizontal indevida. Foram corrigidos contrastes de botões, contadores e filtros usando as cores previstas no design system, além da hierarquia de títulos das listagens. A verificação adicional contempla consentimento, filtros ativos, hover, Dev, Sobre, indicações e 404. Nos cards do Tech Signal, a borda decorativa impede o axe de calcular alguns contrastes; uma conferência complementar ocultou somente essa borda durante o teste, mantendo as cores dos textos e fundos. As etiquetas identificadas nessa conferência também foram corrigidas.
 
-Medição Lighthouse mobile em produção, em 2 de outubro de 2026, antes dos ajustes finais:
+A conferência de teclado e da árvore de acessibilidade do Chromium identificou controles de filtros recolhidos ainda disponíveis para navegação e leitura assistiva. Os controles agora ficam inertes quando recolhidos, o botão comunica seu estado, e a contagem de resultados é uma região de status. Escape fecha o menu mobile e devolve o foco ao botão; a navegação desktop permanece aberta. Esses percursos têm cobertura de regressão. A revalidação de Trabalhos, Blog e Contato passou nos 12 cenários de tela e tema, sem violações detectadas pelo axe nem rolagem horizontal indevida. A árvore do navegador não substitui um ensaio real com NVDA, VoiceOver ou outro leitor de tela.
 
-| Página | Performance | LCP | TBT | CLS |
-| --- | --- | --- | --- | --- |
-| Home | 96 | 2,2 s | 80 ms | 0,001 |
-| Trabalhos | 83 | 4,0 s | 190 ms | 0 |
-| Contato | 82 | 3,7 s | 260 ms | 0,001 |
-| Papert | 95 | 2,7 s | 10 ms | 0,001 |
+Comparação Lighthouse mobile em produção em 2 de outubro de 2026, com o mesmo perfil e **mediana de três execuções por página em cada versão**:
 
-São resultados de uma execução em laboratório com rede e CPU simuladas, sujeitos a variação; não representam Core Web Vitals de usuários reais. Imagens externas do YouTube foram bloqueadas pelo túnel de rede durante a medição. A auditoria automatizada não substitui avaliação manual com leitores de tela.
+| Página | Performance antes → depois | LCP antes → depois | TBT antes → depois |
+| --- | --- | --- | --- |
+| Trabalhos | 82 → 88 | 3,96 → 3,40 s | 114 → 122 ms |
+| Contato | 87 → 91 | 3,65 → 2,60 s | 68 → 230 ms |
+
+O carregamento inicial dispensa o preload da fonte serifada em itálico, mantendo-a disponível sob demanda. Capas locais usam qualidade 80. O retrato de Contato é responsivo e sua variante de 640 pixels foi entregue em produção com cerca de 41 kB, em vez dos 160 kB do arquivo original. O texto e a foto iniciais de Contato aparecem imediatamente, sem depender do script de animação.
+
+O LCP melhorou nas duas páginas, mas permanece acima da meta de 2,5 s. O TBT de Contato aumentou na comparação e precisa de investigação; não houve ganho geral de processamento. O CLS ficou abaixo de 0,001 nas medianas. São resultados de laboratório com rede e CPU simuladas, sujeitos a variação; não representam Core Web Vitals de usuários reais. Imagens externas do YouTube continuam sujeitas ao bloqueio do túnel de rede no ambiente de auditoria.
 
 ## Alcance internacional
 
-O objetivo definido por Isaac é **formar parcerias de pesquisa e educação**. A recomendação é um piloto em inglês com a apresentação de Sobre e os três trabalhos em destaque. A adaptação deve partir do texto autoral, preservar opiniões e expressões pessoais e explicar referências brasileiras quando necessário. Não acrescentar experiências, resultados ou credenciais.
+O objetivo definido por Isaac é **formar parcerias de pesquisa e educação**. Foi preparado um rascunho editorial em inglês com a apresentação de Sobre e os três trabalhos em destaque, com revisão de fidelidade às fontes. Ele ainda não foi publicado e aguarda a revisão da voz por Isaac. Os dados profissionais de Sobre — coordenação no Sesc Nacional, mestrado em andamento na UFRJ e cerca de 80 mil estudantes — foram reconfirmados por Isaac. A adaptação deve partir do texto autoral, preservar opiniões e expressões pessoais e explicar referências brasileiras quando necessário. Não acrescentar experiências, resultados ou credenciais.
 
 Antes de publicar, revisar o sentido e a naturalidade do inglês com Isaac. Preservar as URLs em português, oferecer alternância explícita de idioma e metadados adequados. A tradução completa do site fica condicionada ao retorno desse piloto.
 
@@ -74,9 +76,9 @@ Antes de publicar, revisar o sentido e a naturalidade do inglês com Isaac. Pres
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Investigar carregamento de Trabalhos e Contato | Comparar medições no mesmo perfil; buscar LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
+| 1 | Continuar a melhoria de carregamento e investigar o TBT de Contato | LCP até 2,5 s e TBT até 200 ms em comparação repetível, sem remover conteúdo autoral |
 | 2 | Reconfirmar feeds NYT e ChinAI com acesso de rede disponível | XML RSS/Atom com entradas válidas; ajustar cadastro somente se houver evidência de falha |
-| 3 | Preparar o piloto em inglês para pesquisa e educação | Sobre e três trabalhos adaptados, revisão autoral de Isaac e navegação entre idiomas testada |
+| 3 | Revisar o rascunho em inglês e definir sua publicação | Voz confirmada por Isaac; depois, navegação entre idiomas e metadados testados |
 | 4 | Complementar a avaliação de acessibilidade e experiência real | Percurso de teclado e leitor de tela; Core Web Vitals de campo quando houver dados suficientes |
 
 ## Manutenção

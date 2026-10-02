@@ -151,6 +151,14 @@ const isCurrentPath = (href: string) =>
 				btn.hidden = e.matches;
 			};
 			const mediaQueries = window.matchMedia('(min-width: 50em)');
+			const closeOnEscape = (event: KeyboardEvent) => {
+				if (event.key !== 'Escape' || mediaQueries.matches || menu.hidden) return;
+				event.preventDefault();
+				setExpanded(false);
+				btn.focus();
+			};
+			btn.addEventListener('keydown', closeOnEscape);
+			menu.addEventListener('keydown', closeOnEscape);
 			handleViewports(mediaQueries);
 			mediaQueries.addEventListener('change', handleViewports);
 		}
