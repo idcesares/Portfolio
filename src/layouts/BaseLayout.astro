@@ -51,6 +51,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
                 />
 	</head>
 	<body>
+		<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
 		<div class="stack backgrounds">
 			<Nav />
 			<slot />
@@ -181,6 +182,17 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 		</script>
 
 		<style>
+			.skip-link {
+				position: fixed;
+				z-index: var(--z-toast);
+				left: var(--space-4);
+				top: var(--space-4);
+				transform: translateY(-200%);
+				padding: var(--space-3) var(--space-4);
+				background: var(--color-bg-primary);
+				color: var(--color-text-primary);
+			}
+			.skip-link:focus { transform: none; }
 			:root {
 				--bg-noise: url('/assets/backgrounds/noise.png');
 				/* Membrane Palette: warm (terracotta) + digital (teal) ambient glows */

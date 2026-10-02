@@ -6,7 +6,8 @@
     "dev": "astro dev",
     "start": "astro dev",
     "build": "astro build",
-    "preview": "astro preview",
+    "build:preview": "node scripts/node-preview.mjs build",
+    "preview": "node scripts/node-preview.mjs preview",
     "astro": "astro",
     "check": "astro check && node scripts/check-assets.mjs && astro build",
     "check:assets": "node scripts/check-assets.mjs",
@@ -17,6 +18,7 @@
   "dependencies": {
     "@astrojs/markdown-remark": "^7.3.1",
     "@astrojs/mdx": "^8.0.2",
+    "@astrojs/node": "11.1.6",
     "@astrojs/partytown": "^2.1.8",
     "@astrojs/rss": "^4.0.19",
     "@astrojs/sitemap": "^3.7.4",

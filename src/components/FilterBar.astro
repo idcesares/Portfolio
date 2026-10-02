@@ -32,13 +32,14 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 			<input 
 				type="text" 
 				id="local-search" 
+				aria-label={variant === 'blog' ? 'Buscar posts' : 'Buscar projetos'}
 				placeholder={variant === 'blog' ? 'Buscar posts...' : 'Buscar projetos...'}
 				class="local-search-input"
 			/>
 		</div>
 
 		<div class="quick-filters">
-			<select id="sort-select" class="sort-select">
+			<select id="sort-select" class="sort-select" aria-label="Ordenar resultados">
 				{sortOptions.map((option) => (
 					<option 
 						value={option.value} 

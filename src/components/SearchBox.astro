@@ -354,43 +354,44 @@ const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
         return;
       }
 
-      const resultsHTML = results.map(result => {
+      const fragment = document.createDocumentFragment();
+      results.forEach(result => {
         const item = result.item;
-        const highlightedTitle = this.highlightMatches(item.title, result.matches?.filter((m: FuseResultMatch) => m.key === 'title'));
-        
-        return `
-          <a href="${item.url}" class="search-result-item">
-            <div class="search-result-type">${({ blog: 'Blog', work: 'Trabalho', dev: 'Projeto' })[item.type]}</div>
-            <div class="search-result-title">${highlightedTitle}</div>
-            <div class="search-result-description">${this.truncateText(item.description, 120)}</div>
-          </a>
-        `;
-      }).join('');
+        const link = document.createElement('a');
+        link.href = item.url;
+        link.className = 'search-result-item';
+        const type = document.createElement('div');
+        type.className = 'search-result-type';
+        type.textContent = ({ blog: 'Blog', work: 'Trabalho', dev: 'Projeto' })[item.type];
+        const title = document.createElement('div');
+        title.className = 'search-result-title';
+        title.append(this.highlightMatches(item.title, result.matches?.filter((m: FuseResultMatch) => m.key === 'title')));
+        const description = document.createElement('div');
+        description.className = 'search-result-description';
+        description.textContent = this.truncateText(item.description, 120);
+        link.append(type, title, description);
+        fragment.append(link);
+      });
 
-      searchResults.innerHTML = resultsHTML;
+      searchResults.replaceChildren(fragment);
       searchStatus.textContent = `${results.length} ${results.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}`;
       this.showResults(searchResults);
     }
 
-    highlightMatches(text: string, matches?: readonly FuseResultMatch[]): string {
-      if (!matches || matches.length === 0) return text;
-      
-      let highlightedText = text;
-      const match = matches[0];
-      
-      if (match.indices && match.indices.length > 0) {
-        // Sort indices in reverse order to avoid index shifting issues
-        const sortedIndices = [...match.indices].sort((a, b) => b[0] - a[0]);
-        
-        for (const [start, end] of sortedIndices) {
-          const before = highlightedText.substring(0, start);
-          const highlighted = highlightedText.substring(start, end + 1);
-          const after = highlightedText.substring(end + 1);
-          highlightedText = `${before}<mark style="background: var(--color-teal-20); color: var(--color-text-primary); padding: 0.1em 0.25em; border-radius: var(--radius-sm);">${highlighted}</mark>${after}`;
-        }
+    highlightMatches(text: string, matches?: readonly FuseResultMatch[]): DocumentFragment {
+      const fragment = document.createDocumentFragment();
+      let cursor = 0;
+      const indices = [...(matches?.[0]?.indices ?? [])].sort((a, b) => a[0] - b[0]);
+      for (const [start, end] of indices) {
+        fragment.append(text.slice(cursor, start));
+        const mark = document.createElement('mark');
+        mark.textContent = text.slice(start, end + 1);
+        mark.style.cssText = 'background: var(--color-teal-20); color: var(--color-text-primary); padding: 0.1em 0.25em; border-radius: var(--radius-sm);';
+        fragment.append(mark);
+        cursor = end + 1;
       }
-      
-      return highlightedText;
+      fragment.append(text.slice(cursor));
+      return fragment;
     }
 
     truncateText(text: string, maxLength: number): string {

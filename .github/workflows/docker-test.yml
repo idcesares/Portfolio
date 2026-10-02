@@ -8,12 +8,23 @@ on:
       - 'docker-compose*.yml'
       - '.dockerignore'
       - '.github/workflows/docker-test.yml'
+      - 'astro.config.mjs'
+      - 'scripts/node-preview.mjs'
+      - 'scripts/check-preview.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
   pull_request:
     branches: [ main ]
     paths:
       - 'Dockerfile'
       - 'docker-compose*.yml'
       - '.dockerignore'
+      - '.github/workflows/docker-test.yml'
+      - 'astro.config.mjs'
+      - 'scripts/node-preview.mjs'
+      - 'scripts/check-preview.mjs'
+      - 'package.json'
+      - 'pnpm-lock.yaml'
   workflow_dispatch:
 
 jobs:
@@ -63,6 +74,12 @@ jobs:
     - name: Test production build
       run: |
         docker compose -f docker-compose.prod.yml build --progress=plain
+
+    - name: Start and verify standalone production preview
+      run: |
+        docker compose down
+        docker compose -f docker-compose.prod.yml up -d --wait --wait-timeout 90
+        docker compose -f docker-compose.prod.yml exec -T portfolio-preview node scripts/check-preview.mjs
 
     - name: Cleanup
       if: always()

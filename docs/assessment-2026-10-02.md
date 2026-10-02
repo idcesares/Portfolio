@@ -122,3 +122,17 @@ Em 2 de outubro, após autorização para iniciar:
 - Validação final: 54 arquivos com zero erros/warnings/hints no Astro Check; assets e build aprovados; dois testes de navegador aprovados. O aviso de `NO_COLOR`/`FORCE_COLOR` é da configuração de terminal deste ambiente.
 
 Os demais achados do assessment continuam no backlog: preview Docker, H1 duplicados, preferências/textos de cookies, escape de resultados da busca e revisão de acessibilidade/editorial. Esta primeira rodada foi preparada em branch própria para revisão antes de integrar em produção.
+
+## Segunda rodada implementada
+
+A primeira rodada foi integrada pelo PR #116. A continuação cobre as pendências técnicas:
+
+- Preview local e Docker com adapter Node standalone em `dist-preview/`, separado do build Vercel. O container inicia o servidor diretamente, como usuário `node`. A CI passou a iniciar e verificar o container de preview, além de construir sua imagem.
+- Smoke test de páginas, índice de busca, RSS, sitemap, 404 e imagens locais otimizadas. Build e execução do container aprovados localmente, com UID 1000.
+- Cinco H1 editoriais corrigidos; as 42 páginas do site têm um único H1 no HTML gerado.
+- Busca agora cria nós de texto e elementos `mark`, sem interpretar títulos/descrições como HTML. Teste com markup e event handler passou sem execução de código.
+- Controle de preferências de cookies no rodapé para rever aceite/recusa. Recusar após aceitar encerra a instrumentação da visita por reload e persiste a recusa. Texto de consentimento descreve o processamento pelo Google.
+- Tema e consentimento funcionam quando o armazenamento do navegador está bloqueado. O tema tem nome acessível em português; busca local e ordenação têm nomes explícitos; páginas com o layout principal oferecem link de pular para o conteúdo.
+- Auditoria completa sem vulnerabilidades conhecidas. Build Vercel, build Node, checagem de assets e validação de tipos aprovados. Oito testes de navegador aprovados, cobrindo também falhas de escrita, cookies bloqueados e cookie antigo somente leitura. A recusa tem prioridade sobre aceite antigo, inclusive após reload.
+
+O retrofit de voz editorial, revisão manual de alt text/descrições antigas, reconferência dos feeds externos e internacionalização permanecem tarefas editoriais/curadoria separadas. Esta rodada não reescreve os artigos nem altera suas URLs.

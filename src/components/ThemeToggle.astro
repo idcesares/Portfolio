@@ -4,7 +4,7 @@ import Icon from './Icon.astro';
 
 <theme-toggle>
 	<button>
-		<span class="sr-only">Dark theme</span>
+		<span class="sr-only">Tema escuro</span>
 		<span class="icon light"><Icon icon="sun" /></span>
 		<span class="icon dark"><Icon icon="moon-stars" /></span>
 	</button>
@@ -87,7 +87,9 @@ import Icon from './Icon.astro';
 			button.addEventListener('click', () => {
 				const dark = !this.isDark();
 				applyTheme(dark);
-				localStorage.setItem('theme', dark ? 'dark' : 'light');
+				try {
+					localStorage.setItem('theme', dark ? 'dark' : 'light');
+				} catch { /* The toggle still works for this page. */ }
 			});
 
 			// Initialize button state to reflect current theme.

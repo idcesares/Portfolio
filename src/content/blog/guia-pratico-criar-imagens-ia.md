@@ -17,7 +17,7 @@ tags:
     - C2PA
 ---
 
-# Como gerar imagens com IA: um sistema de prompts agnóstico de ferramenta
+## Como gerar imagens com IA: um sistema de prompts agnóstico de ferramenta
 
 > Um método para chegar em imagens consistentes sem virar refém de tentativa e erro, e que sobrevive à próxima atualização do seu gerador favorito.
 

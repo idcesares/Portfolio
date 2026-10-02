@@ -13,7 +13,7 @@ tags:
     - Rede Sesc
 ---
 
-# IA e Personalização da Aprendizagem na Educação
+## IA e Personalização da Aprendizagem na Educação
 
 **Reflexões da mesa-redonda do 1º Congresso da Rede Sesc de Educação.**
 

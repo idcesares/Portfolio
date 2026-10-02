@@ -23,6 +23,7 @@ const socialLinks: { label: string; href: string; icon: keyof typeof iconPaths }
 	<div class="footer-links">
 		<a href="/tech-signal/" class="text-link">Tech Signal</a>
 		<a href="/deals/" class="text-link">Indico e uso</a>
+		<button type="button" class="text-link cookie-preferences" data-cookie-preferences hidden>Preferências de cookies</button>
 		<div class="socials">
 			{
 				socialLinks.map(({ href, icon, label }) => (
@@ -76,6 +77,13 @@ const socialLinks: { label: string; href: string; icon: keyof typeof iconPaths }
 
 	.text-link {
 		color: var(--color-text-tertiary);
+	}
+	.cookie-preferences {
+		border: 0;
+		background: transparent;
+		font: inherit;
+		cursor: pointer;
+		min-height: 44px;
 	}
 
 	.socials {

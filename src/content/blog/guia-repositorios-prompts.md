@@ -14,7 +14,7 @@ tags:
 ---
 
 ---
-# **Prompts de IA: Onde Encontrar os Melhores para Turbinar Sua Criatividade e Produtividade 🚀**
+## **Prompts de IA: Onde Encontrar os Melhores para Turbinar Sua Criatividade e Produtividade 🚀**
 
 A Inteligência Artificial (IA) generativa, como o ChatGPT, Midjourney e DALL-E, transformou a maneira como criamos conteúdo, escrevemos códigos, geramos imagens e muito mais. Mas para extrair o máximo dessas ferramentas poderosas, você precisa de uma coisa fundamental: **prompts eficazes**.
 

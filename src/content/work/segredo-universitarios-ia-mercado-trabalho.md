@@ -14,7 +14,7 @@ tags:
     - Educação Superior
 ---
 
-# O Segredo dos Universitários que Usam IA para Sair na Frente no Mercado de Trabalho
+## O Segredo dos Universitários que Usam IA para Sair na Frente no Mercado de Trabalho
 
 Na minha última live, falei sobre um tema que gera muita curiosidade e, para alguns, até um pouco de ansiedade: o uso da Inteligência Artificial por estudantes universitários. O título foi "O Segredo dos Universitários que Usam IA para Sair na Frente no Mercado de Trabalho", mas, como eu disse logo no início, quero começar este texto revelando a mesma coisa que revelei ao vivo: **o segredo é que não existe segredo. Existe estratégia e intencionalidade.**
 
