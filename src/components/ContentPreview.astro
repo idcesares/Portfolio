@@ -24,7 +24,7 @@ const { data, id, collection } = entry;
       {typeof data.img === 'string' ? (
         <img src={data.img} alt={data.img_alt || ''} width="600" height="400" loading="lazy" decoding="async" />
       ) : (
-        <Image src={data.img} alt={data.img_alt || ''} width={600} height={400} loading="lazy" decoding="async" />
+        <Image src={data.img} alt={data.img_alt || ''} width={600} height={400} quality={80} loading="lazy" decoding="async" />
       )}
     </div>
     <div class="content">
