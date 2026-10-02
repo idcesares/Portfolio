@@ -29,8 +29,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 │   ├── favicon.svg
 │   ├── llms.txt            # Instruções para LLMs
 │   ├── llms-full.txt       # Instruções completas para LLMs
-│   ├── robots.txt
-│   └── search-fallback.js  # Fallback de busca (cache 24h)
+│   └── robots.txt
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── workflows/          # CI (astro check + build) e Docker test

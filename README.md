@@ -17,6 +17,8 @@ Além do conteúdo editorial, o repositório também documenta:
 - instruções para agentes e copilots alinhadas com a arquitetura atual;
 - pipelines de validação com `astro check`, build e auditoria de dependências.
 
+A análise atual e as prioridades do site estão em [docs/site-review.md](./docs/site-review.md).
+
 ## Estado Atual do Repositório
 
 No snapshot atual do projeto, o site expõe:
@@ -41,7 +43,7 @@ Principais entregas já implementadas:
 - animações CSS com scroll reveal e respeito a `prefers-reduced-motion`;
 - SEO com `astro-seo`, sitemap, JSON-LD e RSS;
 - analytics e speed insights via Vercel;
-- fallback estático para busca em `public/search-fallback.js`.
+- busca global com Fuse.js carregado sob demanda.
 
 ## Stack Atual
 
@@ -82,7 +84,7 @@ Principais entregas já implementadas:
 - `output: 'server'` para preservar integrações da Vercel, image service e analytics.
 - Páginas e endpoints públicos usam `export const prerender = true`.
 - `prefetchAll: true` com `defaultStrategy: 'viewport'`.
-- `trailingSlash: 'ignore'` + `build.format: 'file'` para URLs consistentes.
+- `trailingSlash: 'always'` + `build.format: 'file'` no deploy Vercel para URLs consistentes.
 
 ### Conteúdo
 
@@ -115,7 +117,7 @@ O endpoint [`src/pages/search-data.json.ts`](./src/pages/search-data.json.ts) ge
 - datas;
 - URL pública.
 
-Esse índice alimenta a experiência client-side com Fuse.js e é entregue com cache de 5 minutos, CORS aberto e fallback estático em [`public/search-fallback.js`](./public/search-fallback.js).
+Esse índice alimenta a experiência client-side com Fuse.js e é entregue com cache de 5 minutos e CORS aberto.
 
 ### Design system
 
@@ -156,8 +158,7 @@ Portfolio/
 │   ├── assets/               # Imagens estáticas otimizadas
 │   ├── certificates/         # PDFs públicos
 │   ├── llms.txt              # Guia resumido para LLMs
-│   ├── llms-full.txt         # Guia estendido para LLMs
-│   └── search-fallback.js    # Fallback cacheado para busca
+│   └── llms-full.txt         # Guia estendido para LLMs
 ├── design-system/            # Membrane Palette
 ├── docker/                   # Documentação e scripts Docker
 ├── .github/workflows/        # CI
@@ -334,7 +335,7 @@ O deploy usa:
 - `pnpm install`
 - `pnpm build`
 - headers de segurança globais;
-- cache dedicado para `/search-data.json`, `/search-fallback.js`, `/_astro/*`, `/rss.xml` e `/favicon.svg`.
+- cache dedicado para `/search-data.json`, `/_astro/*`, `/rss.xml` e `/favicon.svg`.
 
 ## Documentação do Repositório
 
