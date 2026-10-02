@@ -31,7 +31,8 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 				align="start"
 			/>
 			
-			<div class="content-section" data-animate="fade-up">
+			<section class="content-section" data-animate="fade-up" aria-labelledby="listing-title">
+				<h2 id="listing-title" class="sr-only">Todas as postagens</h2>
 				<FilterBar variant="blog" tags={allTags} />
 				
 				<div class="view-controls">
@@ -43,7 +44,7 @@ const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
 						<PostPreviewEnhanced post={post} variant="default" />
 					))}
 				</GridEnhanced>
-			</div>
+			</section>
 		</main>
 		<ContactCTA />
 	</div>

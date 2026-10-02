@@ -93,13 +93,13 @@
 
 	.cc-btn-solid {
 		border: 1px solid var(--color-terracotta-dark);
-		background: var(--color-terracotta);
+		background: var(--color-action-primary);
 		color: var(--color-text-on-accent);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.cc-btn-solid:hover {
-		background: var(--color-terracotta-light);
+		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
 	}
 
 	@media (min-width: 50em) {

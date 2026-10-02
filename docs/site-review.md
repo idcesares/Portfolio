@@ -25,30 +25,59 @@ A referência visual é o [design system Membrane Palette](../design-system/DESI
 
 A experiência deve funcionar em mobile, com teclado e com preferências de movimento reduzido. Busca, filtros e tema precisam continuar utilizáveis quando o navegador restringe armazenamento. O visitante pode rever as preferências de cookies no rodapé; a recusa impede o carregamento do Google Analytics.
 
+## Conteúdo e vitrine
+
+Descrições e alternativas de imagens foram revisadas a partir dos textos e das capas publicadas. Corpos dos artigos, títulos, datas e URLs foram preservados. A home destaca três trabalhos com abordagens complementares:
+
+- **Papert e aprendizagem criativa:** referência escolhida por Isaac para apresentar sua reflexão sobre educação.
+- **LearnChain:** articula educação, blockchain e autonomia sobre dados e conhecimento.
+- **IA e personalização na educação:** apresenta a aplicação pedagógica da inteligência artificial.
+
+O caminho da vitrine ao artigo e ao contato tem cobertura em teste de navegador. A seleção deve acompanhar a atuação de Isaac, sem depender apenas da data da publicação.
+
 ## Estado técnico verificado
 
-A base técnica está operacional. As verificações concluídas em 2 de outubro indicam:
+A auditoria de dependências não encontrou vulnerabilidades conhecidas. Astro Check passou em 59 arquivos, sem erros, warnings ou hints; referências de assets e builds Vercel e Node foram aprovados. Os 13 testes Chromium passaram. A CI também inicia o preview Docker e confere páginas, busca, feeds, 404 e imagens.
 
-- Auditoria completa de dependências sem vulnerabilidades conhecidas.
-- Astro Check: 57 arquivos, zero erros, warnings ou hints; referências de assets e build Vercel aprovados.
-- Oito testes Chromium aprovados, cobrindo consentimento, revogação com armazenamento restrito e renderização segura da busca.
-- Preview Node standalone e Docker aprovados; a CI inicia o container e verifica páginas, busca, feeds, 404 e imagens.
-- As 42 páginas geradas têm um H1, metadados essenciais e destinos internos válidos na amostra analisada.
-- Deploy de produção, páginas principais, índice de busca, RSS e sitemap verificados; checks da branch principal aprovados.
+Os testes de navegador cobrem consentimento e revogação de Analytics com armazenamento restrito, renderização segura da busca, vitrine e contato, e metadados no `head` após o HTML ser interpretado pelo navegador. Os testes de Analytics usam um script substituto, sem enviar visitas reais ao Google.
 
-Os testes de Analytics usam um script substituto, sem enviar visitas reais ao Google. Esta verificação não inclui medição de Core Web Vitals, auditoria completa de acessibilidade ou validação de todos os links externos.
+A auditoria identificou que o componente Speed Insights no `head` deslocava os metadados para o corpo da página. O componente foi movido para o `body`, preservando as descrições, URLs canônicas e dados de compartilhamento existentes.
+
+## Tech Signal
+
+A curadoria contém 79 fontes e 62 feeds. O OPML gerado contém exatamente os 62 endereços únicos cadastrados. A conferência externa confirmou 60 feeds com XML RSS ou Atom e entradas utilizáveis.
+
+Os feeds de **The New York Times** e **ChinAI** ficaram sem confirmação por bloqueio do túnel de rede no ambiente de auditoria. Alguns sites também responderam com restrições de acesso. Isso não comprova que os endereços estejam quebrados; os cadastros foram mantidos. A data de curadoria não foi avançada com uma verificação parcial.
+
+## Mobile, acessibilidade e desempenho
+
+Home, Trabalhos, Blog, Contato, Papert e Tech Signal foram avaliados com Chromium e axe-core em 390 e 1280 pixels, nos temas claro e escuro, com movimento reduzido. A amostra não apresentou rolagem horizontal indevida. Foram corrigidos contrastes de botões, contadores e filtros usando as cores previstas no design system, além da hierarquia de títulos das listagens. A verificação adicional contempla consentimento, filtros ativos, hover, Dev, Sobre, indicações e 404. Nos cards do Tech Signal, a borda decorativa impede o axe de calcular alguns contrastes; uma conferência complementar ocultou somente essa borda durante o teste, mantendo as cores dos textos e fundos. As etiquetas identificadas nessa conferência também foram corrigidas.
+
+Medição Lighthouse mobile em produção, em 2 de outubro de 2026, antes dos ajustes finais:
+
+| Página | Performance | LCP | TBT | CLS |
+| --- | --- | --- | --- | --- |
+| Home | 96 | 2,2 s | 80 ms | 0,001 |
+| Trabalhos | 83 | 4,0 s | 190 ms | 0 |
+| Contato | 82 | 3,7 s | 260 ms | 0,001 |
+| Papert | 95 | 2,7 s | 10 ms | 0,001 |
+
+São resultados de uma execução em laboratório com rede e CPU simuladas, sujeitos a variação; não representam Core Web Vitals de usuários reais. Imagens externas do YouTube foram bloqueadas pelo túnel de rede durante a medição. A auditoria automatizada não substitui avaliação manual com leitores de tela.
+
+## Alcance internacional
+
+O objetivo definido por Isaac é **formar parcerias de pesquisa e educação**. A recomendação é um piloto em inglês com a apresentação de Sobre e os três trabalhos em destaque. A adaptação deve partir do texto autoral, preservar opiniões e expressões pessoais e explicar referências brasileiras quando necessário. Não acrescentar experiências, resultados ou credenciais.
+
+Antes de publicar, revisar o sentido e a naturalidade do inglês com Isaac. Preservar as URLs em português, oferecer alternância explícita de idioma e metadados adequados. A tradução completa do site fica condicionada ao retorno desse piloto.
 
 ## Prioridades
 
-Priorizar a qualidade do conteúdo e a clareza da navegação. Avaliar novas funcionalidades conforme o benefício para o público.
-
-| Ordem | Ação | Impacto / esforço estimados | Critério de conclusão |
-| --- | --- | --- | --- |
-| 1 | Revisar textos antigos, descrições e alt text | Alto / médio | Voz autoral preservada, descrições claras e imagens com alternativas adequadas ao contexto |
-| 2 | Revisar a apresentação dos trabalhos e o caminho até contato | Alto / médio | Leitor identifica contexto, contribuição e entregas; encontra o canal de contato |
-| 3 | Conferir fontes e feeds do Tech Signal | Médio / baixo | Links externos conferidos; apenas feeds utilizáveis entram no OPML |
-| 4 | Medir experiência mobile e acessibilidade nas páginas principais | Alto / médio | Registrar medições, problemas reproduzíveis e ações com critérios verificáveis |
-| 5 | Avaliar a necessidade de conteúdo em inglês | A confirmar / alto | Público e benefício definidos antes de implementar; URLs em português preservadas |
+| Ordem | Próxima ação | Critério de conclusão |
+| --- | --- | --- |
+| 1 | Investigar carregamento de Trabalhos e Contato | Comparar medições no mesmo perfil; buscar LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
+| 2 | Reconfirmar feeds NYT e ChinAI com acesso de rede disponível | XML RSS/Atom com entradas válidas; ajustar cadastro somente se houver evidência de falha |
+| 3 | Preparar o piloto em inglês para pesquisa e educação | Sobre e três trabalhos adaptados, revisão autoral de Isaac e navegação entre idiomas testada |
+| 4 | Complementar a avaliação de acessibilidade e experiência real | Percurso de teclado e leitor de tela; Core Web Vitals de campo quando houver dados suficientes |
 
 ## Manutenção
 

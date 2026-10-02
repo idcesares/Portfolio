@@ -1,4 +1,5 @@
 ---
+import SpeedInsights from '@vercel/speed-insights/astro';
 import MainHead from '../components/MainHead.astro';
 import {
   AUTHOR_NAME,
@@ -174,7 +175,7 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
 
 .skip-link {
   position: absolute; left: -999px; top: 0; z-index: 999;
-  background: var(--color-terracotta); color: var(--color-text-on-accent);
+  background: var(--color-action-primary); color: var(--color-text-on-accent);
   padding: var(--space-3) var(--space-5); border-radius: 0 0 var(--radius-md) 0;
   font-size: 0.875rem; font-weight: 500;
 }
@@ -331,14 +332,14 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
   color: var(--color-text-primary);
 }
 .filter-pill.active {
-  background: var(--color-terracotta); border-color: var(--color-terracotta);
+  background: var(--color-action-primary); border-color: var(--color-action-primary);
   color: var(--color-text-on-accent);
 }
 .filter-pill .pill-count {
   font-family: var(--font-mono); font-size: 0.62rem;
-  opacity: 0.65; font-weight: 400;
+  opacity: 1; font-weight: 400;
 }
-.filter-pill.active .pill-count { opacity: 0.85; }
+
 .filter-pill:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 
 /* ═══════════ MAIN ═══════════ */
@@ -421,8 +422,8 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .tier-btn[data-tier="2"] .tier-tick { background: var(--color-teal); }
 .tier-btn[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
 .tier-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
-.tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
+.tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
+.tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
 .tier-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 
 /* Controle de natureza da fonte: mesma anatomia do de prioridade,
@@ -439,7 +440,7 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .kind-btn:hover { color: var(--color-text-primary); }
 .kind-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
 .kind-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.kind-btn .pill-count { font-family: var(--font-mono); font-size: 0.62rem; opacity: 0.65; }
+.kind-btn .pill-count { font-family: var(--font-mono); font-size: 0.62rem; opacity: 1; }
 
 /* Controle de ordem: mesma anatomia dos outros, o ícone gira ao embaralhar. */
 .order-btn {
@@ -475,7 +476,7 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .picks-reroll {
   display: inline-flex; align-items: center; gap: var(--space-2);
   min-height: var(--size-touch-target); padding: var(--space-2) var(--space-5);
-  font-size: 0.8125rem; font-weight: 500; color: var(--color-teal);
+  font-size: 0.8125rem; font-weight: 500; color: var(--color-text-accent);
   border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
   background: var(--color-bg-secondary);
   transition: border-color var(--duration-fast) var(--ease-default);
@@ -537,11 +538,11 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   transition: all var(--duration-fast) var(--ease-default);
 }
 .card-tier .tier-tick { width: 6px; height: 6px; border-radius: 50%; }
-.card-tier[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-terracotta); }
+.card-tier[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
 .card-tier[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
-.card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-teal); }
+.card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
 .card-tier[data-tier="2"] .tier-tick { background: var(--color-teal); }
-.card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-tertiary); }
+.card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
 .card-tier[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
 .card-tier:hover { border-color: currentColor; }
 .card-tier:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
@@ -561,11 +562,11 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
   padding: 2px var(--space-3); border-radius: var(--radius-full); line-height: 1.7;
 }
-.tag-cadence { background: var(--color-terracotta-10); color: var(--color-terracotta); }
-.tag-deep    { background: var(--color-teal-10);       color: var(--color-teal); }
+.tag-cadence { background: var(--color-terracotta-10); color: var(--color-text-primary); }
+.tag-deep    { background: var(--color-teal-10);       color: var(--color-text-primary); }
 .tag-kind    { background: var(--color-bg-primary);    color: var(--color-text-secondary);
                border: 1px solid var(--color-border-default); }
-.tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-tertiary); }
+.tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-primary); }
 .tag-region  { background: var(--color-sage-10);       color: var(--color-success-text); }
 .access {
   margin-left: auto; font-family: var(--font-mono); font-size: 0.6rem;
@@ -573,7 +574,7 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   padding: 2px var(--space-2); border-radius: var(--radius-sm);
 }
 .access-free { background: var(--color-sage-10); color: var(--color-success-text); }
-.access-paid { background: var(--color-amber-10); color: var(--color-warning-text); }
+.access-paid { background: var(--color-amber-10); color: var(--color-text-primary); }
 
 /* Filtro: os cards existem no HTML servido e sao apenas ocultados. */
 .card[hidden] { display: none; }
@@ -596,7 +597,7 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .header-back:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 .footer-back {
   display: inline-flex; align-items: center; min-height: var(--size-touch-target);
-  font-size: 0.8125rem; font-weight: 500; color: var(--color-teal);
+  font-size: 0.8125rem; font-weight: 500; color: var(--color-text-accent);
   border-bottom: 1px solid transparent;
 }
 .footer-back:hover { border-bottom-color: var(--color-teal); }
@@ -630,12 +631,12 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   min-height: var(--size-touch-target); flex-shrink: 0;
   padding: var(--space-2) var(--space-5);
   font-size: 0.875rem; font-weight: 500;
-  color: var(--color-text-on-accent); background: var(--color-terracotta);
+  color: var(--color-text-on-accent); background: var(--color-action-primary);
   border-radius: var(--radius-full);
   transition: background-color var(--duration-fast) var(--ease-default),
               transform var(--duration-fast) var(--ease-default);
 }
-.method-export-link:hover { background: var(--color-burgundy); transform: translateY(-1px); }
+.method-export-link:hover { background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary)); transform: translateY(-1px); }
 .method-export-link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 @media (max-width: 560px) {
   .method-export-text { min-width: 0; }
@@ -694,6 +695,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
 </style>
 </head>
 <body>
+<SpeedInsights />
 <a href="#main" class="skip-link">Pular para as fontes</a>
 
 <header class="site-header">

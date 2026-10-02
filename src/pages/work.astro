@@ -31,7 +31,8 @@ const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sor
 				align="start"
 			/>
 			
-			<div class="content-section" data-animate="fade-up">
+			<section class="content-section" data-animate="fade-up" aria-labelledby="listing-title">
+				<h2 id="listing-title" class="sr-only">Todos os trabalhos</h2>
 				<FilterBar variant="work" tags={allTags} />
 				
 				<div class="view-controls">
@@ -43,7 +44,7 @@ const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sor
 						<PortfolioPreviewEnhanced project={project} variant="default" />
 					))}
 				</GridEnhanced>
-			</div>
+			</section>
 		</main>
 		<ContactCTA />
 	</div>

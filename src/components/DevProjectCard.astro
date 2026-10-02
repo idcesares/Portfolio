@@ -446,14 +446,14 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 	}
 
 	.action-primary {
-		background: var(--color-terracotta);
+		background: var(--color-action-primary);
 		color: var(--color-text-on-accent);
 		border: 1px solid var(--color-terracotta-dark);
 		box-shadow: var(--shadow-sm);
 	}
 
 	.action-primary:hover {
-		background: var(--color-terracotta-light);
+		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
 		transform: translateY(-1px);
 		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
 	}

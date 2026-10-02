@@ -21,7 +21,7 @@ const { href } = Astro.props;
 		line-height: var(--leading-display);
 		border-radius: var(--radius-full);
 		overflow: hidden;
-		background: var(--color-terracotta);
+		background: var(--color-action-primary);
 		box-shadow: var(--shadow-md);
 		border: 1px solid var(--color-terracotta-dark);
 		letter-spacing: var(--tracking-small);
@@ -40,7 +40,7 @@ const { href } = Astro.props;
 
 	a:hover {
 		transform: translateY(-1px);
-		background: var(--color-terracotta-light);
+		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
 		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
 	}
 

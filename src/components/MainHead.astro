@@ -1,7 +1,6 @@
 ---
 import '../styles/global.css';
 import { Font } from 'astro:assets';
-import SpeedInsights from '@vercel/speed-insights/astro';
 import { SEO } from 'astro-seo';
 import {
   AUTHOR_NAME,
@@ -99,7 +98,6 @@ const twitter = {
   title={SITE_TITLE}
   href={new URL('rss.xml', Astro.site)}
 />
-<SpeedInsights />
 <SEO
   title={displayTitle}
   description={description}
