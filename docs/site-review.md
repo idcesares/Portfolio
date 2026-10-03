@@ -37,7 +37,9 @@ O caminho da vitrine ao artigo e ao contato tem cobertura em teste de navegador.
 
 ## Estado técnico verificado
 
-A auditoria de dependências não encontrou vulnerabilidades conhecidas. Astro Check passou em 61 arquivos, sem erros, warnings ou hints; referências de assets e builds Vercel e Node foram aprovados. Os 18 testes Chromium passaram. A CI também inicia o preview Docker e confere páginas, busca, feeds, 404 e imagens.
+A auditoria atual encontrou **uma vulnerabilidade alta**, [GHSA-ch52-4w7c-c8xp](https://github.com/advisories/GHSA-ch52-4w7c-c8xp), em `http-cache-semantics`, dependência do Astro. O aviso foi atualizado em 2 de outubro à noite; na conferência de 3 de outubro, a versão mais recente era 4.2.0 e ainda não havia versão corrigida. O uso identificado no Astro está no cache de imagens durante o build, sem repassar cabeçalhos dos visitantes nem chamar `satisfiesWithoutRevalidation`, método envolvido no aviso. Não foi identificada a condição de exploração nesse caminho, mas a auditoria da CI permanece reprovada e bloqueia a integração do PR #124.
+
+Astro Check passou em 61 arquivos, sem erros, warnings ou hints; referências de assets e builds Vercel e Node foram aprovados. Os 18 testes Chromium passaram. A CI também inicia o preview Docker e confere páginas, busca, feeds, 404 e imagens.
 
 Os testes de navegador cobrem ausência de inicialização do worker antes do consentimento, aceite tardio e salvo, revogação de Analytics com armazenamento restrito, renderização segura da busca, vitrine e contato, introdução legível sem módulos JavaScript, menu mobile com Escape, filtros recolhidos fora da árvore de acessibilidade, anúncios de resultados, e metadados no `head` após o HTML ser interpretado pelo navegador. Os testes de Analytics usam um script substituto, sem enviar visitas reais ao Google.
 
@@ -78,10 +80,11 @@ Antes de publicar, revisar o sentido e a naturalidade do inglês com Isaac. Pres
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Continuar a melhoria de LCP e revalidar o processamento em produção | LCP até 2,5 s e TBT até 200 ms em comparação repetível, sem remover conteúdo autoral |
-| 2 | Reconfirmar feeds NYT e ChinAI com acesso de rede disponível | XML RSS/Atom com entradas válidas; ajustar cadastro somente se houver evidência de falha |
-| 3 | Revisar o rascunho em inglês e definir sua publicação | Voz confirmada por Isaac; depois, navegação entre idiomas e metadados testados |
-| 4 | Complementar a avaliação de acessibilidade e experiência real | Percurso de teclado e leitor de tela; Core Web Vitals de campo quando houver dados suficientes |
+| 1 | Resolver o aviso de segurança e liberar a integração do PR #124 | Correção disponível e validada; auditoria e demais checks aprovados |
+| 2 | Continuar a melhoria de LCP e revalidar o processamento em produção | LCP até 2,5 s e TBT até 200 ms em comparação repetível, sem remover conteúdo autoral |
+| 3 | Reconfirmar feeds NYT e ChinAI com acesso de rede disponível | XML RSS/Atom com entradas válidas; ajustar cadastro somente se houver evidência de falha |
+| 4 | Revisar o rascunho em inglês e definir sua publicação | Voz confirmada por Isaac; depois, navegação entre idiomas e metadados testados |
+| 5 | Complementar a avaliação de acessibilidade e experiência real | Percurso de teclado e leitor de tela; Core Web Vitals de campo quando houver dados suficientes |
 
 ## Manutenção
 
