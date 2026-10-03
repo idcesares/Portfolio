@@ -21,16 +21,31 @@ test.beforeEach(async ({ context }) => {
   );
 });
 
-test('accepting after Partytown is ready initializes Analytics on the same page', async ({ page }) => {
+test('an undecided or denied visitor does not start the analytics worker', async ({ page }) => {
+  const workerRequests: string[] = [];
+  page.context().on('request', (request) => {
+    if (request.url().includes('/~partytown/')) workerRequests.push(request.url());
+  });
+  await page.goto('/contact/');
+  await page.getByRole('button', { name: 'Recusar', exact: true }).waitFor({ state: 'visible' });
+  expect(workerRequests).toEqual([]);
+  expect(await page.evaluate(() => navigator.serviceWorker.getRegistrations().then((items) => items.length))).toBe(0);
+  await page.getByRole('button', { name: 'Recusar', exact: true }).click();
+  await page.reload();
+  await expect(page.getByRole('region', { name: 'Preferências de cookies' })).toBeHidden();
+  expect(workerRequests).toEqual([]);
+  expect(await page.evaluate(() => navigator.serviceWorker.getRegistrations().then((items) => items.length))).toBe(0);
+});
+
+test('accepting after the page loads starts Analytics on the same page', async ({ page }) => {
   await page.addInitScript(() => {
     (window as unknown as { partytownReady: Promise<void> }).partytownReady =
       new Promise((resolve) => document.addEventListener('pt0', () => resolve(), { once: true }));
   });
   await page.goto('/');
-  // pt0 is dispatched once the worker has finished its initial script scan.
-  await page.evaluate(() => (window as unknown as { partytownReady: Promise<void> }).partytownReady);
-
   await page.getByRole('button', { name: 'Aceitar', exact: true }).click();
+  // pt0 is dispatched once the consent-started worker scans its first script.
+  await page.evaluate(() => (window as unknown as { partytownReady: Promise<void> }).partytownReady);
   const calls = () => page.locator('html').getAttribute('data-test-ga-calls');
   await expect.poll(calls).toContain('G-0XZV7NBH4E');
   const recorded = JSON.parse((await calls())!);

@@ -13,6 +13,24 @@ import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
 
+// Keep the official library serving/build hooks, but start its browser runtime
+// only when CookieConsent authorizes Analytics. No worker is needed beforehand.
+function partytownAfterConsent() {
+  const integration = partytown({ config: { forward: ['dataLayer.push'] } });
+  const setup = integration.hooks['astro:config:setup'];
+  integration.hooks['astro:config:setup'] = (options) => setup({
+    ...options,
+    injectScript(stage, code) {
+      if (stage === 'head-inline') {
+        options.injectScript(stage, `window.addEventListener('portfolio:analytics-consent', () => {${code}\n}, { once: true });`);
+      } else {
+        options.injectScript(stage, code);
+      }
+    },
+  });
+  return integration;
+}
+
 const copyIcon = `data:image/svg+xml,${encodeURIComponent(
   '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#E2DCD2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="10" height="10" rx="2"/><path d="M6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>'
 )}`;
@@ -168,11 +186,7 @@ export default defineConfig({
       const lastmod = sitemapLastmod.get(pathname);
       return lastmod ? { ...item, lastmod: lastmod.toISOString() } : item;
     },
-  }), partytown({
-    config: {
-      forward: ["dataLayer.push"]
-    }
-  }), mdx()],
+  }), partytownAfterConsent(), mdx()],
 
   markdown: {
     syntaxHighlight: false,

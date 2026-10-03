@@ -217,6 +217,8 @@
 			script.async = true;
 			script.src = `https://www.googletagmanager.com/gtag/js?id=${GA_ID}`;
 			document.head.appendChild(script);
+			// Queue the initial calls and script before starting the worker.
+			window.dispatchEvent(new Event('portfolio:analytics-consent'));
 		}
 	}
 
