@@ -16,7 +16,7 @@
 │  │  │  ┌─────────────────────────────────────────┐    │  │    │
 │  │  │  │  Container: dcesares-portfolio-dev      │    │  │    │
 │  │  │  │  ┌───────────────────────────────────┐  │    │  │    │
-│  │  │  │  │  Node 18 Alpine                   │  │    │  │    │
+│  │  │  │  │  Node 24 Alpine                   │  │    │  │    │
 │  │  │  │  │  + pnpm                            │  │    │  │    │
 │  │  │  │  │  + Dependencies                    │  │    │  │    │
 │  │  │  │  └───────────────────────────────────┘  │    │  │    │
@@ -69,7 +69,7 @@
     ┌──────────────────┐
     │   Stage: base    │
     │                  │
-    │  • Node 18 Alpine│
+    │  • Node 24 Alpine│
     │  • Install pnpm  │
     │  • Copy package  │
     │    files         │

@@ -3,12 +3,12 @@
 # Supports both development and production builds
 
 # Base stage - shared dependencies
-FROM node:22-alpine AS base
+FROM node:24-alpine AS base
 
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
 RUN --mount=type=secret,id=proxy_ca \
     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
-    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.33.0 --activate
+    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.6 --activate
 
 # Set working directory
 WORKDIR /app
@@ -50,12 +50,12 @@ RUN --mount=type=secret,id=proxy_ca \
     NODE_USE_ENV_PROXY=1 pnpm build:preview
 
 # Production stage - lightweight runtime
-FROM node:22-alpine AS production
+FROM node:24-alpine AS production
 
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
 RUN --mount=type=secret,id=proxy_ca \
     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
-    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.33.0 --activate
+    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.6 --activate
 
 WORKDIR /app
 
