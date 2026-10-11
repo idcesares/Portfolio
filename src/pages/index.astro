@@ -5,26 +5,21 @@ import { getCollection } from 'astro:content';
 import { Image } from 'astro:assets';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
-
-import CallToAction from '../components/CallToAction.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import DevProjectCard from '../components/DevProjectCard.astro';
 import GridEnhanced from '../components/GridEnhanced.astro';
 import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
 import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
-
-import ContactCTA from '../components/ContactCTA.astro';
-import Skills from '../components/Skills.astro';
 import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
-import DevProjectCard from '../components/DevProjectCard.astro';
+import SectionHeader from '../components/SectionHeader.astro';
+import Skills from '../components/Skills.astro';
 import { devProjects } from '../data/dev-projects';
 import { SOURCES } from '../data/tech-signal-sources';
-
-import Portrait from '../assets/portrait.webp';
-
-import { University } from '@lucide/astro';
 import { getSiteStructuredData } from '../utils/seo';
 
+import Portrait from '../assets/portrait.webp';
 
 const work = await getCollection('work', ({ data }) => !data.draft);
 const highlightedWorkIds = [
@@ -40,332 +35,145 @@ const projects = highlightedWorkIds.map((id) => {
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft))
 	.sort((a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf())
-	.slice(0, 4);
+	.slice(0, 3);
 
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
 const structuredData = getSiteStructuredData(site);
 const signalCount = SOURCES.length;
-const signalBrazilCount = SOURCES.filter(source => source.region === 'Brasil' || source.region === 'LATAM').length;
-const featuredProjects = devProjects.filter(project => project.featured).slice(0, 3);
-
+const signalBrazilCount = SOURCES.filter((source) => source.region === 'Brasil' || source.region === 'LATAM').length;
+const featuredProjects = devProjects.filter((project) => project.featured).slice(0, 3);
 ---
 
 <BaseLayout structuredData={structuredData}>
-	<div class="stack gap-20 lg:gap-48">
-		<div class="wrapper stack gap-8 lg:gap-20">
-			<header class="hero" data-animate="fade-up">
-				<Hero
-					title="Isaac D'Césares"
-					tagline="Traduzo tecnologias emergentes em experiências que ressignificam como pessoas e instituições aprendem."
-					align="start"
-				>
-					<div class="roles" data-animate-stagger>
-						<Pill color="terracotta"><Icon icon="book-open" size="1.33em" /> Pesquisador</Pill>
-						<Pill color="sage"><University /> Educador</Pill>
-						<Pill color="teal"><Icon icon="terminal-window" size="1.33em" /> Inventor</Pill>
-					</div>
-
-					<div class="hero-actions">
-						<CallToAction href="/dev/">
-							O que venho construindo
-							<Icon icon="arrow-right" size="1.2em" />
-						</CallToAction>
-						<a class="ghost-link" href="/about/">Quem sou e como penso</a>
-					</div>
-
-				</Hero>
-
-				<Image
-					class="portrait"
-					alt="Isaac D'Césares, retrato de perfil"
-					src={Portrait}
-					loading="eager"
-					width={400}
-					height={300}
-					decoding="async"
-					data-animate="scale-up"
-					data-animate-delay="200"
-				/>
-			</header>
-
-			<Skills />
-		</div>
-
-		<main id="main-content" tabindex="-1" class="wrapper stack gap-20 lg:gap-48">
-			<section class="project-highlights stack gap-8" aria-labelledby="projects-title">
-				<header class="stack gap-2">
-					<h2 id="projects-title">Da pergunta ao código</h2>
-					<p>Pesquisa, ferramentas e sistemas que venho desenvolvendo. Cada projeto é um jeito de testar uma ideia no mundo.</p>
-				</header>
-				<div class="projects-grid">
-					{featuredProjects.map(project => <DevProjectCard project={project} />)}
+	<main id="main-content" tabindex="-1" class="mp-container mp-stack home" data-gap="16">
+		<section class="home-hero mp-section" data-size="sm" aria-label="Apresentação">
+			<Hero
+				title="Isaac D'Césares"
+				tagline="Traduzo tecnologias emergentes em experiências que ressignificam como pessoas e instituições aprendem."
+				align="start"
+			>
+				<ul class="mp-cluster home-hero__roles" data-gap="2" aria-label="Três dimensões">
+					<li><Pill tone="human"><Icon icon="book-open" /> Pesquisador</Pill></li>
+					<li><Pill tone="learning"><Icon icon="university" /> Educador</Pill></li>
+					<li><Pill tone="digital"><Icon icon="square-terminal" /> Inventor</Pill></li>
+				</ul>
+				<div class="mp-cluster" data-gap="3">
+					<a class="mp-button" data-size="lg" href="/dev/">
+						O que venho construindo
+						<Icon icon="arrow-right" />
+					</a>
+					<a class="mp-button" data-variant="secondary" data-size="lg" href="/about/">Quem sou e como penso</a>
 				</div>
-				<CallToAction href="/dev/">Explorar todos os projetos <Icon icon="arrow-right" size="1.2em" /></CallToAction>
-			</section>
-			<section class="section with-background with-cta" data-animate="fade-up" aria-labelledby="work-highlights-title">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h2 id="work-highlights-title">Trabalhos em destaque</h2>
-					<p>Aprendizagem, IA na educação e autonomia sobre dados e conhecimento.</p>
-				</header>
+			</Hero>
+			<Image
+				class="home-hero__portrait"
+				alt="Isaac D'Césares, retrato de perfil"
+				src={Portrait}
+				loading="eager"
+				fetchpriority="high"
+				width={480}
+				height={600}
+				widths={[360, 480, 720, 960]}
+				sizes="(min-width: 60em) 480px, 100vw"
+			/>
+		</section>
 
-				<div class="gallery">
-					<GridEnhanced variant="offset">
-						{projects.map((project) => (
-							<PortfolioPreviewEnhanced project={project} />
-						))}
-					</GridEnhanced>
-				</div>
+		<Skills />
 
-				<div class="cta">
-					<CallToAction href="/work/">
-						Ver todos os trabalhos
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
-			<section class="section with-background with-cta bg-variant" data-animate="fade-up">
-				<header class="section-header stack gap-2 lg:gap-4">
-					<h2>Últimas postagens</h2>
-					<p>Notas técnicas e reflexões sobre educação, IA e o que tenho aprendido no caminho.</p>
-				</header>
+		<section class="mp-stack" data-gap="8" aria-labelledby="projects-title" data-animate>
+			<SectionHeader
+				id="projects-title"
+				title="Da pergunta ao código"
+				lede="Pesquisa, ferramentas e sistemas que venho desenvolvendo. Cada projeto é um jeito de testar uma ideia no mundo."
+				href="/dev/"
+				cta="Explorar todos os projetos"
+			/>
+			<div class="mp-grid" data-min="lg" data-gap="6">
+				{featuredProjects.map((project) => <DevProjectCard project={project} />)}
+			</div>
+		</section>
 
-				<div class="gallery">
-					<GridEnhanced variant="offset">
-						{posts.map((post) => (
-							<PostPreviewEnhanced post={post} />
-						))}
-					</GridEnhanced>
-				</div>
+		<section class="mp-stack" data-gap="8" aria-labelledby="work-highlights-title" data-animate>
+			<SectionHeader
+				id="work-highlights-title"
+				title="Trabalhos em destaque"
+				lede="Aprendizagem, IA na educação e autonomia sobre dados e conhecimento."
+				href="/work/"
+				cta="Ver todos os trabalhos"
+			/>
+			<GridEnhanced variant="compact">
+				{projects.map((project) => <PortfolioPreviewEnhanced project={project} />)}
+			</GridEnhanced>
+		</section>
 
-				<div class="cta">
-					<CallToAction href="/blog/">
-						Ler todas as postagens
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
-			<section class="signal-band stack gap-4" data-animate="fade-up" aria-labelledby="signal-title">
-				<p class="signal-eyebrow">Dieta de informação</p>
-				<h2 id="signal-title">Tech Signal Stack</h2>
-				<p>As {signalCount} fontes que acompanho para entender tecnologia, IA e política, {signalBrazilCount} delas do Brasil e da América Latina. A ordem muda a cada visita, para ninguém ficar preso nas mesmas.</p>
-				<div class="signal-cta">
-					<CallToAction href="/tech-signal/">
-						Explorar as fontes
-						<Icon icon="arrow-right" size="1.2em" />
-					</CallToAction>
-				</div>
-			</section>
-		</main>
+		<section class="mp-stack" data-gap="8" aria-labelledby="posts-title" data-animate>
+			<SectionHeader
+				id="posts-title"
+				title="Últimas postagens"
+				lede="Notas técnicas e reflexões sobre educação, IA e o que tenho aprendido no caminho."
+				href="/blog/"
+				cta="Ler todas as postagens"
+			/>
+			<GridEnhanced variant="compact">
+				{posts.map((post) => <PostPreviewEnhanced post={post} />)}
+			</GridEnhanced>
+		</section>
 
-		<ContactCTA />
-	</div>
+		<section class="mp-card signal-band" data-variant="featured" aria-labelledby="signal-title" data-animate>
+			<p class="mp-card__overline">Dieta de informação</p>
+			<h2 class="type-h1" id="signal-title">Tech Signal Stack</h2>
+			<p class="mp-card__body type-body-lg mp-text" data-measure>
+				As {signalCount} fontes que acompanho para entender tecnologia, IA e política, {signalBrazilCount} delas do Brasil e da América Latina. A ordem muda a cada visita, para ninguém ficar preso nas mesmas.
+			</p>
+			<div class="mp-card__footer">
+				<a class="mp-button" data-variant="secondary" href="/tech-signal/">
+					Explorar as fontes
+					<Icon icon="arrow-right" />
+				</a>
+			</div>
+		</section>
+	</main>
+
+	<ContactCTA />
 </BaseLayout>
 
 <style>
-	.project-highlights h2 { font-size: var(--text-h1); }
-	.project-highlights p { color: var(--color-text-secondary); max-width: 65ch; }
-	.projects-grid { display: grid; gap: var(--space-6); grid-template-columns: minmax(0, 1fr); }
-	@media (min-width: 65em) {
-		.projects-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
-	}
-	.signal-band {
-		padding: var(--space-8);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-xl);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-	}
-	.signal-cta { display: grid; justify-items: start; }
-	.signal-band h2 { font-size: var(--text-h1); }
-	.signal-band p { color: var(--color-text-secondary); max-width: 65ch; }
-	.signal-band .signal-eyebrow {
-		font-family: var(--font-mono);
-		font-size: var(--text-small);
-		letter-spacing: 0.08em;
-		text-transform: uppercase;
-		color: var(--color-human-text);
-	}
-	@media (min-width: 50em) {
-		.signal-band { padding: var(--space-12) var(--space-16); }
-	}
-	.hero {
-		display: flex;
-		flex-direction: column;
+	.home-hero {
+		display: grid;
+		gap: var(--space-10);
 		align-items: center;
-		gap: var(--space-8);
 	}
 
-	.roles {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2);
+	.home-hero__roles {
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.hero img {
-		aspect-ratio: 5 / 4;
+	.home-hero__portrait {
+		width: 100%;
+		max-width: 30rem;
+		aspect-ratio: 4 / 5;
 		object-fit: cover;
 		object-position: top;
-		border-radius: var(--radius-xl);
-		box-shadow: var(--shadow-md);
+		border-radius: var(--photo-border-radius);
+		box-shadow: var(--photo-shadow);
 		filter: var(--photo-warmth);
 	}
 
-	.hero-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-3);
-		align-items: center;
-	}
-
-	.ghost-link {
-		display: inline-flex;
-		align-items: center;
-		justify-content: center;
-		padding: var(--space-3) var(--space-6);
-		border-radius: var(--radius-full);
-		border: 1px solid var(--color-border-default);
-		color: var(--color-text-secondary);
-		text-decoration: none;
-		font-family: var(--font-sans);
-		font-weight: var(--weight-medium);
-		transition: all var(--transition-default);
-		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
-		box-shadow: var(--shadow-sm);
-		min-height: 44px;
-	}
-
-	@media (hover: hover) {
-		.ghost-link:hover {
-			color: var(--color-text-primary);
-			border-color: var(--color-border-emphasis);
-		}
-	}
-
-	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
-		.ghost-link:hover {
-			transform: translateY(-1px);
-		}
-	}
-
-	@media (min-width: 50em) {
-		.hero {
-			display: grid;
-			grid-template-columns: 6fr 4fr;
-			padding-inline: var(--space-10);
+	@media (min-width: 60em) {
+		.home-hero {
+			grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 			gap: var(--space-16);
 		}
 
-		.roles {
-			margin-top: var(--space-2);
-			gap: var(--space-2);
-		}
-
-		.hero img {
-			aspect-ratio: 3 / 4;
-			border-radius: var(--radius-xl);
-			object-fit: cover;
+		.home-hero__portrait {
+			justify-self: end;
 		}
 	}
 
-	/* ====================================================== */
-
-	.section {
-		display: grid;
-		gap: var(--space-8);
-	}
-
-	.with-background {
-		position: relative;
-	}
-
-	.with-background::before {
-		content: '';
-		position: absolute;
-		pointer-events: none;
-		left: 50%;
-		width: 100vw;
-		height: 140%;
-		top: -40%;
-		transform: translateX(-50%);
-		background:
-			radial-gradient(800px 400px at 50% 10%, var(--color-terracotta-10), transparent 70%),
-			radial-gradient(600px 300px at 80% 20%, var(--color-teal-08), transparent 65%);
-		opacity: var(--opacity-heavy);
-		z-index: -1;
-	}
-
-	.with-background.bg-variant::before {
-		background:
-			radial-gradient(800px 400px at 40% 10%, var(--color-teal-12), transparent 70%),
-			radial-gradient(600px 300px at 70% 20%, var(--color-sage-10), transparent 65%);
-	}
-
-	.section-header {
-		justify-self: center;
-		text-align: center;
-		max-width: 50ch;
-		font-size: var(--text-body-lg);
-		color: var(--color-text-secondary);
-	}
-
-	.section-header h2 {
-		font-size: var(--text-h1);
-		letter-spacing: var(--tracking-heading);
-	}
-
-	@media (min-width: 50em) {
-		.section {
-			grid-template-columns: repeat(4, 1fr);
-			grid-template-areas: 'header header header header' 'gallery gallery gallery gallery';
-			gap: var(--space-20);
-		}
-
-		.section.with-cta {
-			grid-template-areas: 'header header header cta' 'gallery gallery gallery gallery';
-		}
-
-		.section-header {
-			grid-area: header;
-			font-size: var(--text-h3);
-		}
-
-		.section-header h2 {
-			font-size: var(--text-display);
-		}
-
-		.with-cta .section-header {
-			justify-self: flex-start;
-			text-align: left;
-		}
-
-		.gallery {
-			grid-area: gallery;
-		}
-
-		.cta {
-			grid-area: cta;
-		}
-	}
-
-	/* ====================================================== */
-
-	.mention-card {
-		display: flex;
-		height: 7rem;
-		justify-content: center;
-		align-items: center;
-		text-align: center;
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-xl);
-		color: var(--color-text-secondary);
-		background: var(--gradient-subtle);
-		box-shadow: var(--shadow-sm);
-	}
-
-	@media (min-width: 50em) {
-		.mention-card {
-			border-radius: var(--radius-xl);
-			height: 9.5rem;
-		}
+	.signal-band {
+		--mp-card-bg: var(--color-bg-elevated);
+		background-image: var(--gradient-subtle);
 	}
 </style>

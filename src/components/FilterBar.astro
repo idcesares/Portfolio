@@ -1,504 +1,180 @@
 ---
+import Icon from './Icon.astro';
+
 interface Props {
 	variant?: 'blog' | 'work';
 	tags: string[];
-	onTagFilter?: (tag: string) => void;
-	onSortChange?: (sort: string) => void;
-	onSearchChange?: (search: string) => void;
-	onReset?: () => void;
-	activeSortOption?: string;
 }
 
-const { 
-	variant = 'blog', 
-	tags, 
-	activeSortOption = 'newest' 
-} = Astro.props;
+const { variant = 'blog', tags } = Astro.props;
+const noun = variant === 'blog' ? 'posts' : 'projetos';
 
 const sortOptions = [
 	{ value: 'newest', label: 'Mais recentes' },
 	{ value: 'oldest', label: 'Mais antigos' },
-	{ value: 'alphabetical', label: 'Alfabética (A-Z)' }
+	{ value: 'alphabetical', label: 'Alfabética (A–Z)' },
 ];
 
-// Select only the most common/important tags for the dropdown
-const topTags = tags.slice(0, 8); // Limit to top 8 tags
+const views = [
+	{ value: 'wide', label: 'Cards grandes', d: 'M3 3h8v8H3zM13 3h8v8h-8zM3 13h8v8H3zM13 13h8v8h-8z' },
+	{ value: 'compact', label: 'Cards compactos', d: 'M3 3h5v5H3zM10 3h5v5h-5zM17 3h4v5h-4zM3 10h5v5H3zM10 10h5v5h-5zM17 10h4v5h-4zM3 17h5v4H3zM10 17h5v4h-5zM17 17h4v4h-4z' },
+	{ value: 'list', label: 'Lista', d: 'M3 5h18M3 12h18M3 19h18' },
+];
+
+// The most frequent tags (the page passes them sorted by frequency).
+const topTags = tags.slice(0, 8);
 ---
 
-<div class="filter-container">
-	<!-- Main Filter Bar -->
-	<div class="main-filter-bar">
-		<div class="search-section">
-			<input 
-				type="text" 
-				id="local-search" 
-				aria-label={variant === 'blog' ? 'Buscar posts' : 'Buscar projetos'}
-				placeholder={variant === 'blog' ? 'Buscar posts...' : 'Buscar projetos...'}
-				class="local-search-input"
-			/>
+<section class="mp-card filter-bar" data-variant="flat" aria-label={`Filtrar ${noun}`} data-noun={noun}>
+	<div class="mp-cluster" data-gap="3">
+		<div class="mp-field filter-bar__search">
+			<label class="mp-field__label mp-visually-hidden" for="local-search">{variant === 'blog' ? 'Buscar posts' : 'Buscar projetos'}</label>
+			<input class="mp-input" type="search" id="local-search" placeholder={variant === 'blog' ? 'Buscar posts…' : 'Buscar projetos…'} autocomplete="off" />
 		</div>
-
-		<div class="quick-filters">
-			<select id="sort-select" class="sort-select" aria-label="Ordenar resultados">
-				{sortOptions.map((option) => (
-					<option 
-						value={option.value} 
-						selected={activeSortOption === option.value}
-					>
-						{option.label}
-					</option>
-				))}
+		<div class="mp-field">
+			<label class="mp-field__label mp-visually-hidden" for="sort-select">Ordenar resultados</label>
+			<select class="mp-input" id="sort-select">
+				{sortOptions.map((option) => <option value={option.value}>{option.label}</option>)}
 			</select>
-
-			<button id="advanced-toggle" class="advanced-toggle" title="Filtros avançados" aria-controls="advanced-filters" aria-expanded="false">
-				<svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor">
-					<path d="M6 10.5a.5.5 0 0 1 .5-.5h3a.5.5 0 0 1 0 1h-3a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5zm-2-3a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11a.5.5 0 0 1-.5-.5z"/>
-				</svg>
-			</button>
+		</div>
+		<button
+			class="mp-button"
+			type="button"
+			id="advanced-toggle"
+			data-variant="ghost"
+			data-icon-only
+			aria-label="Filtros avançados"
+			aria-controls="advanced-filters"
+			aria-expanded="false"
+		>
+			<Icon icon="sliders-horizontal" />
+		</button>
+		<div class="mp-cluster filter-bar__views" role="group" aria-label="Visualização" data-gap="1">
+			{
+				views.map(({ value, label, d }) => (
+					<button class="mp-button" type="button" data-variant="ghost" data-size="sm" data-icon-only data-view={value} aria-label={label} aria-pressed={value === 'wide' ? 'true' : 'false'}>
+						<svg class="mp-icon" data-size="sm" viewBox="0 0 24 24" aria-hidden="true"><path d={d} /></svg>
+					</button>
+				))
+			}
 		</div>
 	</div>
 
-	<!-- Advanced Filters (Collapsible) -->
-	<div class="advanced-filters" id="advanced-filters" inert>
-		<div class="advanced-content">
-			<div class="filter-group">
-				<label for="category-select" class="filter-label">Categoria:</label>
-				<select id="category-select" class="category-select">
-					<option value="">Todas as categorias</option>
-					{topTags.map((tag) => (
-						<option value={tag}>{tag}</option>
-					))}
-				</select>
-			</div>
-			
-			<div class="filter-actions">
-				<button id="reset-filters" class="reset-button">
-					Limpar filtros
-				</button>
-			</div>
+	<div class="mp-cluster filter-bar__advanced" id="advanced-filters" data-align="baseline" data-gap="3" hidden>
+		<div class="mp-field">
+			<label class="mp-field__label" for="category-select">Categoria:</label>
+			<select class="mp-input" id="category-select" data-size="sm">
+				<option value="">Todas as categorias</option>
+				{topTags.map((tag) => <option value={tag}>{tag}</option>)}
+			</select>
 		</div>
+		<button class="mp-button" type="button" id="reset-filters" data-variant="ghost" data-size="sm">Limpar filtros</button>
 	</div>
 
-	<!-- Results Count -->
-	<div class="results-info">
-		<span id="results-text" role="status" aria-atomic="true">Mostrando todos os resultados</span>
-	</div>
-</div>
+	<p class="mp-text type-small" data-tone="subtle" id="results-text" role="status" aria-atomic="true"></p>
+</section>
 
 <style>
-	.filter-container {
-		background: color-mix(in oklab, var(--color-bg-primary) 88%, transparent);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-md);
-		padding: var(--space-4);
-		margin-bottom: var(--space-8);
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
-		backdrop-filter: blur(var(--space-3));
+	.filter-bar {
+		--mp-card-padding: var(--space-4);
+		gap: var(--space-3);
+		margin-block-end: var(--space-8);
 	}
 
-	/* Main Filter Bar */
-	.main-filter-bar {
-		display: flex;
-		gap: var(--space-4);
-		align-items: center;
-		flex-wrap: wrap;
+	.filter-bar__search {
+		flex: 1 1 16rem;
 	}
 
-	.search-section {
-		flex: 1;
-		min-width: 200px;
+	.filter-bar__views {
+		margin-inline-start: auto;
 	}
 
-	.local-search-input {
-		width: 100%;
-		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-input);
-		border-radius: var(--radius-sm);
-		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
-		color: var(--color-text-primary);
-		font-size: var(--text-body);
-		transition: border-color var(--duration-normal) var(--ease-out);
-	}
-
-	.local-search-input:focus-visible {
-		outline: var(--focus-ring);
-		outline-offset: var(--focus-ring-offset);
-		border-color: var(--color-focus);
-	}
-
-	.local-search-input::placeholder {
-		color: var(--color-text-tertiary);
-	}
-
-	.quick-filters {
-		display: flex;
-		gap: var(--space-2);
-		align-items: center;
-	}
-
-	.sort-select {
-		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-input);
-		border-radius: var(--radius-sm);
-		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
-		color: var(--color-text-primary);
-		font-size: var(--text-body);
-		cursor: pointer;
-		min-width: 140px;
-	}
-
-	.sort-select:focus-visible {
-		outline: var(--focus-ring);
-		outline-offset: var(--focus-ring-offset);
-		border-color: var(--color-focus);
-	}
-
-	.advanced-toggle {
-		padding: var(--space-2);
-		border: 1px solid var(--color-border-emphasis);
-		border-radius: var(--radius-sm);
-		background: color-mix(in oklab, var(--color-bg-primary) 60%, transparent);
-		color: var(--color-text-tertiary);
-		cursor: pointer;
-		transition: all var(--duration-normal) var(--ease-out);
-		display: flex;
-		align-items: center;
-		justify-content: center;
-	}
-
-	.advanced-toggle:hover {
-		background: color-mix(in oklab, var(--color-bg-primary) 75%, transparent);
-		border-color: var(--color-border-emphasis);
-		color: var(--color-text-primary);
-	}
-
-	.advanced-toggle.active {
-		background: var(--color-action-secondary);
-		border-color: var(--color-action-secondary);
-		color: var(--color-text-on-accent);
-	}
-
-	/* Advanced Filters */
-	.advanced-filters {
-		max-height: 0;
-		overflow: hidden;
-		transition: max-height var(--duration-normal) var(--ease-out), padding var(--duration-normal) var(--ease-out);
-		border-top: 1px solid transparent;
-	}
-
-	.advanced-filters.expanded {
-		max-height: 200px;
-		padding-top: var(--space-4);
-		border-top-color: var(--color-border-default);
-	}
-
-	.advanced-content {
-		display: flex;
-		gap: var(--space-4);
-		align-items: end;
-		flex-wrap: wrap;
-	}
-
-	.filter-group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-1);
-		min-width: 150px;
-	}
-
-	.filter-label {
-		font-size: var(--text-xs);
-		color: var(--color-text-tertiary);
-		font-weight: var(--weight-medium);
-	}
-
-	.category-select {
-		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-input);
-		border-radius: var(--radius-sm);
-		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
-		color: var(--color-text-primary);
-		font-size: var(--text-body);
-		cursor: pointer;
-	}
-
-	.category-select:focus-visible {
-		outline: var(--focus-ring);
-		outline-offset: var(--focus-ring-offset);
-		border-color: var(--color-focus);
-	}
-
-	.filter-actions {
-		display: flex;
-		align-items: end;
-	}
-
-	.reset-button {
-		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-emphasis);
-		border-radius: var(--radius-sm);
-		background: color-mix(in oklab, var(--color-bg-primary) 60%, transparent);
-		color: var(--color-text-tertiary);
-		font-size: var(--text-body);
-		cursor: pointer;
-		transition: all var(--duration-normal) var(--ease-out);
-		white-space: nowrap;
-	}
-
-	.reset-button:hover {
-		background: color-mix(in oklab, var(--color-bg-primary) 75%, transparent);
-		border-color: var(--color-border-emphasis);
-		color: var(--color-text-primary);
-	}
-
-	/* Results Info */
-	.results-info {
-		display: flex;
-		justify-content: space-between;
-		align-items: center;
-		margin-top: var(--space-2);
-		padding-top: var(--space-2);
-		border-top: 1px solid var(--color-border-default);
-	}
-
-	#results-text {
-		font-size: var(--text-xs);
-		color: var(--color-text-tertiary);
-		font-style: italic;
-	}
-
-	/* Responsive adjustments */
-	@media (max-width: 50em) {
-		.main-filter-bar {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		.search-section {
-			min-width: auto;
-		}
-
-		.quick-filters {
-			justify-content: space-between;
-		}
-
-		.sort-select {
-			flex: 1;
-		}
-
-		.advanced-content {
-			flex-direction: column;
-			align-items: stretch;
-		}
-
-		.filter-group {
-			min-width: auto;
-		}
+	.filter-bar__advanced {
+		padding-block-start: var(--space-3);
+		border-block-start: var(--border-default);
 	}
 </style>
 
 <script>
-	class FilterManager {
-		private currentTag: string = '';
-		private currentSearch: string = '';
-		private allItems: NodeListOf<Element>;
-		private variant: string;
-		private advancedExpanded: boolean = false;
+	const bar = document.querySelector<HTMLElement>('.filter-bar');
+	const grid = document.querySelector<HTMLElement>('.card-list');
 
-		constructor() {
-			this.variant = document.querySelector('.filter-container')?.closest('[data-page-type]')?.getAttribute('data-page-type') || 'blog';
-			this.allItems = document.querySelectorAll('[data-filterable-item]');
-			this.setupEventListeners();
-			this.updateResultsCount();
-		}
+	if (bar && grid) {
+		const noun = bar.dataset.noun ?? 'itens';
+		const items = Array.from(grid.querySelectorAll<HTMLElement>('[data-filterable-item]'));
+		const search = bar.querySelector<HTMLInputElement>('#local-search')!;
+		const sort = bar.querySelector<HTMLSelectElement>('#sort-select')!;
+		const category = bar.querySelector<HTMLSelectElement>('#category-select')!;
+		const toggle = bar.querySelector<HTMLButtonElement>('#advanced-toggle')!;
+		const advanced = bar.querySelector<HTMLElement>('#advanced-filters')!;
+		const status = bar.querySelector<HTMLElement>('#results-text')!;
+		const viewButtons = bar.querySelectorAll<HTMLButtonElement>('[data-view]');
 
-		setupEventListeners() {
-			// Advanced toggle
-			const advancedToggle = document.getElementById('advanced-toggle');
-			if (advancedToggle) {
-				advancedToggle.addEventListener('click', () => {
-					this.toggleAdvancedFilters();
-				});
+		const normalize = (text: string) =>
+			text.normalize('NFD').replace(/\p{Diacritic}/gu, '').toLowerCase();
+
+		const apply = () => {
+			const query = normalize(search.value.trim());
+			const tag = normalize(category.value);
+			let visible = 0;
+			for (const item of items) {
+				const tags = normalize(item.dataset.tags ?? '');
+				const haystack = `${normalize(item.dataset.title ?? '')} ${normalize(item.dataset.description ?? '')} ${tags}`;
+				const show = (!tag || tags.includes(tag)) && (!query || haystack.includes(query));
+				item.hidden = !show;
+				if (show) visible += 1;
 			}
+			status.textContent = visible === items.length ? `${items.length} ${noun}` : `${visible} de ${items.length} ${noun}`;
+		};
 
-			// Category filtering
-			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
-			if (categorySelect) {
-				categorySelect.addEventListener('change', (e) => {
-					const target = e.target as HTMLSelectElement;
-					this.filterByTag(target.value);
-				});
-			}
-
-			// Sort change
-			const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
-			if (sortSelect) {
-				sortSelect.addEventListener('change', (e) => {
-					const target = e.target as HTMLSelectElement;
-					this.sortItems(target.value);
-				});
-			}
-
-			// Local search
-			const searchInput = document.getElementById('local-search') as HTMLInputElement;
-			if (searchInput) {
-				searchInput.addEventListener('input', (e) => {
-					const target = e.target as HTMLInputElement;
-					this.searchItems(target.value);
-				});
-			}
-
-			// Reset filters
-			const resetButton = document.getElementById('reset-filters');
-			if (resetButton) {
-				resetButton.addEventListener('click', () => {
-					this.resetFilters();
-				});
-			}
-		}
-
-		toggleAdvancedFilters() {
-			const advancedFilters = document.getElementById('advanced-filters');
-			const advancedToggle = document.getElementById('advanced-toggle');
-			
-			if (!advancedFilters || !advancedToggle) return;
-
-			this.advancedExpanded = !this.advancedExpanded;
-			advancedToggle.setAttribute('aria-expanded', String(this.advancedExpanded));
-			advancedFilters.inert = !this.advancedExpanded;
-			
-			if (this.advancedExpanded) {
-				advancedFilters.classList.add('expanded');
-				advancedToggle.classList.add('active');
-			} else {
-				advancedFilters.classList.remove('expanded');
-				advancedToggle.classList.remove('active');
-			}
-		}
-
-		filterByTag(tag: string) {
-			this.currentTag = tag;
-			
-			// Update category select
-			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
-			if (categorySelect) {
-				categorySelect.value = tag;
-			}
-
-			this.applyFilters();
-		}
-
-		sortItems(sortType: string) {
-			const container = document.querySelector('.grid');
-			if (!container) return;
-
-			const items = Array.from(this.allItems);
-			
-			items.sort((a, b) => {
-				const aDate = a.getAttribute('data-updated-date');
-				const aTitle = a.getAttribute('data-title') || '';
-				const bDate = b.getAttribute('data-updated-date');
-				const bTitle = b.getAttribute('data-title') || '';
-
-				switch (sortType) {
-					case 'oldest':
-						return new Date(aDate || '').getTime() - new Date(bDate || '').getTime();
-					case 'alphabetical':
-						return aTitle.localeCompare(bTitle);
-					case 'newest':
-					default:
-						return new Date(bDate || '').getTime() - new Date(aDate || '').getTime();
-				}
+		const order = (mode: string) => {
+			const date = (el: HTMLElement) => new Date(el.dataset.updatedDate ?? 0).getTime();
+			const sorted = [...items].sort((a, b) => {
+				if (mode === 'oldest') return date(a) - date(b);
+				if (mode === 'alphabetical') return (a.dataset.title ?? '').localeCompare(b.dataset.title ?? '', 'pt-BR');
+				return date(b) - date(a);
 			});
+			grid.append(...sorted);
+		};
 
-			// Reorder DOM elements
-			items.forEach(item => {
-				container.appendChild(item);
-			});
-
-			this.applyFilters();
-		}
-
-		searchItems(searchTerm: string) {
-			this.currentSearch = searchTerm.toLowerCase();
-			this.applyFilters();
-		}
-
-		applyFilters() {
-			let visibleCount = 0;
-
-			this.allItems.forEach(item => {
-				const itemTags = item.getAttribute('data-tags')?.toLowerCase() || '';
-				const itemTitle = item.getAttribute('data-title')?.toLowerCase() || '';
-				const itemDescription = item.getAttribute('data-description')?.toLowerCase() || '';
-
-				// Check tag filter
-				const tagMatch = !this.currentTag || itemTags.includes(this.currentTag.toLowerCase());
-
-				// Check search filter
-				const searchMatch = !this.currentSearch || 
-					itemTitle.includes(this.currentSearch) || 
-					itemDescription.includes(this.currentSearch) ||
-					itemTags.includes(this.currentSearch);
-
-				const shouldShow = tagMatch && searchMatch;
-
-				if (shouldShow) {
-					(item as HTMLElement).style.display = '';
-					visibleCount++;
-				} else {
-					(item as HTMLElement).style.display = 'none';
-				}
-			});
-
-			this.updateResultsCount(visibleCount);
-		}
-
-		updateResultsCount(count?: number) {
-			const resultsText = document.getElementById('results-text');
-			if (!resultsText) return;
-
-			const total = this.allItems.length;
-			const visible = count !== undefined ? count : total;
-
-			if (visible === total) {
-				resultsText.textContent = `${total} ${this.variant === 'blog' ? 'posts' : 'projetos'}`;
-			} else {
-				resultsText.textContent = `${visible} de ${total} ${this.variant === 'blog' ? 'posts' : 'projetos'}`;
+		const setView = (view: string) => {
+			grid.dataset.view = view;
+			if (view === 'wide') grid.dataset.min = 'lg';
+			else delete grid.dataset.min;
+			viewButtons.forEach((button) => button.setAttribute('aria-pressed', String(button.dataset.view === view)));
+			try {
+				localStorage.setItem('preferred-view', view);
+			} catch {
+				/* Remembering the view is optional. */
 			}
-		}
+		};
 
-	resetFilters() {
-		this.currentTag = '';
-		this.currentSearch = '';			// Reset UI
-			const categorySelect = document.getElementById('category-select') as HTMLSelectElement;
-			if (categorySelect) {
-				categorySelect.value = '';
-			}
-
-			const sortSelect = document.getElementById('sort-select') as HTMLSelectElement;
-			if (sortSelect) {
-				sortSelect.value = 'newest';
-			}
-
-			const searchInput = document.getElementById('local-search') as HTMLInputElement;
-			if (searchInput) {
-				searchInput.value = '';
-			}
-
-			// Resort to newest first
-			this.sortItems('newest');
-		}
-	}
-
-	// Initialize when DOM is ready
-	if (document.readyState === 'loading') {
-		document.addEventListener('DOMContentLoaded', () => {
-			new FilterManager();
+		search.addEventListener('input', apply);
+		category.addEventListener('change', apply);
+		sort.addEventListener('change', () => order(sort.value));
+		toggle.addEventListener('click', () => {
+			const open = toggle.getAttribute('aria-expanded') !== 'true';
+			toggle.setAttribute('aria-expanded', String(open));
+			toggle.setAttribute('aria-pressed', String(open));
+			advanced.hidden = !open;
 		});
-	} else {
-		new FilterManager();
+		bar.querySelector('#reset-filters')!.addEventListener('click', () => {
+			search.value = '';
+			category.value = '';
+			sort.value = 'newest';
+			order('newest');
+			apply();
+			search.focus();
+		});
+		viewButtons.forEach((button) => button.addEventListener('click', () => setView(button.dataset.view ?? 'wide')));
+
+		let saved: string | null = null;
+		try {
+			saved = localStorage.getItem('preferred-view');
+		} catch {
+			/* Storage blocked: default view. */
+		}
+		if (saved === 'compact' || saved === 'list') setView(saved);
+		apply();
 	}
 </script>

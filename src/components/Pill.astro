@@ -1,34 +1,30 @@
 ---
-import { toneColors, type Tone } from './toneColors';
-
+/**
+ * A Membrane tag (.mp-tag) naming a topic or one of the three dimensions.
+ * Tone is the register: human (terracotta), digital (teal), or neutral.
+ * "learning" is the educator dimension, drawn with the sage success pair
+ * through the tag's own knobs (the sanctioned per-instance override).
+ */
 interface Props {
-	color?: Tone;
+	tone?: 'human' | 'digital' | 'learning';
+	href?: string;
 }
 
-const { color = 'teal' } = Astro.props;
-
-const c = toneColors[color];
+const { tone, href } = Astro.props;
+const Tag = href ? 'a' : 'span';
 ---
 
-<div
-	class="pill"
-	style={`--pill-bg: ${c.bg}; --pill-border: ${c.border}; --pill-text: ${c.text};`}
->
+<Tag class="mp-tag pill" href={href} data-tone={tone === 'learning' ? undefined : tone} data-learning={tone === 'learning' ? '' : undefined}>
 	<slot />
-</div>
+</Tag>
 
 <style>
-	.pill {
-		display: flex;
-		padding: var(--space-2) var(--space-4);
-		gap: var(--space-2);
-		color: var(--pill-text);
-		border: 1px solid var(--pill-border);
-		background-color: var(--pill-bg);
-		border-radius: var(--radius-full);
-		font-size: var(--text-small);
-		line-height: var(--leading-small);
-		white-space: nowrap;
-		align-items: center;
+	.pill[data-learning] {
+		--mp-tag-bg: var(--color-success-bg);
+		--mp-tag-fg: var(--color-success-text);
+	}
+
+	.pill :global(.mp-icon) {
+		--mp-icon-size: 1.25em;
 	}
 </style>

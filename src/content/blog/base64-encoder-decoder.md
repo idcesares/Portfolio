@@ -60,4 +60,4 @@ Para os curiosos, o aplicativo está disponível online e o código-fonte pode s
 
 O futuro do desenvolvimento de software está em nossas mãos, e ferramentas como o Claude estão tornando esse futuro mais acessível e empolgante do que nunca. Que venham os próximos desafios!
 
-<a href="https://base64.dcesares.dev" target="_blank" class="button-post">Acesse o app</a>
+<a href="https://base64.dcesares.dev" target="_blank" class="mp-button" rel="noopener">Acesse o app</a>

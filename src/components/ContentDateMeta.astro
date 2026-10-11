@@ -2,9 +2,10 @@
 interface Props {
 	publishDate: Date;
 	updatedDate: Date;
+	class?: string;
 }
 
-const { publishDate, updatedDate } = Astro.props;
+const { publishDate, updatedDate, class: className } = Astro.props;
 const publish = new Date(publishDate);
 const updated = new Date(updatedDate);
 const isUpdated = updated.getTime() > publish.getTime();
@@ -14,25 +15,10 @@ const formattedDate = displayDate.toLocaleDateString('pt-BR', {
 	year: 'numeric',
 	month: 'long',
 	day: 'numeric',
+	timeZone: 'UTC',
 });
 ---
 
-<p class="content-date" data-updated={isUpdated ? 'true' : 'false'}>
-	<span class="content-date__label">{label}</span>
-	<time datetime={displayDate.toISOString()}>{formattedDate}</time>
+<p class:list={['content-date', className]} data-updated={isUpdated ? 'true' : 'false'}>
+	{label} <time datetime={displayDate.toISOString()}>{formattedDate}</time>
 </p>
-
-<style>
-	.content-date {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-1);
-		font-size: var(--text-small);
-		color: var(--color-text-tertiary);
-		flex-wrap: wrap;
-	}
-
-	.content-date__label {
-		font-weight: var(--weight-medium);
-	}
-</style>

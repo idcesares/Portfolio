@@ -5,67 +5,32 @@ import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
-import Hero from '../components/Hero.astro';
-import GridEnhanced from '../components/GridEnhanced.astro';
-import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
 import FilterBar from '../components/FilterBar.astro';
-import ViewToggle from '../components/ViewToggle.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
+import Hero from '../components/Hero.astro';
+import PostPreviewEnhanced from '../components/PostPreviewEnhanced.astro';
+import { tagsByFrequency } from '../utils/tags';
 
 const posts = (await getCollection('blog', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
-
-// Extract all unique tags from posts
-const allTags = [...new Set(posts.flatMap(post => post.data.tags))].sort();
+const tags = tagsByFrequency(posts);
 ---
 
-<BaseLayout
-	title="Blog"
-	description="Notas técnicas, reflexões e guias sobre educação, IA e desenvolvimento."
->
-	<div class="stack gap-20" data-page-type="blog">
-		<main id="main-content" tabindex="-1" class="wrapper stack gap-8">
-			<Hero
-				title="Blog"
-				tagline="Notas técnicas, reflexões e guias sobre educação, IA e desenvolvimento."
-				align="start"
-			/>
-			
-			<section class="content-section" data-animate="fade-up" aria-labelledby="listing-title">
-				<h2 id="listing-title" class="sr-only">Todas as postagens</h2>
-				<FilterBar variant="blog" tags={allTags} />
-				
-				<div class="view-controls">
-					<ViewToggle currentView="default" />
-				</div>
-				
-				<GridEnhanced variant="offset">
-					{posts.map((post) => (
-						<PostPreviewEnhanced post={post} variant="default" />
-					))}
-				</GridEnhanced>
-			</section>
-		</main>
-		<ContactCTA />
-	</div>
+<BaseLayout title="Blog" description="Notas técnicas, reflexões e guias sobre educação, IA e desenvolvimento.">
+	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="10">
+		<Hero
+			title="Blog"
+			tagline="Notas técnicas, reflexões e guias sobre educação, IA e desenvolvimento."
+			align="start"
+		/>
+		<section aria-labelledby="listing-title" data-animate>
+			<h2 id="listing-title" class="mp-visually-hidden">Todas as postagens</h2>
+			<FilterBar variant="blog" tags={tags} />
+			<GridEnhanced>
+				{posts.map((post, index) => <PostPreviewEnhanced post={post} eager={index < 2} />)}
+			</GridEnhanced>
+		</section>
+	</main>
+	<ContactCTA />
 </BaseLayout>
-
-<style>
-	.content-section {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-6);
-	}
-
-	.view-controls {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-	}
-
-	@media (max-width: 50em) {
-		.view-controls {
-			justify-content: flex-start;
-		}
-	}
-</style>

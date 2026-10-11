@@ -2,102 +2,53 @@
 import Icon from './Icon.astro';
 ---
 
-<theme-toggle>
-	<button>
-		<span class="sr-only">Tema escuro</span>
-		<span class="icon light"><Icon icon="sun" /></span>
-		<span class="icon dark"><Icon icon="moon-stars" /></span>
-	</button>
-</theme-toggle>
+<!-- Membrane toggle button: aria-pressed is the state (dark on). With nothing
+     stored the page follows the OS; a click stores the explicit choice. -->
+<button
+	class="mp-button theme-toggle"
+	type="button"
+	data-variant="ghost"
+	data-icon-only
+	aria-pressed="false"
+	aria-label="Tema escuro"
+	data-theme-toggle
+>
+	<Icon icon="moon" class="theme-toggle__moon" />
+	<Icon icon="sun" class="theme-toggle__sun" />
+</button>
 
 <style>
-	button {
-		display: flex;
-		border: 0;
-		border-radius: var(--radius-full);
-		padding: 0;
-		background-color: var(--color-bg-primary);
-		box-shadow: inset 0 0 0 1px var(--color-teal-20), var(--shadow-sm);
-		cursor: pointer;
-		min-width: 44px;
-	}
-
-	.icon {
-		z-index: 1;
-		position: relative;
-		display: flex;
-		padding: var(--space-2);
-		width: var(--space-8);
-		height: var(--space-8);
-		font-size: var(--text-body);
-		color: var(--color-teal-20);
-	}
-
-	.icon.light::before {
-		content: '';
-		z-index: -1;
-		position: absolute;
-		inset: 0;
-		background-color: var(--color-teal);
-		border-radius: var(--radius-full);
-	}
-
-	:global([data-theme='dark']) .icon.light::before {
-		transform: translateX(100%);
-	}
-
-	:global([data-theme='dark']) .icon.dark,
-	:global(html:not([data-theme='dark'])) .icon.light,
-	button[aria-pressed='false'] .icon.light {
-		color: var(--color-text-on-accent);
-	}
-
-	@media (prefers-reduced-motion: no-preference) {
-		.icon,
-		.icon.light::before {
-			transition:
-				transform var(--transition-default),
-				color var(--transition-default);
-		}
-	}
-
-	@media (forced-colors: active) {
-		.icon.light::before {
-			background-color: SelectedItem;
-		}
+	.theme-toggle[aria-pressed='true'] :global(.theme-toggle__moon),
+	.theme-toggle[aria-pressed='false'] :global(.theme-toggle__sun) {
+		display: none;
 	}
 </style>
 
 <script>
-	class ThemeToggle extends HTMLElement {
-		constructor() {
-			super();
+	const root = document.documentElement;
+	const media = window.matchMedia('(prefers-color-scheme: dark)');
+	const isDark = () => (root.getAttribute('data-theme') ?? (media.matches ? 'dark' : 'light')) === 'dark';
+	const buttons = () => document.querySelectorAll<HTMLButtonElement>('[data-theme-toggle]');
+	const sync = () => buttons().forEach((button) => button.setAttribute('aria-pressed', String(isDark())));
 
-			const button = this.querySelector('button')!;
-
-			/** Apply the dark/light mode to the document and sync the button state. */
-			const applyTheme = (dark: boolean) => {
-				document.documentElement.setAttribute('data-theme', dark ? 'dark' : 'light');
-				button.setAttribute('aria-pressed', String(dark));
-			};
-
-			// Toggle the theme when a user clicks the button, persisting only this
-			// explicit choice so untouched visits keep following the system preference.
-			button.addEventListener('click', () => {
-				const dark = !this.isDark();
-				applyTheme(dark);
+	buttons().forEach((button) =>
+		button.addEventListener('click', () => {
+			const next = isDark() ? 'light' : 'dark';
+			const apply = () => {
+				root.setAttribute('data-theme', next);
 				try {
-					localStorage.setItem('theme', dark ? 'dark' : 'light');
-				} catch { /* The toggle still works for this page. */ }
-			});
-
-			// Initialize button state to reflect current theme.
-			applyTheme(this.isDark());
-		}
-
-		isDark() {
-			return document.documentElement.getAttribute('data-theme') === 'dark';
-		}
-	}
-	customElements.define('theme-toggle', ThemeToggle);
+					localStorage.setItem('theme', next);
+				} catch {
+					/* The toggle still works for this page. */
+				}
+				sync();
+			};
+			// Spec §8.7: crossfade the page where supported, an instant swap otherwise.
+			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (document.startViewTransition && !reduce) document.startViewTransition(apply);
+			else apply();
+		}),
+	);
+	media.addEventListener('change', sync);
+	sync();
 </script>

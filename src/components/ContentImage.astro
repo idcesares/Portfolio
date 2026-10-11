@@ -75,60 +75,27 @@ const isExternalOrPublic = typeof src === 'string';
 
 <style>
 	.content-image {
-		margin: 0;
-		margin-block: var(--space-8);
-		display: flex;
-		flex-direction: column;
-		align-items: center;
+		display: grid;
+		justify-items: center;
 		gap: var(--space-3);
+		margin: 0;
 	}
 
 	.content-image__img {
-		max-width: 100%;
+		width: 100%;
 		height: auto;
-		border-radius: var(--radius-lg);
-		box-shadow: var(--shadow-sm);
+		border: var(--border-default);
+		border-radius: var(--photo-border-radius);
 		background: var(--gradient-subtle);
-		border: 1px solid var(--color-border-default);
+		box-shadow: var(--photo-shadow);
 		filter: var(--photo-warmth);
-		/* Smooth loading transition */
-		opacity: 1;
-		transition: opacity var(--duration-normal) var(--ease-out);
 	}
 
 	.content-image__caption {
+		max-width: var(--measure);
+		color: var(--color-text-secondary);
 		font-size: var(--text-small);
-		color: var(--color-text-tertiary);
+		line-height: var(--leading-small);
 		text-align: center;
-		font-style: italic;
-		max-width: 80%;
-		line-height: var(--leading-body-lg);
-	}
-
-	/* Hero images - full width, prominent */
-	.content-image--hero {
-		margin-block: var(--space-10);
-	}
-
-	.content-image--hero .content-image__img {
-		width: 100%;
-		max-width: 100%;
-		border-radius: var(--radius-xl);
-		box-shadow: var(--shadow-md);
-	}
-
-	/* Responsive adjustments */
-	@media (min-width: 50em) {
-		.content-image {
-			margin-block: var(--space-10);
-		}
-
-		.content-image--hero {
-			margin-block: var(--space-12);
-		}
-
-		.content-image__caption {
-			max-width: 70%;
-		}
 	}
 </style>

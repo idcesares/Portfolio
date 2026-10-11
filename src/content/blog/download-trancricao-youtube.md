@@ -100,4 +100,4 @@ Este script permite que você baixe transcrições de vídeos do YouTube de form
 
 Para testar este script diretamente no Google Colab, acesse o link abaixo e comece a experimentar:
 
-<a href="https://colab.research.google.com/drive/1ISt8Tmq_Dk-PUPSNRbRDS4GaLe2GKMQM?usp=sharing" target="_blank" class="button-post">Google Colab: Download de Transcrições do YouTube</a>
+<a href="https://colab.research.google.com/drive/1ISt8Tmq_Dk-PUPSNRbRDS4GaLe2GKMQM?usp=sharing" target="_blank" class="mp-button" rel="noopener">Google Colab: Download de Transcrições do YouTube</a>

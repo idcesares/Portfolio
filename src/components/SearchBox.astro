@@ -1,438 +1,249 @@
 ---
-interface Props {
-  placeholder?: string;
-}
-
-const { placeholder = "Pesquise posts e projetos..." } = Astro.props;
+import Icon from './Icon.astro';
 ---
 
-<div class="search-container">
-  <label for="search-input" class="sr-only">Buscar em posts e projetos</label>
-  <div class="search-box">
-    <input
-      type="search"
-      id="search-input"
-      placeholder={placeholder}
-      class="search-input"
-      autocomplete="off"
-      aria-controls="search-results"
-    />
-    <button type="button" class="search-clear" id="search-clear">
-      <span class="sr-only">Limpar busca</span>
-      ×
-    </button>
-  </div>
-  <span id="search-status" class="sr-only" aria-live="polite"></span>
-  <div id="search-results" class="search-results hidden" aria-label="Resultados da busca"></div>
-</div>
+<!-- Site search as a Membrane dialog: native <dialog> gives focus trapping,
+     Escape and the backdrop; membrane.js covers invoker commands and
+     closedby="any" where the browser lacks them. -->
+<dialog class="mp-dialog search-dialog" id="search-dialog" aria-labelledby="search-dialog-title" closedby="any">
+	<div class="mp-dialog__header">
+		<h2 class="mp-dialog__title" id="search-dialog-title">Busca</h2>
+		<button
+			class="mp-button"
+			type="button"
+			data-variant="ghost"
+			data-size="sm"
+			data-icon-only
+			aria-label="Fechar busca"
+			commandfor="search-dialog"
+			command="close"
+		>
+			<Icon icon="x" />
+		</button>
+	</div>
+	<div class="mp-dialog__body mp-stack" data-gap="4">
+		<div class="mp-field">
+			<label class="mp-field__label mp-visually-hidden" for="search-input">Buscar em posts e projetos</label>
+			<input
+				class="mp-input"
+				type="search"
+				id="search-input"
+				placeholder="Pesquise posts e projetos…"
+				autocomplete="off"
+				autofocus
+				aria-describedby="search-status"
+				aria-controls="search-results"
+			/>
+		</div>
+		<p id="search-status" class="mp-text search-status" data-tone="subtle" aria-live="polite"></p>
+		<ul id="search-results" class="search-results" aria-label="Resultados da busca" hidden></ul>
+	</div>
+</dialog>
 
 <style>
-  .search-container {
-    position: relative;
-    max-width: 640px;
-    margin: 0 auto;
-    width: 100%;
-  }
+	.search-dialog {
+		--mp-dialog-width: var(--container-sm);
+		/* Open near the top, where the eye is after pressing the search button. */
+		margin-block-start: min(12dvh, var(--space-24));
+	}
 
-  .search-box {
-    position: relative;
-    display: flex;
-    align-items: center;
-    background: var(--color-bg-primary);
-    border: 1px solid var(--color-border-input);
-    border-radius: var(--radius-md);
-    box-shadow: var(--shadow-sm);
-  }
+	.search-status:empty {
+		display: none;
+	}
 
-  .search-input {
-    width: 100%;
-    padding: var(--space-3) var(--space-10) var(--space-3) var(--space-4);
-    border: 0;
-    border-radius: var(--radius-md);
-    background: transparent;
-    color: var(--color-text-primary);
-    font-size: var(--text-body);
-    transition: border-color var(--duration-normal) var(--ease-out);
-  }
+	.search-results {
+		display: grid;
+		gap: var(--space-1);
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
 
-  .search-input:focus-visible {
-    outline: var(--focus-ring);
-    outline-offset: var(--focus-ring-offset);
-  }
+	.search-results :global(.search-result-item) {
+		display: grid;
+		gap: var(--space-1);
+		padding: var(--space-3) var(--space-4);
+		border-radius: var(--radius-md);
+		color: inherit;
+		text-decoration: none;
+		transition: background-color var(--transition-fast);
+	}
 
-  .search-input::placeholder {
-    color: var(--color-text-tertiary);
-  }
+	@media (hover: hover) {
+		.search-results :global(.search-result-item:hover) {
+			background-color: var(--color-bg-hover);
+		}
+	}
 
-  .search-input::-webkit-search-cancel-button {
-    appearance: none;
-  }
+	.search-results :global(.search-result-item:focus-visible) {
+		outline: var(--focus-ring);
+		outline-offset: calc(-1 * var(--focus-ring-offset));
+	}
 
-  .search-clear {
-    position: absolute;
-    right: var(--space-2);
-    background: none;
-    border: none;
-    color: var(--color-text-tertiary);
-    font-size: var(--text-body);
-    cursor: pointer;
-    padding: var(--space-1);
-    border-radius: var(--radius-sm);
-    transition: color var(--duration-normal) var(--ease-out);
-  }
+	.search-results :global(.search-result-title) {
+		color: var(--color-text-primary);
+		font-weight: var(--weight-semibold);
+	}
 
-  .search-clear:hover {
-    color: var(--color-text-primary);
-  }
+	.search-results :global(.search-result-description) {
+		color: var(--color-text-secondary);
+		font-size: var(--text-small);
+		line-height: var(--leading-small);
+	}
 
-  .search-clear:focus-visible,
-  :global(.search-result-item:focus-visible) {
-    outline: 2px solid var(--color-teal);
-    outline-offset: 2px;
-  }
-
-  .search-results {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    right: 0;
-    background: var(--color-bg-primary);
-    border: 1px solid var(--color-border-default);
-    border-top: none;
-    border-radius: 0 0 var(--radius-md) var(--radius-md);
-    max-height: 350px;
-    overflow-y: auto;
-    z-index: var(--z-nav);
-    box-shadow: var(--shadow-md);
-  }
-
-  .search-results.hidden {
-    display: none;
-  }
-
-  :global(.search-result-item) {
-    display: block;
-    padding: var(--space-3) var(--space-4);
-    border-bottom: 1px solid var(--color-border-default);
-    cursor: pointer;
-    text-decoration: none;
-    color: inherit;
-    transition: background-color var(--duration-normal) var(--ease-out);
-  }
-
-  :global(.search-result-item:hover) {
-    background: var(--color-bg-secondary);
-  }
-
-  :global(.search-result-item:last-child) {
-    border-bottom: none;
-  }
-
-  :global(.search-result-title) {
-    font-weight: var(--weight-semibold);
-    color: var(--color-text-primary);
-    margin-bottom: var(--space-1);
-    font-size: var(--text-body);
-  }
-
-  :global(.search-result-description) {
-    font-size: var(--text-small);
-    color: var(--color-text-secondary);
-    line-height: var(--leading-body-lg);
-  }
-
-  :global(.search-result-type) {
-    font-size: var(--text-xs);
-    color: var(--color-text-accent);
-    text-transform: uppercase;
-    font-weight: var(--weight-semibold);
-    letter-spacing: var(--tracking-label);
-    margin-bottom: var(--space-1);
-  }
-
-  :global(.search-no-results) {
-    padding: var(--space-4);
-    text-align: center;
-    color: var(--color-text-tertiary);
-    font-style: italic;
-  }
-
-  /* Desktop adjustments */
-  @media (min-width: 50em) {
-    .search-input {
-      padding: var(--space-2) var(--space-8) var(--space-2) var(--space-3);
-      font-size: var(--text-body);
-    }
-
-    .search-clear {
-      right: var(--space-1);
-      font-size: var(--text-small);
-    }
-
-    .search-results {
-      max-height: 300px;
-    }
-
-    :global(.search-result-item) {
-      padding: var(--space-2) var(--space-3);
-    }
-
-    :global(.search-result-title) {
-      font-size: var(--text-small);
-      margin-bottom: 2px;
-    }
-
-    :global(.search-result-description) {
-      font-size: var(--text-xs);
-    }
-
-    :global(.search-result-type) {
-      font-size: var(--text-xs);
-      margin-bottom: 2px;
-    }
-  }
+	.search-results :global(mark) {
+		padding-inline: 0.15em;
+		border-radius: var(--radius-sm);
+		background-color: var(--color-digital-bg);
+		color: var(--color-digital-text);
+	}
 </style>
 
 <script>
-  import type { SearchItem } from '../utils/searchData';
+	import type { SearchItem } from '../utils/searchData';
 
-  type FuseInstance = import('fuse.js').default<SearchItem>;
-  type FuseResult = import('fuse.js').FuseResult<SearchItem>;
-  type FuseResultMatch = import('fuse.js').FuseResultMatch;
+	type FuseInstance = import('fuse.js').default<SearchItem>;
+	type FuseResult = import('fuse.js').FuseResult<SearchItem>;
+	type FuseResultMatch = import('fuse.js').FuseResultMatch;
 
-  class SearchManager {
-    private fuse: FuseInstance | null = null;
-    private searchData: SearchItem[] = [];
-    private loadPromise: Promise<void> | null = null;
+	const TYPE_LABELS: Record<SearchItem['type'], { label: string; tone: 'human' | 'digital' | 'info' }> = {
+		blog: { label: 'Blog', tone: 'human' },
+		work: { label: 'Trabalho', tone: 'info' },
+		dev: { label: 'Projeto', tone: 'digital' },
+	};
 
-    constructor() {
-      this.setupAllSearchInstances();
-    }
+	const dialog = document.getElementById('search-dialog') as HTMLDialogElement;
+	const input = document.getElementById('search-input') as HTMLInputElement;
+	const results = document.getElementById('search-results') as HTMLUListElement;
+	const status = document.getElementById('search-status') as HTMLElement;
 
-    setupAllSearchInstances() {
-      // Find the search input element in the modal and set it up
-      const searchInput = document.querySelector('#search-input') as HTMLInputElement;
-      const searchResults = document.querySelector('#search-results') as HTMLElement;
-      const searchClear = document.querySelector('#search-clear') as HTMLElement;
-      const searchStatus = document.querySelector('#search-status') as HTMLElement;
-      
-      if (searchInput && searchResults && searchClear && searchStatus) {
-        this.setupSearchInstance(searchInput, searchResults, searchClear, searchStatus);
-      }
-    }
+	let fuse: FuseInstance | null = null;
+	let loading: Promise<void> | null = null;
 
-    setupSearchInstance(
-      searchInput: HTMLInputElement,
-      searchResults: HTMLElement,
-      searchClear: HTMLElement,
-      searchStatus: HTMLElement
-    ) {
-      searchInput.addEventListener('input', async (e: Event) => {
-        const query = (e.target as HTMLInputElement).value;
-        await this.performSearch(query, searchResults, searchStatus);
-      });
+	async function ensureLoaded() {
+		if (fuse) return;
+		loading ??= (async () => {
+			try {
+				const [{ default: Fuse }, response] = await Promise.all([import('fuse.js'), fetch('/search-data.json')]);
+				if (!response.ok) throw new Error(`HTTP ${response.status}`);
+				const data = await response.json();
+				const items: SearchItem[] = Array.isArray(data) ? data : data.data ?? [];
+				fuse = new Fuse(items, {
+					keys: [
+						{ name: 'title', weight: 0.4 },
+						{ name: 'description', weight: 0.3 },
+						{ name: 'content', weight: 0.2 },
+						{ name: 'tags', weight: 0.1 },
+					],
+					threshold: 0.3,
+					includeMatches: true,
+					minMatchCharLength: 2,
+					ignoreLocation: true,
+				});
+			} catch (error) {
+				console.error('Failed to load search data:', error);
+				fuse = null;
+			} finally {
+				loading = null;
+			}
+		})();
+		await loading;
+	}
 
-      searchInput.addEventListener('focus', async (e: Event) => {
-        this.warmup();
-        const query = (e.target as HTMLInputElement).value;
-        if (query.length >= 2) {
-          await this.performSearch(query, searchResults, searchStatus);
-        }
-      });
+	/** Text only: editorial markup in titles is shown, never parsed. */
+	function highlight(text: string, matches?: readonly FuseResultMatch[]) {
+		const fragment = document.createDocumentFragment();
+		let cursor = 0;
+		const indices = [...(matches?.[0]?.indices ?? [])].sort((a, b) => a[0] - b[0]);
+		for (const [start, end] of indices) {
+			if (start < cursor) continue;
+			fragment.append(text.slice(cursor, start));
+			const mark = document.createElement('mark');
+			mark.textContent = text.slice(start, end + 1);
+			fragment.append(mark);
+			cursor = end + 1;
+		}
+		fragment.append(text.slice(cursor));
+		return fragment;
+	}
 
-      searchClear.addEventListener('click', () => {
-        this.clearSearch(searchInput, searchResults, searchStatus);
-      });
+	function truncate(text: string, max: number) {
+		if (text.length <= max) return text;
+		const cut = text.slice(0, max);
+		const space = cut.lastIndexOf(' ');
+		return `${space > max * 0.8 ? cut.slice(0, space) : cut}…`;
+	}
 
-      // Handle Escape key
-      searchInput.addEventListener('keydown', (e: KeyboardEvent) => {
-        if (e.key === 'Escape') {
-          this.hideResults(searchResults);
-          searchInput.blur();
-        }
-      });
+	function showStatus(message: string) {
+		status.textContent = message;
+	}
 
-      // Close results when clicking outside
-      document.addEventListener('click', (e: Event) => {
-        const target = e.target as Node;
-        if (!searchInput.contains(target) && !searchResults.contains(target)) {
-          this.hideResults(searchResults);
-        }
-      });
-    }
+	function render(found: FuseResult[]) {
+		if (found.length === 0) {
+			results.hidden = true;
+			results.replaceChildren();
+			showStatus('Nada encontrado. Tente outra palavra.');
+			return;
+		}
+		const items = found.map(({ item, matches }) => {
+			const li = document.createElement('li');
+			const link = document.createElement('a');
+			link.href = item.url;
+			link.className = 'search-result-item';
+			const type = document.createElement('span');
+			const { label, tone } = TYPE_LABELS[item.type];
+			type.className = 'mp-badge';
+			type.dataset.tone = tone;
+			type.textContent = label;
+			const title = document.createElement('span');
+			title.className = 'search-result-title';
+			title.append(highlight(item.title, matches?.filter((m) => m.key === 'title')));
+			const description = document.createElement('span');
+			description.className = 'search-result-description';
+			description.textContent = truncate(item.description, 120);
+			link.append(type, title, description);
+			li.append(link);
+			return li;
+		});
+		results.replaceChildren(...items);
+		results.hidden = false;
+		showStatus(`${found.length} ${found.length === 1 ? 'resultado' : 'resultados'}`);
+	}
 
-    async performSearch(
-      query: string,
-      searchResults: HTMLElement,
-      searchStatus: HTMLElement
-    ) {
-      if (query.length < 2) {
-        this.hideResults(searchResults);
-        searchStatus.textContent = '';
-        return;
-      }
+	async function search(query: string) {
+		if (query.trim().length < 2) {
+			results.hidden = true;
+			showStatus('');
+			return;
+		}
+		if (!fuse) showStatus('Carregando a busca…');
+		await ensureLoaded();
+		if (!fuse) {
+			showStatus('A busca está indisponível agora.');
+			return;
+		}
+		// The input may have changed while the index loaded.
+		if (input.value !== query) return;
+		render(fuse.search(query).slice(0, 8));
+	}
 
-      if (!this.fuse) {
-        this.displayNoResults(searchResults, searchStatus, 'Carregando busca...');
-      }
+	input.addEventListener('input', () => void search(input.value));
 
-      await this.ensureSearchLoaded();
+	// Warm the index as soon as someone reaches for search. `autofocus` on the
+	// field makes showModal() focus it instead of the close button.
+	document.addEventListener('click', (event) => {
+		if ((event.target as Element | null)?.closest('[commandfor="search-dialog"][command="show-modal"]')) {
+			void ensureLoaded();
+		}
+	});
 
-      if (!this.fuse) {
-        this.displayNoResults(searchResults, searchStatus, 'Busca indisponível no momento');
-        return;
-      }
-
-      const results = this.fuse.search(query);
-      this.displayResults(results.slice(0, 8), searchResults, searchStatus); // Limit to 8 results
-    }
-
-    warmup() {
-      void this.ensureSearchLoaded();
-    }
-
-    async ensureSearchLoaded() {
-      if (this.fuse) return;
-      if (!this.loadPromise) {
-        this.loadPromise = this.loadSearchData();
-      }
-      await this.loadPromise;
-    }
-
-    async loadSearchData() {
-      try {
-        const [{ default: Fuse }, response] = await Promise.all([
-          import('fuse.js'),
-          fetch('/search-data.json')
-        ]);
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const data = await response.json();
-        this.searchData = Array.isArray(data) ? data : data.data || [];
-        
-        this.fuse = new Fuse(this.searchData, {
-          keys: [
-            { name: 'title', weight: 0.4 },
-            { name: 'description', weight: 0.3 },
-            { name: 'content', weight: 0.2 },
-            { name: 'tags', weight: 0.1 }
-          ],
-          threshold: 0.3,
-          includeMatches: true,
-          minMatchCharLength: 2,
-          ignoreLocation: true,
-        });
-      } catch (error) {
-        console.error('Failed to load search data:', error);
-        this.searchData = [];
-        this.fuse = null;
-      } finally {
-        this.loadPromise = null;
-      }
-    }
-
-    displayNoResults(
-      searchResults: HTMLElement,
-      searchStatus: HTMLElement,
-      message: string = 'Nenhum resultado encontrado'
-    ) {
-      searchResults.innerHTML = `<div class="search-no-results">${message}</div>`;
-      searchStatus.textContent = message;
-      this.showResults(searchResults);
-    }
-
-    displayResults(
-      results: FuseResult[],
-      searchResults: HTMLElement,
-      searchStatus: HTMLElement
-    ) {
-      if (results.length === 0) {
-        this.displayNoResults(searchResults, searchStatus);
-        return;
-      }
-
-      const fragment = document.createDocumentFragment();
-      results.forEach(result => {
-        const item = result.item;
-        const link = document.createElement('a');
-        link.href = item.url;
-        link.className = 'search-result-item';
-        const type = document.createElement('div');
-        type.className = 'search-result-type';
-        type.textContent = ({ blog: 'Blog', work: 'Trabalho', dev: 'Projeto' })[item.type];
-        const title = document.createElement('div');
-        title.className = 'search-result-title';
-        title.append(this.highlightMatches(item.title, result.matches?.filter((m: FuseResultMatch) => m.key === 'title')));
-        const description = document.createElement('div');
-        description.className = 'search-result-description';
-        description.textContent = this.truncateText(item.description, 120);
-        link.append(type, title, description);
-        fragment.append(link);
-      });
-
-      searchResults.replaceChildren(fragment);
-      searchStatus.textContent = `${results.length} ${results.length === 1 ? 'resultado encontrado' : 'resultados encontrados'}`;
-      this.showResults(searchResults);
-    }
-
-    highlightMatches(text: string, matches?: readonly FuseResultMatch[]): DocumentFragment {
-      const fragment = document.createDocumentFragment();
-      let cursor = 0;
-      const indices = [...(matches?.[0]?.indices ?? [])].sort((a, b) => a[0] - b[0]);
-      for (const [start, end] of indices) {
-        fragment.append(text.slice(cursor, start));
-        const mark = document.createElement('mark');
-        mark.textContent = text.slice(start, end + 1);
-        mark.style.cssText = 'background: var(--color-teal-20); color: var(--color-text-primary); padding: 0.1em 0.25em; border-radius: var(--radius-sm);';
-        fragment.append(mark);
-        cursor = end + 1;
-      }
-      fragment.append(text.slice(cursor));
-      return fragment;
-    }
-
-    truncateText(text: string, maxLength: number): string {
-      if (text.length <= maxLength) return text;
-      
-      const truncated = text.substring(0, maxLength);
-      const lastSpaceIndex = truncated.lastIndexOf(' ');
-      
-      if (lastSpaceIndex > maxLength * 0.8) {
-        return truncated.substring(0, lastSpaceIndex) + '...';
-      }
-      
-      return truncated + '...';
-    }
-
-    clearSearch(
-      searchInput: HTMLInputElement,
-      searchResults: HTMLElement,
-      searchStatus: HTMLElement
-    ) {
-      searchInput.value = '';
-      searchStatus.textContent = '';
-      this.hideResults(searchResults);
-      searchInput.focus();
-    }
-
-    showResults(searchResults: HTMLElement) {
-      searchResults.classList.remove('hidden');
-    }
-
-    hideResults(searchResults: HTMLElement) {
-      searchResults.classList.add('hidden');
-    }
-  }
-
-  // Astro module scripts run after the DOM is parsed, so #search-input
-  // already exists by the time this executes — no readiness dance needed.
-  const searchManager = new SearchManager();
-
-  // Warm up search assets when the overlay opens for a snappy first query.
-  document.addEventListener('searchOverlayOpened', () => {
-    searchManager.warmup();
-  });
+	// "/" opens search from anywhere outside a text field.
+	document.addEventListener('keydown', (event) => {
+		if (event.key !== '/' || dialog.open || event.metaKey || event.ctrlKey || event.altKey) return;
+		const target = event.target as HTMLElement;
+		if (target.closest('input, textarea, select, [contenteditable]')) return;
+		event.preventDefault();
+		void ensureLoaded();
+		dialog.showModal();
+	});
 </script>

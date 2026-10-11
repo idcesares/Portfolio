@@ -1,6 +1,7 @@
 ---
 import '../styles/global.css';
-import { Font } from 'astro:assets';
+import frauncesLatin from '../../design-system/fonts/fraunces-latin-opsz-normal.woff2?url';
+import instrumentSansLatin from '../../design-system/fonts/instrument-sans-latin-wght-normal.woff2?url';
 import { SEO } from 'astro-seo';
 import {
   AUTHOR_NAME,
@@ -89,9 +90,10 @@ const twitter = {
 <link rel="sitemap" href="/sitemap-index.xml" />
 <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-<Font cssVariable="--font-serif" preload={[{ style: 'normal' }]} />
-<Font cssVariable="--font-sans" preload />
-<Font cssVariable="--font-mono" />
+<!-- Membrane fonts (design-system/fonts) load from membrane.css; preload the two
+     latin faces every page paints first. Same URLs Vite emits for the CSS. -->
+<link rel="preload" href={instrumentSansLatin} as="font" type="font/woff2" crossorigin />
+<link rel="preload" href={frauncesLatin} as="font" type="font/woff2" crossorigin />
 <link
   rel="alternate"
   type="application/rss+xml"
@@ -118,29 +120,10 @@ const twitter = {
 }
 
 <script is:inline>
-  // This code is inlined in the head to make dark mode instant & blocking.
-  const getThemePreference = () => {
-    try {
-      const saved = localStorage.getItem('theme');
-      if (saved === 'dark' || saved === 'light') return saved;
-    } catch { /* Follow the system preference when storage is blocked. */ }
-    return window.matchMedia('(prefers-color-scheme: dark)').matches
-      ? 'dark'
-      : 'light';
-  };
-  
-  const applyTheme = () => {
-    const isDark = getThemePreference() === 'dark';
-    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  };
-
-  // Apply theme immediately on script load (before paint)
-  applyTheme();
-
-  // Enable smooth transitions only after initial paint
-  requestAnimationFrame(() => {
-    requestAnimationFrame(() => {
-      document.documentElement.classList.add('theme-ready');
-    });
-  });
+  // Apply a stored theme before first paint. With nothing stored the page has
+  // no data-theme and follows the OS through `color-scheme: light dark`.
+  try {
+    const stored = localStorage.getItem('theme');
+    if (stored === 'dark' || stored === 'light') document.documentElement.setAttribute('data-theme', stored);
+  } catch { /* Storage blocked: follow the OS. */ }
 </script>

@@ -27,236 +27,75 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 
 <html lang="pt-BR">
 	<head>
-		<script is:inline>document.documentElement.classList.add('js');</script>
-		<script is:inline>
-			const setLoadedClass = () => document.documentElement.classList.add('loaded');
-
-			if (document.readyState === 'loading') {
-				document.addEventListener(
-					'DOMContentLoaded',
-					() => requestAnimationFrame(setLoadedClass),
-					{ once: true }
-				);
-			} else {
-				requestAnimationFrame(setLoadedClass);
-			}
-		</script>
-                <MainHead
-                        title={title}
-                        description={description}
-                        image={image}
-                        imageAlt={imageAlt}
-                        ogType={ogType}
-                        article={article}
-                        structuredData={structuredData}
-                />
+		<MainHead
+			title={title}
+			description={description}
+			image={image}
+			imageAlt={imageAlt}
+			ogType={ogType}
+			article={article}
+			structuredData={structuredData}
+		/>
 	</head>
 	<body>
-		<a href="#main-content" class="skip-link">Pular para o conteúdo</a>
-		<div class="stack backgrounds">
+		<a class="mp-skip-link" href="#main-content">Pular para o conteúdo</a>
+		<div class="site-backdrop">
 			<Nav />
 			<slot />
 			<Footer />
 		</div>
 
+		<div class="mp-toast-region" aria-live="polite"></div>
 		<CookieConsent />
 		<SpeedInsights />
 
 		<script>
-			// Scroll Reveal Animation System
-			function initScrollReveal() {
-				const animatedElements = document.querySelectorAll<HTMLElement>('[data-animate]');
-				if (!animatedElements.length) return;
+			// Membrane behaviors: tabs, menu, combobox, tooltip, dialog fallbacks and
+			// MembranePalette.toast(). Document-level delegation, no init call.
+			import '../../design-system/components/membrane.js';
 
-				const revealAll = () => {
-					animatedElements.forEach(el => el.classList.add('is-visible'));
-				};
-
-				const revealInView = (elements: NodeListOf<HTMLElement> | HTMLElement[]) => {
-					elements.forEach(el => {
-						const rect = el.getBoundingClientRect();
-						if (rect.top < window.innerHeight && rect.bottom > 0) {
-							el.classList.add('is-visible');
-						}
-					});
-				};
-
-				const setupScrollFallback = () => {
-					let ticking = false;
-					const onScroll = () => {
-						if (ticking) return;
-						ticking = true;
-						requestAnimationFrame(() => {
-							ticking = false;
-							const hidden = document.querySelectorAll<HTMLElement>('[data-animate]:not(.is-visible)');
-							if (!hidden.length) {
-								window.removeEventListener('scroll', onScroll);
-								window.removeEventListener('resize', onScroll);
-								return;
-							}
-							revealInView(hidden);
-						});
-					};
-					window.addEventListener('scroll', onScroll, { passive: true });
-					window.addEventListener('resize', onScroll);
-					onScroll();
-				};
-
+			// Code blocks (rehype-membrane-code.mjs): copy and confirm with a toast.
+			document.addEventListener('click', async (event) => {
+				const button = (event.target as Element | null)?.closest<HTMLButtonElement>('[data-copy-code]');
+				if (!button) return;
+				const code = button.closest('.mp-code-block')?.querySelector('pre code');
+				if (!code) return;
 				try {
-					const matchMedia = window.matchMedia ? window.matchMedia.bind(window) : null;
-					const prefersReducedMotion = matchMedia
-						? matchMedia('(prefers-reduced-motion: reduce)').matches
-						: false;
-
-					if (prefersReducedMotion) {
-						revealAll();
-						return;
-					}
-
-					if (!('IntersectionObserver' in window)) {
-						setupScrollFallback();
-						return;
-					}
-
-					const elementsToObserve: HTMLElement[] = [];
-
-					animatedElements.forEach(el => {
-						const rect = el.getBoundingClientRect();
-						const isInView = rect.top < window.innerHeight && rect.bottom > 0;
-
-						if (isInView) {
-							el.classList.add('is-visible');
-						} else {
-							elementsToObserve.push(el);
-						}
+					await navigator.clipboard.writeText(code.textContent ?? '');
+					window.MembranePalette?.toast({ title: 'Código copiado', tone: 'success', timeout: 3000 });
+				} catch {
+					window.MembranePalette?.toast({
+						title: 'Não deu para copiar',
+						body: 'Selecione o código e copie pelo teclado.',
+						tone: 'warning',
 					});
+				}
+			});
 
-					if (!elementsToObserve.length) return;
-
-					const observer = new IntersectionObserver(
-						(entries) => {
-							entries.forEach(entry => {
-								if (entry.isIntersecting) {
-									entry.target.classList.add('is-visible');
-									observer.unobserve(entry.target);
-								}
-							});
-						},
-						{
-							threshold: 0.1,
-							rootMargin: '0px 0px -50px 0px'
+			// Section reveals (spec §8): a fade with a small rise, only when motion is
+			// welcome. What is already on screen is marked visible before the hiding
+			// class lands, so nothing above the fold flashes.
+			const targets = Array.from(document.querySelectorAll('[data-animate]'));
+			const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+			if (!reduce && 'IntersectionObserver' in window && targets.length) {
+				const reveal = (el: Element) => el.classList.add('is-visible');
+				const inView = (el: Element) => el.getBoundingClientRect().top < window.innerHeight;
+				const observer = new IntersectionObserver(
+					(entries) => {
+						for (const entry of entries) {
+							if (!entry.isIntersecting) continue;
+							reveal(entry.target);
+							observer.unobserve(entry.target);
 						}
-					);
-
-					elementsToObserve.forEach(el => observer.observe(el));
-
-					// Safety fallback: if nothing is revealed shortly after load, use scroll fallback.
-					window.setTimeout(() => {
-						const hidden = document.querySelectorAll<HTMLElement>('[data-animate]:not(.is-visible)');
-						if (hidden.length) {
-							revealInView(hidden);
-							setupScrollFallback();
-						}
-					}, 500);
-				} catch (error) {
-					setupScrollFallback();
+					},
+					{ rootMargin: '0px 0px -10% 0px' },
+				);
+				for (const el of targets) {
+					if (inView(el)) reveal(el);
+					else observer.observe(el);
 				}
+				document.documentElement.classList.add('reveal-ready');
 			}
-
-			const runReveal = () => initScrollReveal();
-
-			if (document.readyState === 'loading') {
-				document.addEventListener('DOMContentLoaded', runReveal, { once: true });
-			} else {
-				runReveal();
-			}
-
-			window.addEventListener('pageshow', runReveal, { once: true });
-			window.addEventListener('load', runReveal, { once: true });
 		</script>
-		<script is:inline nomodule>
-			(function () {
-				var elements = document.querySelectorAll('[data-animate]');
-				for (var i = 0; i < elements.length; i += 1) {
-					elements[i].classList.add('is-visible');
-				}
-			})();
-		</script>
-
-		<style>
-			.skip-link {
-				position: fixed;
-				z-index: var(--z-toast);
-				left: var(--space-4);
-				top: var(--space-4);
-				transform: translateY(-200%);
-				padding: var(--space-3) var(--space-4);
-				background: var(--color-bg-primary);
-				color: var(--color-text-primary);
-			}
-			.skip-link:focus { transform: none; }
-			:root {
-				--bg-noise: url('/assets/backgrounds/noise.png');
-				/* Membrane Palette: warm (terracotta) + digital (teal) ambient glows */
-				--bg-ambient-1: radial-gradient(
-					1200px 600px at 6% -10%,
-					var(--bg-glow-terracotta),
-					transparent 60%
-				);
-				--bg-ambient-2: radial-gradient(
-					900px 500px at 92% 10%,
-					var(--bg-glow-teal),
-					transparent 55%
-				);
-				--bg-ambient-3: radial-gradient(
-					1000px 700px at 50% 110%,
-					var(--bg-glow-sage),
-					transparent 60%
-				);
-				--bg-glow: radial-gradient(
-					800px 500px at 40% 0%,
-					var(--bg-glow-focal),
-					transparent 60%
-				);
-				--bg-base: var(--color-bg-primary);
-			}
-
-			:root[data-theme="dark"] {
-				/* Gradient dimensions expand in dark mode; colors update via design-tokens.css */
-				--bg-glow: radial-gradient(
-					900px 600px at 40% 0%,
-					var(--bg-glow-focal),
-					transparent 60%
-				);
-				--bg-base: var(--color-bg-primary);
-			}
-
-			:root.loaded {
-				--bg-glow: radial-gradient(
-					900px 600px at 40% 0%,
-					var(--bg-glow-focal-loaded),
-					transparent 60%
-				);
-			}
-
-			.backgrounds {
-				min-height: 100%;
-				isolation: isolate;
-				background:
-					var(--bg-noise) top center/200px repeat,
-					var(--bg-ambient-1),
-					var(--bg-ambient-2),
-					var(--bg-ambient-3),
-					var(--bg-glow),
-					var(--bg-base);
-				background-blend-mode: soft-light, normal, normal, normal, normal, normal;
-			}
-			@media (forced-colors: active) {
-				.backgrounds {
-					background: none;
-					background-blend-mode: none;
-				}
-			}
-		</style>
 	</body>
 </html>

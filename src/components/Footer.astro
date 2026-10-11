@@ -1,138 +1,85 @@
 ---
-import Icon from './Icon.astro';
-import type { iconPaths } from './IconPaths';
+import BrandMark from './BrandMark.astro';
+import Icon, { type IconName } from './Icon.astro';
 
 const currentYear = new Date().getFullYear();
 
-const socialLinks: { label: string; href: string; icon: keyof typeof iconPaths }[] = [
-	{ label: 'LinkedIn', href: 'https://linkedin.com/in/isaacdcesares', icon: 'linkedin-logo' },
-	{ label: 'Twitter', href: 'https://twitter.com/idcesares', icon: 'twitter-logo' },
-	{ label: 'GitHub', href: 'https://github.com/idcesares', icon: 'github-logo' },
-	{ label: 'YouTube', href: 'https://www.youtube.com/@idcesares/', icon: 'youtube-logo' },
+const socialLinks: { label: string; href: string; icon: IconName }[] = [
+	{ label: 'LinkedIn', href: 'https://linkedin.com/in/isaacdcesares', icon: 'linkedin' },
+	{ label: 'Twitter', href: 'https://twitter.com/idcesares', icon: 'twitter' },
+	{ label: 'GitHub', href: 'https://github.com/idcesares', icon: 'github' },
+	{ label: 'YouTube', href: 'https://www.youtube.com/@idcesares/', icon: 'youtube' },
 ];
 ---
 
-<footer>
-	<div class="group">
-		<p>
-			Feito em <a href="https://astro.build/">Astro</a> por <a href="https://github.com/idcesares">@idcesares</a>
-			<Icon icon="rocket-launch" size="1.2em" />
-		</p>
-		<p>&copy; {currentYear} Isaac D'Césares</p>
-	</div>
-	<div class="footer-links">
-		<a href="/tech-signal/" class="text-link">Tech Signal</a>
-		<a href="/deals/" class="text-link">Indico e uso</a>
-		<button type="button" class="text-link cookie-preferences" data-cookie-preferences hidden>Preferências de cookies</button>
-		<div class="socials">
-			{
-				socialLinks.map(({ href, icon, label }) => (
-					<a href={href} target="_blank" class="social" aria-label={label}>
-						<Icon icon={icon} />
-					</a>
-				))
-			}
+<footer class="site-footer">
+	<div class="mp-container mp-stack" data-gap="8">
+		<div class="mp-cluster" data-justify="between" data-gap="6">
+			<a class="site-footer__brand" href="/" aria-label="D'Césares, página inicial">
+				<BrandMark variant="compact" />
+			</a>
+			<ul class="mp-cluster site-footer__social" data-gap="1" aria-label="Redes sociais">
+				{
+					socialLinks.map(({ href, icon, label }) => (
+						<li>
+							<a
+								class="mp-button"
+								data-variant="ghost"
+								data-icon-only
+								href={href}
+								target="_blank"
+								rel="noopener"
+								aria-label={label}
+							>
+								<Icon icon={icon} />
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+		<hr class="mp-divider" data-variant="full" />
+		<div class="mp-cluster type-small site-footer__meta" data-justify="between" data-gap="4">
+			<p>
+				&copy; {currentYear} Isaac D'Césares. Feito em <a class="mp-link" data-variant="quiet" href="https://astro.build/">Astro</a>
+				com <a class="mp-link" data-variant="quiet" href="https://membrane-palette.dcesares.dev">The Membrane Palette</a>.
+			</p>
+			<ul class="mp-cluster site-footer__links" data-gap="4">
+				<li><a class="mp-link" data-variant="quiet" href="/tech-signal/">Tech Signal</a></li>
+				<li><a class="mp-link" data-variant="quiet" href="/deals/">Indico e uso</a></li>
+				<li>
+					<button type="button" class="mp-button" data-variant="ghost" data-size="sm" data-cookie-preferences hidden>
+						Preferências de cookies
+					</button>
+				</li>
+			</ul>
 		</div>
 	</div>
 </footer>
+
 <style>
-	footer {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-12);
-		margin-top: auto;
-		padding: var(--space-12) var(--space-8) var(--space-12);
-		text-align: center;
-		color: var(--color-text-tertiary);
-		font-size: var(--text-small);
-		border-top: 1px solid var(--color-border-default);
-		background: color-mix(in oklab, var(--color-bg-primary) 90%, transparent);
-		backdrop-filter: blur(var(--space-2));
+	.site-footer {
+		margin-top: var(--space-24);
+		padding-block: var(--space-12);
+		border-block-start: var(--border-default);
+		background-color: var(--color-bg-secondary);
+		color: var(--color-text-secondary);
 	}
 
-	footer a {
-		color: var(--color-text-tertiary);
-		text-decoration: 1px solid underline transparent;
-		text-underline-offset: 0.25em;
-		transition: text-decoration-color var(--transition-default);
+	.site-footer__brand {
+		color: var(--color-text-primary);
+		border-radius: var(--radius-sm);
 	}
 
-	footer a:hover,
-	footer a:focus {
-		text-decoration-color: currentColor;
+	.site-footer__social,
+	.site-footer__links {
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.group {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-2);
-	}
-
-	.footer-links {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-4);
-	}
-
-	.text-link {
-		color: var(--color-text-tertiary);
-	}
-	.cookie-preferences {
-		border: 0;
-		background: transparent;
-		font: inherit;
-		cursor: pointer;
-		min-height: 44px;
-	}
-
-	.socials {
-		display: flex;
-		justify-content: center;
-		align-items: center;
-		gap: var(--space-2);
-		flex-wrap: wrap;
-	}
-
-	.social {
-		display: flex;
-		padding: var(--space-1);
-		font-size: var(--text-h3);
-		color: var(--color-text-tertiary);
-		min-height: 44px;
-		min-width: 44px;
-		align-items: center;
-		justify-content: center;
-		transition: color var(--transition-default);
-	}
-
-	.social:hover,
-	.social:focus {
-		color: var(--color-text-accent);
-	}
-
-	@media (min-width: 50em) {
-		footer {
-			flex-direction: row;
-			justify-content: space-between;
-			padding: var(--space-10) var(--space-20);
-		}
-
-		.group {
-			flex-direction: row;
-			gap: var(--space-4);
-			flex-wrap: wrap;
-		}
-
-		.footer-links {
-			flex-direction: row;
-			align-items: center;
-			gap: var(--space-6);
-		}
-
-		.socials {
-			justify-content: flex-end;
-			gap: var(--space-2);
-		}
+	.site-footer__social :global(.mp-button) {
+		--mp-button-fg: var(--color-text-secondary);
+		--mp-button-fg-hover: var(--color-text-primary);
 	}
 </style>
