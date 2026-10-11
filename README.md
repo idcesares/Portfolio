@@ -121,7 +121,7 @@ Esse índice alimenta a experiência client-side com Fuse.js e é entregue com c
 
 ### Design system
 
-O site usa o **Membrane Palette**, com tokens semânticos em [`design-system/tokens/design-tokens.css`](./design-system/tokens/design-tokens.css), base layer em [`design-system/tokens/base.css`](./design-system/tokens/base.css) e documentação em:
+O site usa o **Membrane Palette** (v2.1.0, copiado de [idcesares/The-Membrane-Palette](https://github.com/idcesares/The-Membrane-Palette); para atualizar, copie de lá `tokens/design-tokens.css`, `tokens/base.css`, `DESIGN-SYSTEM.md` e `BRAND-VOICE.md`), com tokens semânticos em [`design-system/tokens/design-tokens.css`](./design-system/tokens/design-tokens.css), base layer em [`design-system/tokens/base.css`](./design-system/tokens/base.css) e documentação em:
 
 - [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md)
 - [`design-system/BRAND-VOICE.md`](./design-system/BRAND-VOICE.md)
