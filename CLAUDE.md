@@ -10,6 +10,9 @@ O overhaul de marca (playbook de fases) foi concluído e o arquivo de playbook f
 - [design-system/BRAND-VOICE.md](design-system/BRAND-VOICE.md) — voz, tom, vocabulário proibido
 - [design-system/DESIGN-SYSTEM.md](design-system/DESIGN-SYSTEM.md) — sistema visual em prosa
 - [design-system/tokens/design-tokens.css](design-system/tokens/design-tokens.css) — fonte de verdade visual
+- [design-system/components/manifest.json](design-system/components/manifest.json) — catálogo da biblioteca de componentes (classes, opções `data-*` válidas, exemplos)
+
+O site é uma **execução da Membrane Palette**: `design-system/` é a distribuição da biblioteca (v2.1.0, ver `membrane.lock.json`), vendorizada sem edição manual. Atualize com `pnpm sync:membrane` (de `../The-Membrane-Palette` ou `--ref <tag>` via jsDelivr).
 
 Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesignguide.pdf` vivem no repo de marca, não aqui. Se precisar deles, peça ao Isaac.
 
@@ -32,6 +35,11 @@ Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesigngu
 
 ## 2. Design rules (resumo — ver DESIGN-SYSTEM.md)
 
+- **Componentes primeiro.** Antes de escrever CSS, use a biblioteca: `mp-button`, `mp-card`, `mp-tag`, `mp-badge`, `mp-input`/`mp-field`, `mp-dialog`, `mp-navbar`, `mp-prose`, `mp-code-block`, `mp-empty`, `mp-steps`, `mp-stat`, layout (`mp-container`, `mp-stack`, `mp-cluster`, `mp-grid`, `mp-section`) e as composições `type-*`. Opções só como `data-*` com os valores do manifest; estado só por atributos nativos/ARIA (`aria-pressed`, `aria-current`, `hidden`), nunca classe de estado. CSS próprio de página fica para layout específico e para os knobs `--mp-<componente>-*`.
+- `membrane.js` é o único JS de comportamento genérico (dialog, menu, tabs, combobox, toast). Feedback de ação usa `window.MembranePalette.toast()`.
+- Ícones: `<Icon>` (Lucide, `.mp-icon`, linha). Marcas: `<BrandMark>` (SVGs outline de `design-system/brand/`), nunca recriar o logotipo em texto.
+- Fontes: as da Membrane (`design-system/fonts/`, auto-hospedadas, com fallbacks métricos). Nada de Google Fonts nem Fonts API do Astro.
+- `pnpm check:membrane` reprova classes `mp-*` inexistentes, valores `data-*` fora do manifest, cores cruas, primitivos Tier 1 e tokens desconhecidos ou depreciados.
 - Tokens em [design-tokens.css](design-system/tokens/design-tokens.css) são a única fonte de verdade visual. Zero hex, rem, ms hardcoded fora dele.
 - Token faltando? Proponha no PR com justificativa, não adicione silenciosamente.
 - Nunca `#FFFFFF` em background, nunca `#000000` em foreground. Use `var(--color-bg-primary)` e `var(--color-text-primary)`.
@@ -54,7 +62,10 @@ pnpm astro check          # TypeScript + schemas das content collections
 pnpm build                # SSR build para Vercel (EPERM no Windows é esperado; Vercel builda no Git)
 pnpm build:preview        # Build Node standalone em dist-preview/
 pnpm preview              # Servir o build Node local
-pnpm check                # Gate pré-commit (astro check + build)
+pnpm check                # Gate pré-commit (astro check + assets + check:membrane + build)
+pnpm check:membrane       # Conformidade com a Membrane (manifest + tokens)
+pnpm test:browser         # Playwright: axe em todas as páginas (claro/escuro), overflow mobile, teclado, busca, tema, fontes, consentimento
+pnpm sync:membrane        # Atualiza design-system/ a partir da Membrane Palette
 pnpm audit                # Dependências high+critical
 ```
 
@@ -77,10 +88,10 @@ Nunca rodar `pnpm build` ou deploy automaticamente. Deploy é decisão do Isaac.
 - `src/layouts/BaseLayout.astro` — layout único.
 - `src/components/` — componentes `PascalCase.astro` com `interface Props {}`.
 - `src/styles/` — estilos globais que consomem tokens.
-- `design-system/` — spec somente leitura (voice, design system, tokens).
+- `design-system/` — distribuição da Membrane Palette (somente leitura; atualizar com `pnpm sync:membrane`).
 - `public/assets/` — imagens. Paths absolutos em markdown (`/assets/...`), WebP preferido, `loading="lazy"`.
 
-Stack: Astro 7 SSR em Vercel, Tailwind v4 via `@tailwindcss/vite`, Fuse.js client-side search. Sem React/UI kits: o site é intencionalmente Astro puro com pouco JS.
+Stack: Astro 7 SSR em Vercel, Membrane Palette (componentes `mp-*` + `membrane.js`), Tailwind v4 via `@tailwindcss/vite` com o tema da Membrane, Fuse.js client-side search. Sem React/UI kits: o site é intencionalmente Astro puro com pouco JS.
 
 Convenções: TS strict, sem `any`. Commits em inglês (`feat:`, `fix:`, `docs:`). PRs pequenos e focados em um escopo.
 
