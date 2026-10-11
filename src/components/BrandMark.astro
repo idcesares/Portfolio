@@ -22,8 +22,9 @@ const svg = sources[variant]
 	.replace(/\srole="img"\s+aria-label="[^"]*"/, ' aria-hidden="true" focusable="false"')
 	.replace(/<title>[^<]*<\/title>\s*/, '')
 	.replace('fill="#1A1B1F"', 'fill="currentColor"')
-	.replace('fill="#B35530"', 'fill="var(--color-action-primary)"')
-	.replace('fill="#1B756D"', 'fill="var(--color-action-secondary)"')
+	// var() is only reliable in CSS, not in SVG presentation attributes.
+	.replace('fill="#B35530"', 'style="fill: var(--color-action-primary)"')
+	.replace('fill="#1B756D"', 'style="fill: var(--color-action-secondary)"')
 	.replace('<svg ', `<svg class="brand-mark${className ? ` ${className}` : ''}" data-variant="${variant}" `);
 ---
 
