@@ -194,7 +194,7 @@ const coreTechnologies = [...technologyFrequency.entries()]
 	.section-eyebrow {
 		font-size: var(--text-xs);
 		font-weight: var(--weight-semibold);
-		color: var(--color-teal);
+		color: var(--color-text-accent);
 		text-transform: uppercase;
 		letter-spacing: var(--tracking-label);
 	}
@@ -224,10 +224,17 @@ const coreTechnologies = [...technologyFrequency.entries()]
 			color var(--transition-default);
 	}
 
-	.index-links a:hover {
-		transform: translateY(-1px);
-		border-color: var(--color-border-emphasis);
-		color: var(--color-text-primary);
+	@media (hover: hover) {
+		.index-links a:hover {
+			border-color: var(--color-border-emphasis);
+			color: var(--color-text-primary);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.index-links a:hover {
+			transform: translateY(-1px);
+		}
 	}
 
 	.index-links small {
@@ -236,8 +243,8 @@ const coreTechnologies = [...technologyFrequency.entries()]
 		min-width: 1.65rem;
 		height: 1.65rem;
 		border-radius: var(--radius-full);
-		background: var(--color-teal-10);
-		color: var(--color-teal);
+		background: var(--color-digital-bg);
+		color: var(--color-digital-text);
 		font-family: var(--font-mono);
 		font-size: var(--text-xs);
 	}
@@ -348,9 +355,16 @@ const coreTechnologies = [...technologyFrequency.entries()]
 			box-shadow var(--transition-default);
 	}
 
-	.github-action:hover {
-		transform: translateY(-1px);
-		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+	@media (hover: hover) {
+		.github-action:hover {
+			box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.github-action:hover {
+			transform: translateY(-1px);
+		}
 	}
 
 	.tech-section {

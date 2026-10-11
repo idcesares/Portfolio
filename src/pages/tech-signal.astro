@@ -280,15 +280,15 @@ button { cursor: pointer; font-family: var(--font-sans); border: none; backgroun
   width: 100%; font-family: var(--font-sans); font-size: 0.9375rem;
   color: var(--color-text-primary);
   background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-default);
+  border: 1px solid var(--color-border-input);
   border-radius: var(--radius-full);
   padding: var(--space-2) var(--space-10) var(--space-2) 2.5rem;
   transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
 }
 .search-input::placeholder { color: var(--color-text-tertiary); }
-.search-input:focus {
-  outline: none; border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px var(--color-teal-10);
+.search-input:focus-visible {
+  outline: var(--focus-ring); outline-offset: var(--focus-ring-offset);
+  border-color: var(--color-focus);
 }
 .search-clear {
   position: absolute; right: var(--space-1);
@@ -422,8 +422,8 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .tier-btn[data-tier="2"] .tier-tick { background: var(--color-teal); }
 .tier-btn[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
 .tier-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
-.tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
+.tier-btn.active[data-tier="1"] { background: var(--color-human-bg); color: var(--color-text-primary); }
+.tier-btn.active[data-tier="2"] { background: var(--color-digital-bg); color: var(--color-text-primary); }
 .tier-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 
 /* Controle de natureza da fonte: mesma anatomia do de prioridade,
@@ -512,7 +512,12 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .card.t1::before { background: var(--color-terracotta); }
 .card.t2::before { background: var(--color-teal); }
 .card.t3::before { background: var(--color-neutral-300); }
-.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-border-emphasis); }
+@media (hover: hover) {
+  .card:hover { box-shadow: var(--shadow-md); border-color: var(--color-border-emphasis); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover { transform: translateY(-3px); }
+}
 .card.t1:hover { box-shadow: var(--shadow-md), var(--shadow-glow-warm); }
 .card.t2:hover { box-shadow: var(--shadow-md), var(--shadow-glow-teal); }
 .card:has(.card-link:focus-visible) {
@@ -523,7 +528,12 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
 .card-link:focus { outline: none; }
 .card-body { position: relative; z-index: 1; pointer-events: none; }
 .card-body a { pointer-events: auto; }
-.card:hover .card-arrow { opacity: 1; color: var(--color-terracotta); transform: translate(3px,-3px); }
+@media (hover: hover) {
+  .card:hover .card-arrow { opacity: 1; color: var(--color-terracotta); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .card:hover .card-arrow { transform: translate(3px,-3px); }
+}
 
 .card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
 .card-title-wrap { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; min-width: 0; }
@@ -538,9 +548,9 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   transition: all var(--duration-fast) var(--ease-default);
 }
 .card-tier .tier-tick { width: 6px; height: 6px; border-radius: 50%; }
-.card-tier[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
+.card-tier[data-tier="1"] { background: var(--color-human-bg); color: var(--color-text-primary); }
 .card-tier[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
-.card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
+.card-tier[data-tier="2"] { background: var(--color-digital-bg); color: var(--color-text-primary); }
 .card-tier[data-tier="2"] .tier-tick { background: var(--color-teal); }
 .card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
 .card-tier[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
@@ -562,19 +572,19 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
   padding: 2px var(--space-3); border-radius: var(--radius-full); line-height: 1.7;
 }
-.tag-cadence { background: var(--color-terracotta-10); color: var(--color-text-primary); }
-.tag-deep    { background: var(--color-teal-10);       color: var(--color-text-primary); }
+.tag-cadence { background: var(--color-human-bg); color: var(--color-text-primary); }
+.tag-deep    { background: var(--color-digital-bg);    color: var(--color-text-primary); }
 .tag-kind    { background: var(--color-bg-primary);    color: var(--color-text-secondary);
                border: 1px solid var(--color-border-default); }
 .tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-primary); }
-.tag-region  { background: var(--color-sage-10);       color: var(--color-success-text); }
+.tag-region  { background: var(--color-success-bg);    color: var(--color-success-text); }
 .access {
   margin-left: auto; font-family: var(--font-mono); font-size: 0.6rem;
   letter-spacing: 0.04em; text-transform: uppercase;
   padding: 2px var(--space-2); border-radius: var(--radius-sm);
 }
-.access-free { background: var(--color-sage-10); color: var(--color-success-text); }
-.access-paid { background: var(--color-amber-10); color: var(--color-text-primary); }
+.access-free { background: var(--color-success-bg); color: var(--color-success-text); }
+.access-paid { background: var(--color-warning-bg); color: var(--color-text-primary); }
 
 /* Filtro: os cards existem no HTML servido e sao apenas ocultados. */
 .card[hidden] { display: none; }
@@ -636,7 +646,12 @@ main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) 
   transition: background-color var(--duration-fast) var(--ease-default),
               transform var(--duration-fast) var(--ease-default);
 }
-.method-export-link:hover { background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary)); transform: translateY(-1px); }
+@media (hover: hover) {
+  .method-export-link:hover { background: var(--color-action-primary-hover); }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  .method-export-link:hover { transform: translateY(-1px); }
+}
 .method-export-link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
 @media (max-width: 560px) {
   .method-export-text { min-width: 0; }
@@ -661,7 +676,7 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
 .empty-sub { font-size: 0.875rem; }
 .empty-reset {
   margin-top: var(--space-5); font-size: 0.875rem; font-weight: 500;
-  color: var(--color-teal); border-bottom: 1px solid transparent;
+  color: var(--color-text-accent); border-bottom: 1px solid transparent;
   transition: border-color var(--duration-fast);
 }
 .empty-reset:hover { border-bottom-color: var(--color-teal); }
@@ -1077,11 +1092,10 @@ function paintToggle(isDark) {
 }
 
 // O MainHead já aplicou o tema antes da pintura. Aqui só refletimos no botão.
-paintToggle(root.classList.contains('theme-dark'));
+paintToggle(root.getAttribute('data-theme') === 'dark');
 
 themeToggle.addEventListener('click', () => {
-  const isDark = !root.classList.contains('theme-dark');
-  root.classList.toggle('theme-dark', isDark);
+  const isDark = root.getAttribute('data-theme') !== 'dark';
   root.setAttribute('data-theme', isDark ? 'dark' : 'light');
   localStorage.setItem('theme', isDark ? 'dark' : 'light');
   paintToggle(isDark);

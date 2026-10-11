@@ -183,7 +183,7 @@ const featuredProjects = devProjects.filter(project => project.featured).slice(0
 		font-size: var(--text-small);
 		letter-spacing: 0.08em;
 		text-transform: uppercase;
-		color: var(--color-terracotta);
+		color: var(--color-human-text);
 	}
 	@media (min-width: 50em) {
 		.signal-band { padding: var(--space-12) var(--space-16); }
@@ -234,10 +234,17 @@ const featuredProjects = devProjects.filter(project => project.featured).slice(0
 		min-height: 44px;
 	}
 
-	.ghost-link:hover {
-		color: var(--color-text-primary);
-		border-color: var(--color-border-emphasis);
-		transform: translateY(-1px);
+	@media (hover: hover) {
+		.ghost-link:hover {
+			color: var(--color-text-primary);
+			border-color: var(--color-border-emphasis);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.ghost-link:hover {
+			transform: translateY(-1px);
+		}
 	}
 
 	@media (min-width: 50em) {

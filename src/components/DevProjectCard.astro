@@ -1,6 +1,7 @@
 ---
 import type { DevProject } from '../data/dev-projects';
 import { categoryLabels, statusLabels, statusColors } from '../data/dev-projects';
+import { toneColors } from './toneColors';
 import Icon from './Icon.astro';
 
 interface Props {
@@ -32,13 +33,6 @@ const placeholderIcons = {
 
 const placeholderIcon = placeholderIcons[project.category];
 
-const colorMap: Record<string, { bg: string; border: string; text: string }> = {
-	teal:       { bg: 'var(--color-teal-10)', border: 'var(--color-teal-20)', text: 'var(--color-teal)' },
-	terracotta: { bg: 'var(--color-terracotta-10)', border: 'var(--color-terracotta-20)', text: 'var(--color-terracotta)' },
-	amber:      { bg: 'var(--color-amber-10)', border: 'rgba(212, 154, 58, 0.25)', text: 'var(--color-amber)' },
-	sage:       { bg: 'var(--color-sage-10)', border: 'rgba(90, 138, 110, 0.25)', text: 'var(--color-sage)' },
-	burgundy:   { bg: 'var(--color-burgundy-10)', border: 'rgba(122, 51, 69, 0.25)', text: 'var(--color-burgundy)' },
-};
 ---
 
 <article
@@ -81,7 +75,7 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 
 		<div class="tech-stack">
 			{visibleTech.map((tech) => {
-				const c = colorMap[tech.color] || colorMap.teal;
+				const c = toneColors[tech.color] ?? toneColors.teal;
 				return (
 					<span
 						class="tech-pill"
@@ -148,10 +142,17 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 			border-color var(--duration-normal) var(--ease-out);
 	}
 
-	.dev-card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-md);
-		border-color: var(--color-border-emphasis);
+	@media (hover: hover) {
+		.dev-card:hover {
+			box-shadow: var(--shadow-md);
+			border-color: var(--color-border-emphasis);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.dev-card:hover {
+			transform: translateY(-4px);
+		}
 	}
 
 	/* ========================================
@@ -452,10 +453,17 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		box-shadow: var(--shadow-sm);
 	}
 
-	.action-primary:hover {
-		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
-		transform: translateY(-1px);
-		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+	@media (hover: hover) {
+		.action-primary:hover {
+			background: var(--color-action-primary-hover);
+			box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.action-primary:hover {
+			transform: translateY(-1px);
+		}
 	}
 
 	.action-primary:focus-visible {
@@ -470,10 +478,17 @@ const colorMap: Record<string, { bg: string; border: string; text: string }> = {
 		box-shadow: var(--shadow-sm);
 	}
 
-	.action-ghost:hover {
-		color: var(--color-text-primary);
-		border-color: var(--color-border-emphasis);
-		transform: translateY(-1px);
+	@media (hover: hover) {
+		.action-ghost:hover {
+			color: var(--color-text-primary);
+			border-color: var(--color-border-emphasis);
+		}
+	}
+
+	@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+		.action-ghost:hover {
+			transform: translateY(-1px);
+		}
 	}
 
 	.action-ghost:focus-visible {

@@ -63,13 +63,13 @@ const deals = [
 
     .deal-item h2 {
         color: inherit;
-        font-size: var(--text-lg);
+        font-size: var(--text-h3);
         font-family: var(--font-serif);
         margin-bottom: var(--space-2);
     }
 
     .deal-item p {
-        font-size: var(--text-md);
+        font-size: var(--text-h4);
         margin-bottom: var(--space-4);
     }
 
@@ -86,7 +86,9 @@ const deals = [
         transition: background var(--duration-normal) var(--ease-out);
     }
 
-    .deal-button:hover {
-        background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
+    @media (hover: hover) {
+        .deal-button:hover {
+            background: var(--color-action-primary-hover);
+        }
     }
 </style>

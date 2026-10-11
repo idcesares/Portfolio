@@ -134,10 +134,17 @@ pre {
 		background-position var(--transition-slow);
 }
 
-.button-post:hover {
-	transform: translateY(-1px);
-	box-shadow: var(--shadow-md), var(--shadow-glow-warm);
-	background-position: 60% 40%;
+@media (hover: hover) {
+	.button-post:hover {
+		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
+		background-position: 60% 40%;
+	}
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	.button-post:hover {
+		transform: translateY(-1px);
+	}
 }
 
 /* ============================================================
@@ -353,10 +360,17 @@ pre button.rehype-pretty-copy.rehype-pretty-copied {
 	opacity: 1;
 }
 
-pre button.rehype-pretty-copy:hover {
-	background: rgba(255, 255, 255, 0.1) !important;
-	border-color: rgba(255, 255, 255, 0.18) !important;
-	transform: translateY(-1px);
+@media (hover: hover) {
+	pre button.rehype-pretty-copy:hover {
+		background: rgba(255, 255, 255, 0.1) !important;
+		border-color: rgba(255, 255, 255, 0.18) !important;
+	}
+}
+
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+	pre button.rehype-pretty-copy:hover {
+		transform: translateY(-1px);
+	}
 }
 
 @media (hover: none), (pointer: coarse) {

@@ -114,18 +114,18 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 	.local-search-input {
 		width: 100%;
 		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-default);
+		border: 1px solid var(--color-border-input);
 		border-radius: var(--radius-sm);
 		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
 		color: var(--color-text-primary);
-		font-size: var(--text-base);
+		font-size: var(--text-body);
 		transition: border-color var(--duration-normal) var(--ease-out);
 	}
 
-	.local-search-input:focus {
-		outline: none;
-		border-color: var(--color-teal);
-		box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-teal) 25%, transparent);
+	.local-search-input:focus-visible {
+		outline: var(--focus-ring);
+		outline-offset: var(--focus-ring-offset);
+		border-color: var(--color-focus);
 	}
 
 	.local-search-input::placeholder {
@@ -140,19 +140,19 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 
 	.sort-select {
 		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-default);
+		border: 1px solid var(--color-border-input);
 		border-radius: var(--radius-sm);
 		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
 		color: var(--color-text-primary);
-		font-size: var(--text-base);
+		font-size: var(--text-body);
 		cursor: pointer;
 		min-width: 140px;
 	}
 
-	.sort-select:focus {
-		outline: none;
-		border-color: var(--color-teal);
-		box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-teal) 25%, transparent);
+	.sort-select:focus-visible {
+		outline: var(--focus-ring);
+		outline-offset: var(--focus-ring-offset);
+		border-color: var(--color-focus);
 	}
 
 	.advanced-toggle {
@@ -216,18 +216,18 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 
 	.category-select {
 		padding: var(--space-2) var(--space-3);
-		border: 1px solid var(--color-border-default);
+		border: 1px solid var(--color-border-input);
 		border-radius: var(--radius-sm);
 		background: color-mix(in oklab, var(--color-bg-primary) 70%, transparent);
 		color: var(--color-text-primary);
-		font-size: var(--text-base);
+		font-size: var(--text-body);
 		cursor: pointer;
 	}
 
-	.category-select:focus {
-		outline: none;
-		border-color: var(--color-teal);
-		box-shadow: 0 0 0 2px color-mix(in oklab, var(--color-teal) 25%, transparent);
+	.category-select:focus-visible {
+		outline: var(--focus-ring);
+		outline-offset: var(--focus-ring-offset);
+		border-color: var(--color-focus);
 	}
 
 	.filter-actions {
@@ -241,7 +241,7 @@ const topTags = tags.slice(0, 8); // Limit to top 8 tags
 		border-radius: var(--radius-sm);
 		background: color-mix(in oklab, var(--color-bg-primary) 60%, transparent);
 		color: var(--color-text-tertiary);
-		font-size: var(--text-base);
+		font-size: var(--text-body);
 		cursor: pointer;
 		transition: all var(--duration-normal) var(--ease-out);
 		white-space: nowrap;

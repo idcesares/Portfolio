@@ -36,9 +36,13 @@ Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesigngu
 - Token faltando? Proponha no PR com justificativa, não adicione silenciosamente.
 - Nunca `#FFFFFF` em background, nunca `#000000` em foreground. Use `var(--color-bg-primary)` e `var(--color-text-primary)`.
 - Tipografia: Fraunces em H1–H3 (H4 em Instrument Sans), body em Instrument Sans, código em JetBrains Mono.
-- Cor: 60% canvas/neutrals, 30% accents humanos (terracotta primária, amber, burgundy), 10% registro digital (teal secundária, steel blue, slate).
+- Cor: 60% canvas/neutrals, 30% accents humanos (terracotta primária, amber, burgundy), 10% registro digital (teal secundária, charcoal). Steel blue existe só como cor de gráfico (`--color-chart-5`).
+- Consuma tokens semânticos (Tier 2), não primitivos. Texto sobre tinta usa os pares verificados pelo gate de contraste: `--color-human-text`/`--color-human-bg`, `--color-digital-text`/`--color-digital-bg` e `--color-{success,warning,error,info}-text`/`-bg`. Nunca `--color-teal`, `--color-terracotta` etc. como cor de texto (não mudam no dark mode).
+- Campos de formulário: borda `var(--color-border-input)` (≥3:1, WCAG 1.4.11). Hover de botão preenchido: `--color-action-primary-hover` / `--color-action-secondary-hover`, nunca `filter: brightness()`.
+- Tamanhos de texto: `--text-small`, `--text-body`, `--text-h4`, `--text-h3`, `--text-h2`. Os aliases `--text-sm/base/md/lg/xl` estão depreciados.
 - Touch targets mínimo 44×44px. `:focus-visible` com `outline: var(--focus-ring)`.
-- Dark mode via `prefers-color-scheme` + `[data-theme="dark"]` + `.theme-dark`.
+- Dark mode via `prefers-color-scheme` + `[data-theme="dark"|"light"]` no `<html>`. A classe `.theme-dark` está depreciada desde a v2.1 do Membrane Palette: não use.
+- Motion: efeitos só de hover ficam dentro de `@media (hover: hover)`; movimento (lift, nudge) sai sob `prefers-reduced-motion`.
 
 ---
 

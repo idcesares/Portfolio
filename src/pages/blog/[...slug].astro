@@ -142,7 +142,7 @@ const article = {
 	}
 
 	.description {
-		font-size: var(--text-lg);
+		font-size: var(--text-h3);
 		max-width: 65ch;
 		color: var(--color-text-secondary);
 		line-height: var(--leading-body);
@@ -152,7 +152,7 @@ const article = {
 		display: flex;
 		align-items: center;
 		gap: var(--space-2);
-		font-size: var(--text-sm);
+		font-size: var(--text-small);
 		color: var(--color-text-tertiary);
 		white-space: nowrap;
 	}
@@ -170,7 +170,7 @@ const article = {
 
 	/* Paragraphs - optimized for reading */
 	.content :global(p) {
-		font-size: var(--text-md);
+		font-size: var(--text-h4);
 		line-height: var(--leading-body);
 		letter-spacing: 0.01em;
 		color: var(--color-text-secondary);
@@ -213,7 +213,7 @@ const article = {
 	.content :global(h4),
 	.content :global(h5),
 	.content :global(h6) {
-		font-size: var(--text-lg);
+		font-size: var(--text-h3);
 		line-height: var(--leading-subheading);
 		margin-top: var(--space-8);
 		margin-bottom: var(--space-2);
@@ -265,7 +265,7 @@ const article = {
 	}
 
 	.content :global(figcaption) {
-		font-size: var(--text-sm);
+		font-size: var(--text-small);
 		color: var(--color-text-tertiary);
 		text-align: center;
 		font-style: italic;
@@ -275,7 +275,7 @@ const article = {
 
 	/* Blockquotes - distinctive with terracotta accent (human register) */
 	.content :global(blockquote) {
-		font-size: var(--text-lg);
+		font-size: var(--text-h3);
 		font-style: italic;
 		line-height: var(--leading-body);
 		padding: var(--space-5) var(--space-6);
@@ -299,14 +299,14 @@ const article = {
 	}
 
 	.content :global(li) {
-		font-size: var(--text-md);
+		font-size: var(--text-h4);
 		line-height: var(--leading-body);
 		color: var(--color-text-secondary);
 		margin-bottom: var(--space-2);
 	}
 
 	.content :global(li)::marker {
-		color: var(--color-teal);
+		color: var(--color-text-accent);
 	}
 
 	/* Nested lists */
@@ -402,7 +402,7 @@ const article = {
 		width: 100%;
 		border-collapse: collapse;
 		margin-block: var(--space-8);
-		font-size: var(--text-sm);
+		font-size: var(--text-small);
 	}
 
 	.content :global(th),
@@ -456,15 +456,15 @@ const article = {
 
 		/* Enhanced typography for larger screens */
 		.content :global(p) {
-			font-size: var(--text-lg);
+			font-size: var(--text-h3);
 		}
 
 		.content :global(li) {
-			font-size: var(--text-lg);
+			font-size: var(--text-h3);
 		}
 
 		.content :global(blockquote) {
-			font-size: var(--text-xl);
+			font-size: var(--text-h2);
 			padding: var(--space-6) var(--space-8);
 		}
 	}

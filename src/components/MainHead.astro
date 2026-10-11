@@ -131,7 +131,6 @@ const twitter = {
   
   const applyTheme = () => {
     const isDark = getThemePreference() === 'dark';
-    document.documentElement.classList[isDark ? 'add' : 'remove']('theme-dark');
     document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
   };
 

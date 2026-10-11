@@ -90,7 +90,10 @@ export const prerender = true;
   .envelope small { font: 0.6rem var(--font-mono); letter-spacing: 0.1em; }
   .button { display: inline-flex; justify-content: center; align-items: center; gap: 1rem; padding: 1rem 1.4rem; border: 1px solid var(--color-border-emphasis); border-radius: 0.7rem; font: 600 0.95rem/1.5 var(--font-sans); color: var(--color-text-primary); text-decoration: none; cursor: pointer; }
   .primary { background: var(--color-action-secondary); color: var(--color-text-on-accent); border-color: transparent; }
-  .button:hover { filter: brightness(1.1); }
+  @media (hover: hover) {
+    .button:hover { background: var(--color-bg-hover); }
+    .primary:hover { background: var(--color-action-secondary-hover); }
+  }
   .button:focus-visible, input:focus-visible { outline: 3px solid var(--color-focus); outline-offset: 5px; }
   .fine-print { margin-top: 1.5rem; color: var(--color-text-secondary); font-size: 0.8rem; }
   .player { margin-top: 2rem; aspect-ratio: 16 / 9; border: 1px solid var(--color-border-default); border-radius: 1rem; overflow: hidden; background: var(--color-charcoal); }

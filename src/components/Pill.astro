@@ -1,19 +1,13 @@
 ---
+import { toneColors, type Tone } from './toneColors';
+
 interface Props {
-	color?: 'teal' | 'terracotta' | 'amber' | 'sage' | 'burgundy';
+	color?: Tone;
 }
 
 const { color = 'teal' } = Astro.props;
 
-const colorMap = {
-	teal:       { bg: 'var(--color-teal-10)', border: 'var(--color-teal-20)', text: 'var(--color-teal-dark)' },
-	terracotta: { bg: 'var(--color-terracotta-10)', border: 'var(--color-terracotta-20)', text: 'var(--color-terracotta-dark)' },
-	amber:      { bg: 'var(--color-amber-10)', border: 'rgba(212, 154, 58, 0.25)', text: 'var(--color-amber)' },
-	sage:       { bg: 'var(--color-sage-10)', border: 'rgba(90, 138, 110, 0.25)', text: 'var(--color-sage)' },
-	burgundy:   { bg: 'var(--color-burgundy-10)', border: 'rgba(122, 51, 69, 0.25)', text: 'var(--color-burgundy)' },
-};
-
-const c = colorMap[color];
+const c = toneColors[color];
 ---
 
 <div

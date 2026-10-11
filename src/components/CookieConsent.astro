@@ -98,8 +98,10 @@
 		box-shadow: var(--shadow-sm);
 	}
 
-	.cc-btn-solid:hover {
-		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
+	@media (hover: hover) {
+		.cc-btn-solid:hover {
+			background: var(--color-action-primary-hover);
+		}
 	}
 
 	@media (min-width: 50em) {
