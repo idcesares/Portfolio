@@ -9,8 +9,10 @@
     "build:preview": "node scripts/node-preview.mjs build",
     "preview": "node scripts/node-preview.mjs preview",
     "astro": "astro",
-    "check": "astro check && node scripts/check-assets.mjs && astro build",
+    "check": "astro check && node scripts/check-assets.mjs && node scripts/check-membrane.mjs && astro build",
     "check:assets": "node scripts/check-assets.mjs",
+    "check:membrane": "node scripts/check-membrane.mjs",
+    "sync:membrane": "node scripts/sync-membrane.mjs",
     "test:browser": "playwright test",
     "audit": "pnpm audit --audit-level high",
     "audit:full": "pnpm audit --audit-level moderate"
@@ -24,7 +26,6 @@
     "@astrojs/sitemap": "^3.7.4",
     "@astrojs/vercel": "^11.0.13",
     "@lucide/astro": "^1.55.0",
-    "@rehype-pretty/transformers": "^0.13.2",
     "@tailwindcss/vite": "^4.3.3",
     "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.3.8",
@@ -60,6 +61,7 @@
   },
   "devDependencies": {
     "@astrojs/check": "0.9.10",
+    "@axe-core/playwright": "4.13.0",
     "@playwright/test": "1.64.0",
     "typescript": "~6.0.3"
   }

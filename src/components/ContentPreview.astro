@@ -4,68 +4,84 @@ import { Image } from 'astro:assets';
 import ContentDateMeta from './ContentDateMeta.astro';
 
 interface Props {
-  entry: CollectionEntry<'blog'> | CollectionEntry<'work'>;
-  variant?: 'default' | 'compact';
+	entry: CollectionEntry<'blog'> | CollectionEntry<'work'>;
+	variant?: 'default' | 'compact';
+	/** Load the image eagerly (first card above the fold). */
+	eager?: boolean;
 }
-const { entry, variant = 'default' } = Astro.props;
+const { entry, variant = 'default', eager = false } = Astro.props;
 const { data, id, collection } = entry;
+const loading = eager ? 'eager' : 'lazy';
 ---
 
 <li
-  class:list={[collection === 'blog' ? 'post-item' : 'project-item', 'content-card', variant]}
-  data-filterable-item
-  data-tags={data.tags.join(', ')}
-  data-title={data.title}
-  data-description={data.description}
-  data-updated-date={data.updatedDate.toISOString()}
+	class="content-preview"
+	data-variant={variant}
+	data-filterable-item
+	data-tags={data.tags.join(', ')}
+	data-title={data.title}
+	data-description={data.description}
+	data-updated-date={data.updatedDate.toISOString()}
 >
-  <a class="card" href={`/${collection}/${id}/`}>
-    <div class="image-container">
-      {typeof data.img === 'string' ? (
-        <img src={data.img} alt={data.img_alt || ''} width="600" height="400" loading="lazy" decoding="async" />
-      ) : (
-        <Image src={data.img} alt={data.img_alt || ''} width={600} height={400} quality={80} loading="lazy" decoding="async" />
-      )}
-    </div>
-    <div class="content">
-      <ContentDateMeta publishDate={data.publishDate} updatedDate={data.updatedDate} />
-      <h3 class="title">{data.title}</h3>
-      <p class="description">{data.description}</p>
-      <div class="tags">
-        {data.tags.slice(0, 2).map(tag => <span class="tag">{tag}</span>)}
-        {data.tags.length > 2 && <span class="tag-more">+{data.tags.length - 2}</span>}
-      </div>
-    </div>
-  </a>
+	<!-- Membrane clickable card: the title link stretches over the whole card. -->
+	<article class="mp-card" data-tone={collection === 'work' ? 'digital' : undefined}>
+		<div class="mp-card__media">
+			{
+				typeof data.img === 'string' ? (
+					<img src={data.img} alt={data.img_alt || ''} width="600" height="338" loading={loading} decoding="async" />
+				) : (
+					<Image src={data.img} alt={data.img_alt || ''} width={600} height={338} quality={80} loading={loading} decoding="async" />
+				)
+			}
+		</div>
+		<ContentDateMeta class="mp-card__overline" publishDate={data.publishDate} updatedDate={data.updatedDate} />
+		<h3 class="mp-card__title"><a class="mp-card__link" href={`/${collection}/${id}/`}>{data.title}</a></h3>
+		<p class="mp-card__body">{data.description}</p>
+		{
+			data.tags.length > 0 && (
+				<div class="mp-card__footer">
+					{data.tags.slice(0, 2).map((tag) => (
+						<span class="mp-tag">{tag}</span>
+					))}
+					{data.tags.length > 2 && <span class="mp-text type-small" data-tone="subtle">+{data.tags.length - 2}</span>}
+				</div>
+			)
+		}
+	</article>
 </li>
 
 <style>
-  .content-card { list-style: none; min-width: 0; }
-  .card {
-    display: flex; flex-direction: column; height: 100%;
-    background: var(--color-bg-primary);
-    border: 1px solid var(--color-border-default);
-    border-radius: var(--radius-lg); overflow: hidden;
-    box-shadow: var(--shadow-sm); text-decoration: none; color: inherit;
-    transition: border-color var(--transition-default), box-shadow var(--transition-default);
-  }
-  .card:hover, .card:focus-visible { border-color: var(--color-border-emphasis); box-shadow: var(--shadow-md); }
-  .card:focus-visible { outline: 2px solid var(--color-teal); outline-offset: 3px; }
-  .image-container { aspect-ratio: 3 / 2; overflow: hidden; }
-  img { width: 100%; height: 100%; object-fit: cover; filter: var(--photo-warmth); }
-  .content { display: flex; flex-direction: column; gap: var(--space-3); padding: var(--space-6); min-width: 0; }
-  .title { font-family: var(--font-serif); font-size: var(--text-h3); line-height: var(--leading-subheading); margin: 0; overflow-wrap: anywhere; }
-  .description { color: var(--color-text-secondary); line-height: var(--leading-body); margin: 0; overflow-wrap: anywhere; }
-  .tags { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; }
-  .tag, .tag-more { font-size: var(--text-xs); color: var(--color-text-secondary); }
-  .tag { padding: var(--space-1) var(--space-2); border-radius: var(--radius-full); background: var(--color-teal-10); }
-  .compact .title { font-size: var(--text-lg); }
-  .compact .content { padding: var(--space-4); }
-  .compact .image-container { aspect-ratio: 3 / 1; }
-  @media (min-width: 35em) {
-    .compact .card { display: grid; grid-template-columns: minmax(0, 1fr) 100px; align-items: start; }
-    .compact .content { grid-column: 1; grid-row: 1; }
-    .compact .image-container { grid-column: 2; grid-row: 1; aspect-ratio: 1; margin: var(--space-4) var(--space-4) 0 0; border-radius: var(--radius-sm); }
-  }
-</style>
+	.content-preview {
+		display: grid;
+		min-width: 0;
+	}
 
+	.mp-card__title {
+		overflow-wrap: anywhere;
+	}
+
+	/* Compact (and the list view): text first, a small square thumbnail aside. */
+	@media (min-width: 35em) {
+		:global(.card-list[data-view='list']) .content-preview .mp-card,
+		.content-preview[data-variant='compact'] .mp-card {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) 7rem;
+			column-gap: var(--space-6);
+			align-content: start;
+		}
+
+		:global(.card-list[data-view='list']) .content-preview .mp-card > :not(.mp-card__media),
+		.content-preview[data-variant='compact'] .mp-card > :not(.mp-card__media) {
+			grid-column: 1;
+		}
+
+		:global(.card-list[data-view='list']) .content-preview .mp-card__media,
+		.content-preview[data-variant='compact'] .mp-card__media {
+			grid-column: 2;
+			grid-row: 1 / span 4;
+			aspect-ratio: 1;
+			margin: 0;
+			border-radius: var(--radius-md);
+		}
+	}
+</style>

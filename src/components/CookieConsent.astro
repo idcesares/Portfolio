@@ -2,110 +2,61 @@
 ---
 
 <cookie-consent>
-	<div class="cc-card" role="region" aria-label="Preferências de cookies" hidden>
-		<p class="cc-text">
+	<!-- A floating Membrane card: enters slowly, leaves quickly (spec §8.4). -->
+	<div class="mp-card cc-card" role="region" aria-label="Preferências de cookies" hidden>
+		<p class="mp-card__body type-small">
 			Com sua permissão, uso <strong>Google Analytics</strong> pra entender quais posts e projetos rendem mais leitura por aqui. Os dados de uso são processados pelo Google. Você pode rever sua escolha nas preferências de cookies no rodapé.
 		</p>
-		<div class="cc-actions">
-			<button type="button" class="cc-btn cc-btn-ghost" data-cc="reject">Recusar</button>
-			<button type="button" class="cc-btn cc-btn-solid" data-cc="accept">Aceitar</button>
+		<div class="mp-cluster" data-justify="end" data-gap="2">
+			<button type="button" class="mp-button" data-variant="ghost" data-size="sm" data-cc="reject">Recusar</button>
+			<button type="button" class="mp-button" data-size="sm" data-cc="accept">Aceitar</button>
 		</div>
 	</div>
 </cookie-consent>
 
 <style>
 	.cc-card {
+		--mp-card-padding: var(--space-5);
+		--mp-card-bg: var(--color-bg-elevated);
+		--mp-card-shadow: var(--elevation-overlay);
+
 		position: fixed;
-		left: var(--space-4);
-		right: var(--space-4);
-		bottom: var(--space-4);
+		inset-inline: var(--space-4);
+		inset-block-end: var(--space-4);
 		z-index: var(--z-toast);
 		max-width: 26rem;
 		margin-inline: auto;
-		display: flex;
-		flex-direction: column;
 		gap: var(--space-4);
-		padding: var(--space-5) var(--space-6);
-		border-radius: var(--radius-xl);
-		border: 1px solid var(--color-border-default);
-		background: color-mix(in oklab, var(--color-bg-secondary) 92%, transparent);
-		backdrop-filter: blur(var(--blur-backdrop));
-		-webkit-backdrop-filter: blur(var(--blur-backdrop));
-		box-shadow: var(--shadow-lg);
 		opacity: 0;
-		transform: translateY(calc(var(--space-4) + 8px));
-		transition: opacity var(--duration-slow) var(--ease-out),
-			transform var(--duration-slow) var(--ease-out);
+		translate: 0 var(--space-2);
+		transition:
+			opacity var(--transition-exit),
+			translate var(--transition-exit);
 	}
 
-	.cc-card.cc-visible {
+	.cc-card[data-visible] {
 		opacity: 1;
-		transform: translateY(0);
+		translate: 0 0;
+		transition:
+			opacity var(--transition-enter),
+			translate var(--transition-enter);
 	}
 
-	.cc-card.cc-leaving {
-		opacity: 0;
-		transform: translateY(calc(var(--space-4) + 8px));
-	}
-
-	.cc-text {
-		font-size: var(--text-small);
-		line-height: var(--leading-body);
-		color: var(--color-text-secondary);
-		margin: 0;
-	}
-
-	.cc-text strong {
+	.cc-card strong {
 		color: var(--color-text-primary);
-		font-weight: var(--weight-medium);
-	}
-
-	.cc-actions {
-		display: flex;
-		gap: var(--space-3);
-		justify-content: flex-end;
-	}
-
-	.cc-btn {
-		min-height: 44px;
-		padding: var(--space-2) var(--space-6);
-		border-radius: var(--radius-full);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		cursor: pointer;
-		transition: transform var(--transition-default), background-color var(--transition-default);
-	}
-
-	.cc-btn:active {
-		transform: scale(0.97);
-	}
-
-	.cc-btn-ghost {
-		border: 1px solid var(--color-border-default);
-		background: transparent;
-		color: var(--color-text-secondary);
-	}
-
-	.cc-btn-ghost:hover {
-		background: var(--color-bg-tertiary);
-		color: var(--color-text-primary);
-	}
-
-	.cc-btn-solid {
-		border: 1px solid var(--color-terracotta-dark);
-		background: var(--color-action-primary);
-		color: var(--color-text-on-accent);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.cc-btn-solid:hover {
-		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
+		font-weight: var(--weight-semibold);
 	}
 
 	@media (min-width: 50em) {
 		.cc-card {
-			left: auto;
-			margin-inline: 0;
+			inset-inline: auto var(--space-6);
+			inset-block-end: var(--space-6);
+		}
+	}
+
+	@media print {
+		.cc-card {
+			display: none;
 		}
 	}
 </style>
@@ -155,9 +106,8 @@
 			};
 			const showCard = () => {
 				window.clearTimeout(this.dismissTimer);
-				card.classList.remove('cc-leaving');
 				card.hidden = false;
-				card.classList.add('cc-visible');
+				requestAnimationFrame(() => card.setAttribute('data-visible', ''));
 			};
 			document.querySelectorAll<HTMLButtonElement>('[data-cookie-preferences]').forEach((button) => {
 				button.hidden = false;
@@ -189,15 +139,16 @@
 			// Let the page settle before asking — a banner that appears instantly
 			// competes with content the visitor came here to read.
 			card.removeAttribute('hidden');
-			window.setTimeout(() => card.classList.add('cc-visible'), 1200);
+			window.setTimeout(() => card.setAttribute('data-visible', ''), 1200);
 
 		}
 
 		dismiss(card: HTMLElement) {
-			card.classList.remove('cc-visible');
-			card.classList.add('cc-leaving');
+			card.removeAttribute('data-visible');
 			window.clearTimeout(this.dismissTimer);
-			this.dismissTimer = window.setTimeout(() => card.setAttribute('hidden', ''), 400);
+			// Hide once the exit transition (0ms under reduced motion) has run.
+			const exit = parseFloat(getComputedStyle(card).transitionDuration) * 1000 || 0;
+			this.dismissTimer = window.setTimeout(() => card.setAttribute('hidden', ''), exit);
 		}
 
 		loadAnalytics() {

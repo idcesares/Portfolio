@@ -1,16 +1,17 @@
 import { expect, test } from '@playwright/test';
 
-test('Escape closes the mobile menu and returns focus to its button', async ({ page }) => {
+test('on phones every navbar link stays reachable and the current page is marked', async ({ page }) => {
   await page.setViewportSize({ width: 390, height: 844 });
-  await page.goto('/');
-  const button = page.locator('button[aria-controls="menu-content"]');
-  await button.focus();
-  await page.keyboard.press('Enter');
-  await expect(button).toHaveAttribute('aria-expanded', 'true');
-  await page.getByRole('navigation', { name: 'Navegação principal' }).getByRole('link', { name: 'Home', exact: true }).focus();
-  await page.keyboard.press('Escape');
-  await expect(button).toHaveAttribute('aria-expanded', 'false');
-  await expect(button).toBeFocused();
+  await page.goto('/blog/');
+  const nav = page.getByRole('navigation', { name: 'Navegação principal' });
+  const links = nav.getByRole('link');
+  await expect(links).toHaveCount(6);
+  // The Membrane navbar scrolls its link row instead of hiding it behind a menu.
+  for (const link of await links.all()) {
+    await link.focus();
+    await expect(link).toBeInViewport();
+  }
+  await expect(nav.getByRole('link', { name: 'Blog', exact: true })).toHaveAttribute('aria-current', 'page');
 });
 
 for (const path of ['/work/', '/blog/']) {
@@ -37,7 +38,7 @@ for (const path of ['/work/', '/blog/']) {
     await page.keyboard.press('Enter');
     await expect(button).toHaveAttribute('aria-expanded', 'false');
     await expect.poll(accessibleCategories).toBe(0);
-    await page.getByRole('textbox', { name: path === '/work/' ? 'Buscar projetos' : 'Buscar posts', exact: true }).fill('zzzz-no-results');
+    await page.getByRole('searchbox', { name: path === '/work/' ? 'Buscar projetos' : 'Buscar posts', exact: true }).fill('zzzz-no-results');
     await expect(page.getByRole('status')).toContainText('0');
     await expect(page.locator('[data-filterable-item]:visible')).toHaveCount(0);
     await accessibility.detach();

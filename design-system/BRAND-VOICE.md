@@ -595,8 +595,8 @@ If any answer is no, revise.
 
 ---
 
-*This brand voice guide is the companion to the Brand Essence document (isaac-dcesares-brand-essence-ultimate.md) and the Design System (DESIGN-SYSTEM.md). Consult all three together.*
+*This brand voice guide is the companion to the Design System (`DESIGN-SYSTEM.md`). Consult both together.*
 
 *When in doubt: articulate, warm, concrete, confident without arrogance, Brazilian in texture, and layered. Always.*
 
-*Generated March 2026 — The voice is a living thing, not a rulebook. Use this guide to understand the principles, not to mechanically apply them. Good judgment beats rigid adherence.*
+*Written March 2026. For interface copy (buttons, errors, empty states, pt-BR), see `DESIGN-SYSTEM.md` §16. The voice is a living thing, not a rulebook. Use this guide to understand the principles, not to mechanically apply them. Good judgment beats rigid adherence.*

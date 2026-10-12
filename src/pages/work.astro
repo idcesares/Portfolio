@@ -5,67 +5,35 @@ import { getCollection } from 'astro:content';
 
 import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
-import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
-import Hero from '../components/Hero.astro';
-import GridEnhanced from '../components/GridEnhanced.astro';
 import FilterBar from '../components/FilterBar.astro';
-import ViewToggle from '../components/ViewToggle.astro';
+import GridEnhanced from '../components/GridEnhanced.astro';
+import Hero from '../components/Hero.astro';
+import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
+import { tagsByFrequency } from '../utils/tags';
 
 const projects = (await getCollection('work', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
-
-// Extract all unique tags from projects
-const allTags = [...new Set(projects.flatMap(project => project.data.tags))].sort();
+const tags = tagsByFrequency(projects);
 ---
 
 <BaseLayout
 	title="Trabalho"
 	description="Registros de entregas, projetos e programas em tecnologia educacional, pesquisa e construção de produtos."
 >
-	<div class="stack gap-20" data-page-type="work">
-		<main id="main-content" tabindex="-1" class="wrapper stack gap-8">
-			<Hero
-				title="Meus trabalhos"
-				tagline="O rastro de entregas, projetos e programas. Filtre por tema pra achar o que interessa."
-				align="start"
-			/>
-			
-			<section class="content-section" data-animate="fade-up" aria-labelledby="listing-title">
-				<h2 id="listing-title" class="sr-only">Todos os trabalhos</h2>
-				<FilterBar variant="work" tags={allTags} />
-				
-				<div class="view-controls">
-					<ViewToggle currentView="default" />
-				</div>
-				
-				<GridEnhanced variant="offset">
-					{projects.map((project) => (
-						<PortfolioPreviewEnhanced project={project} variant="default" />
-					))}
-				</GridEnhanced>
-			</section>
-		</main>
-		<ContactCTA />
-	</div>
+	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="10">
+		<Hero
+			title="Meus trabalhos"
+			tagline="O rastro de entregas, projetos e programas. Filtre por tema pra achar o que interessa."
+			align="start"
+		/>
+		<section aria-labelledby="listing-title" data-animate>
+			<h2 id="listing-title" class="mp-visually-hidden">Todos os trabalhos</h2>
+			<FilterBar variant="work" tags={tags} />
+			<GridEnhanced>
+				{projects.map((project, index) => <PortfolioPreviewEnhanced project={project} eager={index < 2} />)}
+			</GridEnhanced>
+		</section>
+	</main>
+	<ContactCTA />
 </BaseLayout>
-
-<style>
-	.content-section {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-6);
-	}
-
-	.view-controls {
-		display: flex;
-		justify-content: flex-end;
-		align-items: center;
-	}
-
-	@media (max-width: 50em) {
-		.view-controls {
-			justify-content: flex-start;
-		}
-	}
-</style>

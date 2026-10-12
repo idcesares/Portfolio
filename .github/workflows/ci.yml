@@ -34,10 +34,13 @@ jobs:
       - name: Check content asset references
         run: pnpm run check:assets
 
+      - name: Membrane conformance
+        run: pnpm run check:membrane
+
       - name: Install browser for regression tests
         run: pnpm exec playwright install --with-deps chromium
 
-      - name: Cookie consent browser regression tests
+      - name: Browser regression tests (axe, Membrane, keyboard, consent)
         run: pnpm run test:browser
 
       - name: Build

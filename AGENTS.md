@@ -18,7 +18,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 │   ├── data/               # Dados tipados para superfícies como /dev
 │   ├── layouts/            # Layouts base (BaseLayout.astro)
 │   ├── pages/              # Rotas e API endpoints (kebab-case)
-│   ├── styles/             # CSS global + design tokens (Membrane Palette)
+│   ├── styles/             # global.css: importa design-system/membrane.css + tema Tailwind da Membrane
 │   ├── utils/              # Utilitários TypeScript
 │   ├── content.config.ts   # Schema das collections
 │   └── env.d.ts
@@ -33,13 +33,14 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── workflows/          # CI (astro check + build) e Docker test
-├── design-system/          # Spec do Membrane Palette (DESIGN-SYSTEM.md, BRAND-VOICE.md, tokens/)
+├── design-system/          # Distribuição da Membrane Palette v2.1 (membrane.css, components/, tokens/, fonts/, brand/, specs) — gerada por `pnpm sync:membrane`, não editar
 ├── docker/                 # Docs e scripts Docker
 ├── astro.config.mjs        # Configuração Astro + integrações
 ├── docker-compose.yml      # Compose dev
 ├── docker-compose.prod.yml # Compose preview de produção
 ├── Dockerfile              # Imagem dev/prod
 ├── remark-reading-time.mjs # Plugin custom de reading time (PT-BR)
+├── rehype-membrane-code.mjs # Blocos de código → mp-code-block (cabeçalho, copiar, tema Shiki via tokens)
 ├── tailwind.config.cjs     # Tailwind content scan fallback
 ├── vercel.json             # Deploy config + security headers + caching
 └── tsconfig.json           # TypeScript strict mode
@@ -174,9 +175,10 @@ pnpm audit
 
 **Styling**: 
 - Tailwind v4 via `@tailwindcss/vite`
-- Membrane Palette design tokens: `var(--color-*)`, `var(--space-*)`, `var(--font-*)` (definidos em `design-system/tokens/design-tokens.css`; base layer em `design-system/tokens/base.css`; spec em `design-system/`)
-- Utility class `stack` para layouts verticais com gaps consistentes
-- Pattern `class:list={['base-class', variant]}` para variantes de componentes
+- O site é uma execução da Membrane Palette: use os componentes `mp-*` da biblioteca (catálogo em `design-system/components/manifest.json`) antes de escrever CSS. Layout com `mp-container`, `mp-stack`, `mp-cluster`, `mp-grid`, `mp-section` (`data-gap` na escala 0–16).
+- Opções como `data-*` com valores do manifest; estado só por atributos nativos/ARIA. CSS próprio consome tokens semânticos (nunca primitivos como `--color-teal`).
+- Tailwind só com o tema da Membrane (`design-system/tokens/membrane-tailwind.css`): utilitários `mp-` (ex.: `bg-mp-surface`, `text-mp-fg`); a paleta padrão do Tailwind não existe.
+- `pnpm check:membrane` valida tudo isso.
 
 **Component Variants**: Use prop `variant?: 'default' | 'compact'` em componentes como `PostPreviewEnhanced.astro` e `PortfolioPreviewEnhanced.astro`.
 
@@ -185,6 +187,8 @@ pnpm audit
 **Validação Automática**:
 - CI Docker: valida Compose em Linux/Windows; builds e execução dos containers Linux usam runners Ubuntu.
 - `astro check` valida TypeScript + content collections
+- `pnpm check:membrane` valida conformidade com a Membrane (classes, opções, tokens)
+- `pnpm test:browser` roda axe-core em todas as páginas nos dois temas, overflow em 390px, teclado, busca, tema, fontes e consentimento
 - Build sem erros é gate obrigatório para deploy
 - Vercel executa `pnpm build` automaticamente
 

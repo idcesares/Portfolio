@@ -1,128 +1,52 @@
 ---
-import Icon from './Icon.astro';
-import { University } from '@lucide/astro';
+import Icon, { type IconName } from './Icon.astro';
+
+const pillars: {
+	title: string;
+	icon: IconName;
+	tone: 'human' | 'success' | 'digital';
+	text: string;
+	href: string;
+	cta: string;
+}[] = [
+	{
+		title: 'Pesquisador',
+		icon: 'book-open',
+		tone: 'human',
+		text: 'Investigo como tecnologias emergentes, IA, blockchain e sistemas multi-agentes, entram na educação sem desumanizar o processo. Mestrado em Computação na UFRJ, com passagens por Stanford (Educação Inovadora), FDC (Transformação Digital), FGV (Ciência de Dados) e outras instituições.',
+		href: '/blog/',
+		cta: 'Ler o blog',
+	},
+	{
+		title: 'Educador',
+		icon: 'university',
+		tone: 'success',
+		text: 'Trabalho com formação de educadores e coordenação de programas de tecnologia educacional em uma rede nacional. Da sala de aula aos espaços maker, meu foco é criar condições para que as pessoas aprendam fazendo.',
+		href: '/work/',
+		cta: 'Ver os trabalhos',
+	},
+	{
+		title: 'Desenvolvedor',
+		icon: 'square-terminal',
+		tone: 'digital',
+		text: 'Escrevo código, construo modelos e desenho arquiteturas técnicas e organizacionais. O catálogo reúne ferramentas online, pesquisas e protótipos, com o estágio de cada projeto à vista.',
+		href: '/dev/',
+		cta: 'Ver os projetos',
+	},
+];
 ---
 
-<section class="box pillars">
-	<article class="pillar">
-		<div class="stack gap-2 lg:gap-4">
-			<Icon icon="book-open" color="var(--color-terracotta)" size="2.5rem" />
-			<h2>Pesquisador</h2>
-			<p>Investigo como tecnologias emergentes, IA, blockchain e sistemas multi-agentes, entram na educação sem desumanizar o processo. Mestrado em Computação na UFRJ, com passagens por Stanford (Educação Inovadora), FDC (Transformação Digital), FGV (Ciência de Dados) e outras instituições.</p>
-			<a href="/blog/" class="pillar-link">
-				Ler o blog
-				<Icon icon="arrow-right" size="1em" />
-			</a>
-		</div>
-	</article>
-	<article class="pillar">
-		<div class="stack gap-2 lg:gap-4">
-			<University class="pillar-icon-lucide" size={40} stroke-width={1.75} />
-			<h2>Educador</h2>
-			<p>Trabalho com formação de educadores e coordenação de programas de tecnologia educacional em uma rede nacional. Da sala de aula aos espaços maker, meu foco é criar condições para que as pessoas aprendam fazendo.</p>
-			<a href="/work/" class="pillar-link">
-				Ver os trabalhos
-				<Icon icon="arrow-right" size="1em" />
-			</a>
-		</div>
-	</article>
-	<article class="pillar">
-		<div class="stack gap-2 lg:gap-4">
-			<Icon icon="terminal-window" color="var(--color-teal)" size="2.5rem" />
-			<h2>Desenvolvedor</h2>
-			<p>Escrevo código, construo modelos e desenho arquiteturas técnicas e organizacionais. O catálogo reúne ferramentas online, pesquisas e protótipos, com o estágio de cada projeto à vista.</p>
-			<a href="/dev/" class="pillar-link">
-				Ver os projetos
-				<Icon icon="arrow-right" size="1em" />
-			</a>
-		</div>
-	</article>
+<section class="mp-grid" aria-label="Três dimensões do trabalho" data-gap="6">
+	{
+		pillars.map(({ title, icon, tone, text, href, cta }) => (
+			<article class="mp-card" data-tone={tone === 'digital' ? 'digital' : undefined}>
+				<Icon icon={icon} size="lg" tone={tone} />
+				<h2 class="mp-card__title">{title}</h2>
+				<p class="mp-card__body">{text}</p>
+				<div class="mp-card__footer">
+					<a class="mp-link" data-variant="standalone" href={href}>{cta}</a>
+				</div>
+			</article>
+		))
+	}
 </section>
-
-<style>
-	.box {
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-lg);
-		padding: var(--space-6);
-		background-color: var(--color-bg-secondary);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.pillars {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-12);
-	}
-
-	.pillar {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.pillars h2 {
-		font-size: var(--text-h3);
-		font-family: var(--font-serif);
-		color: var(--color-text-primary);
-	}
-
-	.pillars p {
-		color: var(--color-text-secondary);
-		line-height: var(--leading-body);
-	}
-
-	.pillar-icon-lucide {
-		color: var(--color-sage);
-	}
-
-	.pillar-link {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-2);
-		margin-top: var(--space-3);
-		color: var(--color-text-secondary);
-		font-family: var(--font-sans);
-		font-weight: var(--weight-medium);
-		font-size: var(--text-small);
-		text-decoration: none;
-		border-bottom: 1px solid transparent;
-		width: fit-content;
-		padding-bottom: 2px;
-		transition:
-			color var(--transition-default),
-			border-color var(--transition-default),
-			transform var(--transition-fast);
-	}
-
-	.pillar-link:hover,
-	.pillar-link:focus-visible {
-		color: var(--color-text-primary);
-		border-bottom-color: var(--color-border-emphasis);
-		transform: translateX(2px);
-	}
-
-	.pillar-link :global(svg) {
-		transition: transform var(--transition-fast);
-	}
-
-	.pillar-link:hover :global(svg),
-	.pillar-link:focus-visible :global(svg) {
-		transform: translateX(2px);
-	}
-
-	@media (min-width: 50em) {
-		.box {
-			border-radius: var(--radius-xl);
-			padding: var(--space-10);
-		}
-
-		.pillars {
-			display: grid;
-			grid-template-columns: repeat(3, 1fr);
-			gap: var(--space-20);
-		}
-
-		.pillars h2 {
-			font-size: var(--text-h2);
-		}
-	}
-</style>

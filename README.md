@@ -121,7 +121,15 @@ Esse índice alimenta a experiência client-side com Fuse.js e é entregue com c
 
 ### Design system
 
-O site usa o **Membrane Palette**, com tokens semânticos em [`design-system/tokens/design-tokens.css`](./design-system/tokens/design-tokens.css), base layer em [`design-system/tokens/base.css`](./design-system/tokens/base.css) e documentação em:
+O site é uma execução do **[Membrane Palette](https://github.com/idcesares/The-Membrane-Palette)** v2.1.0. A distribuição da biblioteca fica em [`design-system/`](./design-system/) (versão e commit em `membrane.lock.json`) e é atualizada com `pnpm sync:membrane`:
+
+- `membrane.css`: fontes auto-hospedadas com fallbacks métricos, tokens, base e os componentes `mp-*`, importado por `src/styles/global.css` como camada global única;
+- `components/membrane.js`: comportamentos (dialog da busca, toasts);
+- `tokens/membrane-tailwind.css`: tema Tailwind v4 só com utilitários da marca;
+- `components/manifest.json`: catálogo de componentes, usado também por `pnpm check:membrane`;
+- `brand/`: marcas outline usadas no cabeçalho, rodapé e favicon.
+
+Documentação:
 
 - [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md)
 - [`design-system/BRAND-VOICE.md`](./design-system/BRAND-VOICE.md)

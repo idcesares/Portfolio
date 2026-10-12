@@ -1,0 +1,22 @@
+---
+/** Section heading with an optional lede and a standalone link to the full list. */
+interface Props {
+	id: string;
+	title: string;
+	lede?: string;
+	href?: string;
+	cta?: string;
+	overline?: string;
+}
+
+const { id, title, lede, href, cta, overline } = Astro.props;
+---
+
+<div class="mp-cluster section-header" data-justify="between" data-align="baseline" data-gap="4">
+	<div class="mp-stack" data-gap="2">
+		{overline && <p class="type-label mp-text" data-tone="human">{overline}</p>}
+		<h2 class="type-h1" id={id}>{title}</h2>
+		{lede && <p class="mp-text type-body-lg" data-tone="muted" data-measure>{lede}</p>}
+	</div>
+	{href && cta && <a class="mp-link" data-variant="standalone" href={href}>{cta}</a>}
+</div>

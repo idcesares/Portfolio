@@ -1,0 +1,124 @@
+---
+/**
+ * Shared page for a blog post or a work entry: breadcrumb, title, metadata,
+ * cover image and the Markdown body in .mp-prose (the Membrane long-form
+ * component). Code blocks inside it come from rehype-membrane-code.mjs.
+ */
+import type { CollectionEntry } from 'astro:content';
+import BaseLayout from './BaseLayout.astro';
+import ContactCTA from '../components/ContactCTA.astro';
+import ContentDateMeta from '../components/ContentDateMeta.astro';
+import ContentImage from '../components/ContentImage.astro';
+import Icon from '../components/Icon.astro';
+import { AUTHOR_PROFILE_PATH, resolveImageSrc } from '../utils/seo';
+
+interface Props {
+	entry: CollectionEntry<'blog'> | CollectionEntry<'work'>;
+	minutesRead?: string;
+	structuredData: Array<Record<string, unknown>>;
+}
+
+const { entry, minutesRead, structuredData } = Astro.props;
+const { data, collection } = entry;
+const section = collection === 'blog' ? { name: 'Blog', path: '/blog/', og: 'Blog' } : { name: 'Trabalhos', path: '/work/', og: 'Work' };
+const site = Astro.site ?? new URL('https://www.dcesares.dev');
+
+const article = {
+	publishedTime: data.publishDate.toISOString(),
+	modifiedTime: data.updatedDate.toISOString(),
+	authors: [new URL(AUTHOR_PROFILE_PATH, site).toString()],
+	section: section.og,
+	tags: data.tags,
+};
+---
+
+<BaseLayout
+	title={data.title}
+	description={data.description}
+	image={resolveImageSrc(data.img)}
+	imageAlt={data.img_alt}
+	ogType="article"
+	article={article}
+	structuredData={structuredData}
+>
+	<main id="main-content" tabindex="-1" class="mp-container mp-section article" data-size="sm">
+		<header class="mp-stack article__header" data-gap="5">
+			<nav class="mp-breadcrumb" aria-label="Você está em">
+				<ol class="mp-breadcrumb__list">
+					<li class="mp-breadcrumb__item"><a class="mp-breadcrumb__link" href="/">Início</a></li>
+					<li class="mp-breadcrumb__item"><a class="mp-breadcrumb__link" href={section.path}>{section.name}</a></li>
+					<li class="mp-breadcrumb__item"><a class="mp-breadcrumb__link" href={`${section.path}${entry.id}/`} aria-current="page">{data.title}</a></li>
+				</ol>
+			</nav>
+			<h1 class="type-display">{data.title}</h1>
+			<p class="mp-text type-body-lg" data-tone="muted" data-measure>{data.description}</p>
+			<div class="mp-cluster type-small article__meta" data-gap="4">
+				<ContentDateMeta publishDate={data.publishDate} updatedDate={data.updatedDate} />
+				{minutesRead && (
+					<p class="mp-cluster" data-gap="1"><Icon icon="book-open" size="sm" /> {minutesRead}</p>
+				)}
+			</div>
+			{data.tags.length > 0 && (
+				<ul class="mp-cluster article__tags" data-gap="2" aria-label="Temas">
+					{data.tags.map((tag) => <li class="mp-tag" data-tone={collection === 'work' ? 'digital' : 'human'}>{tag}</li>)}
+				</ul>
+			)}
+		</header>
+
+		{data.img && <ContentImage src={data.img} alt={data.img_alt || data.title} priority="hero" width={1200} />}
+
+		<article class="mp-prose article__body">
+			<slot />
+		</article>
+	</main>
+
+	<ContactCTA />
+</BaseLayout>
+
+<style>
+	.article {
+		display: grid;
+		justify-items: center;
+		gap: var(--space-10);
+	}
+
+	/* One reading column for header, cover and body (≈70 characters of body-lg). */
+	.article__header,
+	.article__body,
+	.article :global(.content-image) {
+		width: 100%;
+		max-width: var(--container-md);
+	}
+
+
+	.article__meta {
+		color: var(--color-text-tertiary);
+	}
+
+	.article__meta p {
+		margin: 0;
+	}
+
+	.article__tags {
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.article__body {
+		font-size: var(--text-body-lg);
+		line-height: var(--leading-body-lg);
+	}
+
+	/* Markdown tables can't be wrapped in .mp-table-wrap: let them scroll. */
+	.article__body :global(table) {
+		display: block;
+		overflow-x: auto;
+	}
+
+	/* Embedded videos and Markdown CTAs keep their own spacing. */
+	.article__body :global(.video-container),
+	.article__body :global(p > .mp-button) {
+		margin-block: var(--space-6);
+	}
+</style>

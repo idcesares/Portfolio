@@ -1,104 +1,31 @@
 ---
+/** Card grid on the Membrane layout primitive (.mp-grid, auto-fit columns). */
 interface Props {
-	variant?: 'offset' | 'small' | 'compact' | 'list';
+	/** wide: two or three roomy columns; compact: denser columns; list: one column. */
+	variant?: 'wide' | 'compact' | 'list';
 }
 
-const { variant = 'offset' } = Astro.props;
+const { variant = 'wide' } = Astro.props;
 ---
 
-<ul class:list={[
-	'grid', 
-	{ 
-		offset: variant === 'offset',
-		small: variant === 'small',
-		compact: variant === 'compact',
-		list: variant === 'list'
-	}
-]}>
-	<slot />
-</ul>
+{
+	variant === 'list' ? (
+		<ul class="mp-stack card-list" data-view="list" data-gap="4"><slot /></ul>
+	) : (
+		<ul class="mp-grid card-list" data-view={variant} data-min={variant === 'wide' ? 'lg' : undefined} data-gap="8"><slot /></ul>
+	)
+}
 
 <style>
-	.grid {
-		display: grid;
-		grid-auto-rows: auto;
-		gap: var(--space-4);
-		list-style: none;
-		padding: 0;
+	.card-list {
 		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.grid.small {
-		grid-template-columns: 1fr 1fr;
-		gap: var(--space-6);
-	}
-
-	.grid.compact {
-		grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+	/* List view (FilterBar): one column of compact cards. */
+	.card-list[data-view='list'] {
+		grid-template-columns: minmax(0, 1fr);
 		gap: var(--space-4);
-		grid-auto-rows: auto;
-	}
-
-	.grid.list {
-		grid-template-columns: 1fr;
-		gap: var(--space-3);
-		grid-auto-rows: auto;
-	}
-
-	/* If last row contains only one item, make it span both columns. */
-	.grid.small > :global(:last-child:nth-child(odd)) {
-		grid-column: 1 / 3;
-	}
-
-	@media (min-width: 50em) {
-		.grid {
-			grid-template-columns: 1fr 1fr;
-			gap: var(--space-16);
-		}
-
-		.grid.offset {
-			--row-offset: var(--space-32);
-			padding-bottom: var(--row-offset);
-		}
-
-		/* Shift first item in each row vertically to create staggered effect. */
-		.grid.offset > :global(:nth-child(odd)) {
-			transform: translateY(var(--row-offset));
-		}
-
-		/* If last row contains only one item, display it in the second column. */
-		.grid.offset > :global(:last-child:nth-child(odd)) {
-			grid-column: 2 / 3;
-			transform: translateY(var(--row-offset));
-		}
-
-		.grid.small {
-			grid-template-columns: repeat(3, 1fr);
-			gap: var(--space-8);
-		}
-
-		.grid.small > :global(:last-child:nth-child(3n-1)) {
-			grid-column: 2 / 4;
-		}
-
-		.grid.compact {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 350px), 1fr));
-			gap: var(--space-6);
-		}
-
-		.grid.list {
-			gap: var(--space-4);
-		}
-	}
-
-	@media (min-width: 75em) {
-		.grid.compact {
-			grid-template-columns: repeat(auto-fit, minmax(min(100%, 400px), 1fr));
-			gap: var(--space-8);
-		}
-
-		.grid.small {
-			grid-template-columns: repeat(4, 1fr);
-		}
 	}
 </style>

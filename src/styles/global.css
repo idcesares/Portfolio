@@ -1,583 +1,220 @@
-@import "tailwindcss";
-@import "../../design-system/tokens/design-tokens.css";
-@import "../../design-system/tokens/base.css";
-
-:root {
-	--tracking-display: 0;
-	--tracking-heading: 0;
-	--tracking-subheading: 0;
-}
-
 /* ============================================================
-   GLOBAL RESET & BASE STYLES
+   dcesares.dev — global styles
+   The site is an execution of The Membrane Palette: membrane.css
+   (self-hosted fonts + tokens + base + component library) is the
+   whole global layer. Tailwind contributes only on-brand utilities
+   from the Membrane theme; its preflight is left out because the
+   Membrane base layer is the page reset.
+   This file holds the few site-wide rules the library leaves to
+   pages: element defaults, the page backdrop, code highlighting
+   and page motion. Everything here consumes semantic tokens.
    ============================================================ */
 
-html,
-body {
-	min-height: 100%;
-	overflow-x: hidden;
-}
+/* utilities last, so a utility class always beats a component default. */
+@layer theme, tokens, base, components, utilities;
 
-body {
-	background-color: var(--color-bg-primary);
-	color: var(--color-text-secondary);
-	font-family: var(--font-sans);
-	font-size: var(--text-body);
-	-webkit-font-smoothing: antialiased;
-	line-height: var(--leading-body);
-}
-
-/* Theme transition — only active after initial paint to avoid flash */
-html.theme-ready body {
-	transition: background-color var(--duration-normal) var(--ease-default), color var(--duration-normal) var(--ease-default);
-}
-
-*,
-*::after,
-*::before {
-	box-sizing: border-box;
-	margin: 0;
-}
-
-img {
-	max-width: 100%;
-	height: auto;
-}
-
-a {
-	color: var(--color-text-accent);
-}
+@import "../../design-system/membrane.css";
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+@import "../../design-system/tokens/membrane-tailwind.css";
 
 /* ============================================================
-   TYPOGRAPHY — Headings
+   ELEMENT DEFAULTS — the system's pairing rules for bare HTML
+   (Markdown headings outside .mp-prose, page titles). Layered,
+   so any component or page rule wins.
    ============================================================ */
 
-h1,
-h2,
-h3 {
-	font-family: var(--font-serif);
-	font-weight: var(--weight-semibold);
-	color: var(--color-text-primary);
-}
+@layer base {
+	:where(html, body) {
+		min-height: 100%;
+	}
 
-h4,
-h5 {
-	font-family: var(--font-sans);
-	font-weight: var(--weight-semibold);
-	color: var(--color-text-primary);
-}
+	:where(body) {
+		overflow-x: clip;
+	}
 
-h1 {
-	font-size: var(--text-h1);
-	line-height: var(--leading-heading);
-	letter-spacing: var(--tracking-heading);
-}
+	:where(h1, h2, h3, h4, h5, h6, p, figure, blockquote, dl, dd) {
+		margin: 0;
+	}
 
-h2 {
-	font-size: var(--text-h2);
-	line-height: var(--leading-heading);
-	letter-spacing: var(--tracking-heading);
-}
+	:where(h1, h2, h3) {
+		color: var(--color-text-primary);
+		font-family: var(--font-serif);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-heading);
+		letter-spacing: var(--tracking-heading);
+		text-wrap: balance;
+	}
 
-h3 {
-	font-size: var(--text-h3);
-	line-height: var(--leading-subheading);
-	letter-spacing: var(--tracking-subheading);
-}
+	:where(h1) { font-size: var(--text-h1); font-weight: var(--weight-bold); }
+	:where(h2) { font-size: var(--text-h2); }
+	:where(h3) { font-size: var(--text-h3); line-height: var(--leading-subheading); }
 
-h4 {
-	font-size: var(--text-h4);
-	line-height: var(--leading-subheading);
-	letter-spacing: var(--tracking-subheading);
-}
+	:where(h4, h5, h6) {
+		color: var(--color-text-primary);
+		font-family: var(--font-sans);
+		font-size: var(--text-h4);
+		font-weight: var(--weight-semibold);
+		line-height: var(--leading-subheading);
+	}
 
-h5 {
-	font-size: var(--text-h4);
-	line-height: var(--leading-subheading);
-	letter-spacing: var(--tracking-subheading);
-}
+	:where(p) {
+		text-wrap: pretty;
+	}
 
-code,
-pre {
-	font-family: var(--font-mono);
-}
+	:where(img, svg, video) {
+		max-width: 100%;
+	}
 
-/* ============================================================
-   BUTTON — Post / Article CTA
-   ============================================================ */
+	:where(img, video) {
+		height: auto;
+	}
 
-.button-post {
-	background: var(--gradient-membrane);
-	border-radius: var(--radius-full);
-	box-shadow: var(--shadow-md);
-	box-sizing: border-box;
-	color: var(--color-text-on-accent);
-	cursor: pointer;
-	font-family: var(--font-sans);
-	font-size: var(--text-body);
-	font-weight: var(--weight-bold);
-	line-height: var(--leading-body-lg);
-	opacity: 1;
-	outline: 0 solid transparent;
-	padding: var(--space-2) var(--space-5);
-	-webkit-user-select: none;
-	user-select: none;
-	touch-action: manipulation;
-	width: fit-content;
-	word-break: break-word;
-	border: 0;
-	text-decoration: none;
-	background-position: 0% 50%;
-	background-size: 140% 140%;
-	transition: transform var(--transition-default),
-		box-shadow var(--transition-default),
-		background-position var(--transition-slow);
-}
+	:where(a) {
+		color: var(--color-text-accent);
+		text-underline-offset: 0.2em;
+	}
 
-.button-post:hover {
-	transform: translateY(-1px);
-	box-shadow: var(--shadow-md), var(--shadow-glow-warm);
-	background-position: 60% 40%;
-}
+	:where(code, kbd, pre, samp) {
+		font-family: var(--font-mono);
+	}
 
-/* ============================================================
-   UTILITIES
-   ============================================================ */
-
-.sr-only {
-	position: absolute;
-	width: 1px;
-	height: 1px;
-	padding: 0;
-	margin: -1px;
-	overflow: hidden;
-	clip: rect(0, 0, 0, 0);
-	white-space: nowrap;
-	border-width: 0;
-}
-
-.wrapper {
-	width: 100%;
-	max-width: 90rem;
-	margin-inline: auto;
-	padding-inline: var(--site-margin);
-}
-
-.content {
-	max-width: 100%;
-	width: 100%;
-	margin-inline: auto;
-	padding: 0 var(--space-2);
-	box-sizing: border-box;
-}
-
-@media (min-width: 50em) {
-	.content {
-		padding: 0 var(--space-8);
+	:where([hidden]:not([hidden="until-found"])) {
+		display: none !important;
 	}
 }
 
-.stack {
+/* ============================================================
+   PAGE BACKDROP — the membrane: warm and digital glows over the
+   canvas. Glow tokens are mode-aware tints from the system.
+   ============================================================ */
+
+.site-backdrop {
+	min-height: 100dvh;
 	display: flex;
 	flex-direction: column;
-}
-
-/* Gap utilities (bridged — Tailwind gap-* preferred for new code) */
-.gap-2 { gap: var(--space-2); }
-.gap-4 { gap: var(--space-4); }
-.gap-8 { gap: var(--space-8); }
-.gap-10 { gap: var(--space-10); }
-.gap-15 { gap: 3.75rem; }
-.gap-20 { gap: var(--space-20); }
-.gap-30 { gap: 7.5rem; }
-.gap-48 { gap: 12rem; }
-
-.tags {
-	display: flex;
-	flex-wrap: wrap;
-	gap: var(--space-2);
-	align-items: center;
-}
-
-.video-container {
-	position: relative;
-	padding-bottom: 56.25%; /* 16:9 */
-	height: 0;
-	overflow: hidden;
-}
-
-.video-container iframe {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 100%;
-	height: 100%;
-}
-
-@media (min-width: 50em) {
-	.lg\:gap-2 { gap: var(--space-2); }
-	.lg\:gap-4 { gap: var(--space-4); }
-	.lg\:gap-8 { gap: var(--space-8); }
-	.lg\:gap-10 { gap: var(--space-10); }
-	.lg\:gap-15 { gap: 3.75rem; }
-	.lg\:gap-20 { gap: var(--space-20); }
-	.lg\:gap-30 { gap: 7.5rem; }
-	.lg\:gap-48 { gap: 12rem; }
-}
-
-/* ============================================================
-   IMAGERY — Photo Treatment
-   ============================================================ */
-
-.photo-treatment {
-	filter: var(--photo-warmth);
-	border-radius: var(--photo-border-radius);
-	box-shadow: var(--photo-shadow);
-}
-
-/* ============================================================
-   SECTION DIVIDERS
-   ============================================================ */
-
-.section-divider {
-	border: none;
-	height: 1px;
-	background: var(--gradient-divider);
-	margin: var(--space-16) 0;
-}
-
-/* ============================================================
-   CODE BLOCKS
-   ============================================================ */
-
-pre {
-	position: relative;
-	margin: var(--space-5) 0;
-	padding: calc(var(--space-6) + 1.15rem) var(--space-5) var(--space-5);
-	border: 1px solid color-mix(in oklab, var(--code-border) 85%, var(--color-terracotta) 15%);
-	border-radius: var(--radius-lg);
+	isolation: isolate;
 	background:
-		linear-gradient(180deg, rgba(255, 255, 255, 0.045), transparent 4.25rem),
-		var(--code-bg);
-	box-shadow:
-		inset 0 1px 0 rgba(255, 255, 255, 0.06),
-		0 18px 44px rgba(0, 0, 0, 0.18);
-	color: var(--code-text);
-	overflow-x: hidden;
-	white-space: pre-wrap;
-	overflow-wrap: anywhere;
-	word-break: break-word;
-	tab-size: 2;
+		radial-gradient(1200px 600px at 6% -10%, var(--bg-glow-terracotta), transparent 60%),
+		radial-gradient(900px 500px at 92% 10%, var(--bg-glow-teal), transparent 55%),
+		radial-gradient(1000px 700px at 50% 110%, var(--bg-glow-sage), transparent 60%),
+		radial-gradient(900px 600px at 40% 0%, var(--bg-glow-focal), transparent 60%),
+		var(--color-bg-primary);
 }
 
-figure[data-rehype-pretty-code-figure] pre {
-	width: 100%;
+.site-backdrop > main {
+	flex: 1;
 }
 
-pre::before {
-	content: "";
-	position: absolute;
-	top: var(--space-4);
-	left: var(--space-5);
-	width: 2.5rem;
-	height: 0.625rem;
-	background:
-		radial-gradient(circle, var(--color-terracotta-light) 0 0.25rem, transparent 0.275rem) 0 50% / 0.825rem 100% no-repeat,
-		radial-gradient(circle, var(--color-amber-light) 0 0.25rem, transparent 0.275rem) 50% 50% / 0.825rem 100% no-repeat,
-		radial-gradient(circle, var(--color-teal-light) 0 0.25rem, transparent 0.275rem) 100% 50% / 0.825rem 100% no-repeat;
-	opacity: 0.9;
-	pointer-events: none;
+@media (forced-colors: active) {
+	.site-backdrop {
+		background: Canvas;
+	}
 }
 
-pre code {
-	display: block;
-	width: 100%;
-	max-width: 100%;
-	font-size: var(--text-code);
-	line-height: var(--leading-code);
-	white-space: inherit;
-	overflow-wrap: inherit;
-	word-break: inherit;
+/* ============================================================
+   CODE BLOCKS — rehype-pretty-code output wrapped in
+   .mp-code-block. Shiki emits the css-variables theme, so the
+   syntax colors are the system's gate-checked --code-* tokens.
+   ============================================================ */
+
+.mp-code-block {
+	--shiki-foreground: var(--code-text);
+	--shiki-background: transparent;
+	--shiki-token-keyword: var(--code-keyword);
+	--shiki-token-string: var(--code-string);
+	--shiki-token-string-expression: var(--code-string);
+	--shiki-token-function: var(--code-function);
+	--shiki-token-constant: var(--code-number);
+	--shiki-token-comment: var(--code-comment);
+	--shiki-token-parameter: var(--code-text);
+	--shiki-token-punctuation: var(--code-text);
+	--shiki-token-link: var(--code-function);
+
+	position: relative;
+	margin-block: var(--space-6);
 }
 
-pre [data-line] {
-	display: block;
-	width: 100%;
-	padding: 0 var(--space-4);
-	border-inline-start: 2px solid transparent;
-	white-space: inherit;
-	overflow-wrap: inherit;
-	word-break: inherit;
+.mp-code-block pre {
+	white-space: pre;
 }
 
-pre [data-highlighted-line] {
-	background: rgba(255, 255, 255, 0.055);
-	border-inline-start-color: var(--color-teal-light);
+.mp-code-block [data-line] {
+	display: inline-block;
+	min-width: 100%;
+	padding-inline: var(--space-2);
+	border-inline-start: var(--border-width-medium) solid transparent;
 }
 
-code[data-line-numbers] {
+.mp-code-block [data-highlighted-line] {
+	background-color: color-mix(in srgb, var(--code-number) 12%, transparent);
+	border-inline-start-color: var(--code-number);
+}
+
+.mp-code-block code[data-line-numbers] {
 	counter-reset: line;
 }
 
-code[data-line-numbers] > [data-line]::before {
+.mp-code-block code[data-line-numbers] > [data-line]::before {
 	counter-increment: line;
 	content: counter(line);
 	display: inline-block;
 	width: 2ch;
-	margin-right: var(--space-4);
-	text-align: right;
-	opacity: 0.6;
+	margin-inline-end: var(--space-4);
+	color: var(--code-comment);
+	text-align: end;
 }
 
-pre button.rehype-pretty-copy {
-	top: var(--space-3) !important;
-	right: var(--space-3) !important;
-	width: 2rem !important;
-	height: 2rem !important;
-	margin: 0 !important;
-	border: 1px solid rgba(255, 255, 255, 0.1) !important;
-	border-radius: var(--radius-sm) !important;
-	background: rgba(255, 255, 255, 0.055) !important;
-	box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08) !important;
-	cursor: pointer;
-	transition:
-		opacity var(--duration-fast) var(--ease-out),
-		background-color var(--duration-fast) var(--ease-out),
-		border-color var(--duration-fast) var(--ease-out),
-		transform var(--duration-fast) var(--ease-out);
+/* The copy button is a .mp-button in .mp-code-block__header (rehype-membrane-code.mjs). */
+
+/* Embedded video (YouTube) at 16:9. */
+.video-container {
+	overflow: hidden;
+	aspect-ratio: 16 / 9;
+	border-radius: var(--radius-lg);
+	background-color: var(--color-bg-tertiary);
 }
 
-pre:hover button.rehype-pretty-copy,
-pre button.rehype-pretty-copy:focus-visible,
-pre button.rehype-pretty-copy.rehype-pretty-copied {
-	opacity: 1;
-}
-
-pre button.rehype-pretty-copy:hover {
-	background: rgba(255, 255, 255, 0.1) !important;
-	border-color: rgba(255, 255, 255, 0.18) !important;
-	transform: translateY(-1px);
-}
-
-@media (hover: none), (pointer: coarse) {
-	pre button.rehype-pretty-copy {
-		opacity: 1 !important;
-	}
-}
-
-@media (max-width: 40em) {
-	pre {
-		padding: calc(var(--space-5) + 1rem) var(--space-4) var(--space-4);
-	}
-
-	pre::before {
-		top: var(--space-4);
-		left: var(--space-4);
-	}
-
-	pre [data-line] {
-		padding-inline: var(--space-3);
-	}
-
-	pre button.rehype-pretty-copy {
-		opacity: 1 !important;
-	}
-}
-
-pre::-webkit-scrollbar {
-	width: 0;
-	height: 0;
-}
-
-pre::-webkit-scrollbar-track {
-	background: rgba(255, 255, 255, 0.04);
-	border-radius: var(--radius-full);
-}
-
-pre::-webkit-scrollbar-thumb {
-	background: rgba(226, 220, 210, 0.22);
-	border-radius: var(--radius-full);
-}
-
-/* Shiki theme variables */
-code[data-theme*=" "],
-code[data-theme*=" "] span {
-	color: var(--shiki-light);
-	background-color: var(--shiki-light-bg);
-}
-
-@media (prefers-color-scheme: dark) {
-	code[data-theme*=" "],
-	code[data-theme*=" "] span {
-		color: var(--shiki-dark);
-		background-color: var(--shiki-dark-bg);
-	}
+.video-container iframe {
+	display: block;
+	width: 100%;
+	height: 100%;
+	border: 0;
 }
 
 /* ============================================================
-   SCROLL REVEAL ANIMATION SYSTEM
+   MOTION (spec §8) — section reveals and page transitions.
+   Opt-in only: nothing moves under reduced motion, the movement
+   stays within --space-2, and nothing is hidden until the reveal
+   script has run (it sets .reveal-ready), so a page whose
+   scripts fail still shows all of its content.
    ============================================================ */
 
-[data-animate] {
-	opacity: 1;
-	will-change: opacity, transform;
-}
-
-/* Hide only when JavaScript is active */
-.js [data-animate] {
-	opacity: 0;
-}
-
-/* Revealed state */
-[data-animate].is-visible {
-	opacity: 1;
-}
-
-/* Animation variants */
-[data-animate="fade-up"] {
-	transform: translateY(2rem);
-}
-[data-animate="fade-up"].is-visible {
-	transform: translateY(0);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-out);
-}
-
-[data-animate="fade-down"] {
-	transform: translateY(-2rem);
-}
-[data-animate="fade-down"].is-visible {
-	transform: translateY(0);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-out);
-}
-
-[data-animate="fade-left"] {
-	transform: translateX(2rem);
-}
-[data-animate="fade-left"].is-visible {
-	transform: translateX(0);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-out);
-}
-
-[data-animate="fade-right"] {
-	transform: translateX(-2rem);
-}
-[data-animate="fade-right"].is-visible {
-	transform: translateX(0);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-out);
-}
-
-[data-animate="fade"] {
-	transform: none;
-}
-[data-animate="fade"].is-visible {
-	transition: opacity var(--duration-slow) var(--ease-out);
-}
-
-[data-animate="scale-up"] {
-	transform: scale(0.95);
-}
-[data-animate="scale-up"].is-visible {
-	transform: scale(1);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-spring);
-}
-
-[data-animate="blur-in"] {
-	filter: blur(8px);
-	transform: translateY(1rem);
-}
-[data-animate="blur-in"].is-visible {
-	filter: blur(0);
-	transform: translateY(0);
-	transition:
-		opacity var(--duration-slow) var(--ease-out),
-		filter var(--duration-slow) var(--ease-out),
-		transform var(--duration-slow) var(--ease-out);
-}
-
-/* Stagger delays for child elements */
-[data-animate-stagger] > * {
-	--stagger-delay: 0.08s;
-}
-[data-animate-stagger] > *:nth-child(1) { transition-delay: calc(var(--stagger-delay) * 1); }
-[data-animate-stagger] > *:nth-child(2) { transition-delay: calc(var(--stagger-delay) * 2); }
-[data-animate-stagger] > *:nth-child(3) { transition-delay: calc(var(--stagger-delay) * 3); }
-[data-animate-stagger] > *:nth-child(4) { transition-delay: calc(var(--stagger-delay) * 4); }
-[data-animate-stagger] > *:nth-child(5) { transition-delay: calc(var(--stagger-delay) * 5); }
-[data-animate-stagger] > *:nth-child(6) { transition-delay: calc(var(--stagger-delay) * 6); }
-[data-animate-stagger] > *:nth-child(7) { transition-delay: calc(var(--stagger-delay) * 7); }
-[data-animate-stagger] > *:nth-child(8) { transition-delay: calc(var(--stagger-delay) * 8); }
-
-/* Custom delay utilities */
-[data-animate-delay="100"] { transition-delay: 0.1s !important; }
-[data-animate-delay="200"] { transition-delay: 0.2s !important; }
-[data-animate-delay="300"] { transition-delay: 0.3s !important; }
-[data-animate-delay="400"] { transition-delay: 0.4s !important; }
-[data-animate-delay="500"] { transition-delay: 0.5s !important; }
-
-/* ============================================================
-   VIEW TRANSITION CUSTOMIZATIONS
-   ============================================================ */
-
-@keyframes page-fade-in {
-	from {
+@media (prefers-reduced-motion: no-preference) {
+	.reveal-ready [data-animate]:not(.is-visible) {
 		opacity: 0;
-		transform: translateY(8px);
+		translate: 0 var(--space-2);
 	}
-	to {
+
+	.reveal-ready [data-animate].is-visible {
 		opacity: 1;
-		transform: translateY(0);
-	}
-}
-
-@keyframes page-fade-out {
-	from {
-		opacity: 1;
-		transform: translateY(0);
-	}
-	to {
-		opacity: 0;
-		transform: translateY(-8px);
-	}
-}
-
-::view-transition-old(root) {
-	animation: page-fade-out var(--duration-normal) var(--ease-out) forwards;
-}
-
-::view-transition-new(root) {
-	animation: page-fade-in var(--duration-slow) var(--ease-out) forwards;
-}
-
-::view-transition-group(nav) {
-	animation-duration: var(--duration-normal);
-}
-
-/* ============================================================
-   REDUCED MOTION SUPPORT
-   Core duration/transition resets are in design-tokens.css.
-   These rules handle animation-specific and view-transition overrides.
-   ============================================================ */
-
-@media (prefers-reduced-motion: reduce) {
-	[data-animate] {
-		opacity: 1 !important;
-		transform: none !important;
-		filter: none !important;
+		translate: 0 0;
+		transition:
+			opacity var(--transition-slow),
+			translate var(--transition-slow);
 	}
 
-	::view-transition-group(*),
-	::view-transition-old(*),
-	::view-transition-new(*) {
-		animation: none !important;
+	.reveal-ready [data-animate-stagger] > :nth-child(2) { transition-delay: 60ms; }
+	.reveal-ready [data-animate-stagger] > :nth-child(3) { transition-delay: 120ms; }
+	.reveal-ready [data-animate-stagger] > :nth-child(n + 4) { transition-delay: 180ms; }
+
+	@view-transition {
+		navigation: auto;
+	}
+
+	::view-transition-old(root),
+	::view-transition-new(root) {
+		animation-duration: var(--duration-slower);
+		animation-timing-function: var(--ease-in-out);
 	}
 }

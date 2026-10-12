@@ -4,8 +4,9 @@ import ContentPreview from './ContentPreview.astro';
 interface Props {
   post: CollectionEntry<'blog'>;
   variant?: 'default' | 'compact';
+  eager?: boolean;
 }
-const { post, variant = 'default' } = Astro.props;
+const { post, variant = 'default', eager = false } = Astro.props;
 ---
 
-<ContentPreview entry={post} variant={variant} />
+<ContentPreview entry={post} variant={variant} eager={eager} />

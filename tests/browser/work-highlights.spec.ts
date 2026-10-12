@@ -4,7 +4,7 @@ test('curated work highlights lead from the home page to work and contact', asyn
   await page.goto('/');
   const highlights = page.getByRole('region', { name: 'Trabalhos em destaque', exact: true });
   await expect(highlights).toBeVisible();
-  await expect(highlights.locator('.project-item')).toHaveCount(3);
+  await expect(highlights.locator('[data-filterable-item]')).toHaveCount(3);
   await expect(highlights.getByRole('heading', { name: /Revisitando Papert/ })).toBeVisible();
   await expect(highlights.getByRole('heading', { name: /LearnChain/ })).toBeVisible();
   await expect(highlights.getByRole('heading', { name: /Personalização na Educação/ })).toBeVisible();
