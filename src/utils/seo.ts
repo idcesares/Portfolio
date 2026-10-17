@@ -20,7 +20,7 @@ export const SOCIAL_LINKS = {
   twitter: 'https://twitter.com/idcesares',
 };
 
-export const DEFAULT_OG_IMAGE = '/assets/portrait.webp';
+export const DEFAULT_OG_IMAGE = '/assets/og-default.png';
 
 const getSiteHref = (site: URL) => site.href;
 export const getPersonId = (site: URL) => new URL('/about/#person', site).toString();
