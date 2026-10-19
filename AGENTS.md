@@ -33,7 +33,7 @@ Este é o **portfólio profissional de tecnologia educacional** do Isaac D'Césa
 ├── .github/
 │   ├── copilot-instructions.md
 │   └── workflows/          # CI (astro check + build) e Docker test
-├── design-system/          # Distribuição da Membrane Palette v2.1 (membrane.css, components/, tokens/, fonts/, brand/, specs) — gerada por `pnpm sync:membrane`, não editar
+├── design-system/          # Distribuição da Membrane Palette v2.2 (membrane.css, components/, tokens/, fonts/, brand/, specs) — gerada por `pnpm sync:membrane`, não editar
 ├── docker/                 # Docs e scripts Docker
 ├── astro.config.mjs        # Configuração Astro + integrações
 ├── docker-compose.yml      # Compose dev

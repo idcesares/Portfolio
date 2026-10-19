@@ -17,7 +17,7 @@ Além do conteúdo editorial, o repositório também documenta:
 - instruções para agentes e copilots alinhadas com a arquitetura atual;
 - pipelines de validação com `astro check`, build e auditoria de dependências.
 
-A análise atual e as prioridades do site estão em [docs/site-review.md](./docs/site-review.md).
+O estado atual e as prioridades do site estão em [docs/roadmap.md](./docs/roadmap.md).
 
 ## Estado Atual do Repositório
 
@@ -121,7 +121,7 @@ Esse índice alimenta a experiência client-side com Fuse.js e é entregue com c
 
 ### Design system
 
-O site é uma execução do **[Membrane Palette](https://github.com/idcesares/The-Membrane-Palette)** v2.1.0. A distribuição da biblioteca fica em [`design-system/`](./design-system/) (versão e commit em `membrane.lock.json`) e é atualizada com `pnpm sync:membrane`:
+O site é uma execução do **[Membrane Palette](https://github.com/idcesares/The-Membrane-Palette)** v2.2.0. A distribuição da biblioteca fica em [`design-system/`](./design-system/) (versão e commit em `membrane.lock.json`) e é atualizada com `pnpm sync:membrane`:
 
 - `membrane.css`: fontes auto-hospedadas com fallbacks métricos, tokens, base e os componentes `mp-*`, importado por `src/styles/global.css` como camada global única;
 - `components/membrane.js`: comportamentos (dialog da busca, toasts);

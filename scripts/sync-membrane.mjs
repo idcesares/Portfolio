@@ -32,6 +32,8 @@ const FILES = [
 	'membrane.css',
 	'llms.txt',
 	'DESIGN-SYSTEM.md',
+	'PROFILE.md',
+	'VOICE.md',
 	'BRAND-VOICE.md',
 	'CHANGELOG.md',
 	'components/membrane.js',

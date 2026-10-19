@@ -7,12 +7,14 @@ Guia operacional para Claude Code trabalhando neste repo (`dcesares.dev`).
 ## 0. Referências obrigatórias
 
 O overhaul de marca (playbook de fases) foi concluído e o arquivo de playbook foi removido do repo. Este CLAUDE.md é a fonte primária de orientação operacional agora. Ler junto antes de cada sessão:
-- [design-system/BRAND-VOICE.md](design-system/BRAND-VOICE.md) — voz, tom, vocabulário proibido
+- [design-system/PROFILE.md](design-system/PROFILE.md) — fatos sobre Isaac (autoridade factual; nunca inferir biografia de exemplos de escrita)
+- [design-system/VOICE.md](design-system/VOICE.md) — como Isaac escreve e como o registro se adapta
+- [design-system/BRAND-VOICE.md](design-system/BRAND-VOICE.md) — aplicação pública da voz, vocabulário proibido
 - [design-system/DESIGN-SYSTEM.md](design-system/DESIGN-SYSTEM.md) — sistema visual em prosa
 - [design-system/tokens/design-tokens.css](design-system/tokens/design-tokens.css) — fonte de verdade visual
 - [design-system/components/manifest.json](design-system/components/manifest.json) — catálogo da biblioteca de componentes (classes, opções `data-*` válidas, exemplos)
 
-O site é uma **execução da Membrane Palette**: `design-system/` é a distribuição da biblioteca (v2.1.0, ver `membrane.lock.json`), vendorizada sem edição manual. Atualize com `pnpm sync:membrane` (de `../The-Membrane-Palette` ou `--ref <tag>` via jsDelivr).
+O site é uma **execução da Membrane Palette**: `design-system/` é a distribuição da biblioteca (v2.2.0, ver `design-system/membrane.lock.json`), vendorizada sem edição manual. Atualize com `pnpm sync:membrane` (de `../The-Membrane-Palette` ou `--ref <tag>` via jsDelivr).
 
 Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesignguide.pdf` vivem no repo de marca, não aqui. Se precisar deles, peça ao Isaac.
 
@@ -27,9 +29,10 @@ Os arquivos `isaac-dcesares-brand-essence-ultimate.md` e `idcesaresbranddesigngu
 - Prosa antes de bullets. Listas só quando a informação é genuinamente paralela.
 - Sem abertura tipo "Com certeza!" ou "Ótima pergunta".
 - Sem estrutura "não é X, é Y" repetida.
-- CTA assinatura: "Vamos cocriar?"
+- "Vamos cocriar?" é linguagem de campanha opcional, só quando a ação é um convite a colaborar. Botões nomeiam a ação concreta.
+- Identidade pública: Pesquisador · Educador · Desenvolvedor. "Builder" não é mais rótulo de identidade. Fatos (cargo, formação, números) só de `PROFILE.md` ou de fonte verificada.
 
-**Brand test** (todo PR de copy passa nas 4): reflete as três dimensões (Researcher/Educator/Builder)? Segura os dois registros (humano/digital)? É específico o bastante pra só Isaac assinar? Traduz algo, ou só apresenta?
+**Brand test** (todo PR de copy passa nas 4): reflete as três dimensões (Pesquisador/Educador/Desenvolvedor)? Segura os dois registros (humano/digital)? É específico o bastante pra só Isaac assinar? Traduz algo, ou só apresenta?
 
 ---
 

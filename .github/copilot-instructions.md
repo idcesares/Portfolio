@@ -2,7 +2,7 @@
 
 ## Contexto rápido
 
-- Stack: Astro 7 (`output: 'server'`, adapter Vercel), deployed on Vercel. Membrane Palette v2.1 como camada global (`design-system/membrane.css`: fontes, tokens, base e biblioteca de componentes `mp-*`; `membrane.js` para comportamentos) + Tailwind v4 só com o tema da Membrane. Catálogo de componentes em `design-system/components/manifest.json`; spec em `design-system/DESIGN-SYSTEM.md`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
+- Stack: Astro 7 (`output: 'server'`, adapter Vercel), deployed on Vercel. Membrane Palette v2.2 como camada global (`design-system/membrane.css`: fontes, tokens, base e biblioteca de componentes `mp-*`; `membrane.js` para comportamentos) + Tailwind v4 só com o tema da Membrane. Catálogo de componentes em `design-system/components/manifest.json`; spec em `design-system/DESIGN-SYSTEM.md`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
 - Rendering: páginas públicas, feed RSS e índice de busca usam `export const prerender = true`. MPA mode (sem view transitions/ClientRouter) com prefetch nativo do Astro.
 - Conteúdo: Collections `blog/` e `work/` com schema idêntico (title, description, publishDate, updatedDate, tags[], img, img_alt?) definido em `src/content.config.ts`. Suporta `.md` e `.mdx`. Use `getCollection('blog' | 'work')` tipado como `CollectionEntry<'blog' | 'work'>`.
 - Variantes: Componentes como `PostPreviewEnhanced.astro` e `PortfolioPreviewEnhanced.astro` aceitam `variant?: 'default' | 'compact'` via `class:list={['base-class', variant]}`.
