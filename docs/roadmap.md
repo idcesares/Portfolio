@@ -17,7 +17,7 @@ Este é o documento único de estado e prioridades. Ele substitui a análise de 
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Reconfirmar o LCP de Trabalhos em produção depois do deploy de `fetchpriority` na primeira capa e preconnect a `i.ytimg.com` (confirmado por trace como elemento de LCP) e reconfirmar o TBT de Contato | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
+| 1 | Reduzir o LCP de Trabalhos: `fetchpriority` e preconnect não o moveram, então testar servir a capa do YouTube pela otimização de imagens do próprio site (mesma origem, WebP, 640 px) | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s, sem remover conteúdo autoral. A troca da capa em `frontmatter` depende de Isaac |
 | 2 | Revisar o rascunho em inglês (Sobre e três trabalhos em destaque) | Voz confirmada por Isaac; depois, alternância de idioma, URLs em português preservadas e metadados testados |
 | 3 | Acessibilidade e experiência reais | Percurso com leitor de tela (NVDA ou VoiceOver); Core Web Vitals de campo quando houver dados |
 
@@ -38,6 +38,15 @@ Nova medição em produção em 19 de outubro (Lighthouse 11.7, Chromium 141, me
 | Contato | 98 | 2,26 s | 30 ms |
 
 Contato está dentro das metas (LCP até 2,5 s, TBT até 200 ms). Trabalhos segue com LCP alto. A primeira capa da listagem é uma miniatura externa do YouTube (`i.ytimg.com`), sem `fetchpriority` nem preconnect, e foi confirmada por trace (PerformanceObserver) como elemento de LCP. O Lighthouse não conseguiu atribuí-lo sozinho. O TBT de Contato de 2/10 não se reproduziu nesta medição.
+
+Medição depois do deploy de `fetchpriority="high"` na primeira capa e preconnect a `i.ytimg.com` (19 de outubro, mesma ferramenta):
+
+| Página | Performance | LCP | TBT |
+| --- | --- | --- | --- |
+| Trabalhos | 58, 58, 82 (mediana 58) | 3,93, 4,13, 4,10 s (mediana 4,10 s) | 2332, 1349, 32 ms |
+| Contato | 92, 99, 99 (mediana 99) | 2,73, 2,02, 1,83 s (mediana 2,02 s) | 29, 0,5, 0 ms |
+
+Em Trabalhos o LCP não mudou (era 3,88, 4,07 e 4,19 s antes). Duas das três execuções tiveram TBT alto, provavelmente ruído do ambiente de medição, o que derrubou a nota; vale repetir. Contato segue dentro das metas. A hipótese de prioridade e conexão não bastou: o gargalo parece ser o próprio download da miniatura externa.
 
 São resultados de laboratório, com rede e CPU simuladas. Não representam Core Web Vitals de usuários reais.
 
