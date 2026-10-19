@@ -36,6 +36,7 @@ const { title, description, image, imageAlt, ogType, article, structuredData } =
 			article={article}
 			structuredData={structuredData}
 		/>
+		<slot name="head" />
 	</head>
 	<body>
 		<a class="mp-skip-link" href="#main-content">Pular para o conteúdo</a>

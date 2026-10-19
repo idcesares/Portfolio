@@ -8,10 +8,13 @@ interface Props {
 	variant?: 'default' | 'compact';
 	/** Load the image eagerly (first card above the fold). */
 	eager?: boolean;
+	/** Raise the image fetch priority (the likely LCP element). */
+	priority?: boolean;
 }
-const { entry, variant = 'default', eager = false } = Astro.props;
+const { entry, variant = 'default', eager = false, priority = false } = Astro.props;
 const { data, id, collection } = entry;
 const loading = eager ? 'eager' : 'lazy';
+const fetchpriority = priority ? 'high' : undefined;
 ---
 
 <li
@@ -28,9 +31,9 @@ const loading = eager ? 'eager' : 'lazy';
 		<div class="mp-card__media">
 			{
 				typeof data.img === 'string' ? (
-					<img src={data.img} alt={data.img_alt || ''} width="600" height="338" loading={loading} decoding="async" />
+					<img src={data.img} alt={data.img_alt || ''} width="600" height="338" loading={loading} fetchpriority={fetchpriority} decoding="async" />
 				) : (
-					<Image src={data.img} alt={data.img_alt || ''} width={600} height={338} quality={80} loading={loading} decoding="async" />
+					<Image src={data.img} alt={data.img_alt || ''} width={600} height={338} quality={80} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 				)
 			}
 		</div>

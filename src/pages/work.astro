@@ -21,6 +21,7 @@ const tags = tagsByFrequency(projects);
 	title="Trabalho"
 	description="Registros de entregas, projetos e programas em tecnologia educacional, pesquisa e construção de produtos."
 >
+	<link slot="head" rel="preconnect" href="https://i.ytimg.com" />
 	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="10">
 		<Hero
 			title="Meus trabalhos"
@@ -31,7 +32,7 @@ const tags = tagsByFrequency(projects);
 			<h2 id="listing-title" class="mp-visually-hidden">Todos os trabalhos</h2>
 			<FilterBar variant="work" tags={tags} />
 			<GridEnhanced>
-				{projects.map((project, index) => <PortfolioPreviewEnhanced project={project} eager={index < 2} />)}
+				{projects.map((project, index) => <PortfolioPreviewEnhanced project={project} eager={index < 2} priority={index === 0} />)}
 			</GridEnhanced>
 		</section>
 	</main>

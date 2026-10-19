@@ -5,8 +5,9 @@ interface Props {
   project: CollectionEntry<'work'>;
   variant?: 'default' | 'compact';
   eager?: boolean;
+  priority?: boolean;
 }
-const { project, variant = 'default', eager = false } = Astro.props;
+const { project, variant = 'default', eager = false, priority = false } = Astro.props;
 ---
 
-<ContentPreview entry={project} variant={variant} eager={eager} />
+<ContentPreview entry={project} variant={variant} eager={eager} priority={priority} />

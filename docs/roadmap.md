@@ -17,10 +17,9 @@ Este é o documento único de estado e prioridades. Ele substitui a análise de 
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Reduzir o LCP de Trabalhos (hipótese: capa externa do YouTube) e reconfirmar o TBT de Contato | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
+| 1 | Reconfirmar o LCP de Trabalhos em produção depois do deploy de `fetchpriority` na primeira capa e preconnect a `i.ytimg.com` (confirmado por trace como elemento de LCP) e reconfirmar o TBT de Contato | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
 | 2 | Revisar o rascunho em inglês (Sobre e três trabalhos em destaque) | Voz confirmada por Isaac; depois, alternância de idioma, URLs em português preservadas e metadados testados |
-| 3 | Reconfirmar os feeds do NYT e do ChinAI com acesso de rede | XML RSS/Atom com entradas válidas; mexer no cadastro só com evidência de falha |
-| 4 | Acessibilidade e experiência reais | Percurso com leitor de tela (NVDA ou VoiceOver); Core Web Vitals de campo quando houver dados |
+| 3 | Acessibilidade e experiência reais | Percurso com leitor de tela (NVDA ou VoiceOver); Core Web Vitals de campo quando houver dados |
 
 ## Referências de desempenho (2 de outubro, antes da base 2.2.0)
 
@@ -38,9 +37,14 @@ Nova medição em produção em 19 de outubro (Lighthouse 11.7, Chromium 141, me
 | Trabalhos | 84 | 4,07 s | 32 ms |
 | Contato | 98 | 2,26 s | 30 ms |
 
-Contato está dentro das metas (LCP até 2,5 s, TBT até 200 ms). Trabalhos segue com LCP alto. A primeira capa da listagem é uma miniatura externa do YouTube (`i.ytimg.com`), sem `fetchpriority` nem preconnect, e é a hipótese principal; o Lighthouse falhou ao atribuir o elemento de LCP, então falta confirmar com um trace. O TBT de Contato de 2/10 não se reproduziu nesta medição.
+Contato está dentro das metas (LCP até 2,5 s, TBT até 200 ms). Trabalhos segue com LCP alto. A primeira capa da listagem é uma miniatura externa do YouTube (`i.ytimg.com`), sem `fetchpriority` nem preconnect, e foi confirmada por trace (PerformanceObserver) como elemento de LCP. O Lighthouse não conseguiu atribuí-lo sozinho. O TBT de Contato de 2/10 não se reproduziu nesta medição.
 
 São resultados de laboratório, com rede e CPU simuladas. Não representam Core Web Vitals de usuários reais.
+
+## Verificações concluídas em 19 de outubro
+
+- Feeds do NYT (`rss.nytimes.com/.../Technology.xml`) e do ChinAI (`chinai.substack.com/feed`): HTTP 200, XML RSS com 20 itens cada. Os cadastros ficam como estão. A data de curadoria do Tech Signal não foi alterada, porque a conferência cobriu só esses dois feeds.
+- Suíte de navegador completa (60 testes, inclusive axe nos dois temas) aprovada, com o novo teste de carregamento da listagem de Trabalhos.
 
 ## Regras que não mudam
 
