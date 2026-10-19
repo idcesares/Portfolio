@@ -31,7 +31,7 @@ const fetchpriority = priority ? 'high' : undefined;
 		<div class="mp-card__media">
 			{
 				typeof data.img === 'string' ? (
-					<img src={data.img} alt={data.img_alt || ''} width="600" height="338" loading={loading} fetchpriority={fetchpriority} decoding="async" />
+					<Image src={data.img} alt={data.img_alt || ''} width={600} height={338} quality={80} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 				) : (
 					<Image src={data.img} alt={data.img_alt || ''} width={600} height={338} quality={80} loading={loading} fetchpriority={fetchpriority} decoding="async" />
 				)
