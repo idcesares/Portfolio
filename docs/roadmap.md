@@ -17,7 +17,7 @@ Este é o documento único de estado e prioridades. Ele substitui a análise de 
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Medir de novo o desempenho na base 2.2.0 e investigar o TBT de Contato | Lighthouse mobile com mediana de três execuções por página; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
+| 1 | Reduzir o LCP de Trabalhos (hipótese: capa externa do YouTube) e reconfirmar o TBT de Contato | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
 | 2 | Revisar o rascunho em inglês (Sobre e três trabalhos em destaque) | Voz confirmada por Isaac; depois, alternância de idioma, URLs em português preservadas e metadados testados |
 | 3 | Reconfirmar os feeds do NYT e do ChinAI com acesso de rede | XML RSS/Atom com entradas válidas; mexer no cadastro só com evidência de falha |
 | 4 | Acessibilidade e experiência reais | Percurso com leitor de tela (NVDA ou VoiceOver); Core Web Vitals de campo quando houver dados |
@@ -30,6 +30,15 @@ Mediana de três execuções em produção, Lighthouse mobile. Servem de ponto d
 | --- | --- | --- | --- |
 | Trabalhos | 88 | 3,40 s | 122 ms |
 | Contato | 91 | 2,60 s | 230 ms |
+
+Nova medição em produção em 19 de outubro (Lighthouse 11.7, Chromium 141, mediana de três execuções, ambiente diferente do anterior, então a comparação direta é limitada):
+
+| Página | Performance | LCP | TBT |
+| --- | --- | --- | --- |
+| Trabalhos | 84 | 4,07 s | 32 ms |
+| Contato | 98 | 2,26 s | 30 ms |
+
+Contato está dentro das metas (LCP até 2,5 s, TBT até 200 ms). Trabalhos segue com LCP alto. A primeira capa da listagem é uma miniatura externa do YouTube (`i.ytimg.com`), sem `fetchpriority` nem preconnect, e é a hipótese principal; o Lighthouse falhou ao atribuir o elemento de LCP, então falta confirmar com um trace. O TBT de Contato de 2/10 não se reproduziu nesta medição.
 
 São resultados de laboratório, com rede e CPU simuladas. Não representam Core Web Vitals de usuários reais.
 
