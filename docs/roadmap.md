@@ -17,7 +17,7 @@ Este é o documento único de estado e prioridades. Ele substitui a análise de 
 
 | Ordem | Próxima ação | Critério de conclusão |
 | --- | --- | --- |
-| 1 | Reduzir o LCP de Trabalhos: `fetchpriority` e preconnect não o moveram, então testar servir a capa do YouTube pela otimização de imagens do próprio site (mesma origem, WebP, 640 px) | Lighthouse mobile com mediana de três execuções; LCP até 2,5 s, sem remover conteúdo autoral. A troca da capa em `frontmatter` depende de Isaac |
+| 1 | Baixar o LCP de Trabalhos além de 3,78 s: investigar o que mais compete na listagem (várias capas, scripts, fontes) e medir TBT com um ambiente menos ruidoso | Lighthouse mobile com mediana de cinco execuções; LCP até 2,5 s e TBT até 200 ms, sem remover conteúdo autoral |
 | 2 | Revisar o rascunho em inglês (Sobre e três trabalhos em destaque) | Voz confirmada por Isaac; depois, alternância de idioma, URLs em português preservadas e metadados testados |
 | 3 | Acessibilidade e experiência reais | Percurso com leitor de tela (NVDA ou VoiceOver); Core Web Vitals de campo quando houver dados |
 
@@ -47,6 +47,15 @@ Medição depois do deploy de `fetchpriority="high"` na primeira capa e preconne
 | Contato | 92, 99, 99 (mediana 99) | 2,73, 2,02, 1,83 s (mediana 2,02 s) | 29, 0,5, 0 ms |
 
 Em Trabalhos o LCP não mudou (era 3,88, 4,07 e 4,19 s antes). Duas das três execuções tiveram TBT alto, provavelmente ruído do ambiente de medição, o que derrubou a nota; vale repetir. Contato segue dentro das metas. A hipótese de prioridade e conexão não bastou: o gargalo parece ser o próprio download da miniatura externa.
+
+Depois de servir as capas externas pelo otimizador de imagens do site (#130; `/_vercel/image`, WebP, 38 kB a primeira), mediana de cinco execuções em 19 de outubro:
+
+| Página | Performance | LCP | TBT |
+| --- | --- | --- | --- |
+| Trabalhos | 73 (52 a 86) | 3,78 s (3,31 a 4,52 s) | 787 ms (146 a 2565 ms) |
+| Contato | 99 | 2,11 s | 34 ms |
+
+O LCP de Trabalhos caiu cerca de 0,3 s (era 4,07 a 4,10 s), mas segue acima da meta de 2,5 s. O TBT variou demais entre execuções iguais, o que aponta ruído do ambiente de medição e não regressão. Contato está dentro das metas.
 
 São resultados de laboratório, com rede e CPU simuladas. Não representam Core Web Vitals de usuários reais.
 
