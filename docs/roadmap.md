@@ -46,6 +46,8 @@ São resultados de laboratório, com rede e CPU simuladas. Não representam Core
 - Feeds do NYT (`rss.nytimes.com/.../Technology.xml`) e do ChinAI (`chinai.substack.com/feed`): HTTP 200, XML RSS com 20 itens cada. Os cadastros ficam como estão. A data de curadoria do Tech Signal não foi alterada, porque a conferência cobriu só esses dois feeds.
 - Suíte de navegador completa (60 testes, inclusive axe nos dois temas) aprovada, com o novo teste de carregamento da listagem de Trabalhos.
 
+- A Palette 2.2.0 está fixada no commit `0bdbc24` da `master` (`design-system/membrane.lock.json`). O repo da Palette ainda não tem tag; quando `v2.2.0` existir, rodar `pnpm sync:membrane --ref v2.2.0` para trocar o commit pela tag.
+
 ## Regras que não mudam
 
 - A experiência funciona em mobile, com teclado e com movimento reduzido. Busca, filtros e tema continuam utilizáveis com armazenamento do navegador restrito.
