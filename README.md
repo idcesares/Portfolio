@@ -185,7 +185,7 @@ Portfolio/
 - **Node.js** `>=24.0.0 <25`
 - **pnpm** `>=10 <11`
 
-Use a versão fixada em `packageManager` (`pnpm@10.34.6`). Se o `pnpm` global for de outra versão, execute `corepack pnpm install` e `corepack pnpm check`. O `pnpm-workspace.yaml` delimita este repositório para evitar que um workspace ancestral controle o lockfile e a auditoria. Docker e CI usam a mesma versão de pnpm.
+Use a versão fixada em `packageManager` (`pnpm@10.34.7`). Se o `pnpm` global for de outra versão, execute `corepack pnpm install` e `corepack pnpm check`. O `pnpm-workspace.yaml` delimita este repositório para evitar que um workspace ancestral controle o lockfile e a auditoria. Docker e CI usam a mesma versão de pnpm.
 
 Instalação e uso:
 
