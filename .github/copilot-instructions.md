@@ -2,7 +2,7 @@
 
 ## Contexto rápido
 
-- Stack: Astro 7 (`output: 'server'`, adapter Vercel), deployed on Vercel. Tailwind v4 via `@tailwindcss/vite` + Membrane Palette design tokens (ex.: `var(--color-neutral-100)`, `var(--shadow-md)`, `var(--gradient-membrane)`). Tokens definidos em `design-system/tokens/design-tokens.css`, com base layer em `design-system/tokens/base.css`; spec em `design-system/`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
+- Stack: Astro 7 (`output: 'server'`, adapter Vercel), deployed on Vercel. Membrane Palette v2.2 como camada global (`design-system/membrane.css`: fontes, tokens, base e biblioteca de componentes `mp-*`; `membrane.js` para comportamentos) + Tailwind v4 só com o tema da Membrane. Catálogo de componentes em `design-system/components/manifest.json`; spec em `design-system/DESIGN-SYSTEM.md`. Site em português (`lang="pt-BR"`), datas em `pt-BR`.
 - Rendering: páginas públicas, feed RSS e índice de busca usam `export const prerender = true`. MPA mode (sem view transitions/ClientRouter) com prefetch nativo do Astro.
 - Conteúdo: Collections `blog/` e `work/` com schema idêntico (title, description, publishDate, updatedDate, tags[], img, img_alt?) definido em `src/content.config.ts`. Suporta `.md` e `.mdx`. Use `getCollection('blog' | 'work')` tipado como `CollectionEntry<'blog' | 'work'>`.
 - Variantes: Componentes como `PostPreviewEnhanced.astro` e `PortfolioPreviewEnhanced.astro` aceitam `variant?: 'default' | 'compact'` via `class:list={['base-class', variant]}`.
@@ -16,7 +16,7 @@
 
 - TypeScript estrito; sempre declarar `interface Props { }` em componentes. Manter naming PascalCase para componentes. Evitar adicionar deps novas; preferir utilitários existentes.
 - Frontmatter obrigatório: `title`, `description`, `publishDate`, `updatedDate` (coerção para Date), `tags[]`, `img`, `img_alt?`. Imagens em `public/assets/blog_imgs/` com caminhos absolutos (`/assets/...`); usar `loading="lazy"` e `decoding="async"` (exceto heróis críticos).
-- Styling: Usar design tokens do Membrane Palette (`var(--color-*)`, `var(--space-*)`, `var(--font-*)`) — nunca hardcodar cores/espaçamentos. Priorizar utilities Tailwind e classes utilitárias (`stack` para colunas com gap). Não quebrar identidade visual.
+- Styling: componentes `mp-*` da Membrane primeiro (opções `data-*` do manifest, estado por ARIA); CSS próprio só com tokens semânticos, nunca primitivos nem cores cruas. `pnpm check:membrane` valida. Não quebrar identidade visual.
 - Markdown: Code highlighting via `rehype-pretty-code` (tema Dracula). Reading time calculado pelo plugin `remark-reading-time` (PT-BR).
 - Performance/SEO: Vercel Analytics + Speed Insights ativos. Manter RSS em `/rss.xml` e sitemap automático. Partytown para GTM.
 

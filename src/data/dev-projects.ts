@@ -1,6 +1,5 @@
 export interface TechItem {
 	name: string;
-	color: 'teal' | 'terracotta' | 'amber' | 'sage' | 'burgundy';
 }
 
 export type DevProjectCategory =
@@ -91,12 +90,13 @@ export const statusLabels: Record<DevProjectStatus, string> = {
 	archived: 'Arquivado',
 };
 
-export const statusColors: Record<DevProjectStatus, string> = {
-	live: 'var(--color-teal)',
-	development: 'var(--color-amber)',
-	published: 'var(--color-burgundy)',
-	reference: 'var(--color-sage)',
-	archived: 'var(--color-neutral-400)',
+/** Membrane badge tone per status: the dot and label share a gate-checked pair. */
+export const statusTones: Record<DevProjectStatus, 'success' | 'warning' | 'human' | 'digital' | undefined> = {
+	live: 'success',
+	development: 'warning',
+	published: 'human',
+	reference: 'digital',
+	archived: undefined,
 };
 
 /**
@@ -116,11 +116,11 @@ export const devProjects: DevProject[] = [
 		longDescription:
 			'Instrumento de pesquisa para estimar risco de greenwashing em divulgações climáticas: quando o discurso ambiental merece uma análise mais cuidadosa? Combina sinais do ClimateBERT e regras fuzzy em um escore auditável, com registro das regras acionadas e da proveniência. O resultado apoia a investigação humana; não é uma certificação nem uma conclusão de fraude.',
 		techStack: [
-			{ name: 'Python', color: 'teal' },
-			{ name: 'ClimateBERT', color: 'terracotta' },
-			{ name: 'Lógica fuzzy', color: 'amber' },
-			{ name: 'W3C PROV-O', color: 'sage' },
-			{ name: 'NLP', color: 'burgundy' },
+			{ name: 'Python' },
+			{ name: 'ClimateBERT' },
+			{ name: 'Lógica fuzzy' },
+			{ name: 'W3C PROV-O' },
+			{ name: 'NLP' },
 		],
 		demoUrl: 'https://doi.org/10.5281/zenodo.21122389',
 		repoUrl: 'https://github.com/idcesares/GreenRisk',
@@ -139,10 +139,10 @@ export const devProjects: DevProject[] = [
 		longDescription:
 			'Aplicativo de desktop com um motor de downloads em Rust compartilhado com a linha de comando, o terminal e a extensão para navegador. Permite pausar e retomar transferências, verificar arquivos por SHA-256, baixar vídeo e áudio e manter a fila ativa mesmo após fechar a janela.',
 		techStack: [
-			{ name: 'Rust', color: 'teal' },
-			{ name: 'Tauri 2', color: 'terracotta' },
-			{ name: 'TypeScript', color: 'amber' },
-			{ name: 'Windows 11', color: 'sage' },
+			{ name: 'Rust' },
+			{ name: 'Tauri 2' },
+			{ name: 'TypeScript' },
+			{ name: 'Windows 11' },
 		],
 		demoUrl: 'https://github.com/idcesares/fetchpath/releases/latest',
 		repoUrl: 'https://github.com/idcesares/fetchpath',
@@ -160,12 +160,12 @@ export const devProjects: DevProject[] = [
 		longDescription:
 			'Editor colaborativo inspirado na simplicidade do Dontpad: abra uma URL, escreva e compartilhe. Blocos ricos, presença, histórico, resiliência offline, links somente leitura e proteção por PIN são sustentados por Yjs, Durable Objects e SQLite — sem enviar o conteúdo para modelos de IA.',
 		techStack: [
-			{ name: 'React 19', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Yjs', color: 'amber' },
-			{ name: 'Cloudflare Workers', color: 'sage' },
-			{ name: 'Durable Objects', color: 'burgundy' },
-			{ name: 'SQLite', color: 'teal' },
+			{ name: 'React 19' },
+			{ name: 'TypeScript' },
+			{ name: 'Yjs' },
+			{ name: 'Cloudflare Workers' },
+			{ name: 'Durable Objects' },
+			{ name: 'SQLite' },
 		],
 		demoUrl: 'https://padline.page',
 		repoUrl: 'https://github.com/idcesares/padline',
@@ -180,17 +180,17 @@ export const devProjects: DevProject[] = [
 		id: 'membrane-design-system',
 		title: 'The Membrane Palette',
 		description:
-			'Design system em tokens que mantém calor humano e precisão digital na mesma interface — com dark mode e acessibilidade como estrutura, não remendo.',
+			'Design system de tokens e componentes que mantém calor humano e precisão digital na mesma interface, com dark mode e acessibilidade como estrutura, não remendo.',
 		longDescription:
-			'Sistema de design orientado por uma metáfora simples: a interface como membrana entre o humano e o digital. A fonte de verdade usa tokens DTCG; o CSS gerado trabalha com OKLCH e light-dark(), enquanto gates automatizados verificam contraste WCAG AA e consistência entre os artefatos.',
+			'Sistema de design orientado por uma metáfora simples: a interface como membrana entre o humano e o digital. A fonte de verdade usa tokens DTCG; o CSS gerado trabalha com OKLCH e light-dark(), e uma biblioteca de 35 componentes sem framework segue as mesmas regras. Gates automatizados verificam contraste WCAG AA, consistência entre os artefatos e acessibilidade em três navegadores. Este portfólio é construído com ela.',
 		img: '/assets/blog_imgs/membrane-palette.webp',
 		imgAlt: 'Showcase visual do design system The Membrane Palette',
 		techStack: [
-			{ name: 'Design Tokens', color: 'teal' },
-			{ name: 'DTCG', color: 'terracotta' },
-			{ name: 'OKLCH', color: 'amber' },
-			{ name: 'CSS', color: 'sage' },
-			{ name: 'WCAG AA', color: 'burgundy' },
+			{ name: 'Design Tokens' },
+			{ name: 'DTCG' },
+			{ name: 'OKLCH' },
+			{ name: 'CSS' },
+			{ name: 'WCAG AA' },
 		],
 		demoUrl: 'https://membrane-palette.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/The-Membrane-Palette',
@@ -207,11 +207,11 @@ export const devProjects: DevProject[] = [
 		description:
 			'Este portfólio: uma base editorial para reunir pesquisa, prática profissional e código sem fingir que são vidas separadas.',
 		techStack: [
-			{ name: 'Astro 7', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Tailwind CSS', color: 'sage' },
-			{ name: 'Fuse.js', color: 'amber' },
-			{ name: 'Vercel', color: 'burgundy' },
+			{ name: 'Astro 7' },
+			{ name: 'TypeScript' },
+			{ name: 'Tailwind CSS' },
+			{ name: 'Fuse.js' },
+			{ name: 'Vercel' },
 		],
 		img: '/assets/blog_imgs/what-is-astro-cover-image.webp',
 		imgAlt: 'Página inicial do portfólio dcesares.dev',
@@ -227,11 +227,11 @@ export const devProjects: DevProject[] = [
 		description:
 			'Template open source de portfólio com layout bento, movimento ambiental e uma arquitetura de conteúdo preparada para pessoas, buscadores e LLMs.',
 		techStack: [
-			{ name: 'Next.js 16', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Tailwind CSS', color: 'sage' },
-			{ name: 'Framer Motion', color: 'amber' },
-			{ name: 'Playwright', color: 'burgundy' },
+			{ name: 'Next.js 16' },
+			{ name: 'TypeScript' },
+			{ name: 'Tailwind CSS' },
+			{ name: 'Framer Motion' },
+			{ name: 'Playwright' },
 		],
 		demoUrl: 'https://cloud-dancer.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Cloud-Dancer',
@@ -245,10 +245,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Diagnóstico de IP e rede com explicações legíveis, exportação local e nenhum rastreador acompanhando a consulta.',
 		techStack: [
-			{ name: 'Next.js 16', color: 'teal' },
-			{ name: 'React 19', color: 'terracotta' },
-			{ name: 'TypeScript', color: 'amber' },
-			{ name: 'Vitest', color: 'burgundy' },
+			{ name: 'Next.js 16' },
+			{ name: 'React 19' },
+			{ name: 'TypeScript' },
+			{ name: 'Vitest' },
 		],
 		demoUrl: 'https://myip.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/my-ip',
@@ -262,10 +262,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Curadoria navegável de fontes sobre tecnologia, IA, engenharia, negócios, política e educação — com espaço real para quem apura no Brasil.',
 		techStack: [
-			{ name: 'Astro', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'RSS/OPML', color: 'amber' },
-			{ name: 'SEO', color: 'burgundy' },
+			{ name: 'Astro' },
+			{ name: 'TypeScript' },
+			{ name: 'RSS/OPML' },
+			{ name: 'SEO' },
 		],
 		demoUrl: '/tech-signal/',
 		repoUrl: 'https://github.com/idcesares/Portfolio',
@@ -279,11 +279,11 @@ export const devProjects: DevProject[] = [
 		description:
 			'Casa digital do Núcleo Rio da Rede Brasileira de Aprendizagem Criativa, organizada para leitura, memória da comunidade e descoberta de recursos.',
 		techStack: [
-			{ name: 'Astro', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Markdown/MDX', color: 'amber' },
-			{ name: 'Content Collections', color: 'sage' },
-			{ name: 'Vercel', color: 'burgundy' },
+			{ name: 'Astro' },
+			{ name: 'TypeScript' },
+			{ name: 'Markdown/MDX' },
+			{ name: 'Content Collections' },
+			{ name: 'Vercel' },
 		],
 		demoUrl: 'https://aprendizagemcriativa.rio',
 		status: 'live',
@@ -296,10 +296,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Construtor de prompts pedagógicos para cocriar planos de aula com contexto, inclusão, BNCC e critérios claros de saída.',
 		techStack: [
-			{ name: 'SvelteKit', color: 'teal' },
-			{ name: 'Svelte', color: 'terracotta' },
-			{ name: 'JavaScript', color: 'amber' },
-			{ name: 'Vite', color: 'sage' },
+			{ name: 'SvelteKit' },
+			{ name: 'Svelte' },
+			{ name: 'JavaScript' },
+			{ name: 'Vite' },
 		],
 		demoUrl: 'https://prof-gpt.vercel.app/',
 		repoUrl: 'https://github.com/idcesares/Prof-GPT',
@@ -313,10 +313,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Utilitário web para codificar e decodificar Base64 com Unicode, feedback imediato e uma API server-side pequena e direta.',
 		techStack: [
-			{ name: 'Next.js', color: 'teal' },
-			{ name: 'React', color: 'terracotta' },
-			{ name: 'JavaScript', color: 'amber' },
-			{ name: 'Tailwind CSS', color: 'sage' },
+			{ name: 'Next.js' },
+			{ name: 'React' },
+			{ name: 'JavaScript' },
+			{ name: 'Tailwind CSS' },
 		],
 		demoUrl: 'https://base64.dcesares.dev',
 		repoUrl: 'https://github.com/idcesares/Base64-Encoder-Decoder',
@@ -330,10 +330,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Leitor de QR Code para imagem, colagem ou câmera, criado como uma experiência curta de utilidade imediata.',
 		techStack: [
-			{ name: 'React', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Vite', color: 'amber' },
-			{ name: 'Gemini API', color: 'sage' },
+			{ name: 'React' },
+			{ name: 'TypeScript' },
+			{ name: 'Vite' },
+			{ name: 'Gemini API' },
 		],
 		repoUrl: 'https://github.com/idcesares/QR-Code-Analyzer',
 		status: 'development',
@@ -346,11 +346,11 @@ export const devProjects: DevProject[] = [
 		description:
 			'Memória local-first para agentes: lembra contexto útil, lida com contradições, respeita orçamento de tokens e explica por que recuperou cada registro.',
 		techStack: [
-			{ name: 'Python', color: 'teal' },
-			{ name: 'MCP', color: 'terracotta' },
-			{ name: 'SQLite', color: 'amber' },
-			{ name: 'Svelte', color: 'sage' },
-			{ name: 'Local AI', color: 'burgundy' },
+			{ name: 'Python' },
+			{ name: 'MCP' },
+			{ name: 'SQLite' },
+			{ name: 'Svelte' },
+			{ name: 'Local AI' },
 		],
 		availability: 'Alpha privado durante a fase de consolidação e dogfooding.',
 		status: 'development',
@@ -363,11 +363,11 @@ export const devProjects: DevProject[] = [
 		description:
 			'Blueprint técnico da identidade da Rede: tokens semânticos, componentes, guidelines e artefatos reutilizáveis para manter uma presença nacional coerente.',
 		techStack: [
-			{ name: 'Design Tokens', color: 'teal' },
-			{ name: 'DTCG', color: 'terracotta' },
-			{ name: 'CSS', color: 'amber' },
-			{ name: 'JavaScript', color: 'sage' },
-			{ name: 'SVG', color: 'burgundy' },
+			{ name: 'Design Tokens' },
+			{ name: 'DTCG' },
+			{ name: 'CSS' },
+			{ name: 'JavaScript' },
+			{ name: 'SVG' },
 		],
 		demoUrl: 'https://rse-design-showcase.idcesares.chatgpt.site/showcase/',
 		primaryActionLabel: 'Abrir o showcase',
@@ -381,10 +381,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Método de edição reconstrutiva para textos em inglês: desmonta padrões previsíveis de texto gerado por IA antes de reconstruir voz, ritmo e especificidade.',
 		techStack: [
-			{ name: 'Agent Skills', color: 'teal' },
-			{ name: 'Prompt Engineering', color: 'terracotta' },
-			{ name: 'Edição', color: 'amber' },
-			{ name: 'LLMs', color: 'sage' },
+			{ name: 'Agent Skills' },
+			{ name: 'Prompt Engineering' },
+			{ name: 'Edição' },
+			{ name: 'LLMs' },
 		],
 		repoUrl: 'https://github.com/idcesares/remove-ai-writing-signs',
 		repoActionLabel: 'Conhecer o método',
@@ -398,10 +398,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Exploração de uma infraestrutura descentralizada para aprendizagem, credenciais e circulação de valor — a origem de perguntas que ainda atravessam minha pesquisa.',
 		techStack: [
-			{ name: 'Next.js', color: 'teal' },
-			{ name: 'TypeScript', color: 'terracotta' },
-			{ name: 'Blockchain', color: 'amber' },
-			{ name: 'Vercel', color: 'sage' },
+			{ name: 'Next.js' },
+			{ name: 'TypeScript' },
+			{ name: 'Blockchain' },
+			{ name: 'Vercel' },
 		],
 		repoUrl: 'https://github.com/idcesares/LearnChain',
 		status: 'development',
@@ -414,10 +414,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Série de provas de conceito sobre consultas semânticas em dados distribuídos, reunindo SPARQL, Comunica, Next.js e IPFS.',
 		techStack: [
-			{ name: 'SPARQL', color: 'teal' },
-			{ name: 'IPFS', color: 'terracotta' },
-			{ name: 'Comunica', color: 'amber' },
-			{ name: 'Next.js', color: 'sage' },
+			{ name: 'SPARQL' },
+			{ name: 'IPFS' },
+			{ name: 'Comunica' },
+			{ name: 'Next.js' },
 		],
 		demoUrl: 'https://sparql-next-ipfs.vercel.app',
 		repoUrl: 'https://github.com/idcesares/sparql-next-ipfs',
@@ -431,10 +431,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Acervo em português com experiências de IA que podem ser testadas sem programação — revisado para continuar útil em vez de virar um cemitério de links.',
 		techStack: [
-			{ name: 'Markdown', color: 'teal' },
-			{ name: 'Curadoria', color: 'terracotta' },
-			{ name: 'IA generativa', color: 'amber' },
-			{ name: 'No-code', color: 'sage' },
+			{ name: 'Markdown' },
+			{ name: 'Curadoria' },
+			{ name: 'IA generativa' },
+			{ name: 'No-code' },
 		],
 		repoUrl: 'https://github.com/idcesares/Experimentos-de-IA',
 		repoActionLabel: 'Explorar o acervo',
@@ -448,10 +448,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Notebooks usados em experiências de letramento em IA, aprendizagem de máquina e robótica com estudantes do Ensino Médio.',
 		techStack: [
-			{ name: 'Python', color: 'teal' },
-			{ name: 'Jupyter', color: 'terracotta' },
-			{ name: 'Machine Learning', color: 'amber' },
-			{ name: 'Robótica', color: 'sage' },
+			{ name: 'Python' },
+			{ name: 'Jupyter' },
+			{ name: 'Machine Learning' },
+			{ name: 'Robótica' },
 		],
 		repoUrl: 'https://github.com/idcesares/Clube-de-STEM-IA-ESEM',
 		status: 'reference',
@@ -464,10 +464,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Prova de conceito em que protótipos conectados percebem contexto e reagem usando Arduino, sensores, serviços de nuvem e bots.',
 		techStack: [
-			{ name: 'Arduino', color: 'teal' },
-			{ name: 'C++', color: 'terracotta' },
-			{ name: 'IoT', color: 'amber' },
-			{ name: 'Cloud', color: 'sage' },
+			{ name: 'Arduino' },
+			{ name: 'C++' },
+			{ name: 'IoT' },
+			{ name: 'Cloud' },
 		],
 		repoUrl:
 			'https://github.com/idcesares/Arduino--IoT-e-IA--prototipos-inteligentes-e-reativos',
@@ -481,10 +481,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Repositório aberto para projetos de fabricação digital, cultura maker, modelagem 3D e corte a laser em contextos de aprendizagem.',
 		techStack: [
-			{ name: 'Fabricação digital', color: 'teal' },
-			{ name: 'Modelagem 3D', color: 'terracotta' },
-			{ name: 'Corte a laser', color: 'amber' },
-			{ name: 'Maker', color: 'sage' },
+			{ name: 'Fabricação digital' },
+			{ name: 'Modelagem 3D' },
+			{ name: 'Corte a laser' },
+			{ name: 'Maker' },
 		],
 		repoUrl: 'https://github.com/idcesares/Open-Digital-Fabrication-Projects',
 		status: 'reference',
@@ -497,10 +497,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Coleção de pequenos estudos com datasets, visualizações e algoritmos — um registro do aprendizado pela investigação dos dados.',
 		techStack: [
-			{ name: 'Python', color: 'teal' },
-			{ name: 'Jupyter', color: 'terracotta' },
-			{ name: 'Data Science', color: 'amber' },
-			{ name: 'Machine Learning', color: 'sage' },
+			{ name: 'Python' },
+			{ name: 'Jupyter' },
+			{ name: 'Data Science' },
+			{ name: 'Machine Learning' },
 		],
 		repoUrl: 'https://github.com/idcesares/Data-Science-Mini-Projects',
 		status: 'reference',
@@ -513,10 +513,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Análise exploratória de uma década de queimadas no Pantanal, transformando séries ambientais em uma narrativa visual verificável.',
 		techStack: [
-			{ name: 'Python', color: 'teal' },
-			{ name: 'Jupyter', color: 'terracotta' },
-			{ name: 'Visualização de dados', color: 'amber' },
-			{ name: 'Análise exploratória', color: 'sage' },
+			{ name: 'Python' },
+			{ name: 'Jupyter' },
+			{ name: 'Visualização de dados' },
+			{ name: 'Análise exploratória' },
 		],
 		repoUrl: 'https://github.com/idcesares/DS_queimadas_pantanal',
 		status: 'published',
@@ -529,10 +529,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Salas temporárias para compartilhar textos, links e arquivos sem conta; o conteúdo desaparece quando a sala esvazia ou após 24 horas.',
 		techStack: [
-			{ name: 'TypeScript', color: 'teal' },
-			{ name: 'Socket.IO', color: 'terracotta' },
-			{ name: 'Node.js', color: 'amber' },
-			{ name: 'Privacidade', color: 'sage' },
+			{ name: 'TypeScript' },
+			{ name: 'Socket.IO' },
+			{ name: 'Node.js' },
+			{ name: 'Privacidade' },
 		],
 		repoUrl: 'https://github.com/idcesares/Disposable-Pods',
 		status: 'development',
@@ -545,10 +545,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Sorteio web reproduzível para distribuir vagas, com semente opcional, primeira chamada, lista de espera e saída pronta para conferência.',
 		techStack: [
-			{ name: 'JavaScript', color: 'teal' },
-			{ name: 'HTML', color: 'terracotta' },
-			{ name: 'Bootstrap', color: 'sage' },
-			{ name: 'SeedRandom', color: 'amber' },
+			{ name: 'JavaScript' },
+			{ name: 'HTML' },
+			{ name: 'Bootstrap' },
+			{ name: 'SeedRandom' },
 		],
 		demoUrl: 'https://sistema-de-sorteio.vercel.app/',
 		repoUrl: 'https://github.com/idcesares/Sistema-de-Sorteio',
@@ -562,10 +562,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Quiz sobre a história da inteligência artificial com animações, feedback contextual e compartilhamento de resultados.',
 		techStack: [
-			{ name: 'Next.js', color: 'teal' },
-			{ name: 'React', color: 'terracotta' },
-			{ name: 'Framer Motion', color: 'amber' },
-			{ name: 'Lottie', color: 'sage' },
+			{ name: 'Next.js' },
+			{ name: 'React' },
+			{ name: 'Framer Motion' },
+			{ name: 'Lottie' },
 		],
 		demoUrl: 'https://ai-quiz.idcesares.vercel.app',
 		repoUrl: 'https://github.com/idcesares/AiQuiz',
@@ -579,10 +579,10 @@ export const devProjects: DevProject[] = [
 		description:
 			'Um classificador no navegador que responde à pergunta científica definitiva: a pessoa diante da câmera é Isaac ou não?',
 		techStack: [
-			{ name: 'Teachable Machine', color: 'teal' },
-			{ name: 'TensorFlow.js', color: 'terracotta' },
-			{ name: 'HTML', color: 'amber' },
-			{ name: 'Computer Vision', color: 'sage' },
+			{ name: 'Teachable Machine' },
+			{ name: 'TensorFlow.js' },
+			{ name: 'HTML' },
+			{ name: 'Computer Vision' },
 		],
 		demoUrl: 'https://isaac-or-not-isaac.vercel.app',
 		repoUrl: 'https://github.com/idcesares/ISAAC-OR-NOT-ISAAC',

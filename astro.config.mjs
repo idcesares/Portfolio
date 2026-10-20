@@ -1,4 +1,4 @@
-import { defineConfig, fontProviders, svgoOptimizer } from 'astro/config';
+import { defineConfig, svgoOptimizer } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import vercel from "@astrojs/vercel";
 import node from '@astrojs/node';
@@ -6,12 +6,22 @@ import sitemap from "@astrojs/sitemap";
 import partytown from '@astrojs/partytown';
 import mdx from '@astrojs/mdx';
 import rehypePrettyCode from 'rehype-pretty-code';
-import { transformerCopyButton } from '@rehype-pretty/transformers';
+import { createCssVariablesTheme } from 'shiki';
 import { remarkReadingTime } from './remark-reading-time.mjs';
+import { rehypeMembraneCode } from './rehype-membrane-code.mjs';
 import { readdirSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
 
 import tailwindcss from '@tailwindcss/vite';
+
+// Shiki emits CSS variables instead of colors; global.css maps them onto the
+// Membrane --code-* tokens, so highlighting uses the gate-checked syntax colors.
+const membraneCodeTheme = createCssVariablesTheme({
+  name: 'membrane',
+  variablePrefix: '--shiki-',
+  variableDefaults: {},
+  fontStyle: true,
+});
 
 // Keep the official library serving/build hooks, but start its browser runtime
 // only when CookieConsent authorizes Analytics. No worker is needed beforehand.
@@ -30,13 +40,6 @@ function partytownAfterConsent() {
   });
   return integration;
 }
-
-const copyIcon = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#E2DCD2" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="8" width="10" height="10" rx="2"/><path d="M6 14H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h7a2 2 0 0 1 2 2v1"/></svg>'
-)}`;
-const successIcon = `data:image/svg+xml,${encodeURIComponent(
-  '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="#7BC494" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>'
-)}`;
 
 // Read `updatedDate` straight from content frontmatter so the sitemap can advertise
 // per-page lastmod without depending on the astro:content virtual module at config time.
@@ -136,33 +139,9 @@ export default defineConfig({
 
   site: 'https://www.dcesares.dev',
 
-  // Built-in Fonts API: self-hosted, optimized fallbacks, no external Google requests
-  fonts: [
-    {
-      provider: fontProviders.google(),
-      name: 'Fraunces',
-      cssVariable: '--font-serif',
-      weights: ['300 900'],
-      styles: ['normal', 'italic'],
-      fallbacks: ['serif'],
-    },
-    {
-      provider: fontProviders.google(),
-      name: 'Instrument Sans',
-      cssVariable: '--font-sans',
-      weights: [400, 500, 600, 700],
-      styles: ['normal'],
-      fallbacks: ['sans-serif'],
-    },
-    {
-      provider: fontProviders.google(),
-      name: 'JetBrains Mono',
-      cssVariable: '--font-mono',
-      weights: [400, 600],
-      styles: ['normal'],
-      fallbacks: ['monospace'],
-    },
-  ],
+  // Fonts are the Membrane's own self-hosted files (design-system/fonts), loaded
+  // by membrane.css with metric-matched fallbacks; MainHead preloads the two
+  // faces every page renders above the fold.
 
   integrations: [{
     // Dev-only workaround for an Astro 7 mismatch: with trailingSlash 'always'
@@ -203,25 +182,22 @@ export default defineConfig({
         [
           rehypePrettyCode,
           {
-            theme: 'github-dark-dimmed',
+            theme: membraneCodeTheme,
             keepBackground: false,
-            wrap: true,
-            transformers: [
-              transformerCopyButton({
-                visibility: 'hover',
-                feedbackDuration: 2000,
-                copyIcon,
-                successIcon,
-              }),
-            ],
           },
         ],
+        rehypeMembraneCode,
       ],
     }),
   },
 
   vite: {
     plugins: [tailwindcss()],
+    // fuse.js is only imported dynamically (search); pre-bundle it so the dev
+    // server doesn't discover it on first use and reload the page mid-session.
+    optimizeDeps: {
+      include: ['fuse.js'],
+    },
     build: {
       rollupOptions: {
         output: {

@@ -1,6 +1,9 @@
 ---
 import SpeedInsights from '@vercel/speed-insights/astro';
+import BrandMark from '../components/BrandMark.astro';
+import Icon from '../components/Icon.astro';
 import MainHead from '../components/MainHead.astro';
+import ThemeToggle from '../components/ThemeToggle.astro';
 import {
   AUTHOR_NAME,
   SITE_DESCRIPTION,
@@ -110,6 +113,9 @@ const structuredData = {
 const cleanUrl = (url: string) => url.replace(/^https?:\/\//, '').replace(/\/$/, '');
 const accessLabel = (access: SignalSource['access']) =>
   access === 'aberto' ? 'Aberto' : 'Assinatura';
+// Tier is a register: essential sources are human (terracotta), strong ones
+// digital (teal), situational ones neutral.
+const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier === 2 ? 'digital' : undefined);
 ---
 
 <!DOCTYPE html>
@@ -125,617 +131,122 @@ const accessLabel = (access: SignalSource['access']) =>
 <link rel="alternate" hreflang="pt-BR" href={pageUrl.toString()}>
 <link rel="alternate" hreflang="x-default" href={pageUrl.toString()}>
 <style is:global>
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    transition-duration: 0ms !important;
-    animation-duration: 0ms !important;
-    animation-delay: 0ms !important;
-    scroll-behavior: auto !important;
-  }
-}
+/* Page-specific layout only; everything else comes from the Membrane
+   component library loaded by MainHead (global.css → membrane.css). */
 
-/* ═══════════ MOTION ═══════════ */
-@keyframes rise-in {
-  from { opacity: 0; transform: translateY(12px); }
-  to   { opacity: 1; transform: translateY(0); }
+.signal-header {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--space-16) var(--space-12);
+  background-image:
+    radial-gradient(ellipse at 8% 60%, var(--bg-glow-terracotta), transparent 50%),
+    radial-gradient(ellipse at 88% 15%, var(--bg-glow-teal), transparent 48%);
 }
-@keyframes fade-in {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+.signal-header__inner { position: relative; z-index: 1; }
+.signal-header__wordmark {
+  position: absolute; inset-block-end: -0.12em; inset-inline-end: 0;
+  color: var(--color-bg-tertiary);
+  font-family: var(--font-serif); font-size: clamp(5rem, 19vw, 13rem); font-weight: var(--weight-bold);
+  line-height: 1; pointer-events: none; user-select: none;
 }
-@keyframes header-in {
-  from { opacity: 0; transform: translateY(16px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-@keyframes spin-once {
-  from { transform: rotate(0); }
-  to   { transform: rotate(360deg); }
-}
-@keyframes line-grow {
-  from { transform: scaleX(0); }
-  to   { transform: scaleX(1); }
-}
+.signal-header__title { max-width: 16ch; }
+.signal-header__title em { color: var(--color-warning-text); }
+.signal-header__stats { margin: 0; }
+.signal-header__stats dd { margin: 0; }
+.membrane-line { height: var(--border-width-thick); background: var(--gradient-membrane); }
 
-/* ═══════════ RESET & BASE ═══════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { scroll-behavior: smooth; }
-body {
-  font-family: var(--font-sans);
-  background: var(--color-bg-primary);
-  background-image: var(--gradient-warmth);
-  background-attachment: fixed;
-  color: var(--color-text-primary);
-  line-height: 1.6;
-  min-height: 100vh;
-  transition: background-color var(--duration-normal) var(--ease-default),
-              color var(--duration-normal) var(--ease-default);
+.signal-controls {
+  position: sticky; top: 0; z-index: var(--z-sticky);
+  padding-block: var(--space-3);
+  border-block-end: var(--border-default);
+  background-color: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
+  backdrop-filter: blur(var(--blur-backdrop));
 }
-a { color: inherit; text-decoration: none; }
-button { cursor: pointer; font-family: var(--font-sans); border: none; background: none; }
+.signal-search { position: relative; flex: 1 1 16rem; }
+.signal-search .mp-input { padding-inline-end: var(--space-12); border-radius: var(--radius-full); }
+.signal-search__clear { position: absolute; inset-block: 0; inset-inline-end: var(--space-1); margin-block: auto; }
+.filter-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block: var(--space-1); }
+.filter-row .mp-tag { min-height: var(--size-touch-target); }
+.filter-row .mp-tag[aria-pressed='true'] { --mp-tag-bg: var(--color-action-primary); --mp-tag-fg: var(--color-text-on-accent); }
+.pill-count { font-family: var(--font-mono); }
 
-.skip-link {
-  position: absolute; left: -999px; top: 0; z-index: 999;
-  background: var(--color-action-primary); color: var(--color-text-on-accent);
-  padding: var(--space-3) var(--space-5); border-radius: 0 0 var(--radius-md) 0;
-  font-size: 0.875rem; font-weight: 500;
-}
-.skip-link:focus { left: 0; }
+.signal-main { padding-block: var(--space-10) var(--space-24); }
+.result-meta { scroll-margin-top: calc(var(--space-32) + var(--space-8)); }
+.strategy { overflow: hidden; }
+.strategy::before { content: ''; position: absolute; inset: 0 0 auto; height: var(--border-width-thick); background: var(--gradient-membrane); }
+.strat-title { display: inline-flex; align-items: center; gap: var(--space-2); font-family: var(--font-serif); }
 
-/* ═══════════ HEADER ═══════════ */
-.site-header {
-  background: var(--color-charcoal);
-  position: relative; overflow: hidden;
-  padding: var(--space-16) var(--site-margin) var(--space-12);
-}
-[data-theme="dark"] .site-header { background: var(--color-charcoal); }
-.header-ambient {
-  position: absolute; inset: 0; pointer-events: none;
-  background:
-    radial-gradient(ellipse at 8% 60%, color-mix(in srgb, var(--color-terracotta) 20%, transparent) 0%, transparent 50%),
-    radial-gradient(ellipse at 88% 15%, color-mix(in srgb, var(--color-teal) 16%, transparent) 0%, transparent 48%);
-}
-.header-wordmark {
-  position: absolute; bottom: -0.12em; right: -0.02em;
-  font-family: var(--font-serif); font-weight: 700;
-  font-size: clamp(5rem, 19vw, 13rem); line-height: 1;
-  color: color-mix(in srgb, var(--color-cream) 4%, transparent); letter-spacing: 0;
-  pointer-events: none; user-select: none;
-  font-variation-settings: "WONK" 1;
-}
-.header-inner {
-  position: relative; z-index: 2;
-  max-width: var(--container-xl); margin: 0 auto;
-  display: flex; flex-direction: column; gap: var(--space-5);
-}
-.header-inner > * { animation: header-in var(--duration-slow) var(--ease-out) both; }
-.header-eyebrow   { animation-delay: 60ms; }
-.header-headline  { animation-delay: 140ms; }
-.header-meta      { animation-delay: 240ms; }
-.header-eyebrow {
-  font-size: 0.75rem; font-weight: 500; letter-spacing: 0.12em;
-  text-transform: uppercase; color: var(--color-terracotta);
-  display: flex; align-items: center; gap: var(--space-2);
-}
-.header-eyebrow::before {
-  content: ''; width: 24px; height: 1px;
-  background: var(--color-terracotta); opacity: 0.55;
-}
-.header-headline {
-  font-family: var(--font-serif); font-weight: 700;
-  font-size: var(--text-display); line-height: 1.04;
-  letter-spacing: 0; color: var(--color-cream);
-  font-variation-settings: "WONK" 1; max-width: 16ch;
-}
-.header-headline em { font-style: italic; color: var(--color-amber); }
-.header-meta {
-  display: flex; align-items: flex-end; justify-content: space-between;
-  gap: var(--space-10); flex-wrap: wrap;
-}
-.header-desc {
-  font-size: 1.0625rem; color: color-mix(in srgb, var(--color-cream) 60%, transparent);
-  max-width: 54ch; line-height: 1.65;
-}
-.header-stats { display: flex; gap: var(--space-8); flex-shrink: 0; }
-.stat { display: flex; flex-direction: column; gap: 2px; }
-.stat-num {
-  font-family: var(--font-serif); font-size: 1.875rem; font-weight: 700;
-  color: var(--color-cream); line-height: 1; font-variation-settings: "WONK" 1;
-}
-.stat-label {
-  font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.08em;
-  text-transform: uppercase; color: color-mix(in srgb, var(--color-cream) 40%, transparent);
-}
-.membrane-line {
-  height: 3px; background: var(--gradient-membrane);
-  transform-origin: left center;
-  animation: line-grow var(--duration-slower, 600ms) var(--ease-out) 360ms both;
-}
+/* Tier marks: essential = human, strong = digital, situational = neutral. */
+.tier-tick { display: inline-block; flex: none; width: 0.5rem; height: 0.5rem; border-radius: var(--radius-full); background-color: var(--color-border-emphasis); }
+.tier-tick[data-tier='1'] { background-color: var(--color-action-primary); }
+.tier-tick[data-tier='2'] { background-color: var(--color-action-secondary); }
+.tier-tick[data-tier='warm'] { background-color: var(--color-warning); }
 
-/* ═══════════ CONTROLS (sticky) ═══════════ */
-.controls {
-  position: sticky; top: 0; z-index: 100;
-  background: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--color-border-default);
-  transition: background-color var(--duration-normal), border-color var(--duration-normal);
+.seg { padding: var(--space-1); border: var(--border-default); border-radius: var(--radius-full); background-color: var(--color-bg-secondary); }
+@media (prefers-reduced-motion: no-preference) {
+  .order-btn[data-spin] svg { animation: signal-spin var(--duration-slow) var(--ease-out); }
 }
-.controls-inner {
-  max-width: var(--container-xl); margin: 0 auto;
-  padding: var(--space-3) var(--site-margin);
-  display: flex; flex-direction: column; gap: var(--space-3);
-}
-.controls-top {
-  display: flex; align-items: center; gap: var(--space-3);
-}
-/* Search */
-.search-wrap {
-  flex: 1; position: relative; display: flex; align-items: center;
-  min-width: 0;
-}
-.search-icon {
-  position: absolute; left: var(--space-3); color: var(--color-text-tertiary);
-  pointer-events: none; display: flex;
-}
-.search-input {
-  width: 100%; font-family: var(--font-sans); font-size: 0.9375rem;
-  color: var(--color-text-primary);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-full);
-  padding: var(--space-2) var(--space-10) var(--space-2) 2.5rem;
-  transition: border-color var(--duration-fast), box-shadow var(--duration-fast);
-}
-.search-input::placeholder { color: var(--color-text-tertiary); }
-.search-input:focus {
-  outline: none; border-color: var(--color-teal);
-  box-shadow: 0 0 0 3px var(--color-teal-10);
-}
-.search-clear {
-  position: absolute; right: var(--space-1);
-  width: var(--size-touch-target); height: var(--size-touch-target); border-radius: 50%;
-  display: none; align-items: center; justify-content: center;
-  color: var(--color-text-tertiary);
-  transition: background var(--duration-fast), color var(--duration-fast);
-}
-.search-clear:hover { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.search-clear.visible { display: flex; }
-.theme-toggle {
-  width: var(--size-touch-target); height: var(--size-touch-target); flex-shrink: 0;
-  border: 1px solid var(--color-border-default); border-radius: var(--radius-md);
-  color: var(--color-text-secondary);
-  display: flex; align-items: center; justify-content: center;
-  transition: all var(--duration-fast) var(--ease-default);
-}
-.theme-toggle:hover { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.theme-toggle:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+@keyframes signal-spin { to { rotate: 1turn; } }
 
-/* Filter pills */
-.filter-row {
-  display: flex; gap: var(--space-2); overflow-x: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
-  padding-bottom: 2px;
-}
-.filter-row::-webkit-scrollbar { display: none; }
-.filter-pill {
-  font-size: 0.78rem; font-weight: 500; letter-spacing: 0.01em;
-  min-height: var(--size-touch-target);
-  color: var(--color-text-secondary);
-  background: var(--color-bg-primary);
-  border: 1px solid var(--color-border-default);
-  padding: var(--space-2) var(--space-4);
-  border-radius: var(--radius-full); white-space: nowrap;
-  display: flex; align-items: center; gap: var(--space-2);
-  transition: all var(--duration-fast) var(--ease-default);
-}
-.filter-pill:hover {
-  border-color: var(--color-border-emphasis);
-  color: var(--color-text-primary);
-}
-.filter-pill.active {
-  background: var(--color-action-primary); border-color: var(--color-action-primary);
-  color: var(--color-text-on-accent);
-}
-.filter-pill .pill-count {
-  font-family: var(--font-mono); font-size: 0.62rem;
-  opacity: 1; font-weight: 400;
-}
-
-.filter-pill:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-
-/* ═══════════ MAIN ═══════════ */
-main { max-width: var(--container-xl); margin: 0 auto; padding: var(--space-10) var(--site-margin) var(--space-24); }
-
-/* Strategy panel */
-.strategy {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-xl);
-  padding: var(--space-6) var(--space-8);
-  animation: rise-in var(--duration-slow) var(--ease-out) 440ms both;
-  margin-bottom: var(--space-10);
-  display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--space-6);
-  position: relative; overflow: hidden;
-}
-.strategy::before {
-  content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
-  background: var(--gradient-membrane);
-}
-.strat-item { display: flex; flex-direction: column; gap: var(--space-1); }
-.strat-label {
-  font-family: var(--font-mono); font-size: 0.68rem; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--color-text-tertiary);
-}
-.strat-title {
-  font-family: var(--font-serif); font-size: 1.0625rem; font-weight: 600;
-  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
-  display: flex; align-items: center; gap: var(--space-2);
-}
-.strat-dot { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.dot-t { background: var(--color-terracotta); }
-.dot-a { background: var(--color-amber); }
-.dot-d { background: var(--color-teal); }
-.strat-desc { font-size: 0.8125rem; color: var(--color-text-secondary); line-height: 1.5; }
-
-/* Result meta line */
-.result-meta {
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--space-4) var(--space-6); margin-bottom: var(--space-5); flex-wrap: wrap;
-}
-.result-meta-left { display: flex; align-items: baseline; gap: var(--space-3); flex-wrap: wrap; }
-.result-title {
-  font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 600;
-  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
-}
-.result-count {
-  font-family: var(--font-mono); font-size: 0.8rem; color: var(--color-text-tertiary);
-}
-
-/* Tier segmented control */
-.tier-control {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  min-width: 0;
-}
-.tier-control-label {
-  font-family: var(--font-mono); font-size: 0.66rem; letter-spacing: 0.08em;
-  text-transform: uppercase; color: var(--color-text-tertiary);
-  margin-right: var(--space-1); flex-shrink: 0;
-}
-.tier-seg {
-  display: inline-flex; background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
-  padding: 3px; max-width: 100%; overflow-x: auto;
-  scrollbar-width: none; -ms-overflow-style: none;
-}
-.tier-seg::-webkit-scrollbar { display: none; }
-.tier-btn {
-  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
-  min-height: calc(var(--size-touch-target) - 8px);
-  color: var(--color-text-secondary);
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  display: inline-flex; align-items: center; gap: var(--space-1);
-  transition: all var(--duration-fast) var(--ease-default);
-  white-space: nowrap;
-}
-.tier-btn:hover { color: var(--color-text-primary); }
-.tier-btn .tier-tick { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
-.tier-btn[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
-.tier-btn[data-tier="2"] .tier-tick { background: var(--color-teal); }
-.tier-btn[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
-.tier-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.tier-btn.active[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
-.tier-btn.active[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
-.tier-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-
-/* Controle de natureza da fonte: mesma anatomia do de prioridade,
-   sem os pontos coloridos, que ali significam tier. */
-.kind-btn {
-  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
-  min-height: calc(var(--size-touch-target) - 8px);
-  color: var(--color-text-secondary);
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  transition: all var(--duration-fast) var(--ease-default);
-  white-space: nowrap;
-}
-.kind-btn:hover { color: var(--color-text-primary); }
-.kind-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.kind-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.kind-btn .pill-count { font-family: var(--font-mono); font-size: 0.62rem; opacity: 1; }
-
-/* Controle de ordem: mesma anatomia dos outros, o ícone gira ao embaralhar. */
-.order-btn {
-  font-family: var(--font-sans); font-size: 0.72rem; font-weight: 500;
-  min-height: calc(var(--size-touch-target) - 8px);
-  color: var(--color-text-secondary);
-  padding: var(--space-1) var(--space-3); border-radius: var(--radius-full);
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  transition: all var(--duration-fast) var(--ease-default);
-  white-space: nowrap;
-}
-.order-btn:hover { color: var(--color-text-primary); }
-.order-btn.active { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.order-btn:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.order-btn.spin svg { animation: spin-once var(--duration-slow) var(--ease-out); }
-.tier-control[hidden] { display: none; }
-
-/* Sorteio: três fontes que não são o essencial de sempre. */
-.picks {
-  margin-bottom: var(--space-10);
-  animation: rise-in var(--duration-slow) var(--ease-out) 500ms both;
-}
-.picks[hidden] { display: none; }
-.picks-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: var(--space-2) var(--space-6); flex-wrap: wrap; margin-bottom: var(--space-4);
-}
-.picks-title {
-  font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 600;
-  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
-}
-.picks-sub { font-size: 0.8125rem; color: var(--color-text-secondary); margin-top: var(--space-1); max-width: 60ch; }
-.picks-reroll {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  min-height: var(--size-touch-target); padding: var(--space-2) var(--space-5);
-  font-size: 0.8125rem; font-weight: 500; color: var(--color-text-accent);
-  border: 1px solid var(--color-border-default); border-radius: var(--radius-full);
-  background: var(--color-bg-secondary);
-  transition: border-color var(--duration-fast) var(--ease-default);
-}
-.picks-reroll:hover { border-color: var(--color-teal); }
-.picks-reroll:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
+.signal-grid { --mp-grid-min: 18rem; --mp-gap: var(--space-4); }
+.signal-card { --mp-card-padding: var(--space-5); border-inline-start: var(--border-width-thick) solid var(--mp-card-accent); }
+.signal-card[data-tier='3'] { --mp-card-accent: var(--color-border-emphasis); }
+.signal-card .mp-card__title { font-size: var(--text-h4); }
+.card-url { margin: 0; color: var(--color-text-tertiary); font-family: var(--font-mono); font-size: var(--text-xs); overflow-wrap: anywhere; }
+.signal-card .mp-card__body { font-size: var(--text-small); flex: 1; }
+.signal-card .mp-card__footer { gap: var(--space-2); }
+.card-tier { cursor: pointer; }
 .picks .card-tier { cursor: default; }
+.signal-card mark { padding-inline: 0.15em; border-radius: var(--radius-sm); background-color: var(--color-digital-bg); color: var(--color-digital-text); }
 
-/* ═══════════ CARD GRID ═══════════ */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: var(--space-4);
-}
-.card {
-  background: var(--color-bg-secondary);
-  border: 1px solid var(--color-border-default);
-  border-radius: var(--radius-lg);
-  padding: var(--space-5) var(--space-6);
-  display: flex; flex-direction: column; gap: var(--space-3);
-  position: relative; overflow: hidden;
-  transition: transform var(--duration-slow) var(--ease-out),
-              box-shadow var(--duration-slow) var(--ease-out),
-              border-color var(--duration-normal) var(--ease-default),
-              background-color var(--duration-normal) var(--ease-default);
-  animation: rise-in var(--duration-slow) var(--ease-out) both;
-  animation-delay: calc(var(--i, 0) * 28ms);
-}
-.card::before {
-  content: ''; position: absolute; top: 0; left: 0;
-  width: 3px; height: 100%;
-}
-.card.t1::before { background: var(--color-terracotta); }
-.card.t2::before { background: var(--color-teal); }
-.card.t3::before { background: var(--color-neutral-300); }
-.card:hover { transform: translateY(-3px); box-shadow: var(--shadow-md); border-color: var(--color-border-emphasis); }
-.card.t1:hover { box-shadow: var(--shadow-md), var(--shadow-glow-warm); }
-.card.t2:hover { box-shadow: var(--shadow-md), var(--shadow-glow-teal); }
-.card:has(.card-link:focus-visible) {
-  outline: var(--focus-ring); outline-offset: var(--focus-ring-offset);
-}
-.card-link { display: inline; }
-.card-link::after { content: ''; position: absolute; inset: 0; z-index: 0; }
-.card-link:focus { outline: none; }
-.card-body { position: relative; z-index: 1; pointer-events: none; }
-.card-body a { pointer-events: auto; }
-.card:hover .card-arrow { opacity: 1; color: var(--color-terracotta); transform: translate(3px,-3px); }
+.method { gap: var(--space-6); }
+.method-export { padding-block-start: var(--space-5); border-block-start: var(--border-default); }
 
-.card-head { display: flex; justify-content: space-between; align-items: flex-start; gap: var(--space-2); }
-.card-title-wrap { display: flex; flex-direction: column; gap: var(--space-1); flex: 1; min-width: 0; }
-.card-tier {
-  align-self: flex-start; position: relative; z-index: 1;
-  min-height: 28px;
-  font-family: var(--font-sans); font-size: 0.64rem; font-weight: 500;
-  letter-spacing: 0.02em;
-  padding: 2px var(--space-2); border-radius: var(--radius-full);
-  display: inline-flex; align-items: center; gap: 5px;
-  cursor: pointer; border: 1px solid transparent;
-  transition: all var(--duration-fast) var(--ease-default);
-}
-.card-tier .tier-tick { width: 6px; height: 6px; border-radius: 50%; }
-.card-tier[data-tier="1"] { background: var(--color-terracotta-10); color: var(--color-text-primary); }
-.card-tier[data-tier="1"] .tier-tick { background: var(--color-terracotta); }
-.card-tier[data-tier="2"] { background: var(--color-teal-10); color: var(--color-text-primary); }
-.card-tier[data-tier="2"] .tier-tick { background: var(--color-teal); }
-.card-tier[data-tier="3"] { background: var(--color-bg-tertiary); color: var(--color-text-primary); }
-.card-tier[data-tier="3"] .tier-tick { background: var(--color-neutral-300); }
-.card-tier:hover { border-color: currentColor; }
-.card-tier:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.card-title {
-  font-family: var(--font-serif); font-size: var(--text-h4); font-weight: 600;
-  color: var(--color-text-primary); line-height: 1.2;
-  font-variation-settings: "WONK" 1;
-}
-.card-arrow {
-  font-size: 12px; color: var(--color-text-tertiary); flex-shrink: 0; margin-top: 3px;
-  opacity: 0; transition: opacity var(--duration-fast), transform var(--duration-fast), color var(--duration-fast);
-}
-.card-url { font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-tertiary); letter-spacing: 0.01em; }
-.card-desc { font-size: 0.84rem; color: var(--color-text-secondary); line-height: 1.55; flex: 1; }
-.card-foot { display: flex; flex-wrap: wrap; gap: var(--space-2); align-items: center; margin-top: var(--space-1); }
-.tag {
-  font-size: 0.62rem; font-weight: 500; letter-spacing: 0.04em; text-transform: uppercase;
-  padding: 2px var(--space-3); border-radius: var(--radius-full); line-height: 1.7;
-}
-.tag-cadence { background: var(--color-terracotta-10); color: var(--color-text-primary); }
-.tag-deep    { background: var(--color-teal-10);       color: var(--color-text-primary); }
-.tag-kind    { background: var(--color-bg-primary);    color: var(--color-text-secondary);
-               border: 1px solid var(--color-border-default); }
-.tag-topic   { background: var(--color-bg-tertiary);   color: var(--color-text-primary); }
-.tag-region  { background: var(--color-sage-10);       color: var(--color-success-text); }
-.access {
-  margin-left: auto; font-family: var(--font-mono); font-size: 0.6rem;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  padding: 2px var(--space-2); border-radius: var(--radius-sm);
-}
-.access-free { background: var(--color-sage-10); color: var(--color-success-text); }
-.access-paid { background: var(--color-amber-10); color: var(--color-text-primary); }
-
-/* Filtro: os cards existem no HTML servido e sao apenas ocultados. */
-.card[hidden] { display: none; }
-
-/* Utilitario de leitor de tela */
-.sr-only {
-  position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
-  overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0;
-}
-
-/* Volta para o portfolio */
-.header-back {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  min-height: var(--size-touch-target);
-  font-size: 0.8125rem; font-weight: 500;
-  color: color-mix(in srgb, var(--color-cream) 60%, transparent);
-  transition: color var(--duration-fast) var(--ease-default);
-}
-.header-back:hover { color: var(--color-amber); }
-.header-back:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-.footer-back {
-  display: inline-flex; align-items: center; min-height: var(--size-touch-target);
-  font-size: 0.8125rem; font-weight: 500; color: var(--color-text-accent);
-  border-bottom: 1px solid transparent;
-}
-.footer-back:hover { border-bottom-color: var(--color-teal); }
-.footer-back:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-
-/* Nota de método */
-.method {
-  margin-top: var(--space-12); padding: var(--space-6) var(--space-8);
-  border: 1px solid var(--color-border-default); border-radius: var(--radius-xl);
-  background: var(--color-bg-secondary);
-}
-.method h2 {
-  font-family: var(--font-serif); font-size: var(--text-h3); font-weight: 600;
-  color: var(--color-text-primary); font-variation-settings: "WONK" 1;
-  margin-bottom: var(--space-3);
-}
-.method p {
-  font-size: 0.9375rem; color: var(--color-text-secondary);
-  line-height: 1.7; max-width: 68ch;
-}
-.method p + p { margin-top: var(--space-3); }
-.method-export {
-  margin-top: var(--space-6); padding-top: var(--space-5);
-  border-top: 1px solid var(--color-border-default);
-  display: flex; align-items: center; justify-content: space-between;
-  gap: var(--space-6); flex-wrap: wrap;
-}
-.method-export-text { flex: 1; min-width: 22rem; }
-.method-export-link {
-  display: inline-flex; align-items: center; gap: var(--space-2);
-  min-height: var(--size-touch-target); flex-shrink: 0;
-  padding: var(--space-2) var(--space-5);
-  font-size: 0.875rem; font-weight: 500;
-  color: var(--color-text-on-accent); background: var(--color-action-primary);
-  border-radius: var(--radius-full);
-  transition: background-color var(--duration-fast) var(--ease-default),
-              transform var(--duration-fast) var(--ease-default);
-}
-.method-export-link:hover { background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary)); transform: translateY(-1px); }
-.method-export-link:focus-visible { outline: var(--focus-ring); outline-offset: var(--focus-ring-offset); }
-@media (max-width: 560px) {
-  .method-export-text { min-width: 0; }
-  .method-export-link { width: 100%; justify-content: center; }
-}
-
-/* Highlight (search match) */
-mark { background: var(--color-amber); color: var(--color-charcoal); border-radius: 2px; padding: 0 1px; }
-
-/* Empty state */
-.empty {
-  display: none; text-align: center; padding: var(--space-20) var(--space-4);
-  color: var(--color-text-tertiary);
-}
-.empty.visible { display: block; }
-.empty-glyph {
-  font-family: var(--font-serif); font-size: 3rem; font-weight: 700;
-  color: var(--color-border-emphasis); font-variation-settings: "WONK" 1;
-  margin-bottom: var(--space-4);
-}
-.empty-text { font-size: 1rem; margin-bottom: var(--space-2); color: var(--color-text-secondary); }
-.empty-sub { font-size: 0.875rem; }
-.empty-reset {
-  margin-top: var(--space-5); font-size: 0.875rem; font-weight: 500;
-  color: var(--color-teal); border-bottom: 1px solid transparent;
-  transition: border-color var(--duration-fast);
-}
-.empty-reset:hover { border-bottom-color: var(--color-teal); }
-
-/* ═══════════ FOOTER ═══════════ */
-.site-footer { border-top: 1px solid var(--color-border-default); padding: var(--space-8) var(--site-margin); }
-.footer-inner {
-  max-width: var(--container-xl); margin: 0 auto;
-  display: flex; justify-content: space-between; align-items: center;
-  gap: var(--space-4); flex-wrap: wrap;
-}
-.footer-brand {
-  font-family: var(--font-serif); font-weight: 700; font-size: 1rem;
-  font-variation-settings: "WONK" 1; color: var(--color-terracotta);
-}
-.footer-brand .sep { color: var(--color-teal); }
-.footer-brand .sub { font-family: var(--font-sans); font-weight: 400; font-size: 0.75rem; color: var(--color-text-tertiary); margin-left: var(--space-2); }
-.footer-note { font-family: var(--font-mono); font-size: 0.65rem; color: var(--color-text-tertiary); letter-spacing: 0.03em; }
-
-/* ═══════════ RESPONSIVE ═══════════ */
-@media (max-width: 820px) {
-  .strategy { grid-template-columns: 1fr; gap: var(--space-5); }
-  .header-meta { flex-direction: column; align-items: flex-start; gap: var(--space-6); }
-}
-@media (max-width: 560px) {
-  .header-stats { gap: var(--space-6); }
-  .grid { grid-template-columns: 1fr; }
-  .footer-inner { flex-direction: column; align-items: flex-start; }
-  .controls-top { flex-wrap: wrap; }
-}
+.signal-footer { padding-block: var(--space-8); border-block-start: var(--border-default); }
+.signal-footer__brand { display: inline-flex; border-radius: var(--radius-sm); }
 </style>
 </head>
 <body>
+<a class="mp-skip-link" href="#main">Pular para as fontes</a>
 <SpeedInsights />
-<a href="#main" class="skip-link">Pular para as fontes</a>
 
-<header class="site-header">
-  <div class="header-ambient" aria-hidden="true"></div>
-  <div class="header-wordmark" aria-hidden="true">Signal</div>
-  <div class="header-inner">
-    <a href="/" class="header-back">← Voltar para o portfólio</a>
-    <p class="header-eyebrow">Dieta de informação · {CURATED_LABEL}</p>
-    <h1 class="header-headline">Tech <em>Signal</em> Stack.</h1>
-    <div class="header-meta">
-      <p class="header-desc">Curadoria opinativa das fontes de maior sinal em tecnologia. Feita para prática diária, não para rolagem passiva. Cada fonte precisa justificar o lugar que ocupa, e o que se publica no Brasil conta como fonte primária, não como nota de rodapé.</p>
-      <div class="header-stats">
-        <div class="stat"><span class="stat-num">{orderedSources.length}</span><span class="stat-label">fontes</span></div>
-        <div class="stat"><span class="stat-num">{brazilianCount}</span><span class="stat-label">do Brasil</span></div>
-        <div class="stat"><span class="stat-num">{primaryCount}</span><span class="stat-label">primárias</span></div>
-      </div>
+<!-- Always dark: data-theme flips the subtree to the dark tokens, .mp-surface
+     paints it (the Membrane way to theme a region, no hard-coded colors). -->
+<header class="mp-surface signal-header" data-theme="dark">
+  <div class="signal-header__wordmark" aria-hidden="true">Signal</div>
+  <div class="mp-container mp-stack signal-header__inner" data-gap="5">
+    <a class="mp-link" data-variant="quiet" href="/">← Voltar para o portfólio</a>
+    <p class="type-label mp-text" data-tone="human">Dieta de informação · {CURATED_LABEL}</p>
+    <h1 class="type-display signal-header__title">Tech <em>Signal</em> Stack.</h1>
+    <div class="mp-cluster" data-justify="between" data-align="start" data-gap="8">
+      <p class="mp-text type-body-lg" data-tone="muted" data-measure>Curadoria opinativa das fontes de maior sinal em tecnologia. Feita para prática diária, não para rolagem passiva. Cada fonte precisa justificar o lugar que ocupa, e o que se publica no Brasil conta como fonte primária, não como nota de rodapé.</p>
+      <dl class="mp-cluster signal-header__stats" data-gap="8">
+        <div class="mp-stat"><dt class="mp-stat__label">fontes</dt><dd class="mp-stat__value">{orderedSources.length}</dd></div>
+        <div class="mp-stat"><dt class="mp-stat__label">do Brasil</dt><dd class="mp-stat__value">{brazilianCount}</dd></div>
+        <div class="mp-stat"><dt class="mp-stat__label">primárias</dt><dd class="mp-stat__value">{primaryCount}</dd></div>
+      </dl>
     </div>
   </div>
 </header>
-<div class="membrane-line"></div>
+<div class="membrane-line" aria-hidden="true"></div>
 
-<nav class="controls" aria-label="Busca e filtros">
-  <div class="controls-inner">
-    <div class="controls-top">
-      <div class="search-wrap">
-        <span class="search-icon" aria-hidden="true">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-        </span>
-        <input type="search" id="search" class="search-input" placeholder="Buscar por fonte, tema ou nome…" aria-label="Buscar fontes" autocomplete="off">
-        <button type="button" class="search-clear" id="searchClear" aria-label="Limpar busca">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+<nav class="signal-controls" aria-label="Busca e filtros">
+  <div class="mp-container mp-stack" data-gap="3">
+    <div class="mp-cluster" data-gap="2">
+      <div class="signal-search">
+        <label class="mp-visually-hidden" for="search">Buscar fontes</label>
+        <input type="search" id="search" class="mp-input" placeholder="Buscar por fonte, tema ou nome…" autocomplete="off" aria-keyshortcuts="/">
+        <button type="button" class="mp-button signal-search__clear" id="searchClear" data-variant="ghost" data-size="sm" data-icon-only aria-label="Limpar busca" hidden>
+          <Icon icon="x" size="sm" />
         </button>
       </div>
-      <button type="button" class="theme-toggle" id="themeToggle" aria-label="Alternar modo escuro" title="Alternar tema"></button>
+      <ThemeToggle />
     </div>
-    <div class="filter-row" id="filterRow" role="group" aria-label="Filtrar por categoria">
+    <div class="mp-cluster filter-row" id="filterRow" role="group" aria-label="Filtrar por categoria" data-gap="2">
       {CATEGORIES.map((cat) => (
         <button
           type="button"
-          class:list={['filter-pill', { active: cat.id === 'todas' }]}
+          class="mp-tag filter-pill"
           data-filter={cat.id}
           aria-pressed={cat.id === 'todas' ? 'true' : 'false'}
         >
@@ -746,128 +257,129 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
   </div>
 </nav>
 
-<main id="main" tabindex="-1">
-  <div class="strategy" aria-label="Estratégia de leitura sugerida">
-    <div class="strat-item">
-      <span class="strat-label">Varredura da manhã · 15 min</span>
-      <span class="strat-title"><span class="strat-dot dot-t"></span>Ficar em dia</span>
-      <p class="strat-desc">Hacker News, TLDR, Tecnoblog, The Verge. Cobre a maior parte do que importa, com pouca repetição entre eles.</p>
+<main id="main" tabindex="-1" class="mp-container mp-stack signal-main" data-gap="10">
+  <section class="mp-card strategy" aria-label="Estratégia de leitura sugerida">
+    <div class="mp-grid" data-min="sm">
+    <div class="mp-stack strat-item" data-gap="1">
+      <span class="type-label mp-text" data-tone="subtle">Varredura da manhã · 15 min</span>
+      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="1" aria-hidden="true"></span>Ficar em dia</span>
+      <p class="mp-text type-small" data-tone="muted">Hacker News, TLDR, Tecnoblog, The Verge. Cobre a maior parte do que importa, com pouca repetição entre eles.</p>
     </div>
-    <div class="strat-item">
-      <span class="strat-label">Síntese semanal · domingo</span>
-      <span class="strat-title"><span class="strat-dot dot-a"></span>Pensar estratégia</span>
-      <p class="strat-desc">Stratechery, Benedict Evans, Exponential View, Manual do Usuário. A camada que a notícia diária não alcança.</p>
+    <div class="mp-stack strat-item" data-gap="1">
+      <span class="type-label mp-text" data-tone="subtle">Síntese semanal · domingo</span>
+      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="warm" aria-hidden="true"></span>Pensar estratégia</span>
+      <p class="mp-text type-small" data-tone="muted">Stratechery, Benedict Evans, Exponential View, Manual do Usuário. A camada que a notícia diária não alcança.</p>
     </div>
-    <div class="strat-item">
-      <span class="strat-label">Sob demanda · quando pesa</span>
-      <span class="strat-title"><span class="strat-dot dot-d"></span>Ir fundo</span>
-      <p class="strat-desc">Ars Technica, MIT Tech Review, Cetic.br, JOTA, Rest of World. Para quando a manchete não basta.</p>
+    <div class="mp-stack strat-item" data-gap="1">
+      <span class="type-label mp-text" data-tone="subtle">Sob demanda · quando pesa</span>
+      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="2" aria-hidden="true"></span>Ir fundo</span>
+      <p class="mp-text type-small" data-tone="muted">Ars Technica, MIT Tech Review, Cetic.br, JOTA, Rest of World. Para quando a manchete não basta.</p>
     </div>
-  </div>
+    </div>
+  </section>
 
-  <section class="picks" id="picks" aria-labelledby="picksTitle" hidden>
-    <div class="picks-head">
+  <section class="mp-stack picks" data-gap="5" id="picks" aria-labelledby="picksTitle" hidden>
+    <div class="mp-cluster" data-justify="between" data-align="baseline" data-gap="4">
       <div>
-        <h2 class="picks-title" id="picksTitle">Para descobrir hoje</h2>
-        <p class="picks-sub">Três fontes sorteadas fora do núcleo essencial, sempre com pelo menos uma brasileira e uma global. Muda a cada visita.</p>
+        <h2 class="type-h3" id="picksTitle">Para descobrir hoje</h2>
+        <p class="mp-text type-small" data-tone="muted" data-measure>Três fontes sorteadas fora do núcleo essencial, sempre com pelo menos uma brasileira e uma global. Muda a cada visita.</p>
       </div>
-      <button type="button" class="picks-reroll" id="picksReroll">
+      <button type="button" class="mp-button" data-variant="secondary" data-size="sm" id="picksReroll">
         <span aria-hidden="true">↻</span> Sortear de novo
       </button>
     </div>
-    <div class="grid" id="picksGrid"></div>
+    <div class="mp-grid signal-grid" id="picksGrid"></div>
   </section>
 
-  <div class="result-meta">
-    <div class="result-meta-left">
-      <h2 class="result-title" id="resultTitle">Todas as fontes</h2>
-      <span class="result-count" id="resultCount" role="status" aria-live="polite"></span>
+  <div class="mp-stack result-meta" data-gap="4">
+    <div class="mp-cluster" data-align="baseline" data-gap="3">
+      <h2 class="type-h3" id="resultTitle">Todas as fontes</h2>
+      <span class="mp-text type-small" data-tone="subtle" id="resultCount" role="status" aria-live="polite"></span>
     </div>
-    <div class="tier-control">
-      <span class="tier-control-label">Natureza</span>
-      <div class="tier-seg" id="kindSeg" role="group" aria-label="Filtrar por natureza da fonte">
-        <button type="button" class="kind-btn active" data-kind="todas" aria-pressed="true">Todas</button>
+    <div class="mp-cluster seg-control" data-gap="2">
+      <span class="type-label mp-text" data-tone="subtle">Natureza</span>
+      <div class="mp-cluster seg" data-gap="1" id="kindSeg" role="group" aria-label="Filtrar por natureza da fonte">
+        <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind="todas" aria-pressed="true">Todas</button>
         {kindCounts.map((item) => (
-          <button type="button" class="kind-btn" data-kind={item.kind} aria-pressed="false" title={item.title}>
-            {item.label} <span class="pill-count">{item.count}</span>
+          <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind={item.kind} aria-pressed="false" title={item.title}>
+            {item.label} <span class="mp-badge">{item.count}</span>
           </button>
         ))}
       </div>
     </div>
-    <div class="tier-control" id="orderControl" hidden>
-      <span class="tier-control-label">Ordem</span>
-      <div class="tier-seg" id="orderSeg" role="group" aria-label="Ordem das fontes">
-        <button type="button" class="order-btn active" data-order="shuffle" aria-pressed="true" title="Muda a cada visita. Clique de novo para embaralhar outra vez.">
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+    <div class="mp-cluster seg-control" data-gap="2" id="orderControl" hidden>
+      <span class="type-label mp-text" data-tone="subtle">Ordem</span>
+      <div class="mp-cluster seg" data-gap="1" id="orderSeg" role="group" aria-label="Ordem das fontes">
+        <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="shuffle" aria-pressed="true" title="Muda a cada visita. Clique de novo para embaralhar outra vez.">
+          <svg class="mp-icon" data-size="sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
           Embaralhada
         </button>
-        <button type="button" class="order-btn" data-order="tier" aria-pressed="false" title="Essencial primeiro, depois ordem alfabética">Por prioridade</button>
+        <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="tier" aria-pressed="false" title="Essencial primeiro, depois ordem alfabética">Por prioridade</button>
       </div>
     </div>
-    <div class="tier-control">
-      <span class="tier-control-label">Prioridade</span>
-      <div class="tier-seg" id="tierSeg" role="group" aria-label="Filtrar por prioridade">
-        <button type="button" class="tier-btn active" data-tier="todas" aria-pressed="true">Todas</button>
-        <button type="button" class="tier-btn" data-tier="1" aria-pressed="false" title={TIER_DESC[1]}><span class="tier-tick"></span>{TIER_NAME[1]}</button>
-        <button type="button" class="tier-btn" data-tier="2" aria-pressed="false" title={TIER_DESC[2]}><span class="tier-tick"></span>{TIER_NAME[2]}</button>
-        <button type="button" class="tier-btn" data-tier="3" aria-pressed="false" title={TIER_DESC[3]}><span class="tier-tick"></span>{TIER_NAME[3]}</button>
+    <div class="mp-cluster seg-control" data-gap="2">
+      <span class="type-label mp-text" data-tone="subtle">Prioridade</span>
+      <div class="mp-cluster seg" data-gap="1" id="tierSeg" role="group" aria-label="Filtrar por prioridade">
+        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="todas" aria-pressed="true">Todas</button>
+        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="1" aria-pressed="false" title={TIER_DESC[1]}><span class="tier-tick" data-tier="1" aria-hidden="true"></span>{TIER_NAME[1]}</button>
+        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="2" aria-pressed="false" title={TIER_DESC[2]}><span class="tier-tick" data-tier="2" aria-hidden="true"></span>{TIER_NAME[2]}</button>
+        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="3" aria-pressed="false" title={TIER_DESC[3]}><span class="tier-tick" data-tier="3" aria-hidden="true"></span>{TIER_NAME[3]}</button>
       </div>
     </div>
   </div>
 
-  <div class="grid" id="grid">
+  <div class="mp-grid signal-grid" id="grid">
     {orderedSources.map((source, index) => (
       <article
-        class:list={['card', `t${source.tier}`]}
+        class="mp-card signal-card"
+        data-tone={source.tier === 2 ? 'digital' : undefined}
         data-tier={source.tier}
         data-cats={source.cats.join(' ')}
         data-kind={source.kind}
         data-order={index}
         data-haystack={[source.name, source.desc, source.topics.join(' '), source.region, KIND_NAME[source.kind], source.url].join(' ').toLowerCase()}
-        style={`--i:${Math.min(index, 14)}`}
       >
-        <div class="card-head">
-          <div class="card-title-wrap">
-            <button
-              type="button"
-              class="card-tier"
-              data-tier={source.tier}
-              title={`${TIER_DESC[source.tier]}. Clique para filtrar.`}
-              aria-label={`${TIER_DESC[source.tier]}. Filtrar por esta prioridade.`}
-            ><span class="tier-tick"></span>{TIER_NAME[source.tier]}</button>
-            <h3 class="card-title" data-original={source.name}>
-              <a class="card-link" href={source.url} target="_blank" rel="noopener noreferrer">
-                {source.name}<span class="sr-only"> (abre em uma nova aba)</span>
-              </a>
-            </h3>
-          </div>
-          <span class="card-arrow" aria-hidden="true">↗</span>
+        <div class="mp-cluster" data-justify="between" data-gap="2">
+          <button
+            type="button"
+            class="mp-tag card-tier"
+            data-tone={tierTone(source.tier)}
+            data-tier={source.tier}
+            title={`${TIER_DESC[source.tier]}. Clique para filtrar.`}
+            aria-label={`${TIER_DESC[source.tier]}. Filtrar por esta prioridade.`}
+          ><span class="tier-tick" data-tier={source.tier} aria-hidden="true"></span>{TIER_NAME[source.tier]}</button>
+          <span class:list={['mp-badge']} data-tone={source.access === 'aberto' ? 'success' : 'warning'}>{accessLabel(source.access)}</span>
         </div>
-        <div class="card-body">
-          <p class="card-url">{cleanUrl(source.url)}</p>
-          <p class="card-desc" data-original={source.desc}>{source.desc}</p>
-        </div>
-        <div class="card-foot">
-          <span class="tag tag-kind" title={KIND_DESC[source.kind]}>{KIND_NAME[source.kind]}</span>
-          <span class="tag tag-cadence">{source.cadence}</span>
-          {source.deep && <span class="tag tag-deep">Aprofundado</span>}
-          {source.region !== 'Global' && <span class="tag tag-region">{source.region}</span>}
-          {source.topics.map((topic) => <span class="tag tag-topic">{topic}</span>)}
-          <span class:list={['access', source.access === 'aberto' ? 'access-free' : 'access-paid']}>{accessLabel(source.access)}</span>
+        <h3 class="mp-card__title card-title" data-original={source.name}>
+          <a class="mp-card__link card-link" href={source.url} target="_blank" rel="noopener noreferrer">
+            {source.name}<span class="mp-visually-hidden"> (abre em uma nova aba)</span>
+          </a>
+        </h3>
+        <p class="card-url">{cleanUrl(source.url)}</p>
+        <p class="mp-card__body card-desc" data-original={source.desc}>{source.desc}</p>
+        <div class="mp-card__footer">
+          <span class="mp-badge" title={KIND_DESC[source.kind]}>{KIND_NAME[source.kind]}</span>
+          <span class="mp-badge" data-tone="human">{source.cadence}</span>
+          {source.deep && <span class="mp-badge" data-tone="digital">Aprofundado</span>}
+          {source.region !== 'Global' && <span class="mp-badge" data-tone="success">{source.region}</span>}
+          {source.topics.map((topic) => <span class="mp-tag">{topic}</span>)}
         </div>
       </article>
     ))}
   </div>
 
-  <div class="empty" id="empty">
-    <div class="empty-glyph" aria-hidden="true">∅</div>
-    <p class="empty-text">Nenhuma fonte corresponde.</p>
-    <p class="empty-sub">Tente outro termo, categoria ou prioridade.</p>
-    <button type="button" class="empty-reset" id="emptyReset">Limpar filtros</button>
+  <div class="mp-empty" data-variant="bordered" id="empty" hidden>
+    <div class="mp-empty__media" aria-hidden="true"><Icon icon="search" size="lg" /></div>
+    <p class="mp-empty__title">Nenhuma fonte corresponde.</p>
+    <p class="mp-empty__body">Tente outro termo, categoria ou prioridade.</p>
+    <div class="mp-empty__actions">
+      <button type="button" class="mp-button" data-variant="secondary" id="emptyReset">Limpar filtros</button>
+    </div>
   </div>
 
-  <section class="method" aria-labelledby="methodTitle">
-    <h2 id="methodTitle" class="result-title" style="font-size: var(--text-h3)">Como esta lista é feita</h2>
+  <section class="mp-card method" data-variant="flat" aria-labelledby="methodTitle">
+    <div class="mp-prose">
+    <h2 id="methodTitle">Como esta lista é feita</h2>
     <p>Uma fonte entra aqui quando passa em três perguntas. Ela sustenta o que afirma com dado, documento ou apuração que dá para conferir? Ela cobre alguma coisa que as outras da lista não cobrem? E ela me faz mudar de ideia com alguma frequência, ou só confirma o que eu já pensava?</p>
     <p>Cada card diz qual é a natureza da fonte, e essa é a distinção que mais muda a leitura. Jornalismo é redação com apuração própria. Análise é interpretação assinada, com tese à mostra. Pesquisa é produção acadêmica ou institucional com metodologia pública. Fonte primária é a organização falando de si mesma, o que a torna parcial e indispensável ao mesmo tempo: o comunicado de um laboratório de IA ou a sanção de um regulador são o fato, não a cobertura do fato. Descoberta não publica nada de original, revela o que outros publicaram, e serve para medir o tamanho de um assunto, não para formar opinião sobre ele.</p>
     <p>A prioridade não mede qualidade, mede frequência de uso. Essencial é o que eu leio de forma recorrente. Forte é excelente, e o peso depende do papel de quem lê. Situacional é o que eu procuro quando o assunto aparece. Um veículo excelente pode ser situacional, e isso não é demérito: a ANPD e o Cetic.br publicam algumas vezes por ano, e quando publicam valem mais que um mês de notícia.</p>
@@ -876,11 +388,12 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
     <p>A ordem dos cards muda a cada visita, de propósito. Uma lista fixa ensina a ler sempre as mesmas cinco fontes do topo, e o objetivo aqui é o contrário: esbarrar com algo que eu ainda não li. O sorteio de cima evita o núcleo essencial e a ordem por prioridade continua a um clique de distância.</p>
     <p>A curadoria é revisada periodicamente e cada revisão corta, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
 
-    <div class="method-export">
-      <p class="method-export-text">
+    </div>
+    <div class="mp-cluster method-export" data-justify="between" data-gap="6">
+      <p class="mp-text method-export-text" data-measure>
         <strong>Leve a lista para o seu leitor de feeds.</strong> {feedCount} das {orderedSources.length} fontes publicam RSS ou Atom, e cada endereço foi conferido por requisição real antes de entrar no arquivo. As outras {orderedSources.length - feedCount} não têm feed próprio e ficaram de fora: endereço chutado quebra em silêncio dentro do leitor de quem importou. O arquivo vem organizado em pastas por categoria.
       </p>
-      <a class="method-export-link" href="/tech-signal.opml" download>
+      <a class="mp-button" href="/tech-signal.opml" download>
         Baixar OPML
         <span aria-hidden="true">↓</span>
       </a>
@@ -888,11 +401,11 @@ mark { background: var(--color-amber); color: var(--color-charcoal); border-radi
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="footer-inner">
-    <span class="footer-brand">d<span class="sep">'</span>c<span class="sub">Signal Stack</span></span>
-    <p class="footer-note">{orderedSources.length} fontes · revisado em {CURATED_LABEL}</p>
-    <a class="footer-back" href="/">Ver o resto do portfólio</a>
+<footer class="signal-footer">
+  <div class="mp-container mp-cluster" data-justify="between" data-gap="4">
+    <a class="signal-footer__brand" href="/" aria-label="D'Césares, página inicial"><BrandMark variant="monogram" /></a>
+    <p class="mp-text type-small" data-tone="subtle">{orderedSources.length} fontes · revisado em {CURATED_LABEL}</p>
+    <a class="mp-link" data-variant="standalone" href="/">Ver o resto do portfólio</a>
   </div>
 </footer>
 
@@ -914,7 +427,7 @@ const orderSeg    = document.getElementById('orderSeg');
 const orderCtl    = document.getElementById('orderControl');
 const picks       = document.getElementById('picks');
 const picksGrid   = document.getElementById('picksGrid');
-const cards       = Array.from(grid.querySelectorAll('.card'));
+const cards       = Array.from(grid.querySelectorAll('.signal-card'));
 
 const CATEGORY_LABELS = {};
 filterRow.querySelectorAll('.filter-pill').forEach(pill => {
@@ -946,7 +459,7 @@ function paintHighlights(card, term) {
   const desc  = card.querySelector('.card-desc');
   const link  = title.querySelector('.card-link');
   link.innerHTML = highlight(title.dataset.original, term)
-    + '<span class="sr-only"> (abre em uma nova aba)</span>';
+    + '<span class="mp-visually-hidden"> (abre em uma nova aba)</span>';
   desc.innerHTML = highlight(desc.dataset.original, term);
 }
 
@@ -975,15 +488,14 @@ function render() {
   resultCount.textContent = visible === 1 ? '1 fonte' : visible + ' fontes';
 
   const isEmpty = visible === 0;
-  emptyState.classList.toggle('visible', isEmpty);
-  grid.style.display = isEmpty ? 'none' : 'grid';
+  emptyState.hidden = !isEmpty;
+  grid.hidden = isEmpty;
 }
 
 function setCategory(id) {
   activeFilter = id;
   filterRow.querySelectorAll('.filter-pill').forEach(pill => {
     const on = pill.dataset.filter === id;
-    pill.classList.toggle('active', on);
     pill.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   render();
@@ -993,7 +505,6 @@ function setKind(kind) {
   activeKind = kind;
   kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
     const on = btn.dataset.kind === kind;
-    btn.classList.toggle('active', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   render();
@@ -1003,7 +514,6 @@ function setTier(tier) {
   activeTier = tier;
   tierSeg.querySelectorAll('.tier-btn').forEach(btn => {
     const on = btn.dataset.tier === tier;
-    btn.classList.toggle('active', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   render();
@@ -1026,20 +536,20 @@ grid.addEventListener('click', e => {
   const badge = e.target.closest('.card-tier');
   if (!badge) return;
   setTier(activeTier === badge.dataset.tier ? 'todas' : badge.dataset.tier);
-  window.scrollTo({ top: document.querySelector('.result-meta').offsetTop - 80, behavior: 'smooth' });
+  document.querySelector('.result-meta').scrollIntoView({ block: 'start' });
 });
 
 let searchTimer;
 searchInput.addEventListener('input', e => {
   searchTerm = e.target.value;
-  searchClear.classList.toggle('visible', searchTerm.length > 0);
+  searchClear.hidden = searchTerm.length === 0;
   clearTimeout(searchTimer);
   searchTimer = setTimeout(render, 120);
 });
 searchClear.addEventListener('click', () => {
   searchTerm = '';
   searchInput.value = '';
-  searchClear.classList.remove('visible');
+  searchClear.hidden = true;
   searchInput.focus();
   render();
 });
@@ -1048,7 +558,7 @@ searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') searchCle
 document.getElementById('emptyReset').addEventListener('click', () => {
   searchTerm = '';
   searchInput.value = '';
-  searchClear.classList.remove('visible');
+  searchClear.hidden = true;
   setCategory('todas');
   setKind('todas');
   setTier('todas');
@@ -1056,35 +566,10 @@ document.getElementById('emptyReset').addEventListener('click', () => {
 
 // Atalho: "/" foca a busca.
 document.addEventListener('keydown', e => {
-  if (e.key === '/' && document.activeElement !== searchInput) {
+  if (e.key === '/' && !e.target.closest('input, textarea, select, [contenteditable]')) {
     e.preventDefault();
     searchInput.focus();
   }
-});
-
-/* ═══════════ TEMA ═══════════
-   Mesma chave e mesmas classes do resto do site (ThemeToggle + MainHead),
-   para o modo escuro não se perder ao navegar entre as páginas.
-═══════════════════════════════ */
-const root = document.documentElement;
-const themeToggle = document.getElementById('themeToggle');
-const moon = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg>`;
-const sun  = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/></svg>`;
-
-function paintToggle(isDark) {
-  themeToggle.innerHTML = isDark ? sun : moon;
-  themeToggle.setAttribute('aria-label', isDark ? 'Mudar para o modo claro' : 'Mudar para o modo escuro');
-}
-
-// O MainHead já aplicou o tema antes da pintura. Aqui só refletimos no botão.
-paintToggle(root.classList.contains('theme-dark'));
-
-themeToggle.addEventListener('click', () => {
-  const isDark = !root.classList.contains('theme-dark');
-  root.classList.toggle('theme-dark', isDark);
-  root.setAttribute('data-theme', isDark ? 'dark' : 'light');
-  localStorage.setItem('theme', isDark ? 'dark' : 'light');
-  paintToggle(isDark);
 });
 
 /* ═══════════ EMBARALHAR ═══════════
@@ -1107,14 +592,12 @@ function shuffled(list) {
 }
 
 function placeCards(ordered) {
-  ordered.forEach((card, i) => card.style.setProperty('--i', Math.min(i, 14)));
   grid.append(...ordered);
 }
 
 function setOrder(order, reshuffle) {
   orderSeg.querySelectorAll('.order-btn').forEach(btn => {
     const on = btn.dataset.order === order;
-    btn.classList.toggle('active', on);
     btn.setAttribute('aria-pressed', on ? 'true' : 'false');
   });
   if (order === 'tier') {
@@ -1134,15 +617,15 @@ function pickFresh() {
   const rest = shuffled(pool.filter(card => !chosen.includes(card)));
   chosen.push(rest[0]);
 
-  picksGrid.replaceChildren(...shuffled(chosen).map((card, i) => {
+  picksGrid.replaceChildren(...shuffled(chosen).map((card) => {
     const copy = card.cloneNode(true);
     copy.hidden = false;
     copy.removeAttribute('data-order');
-    copy.style.setProperty('--i', i * 3);
     const badge = copy.querySelector('.card-tier');
     const label = document.createElement('span');
     label.className = badge.className;
     label.dataset.tier = badge.dataset.tier;
+    if (badge.dataset.tone) label.dataset.tone = badge.dataset.tone;
     label.innerHTML = badge.innerHTML;
     badge.replaceWith(label);
     return copy;
@@ -1155,9 +638,9 @@ orderSeg.querySelectorAll('.order-btn').forEach(btn => {
   btn.addEventListener('click', () => {
     const order = btn.dataset.order;
     if (order === 'shuffle') {
-      btn.classList.remove('spin');
+      btn.removeAttribute('data-spin');
       void btn.offsetWidth;
-      btn.classList.add('spin');
+      btn.setAttribute('data-spin', '');
     }
     setOrder(order, true);
   });

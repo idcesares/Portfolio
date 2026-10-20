@@ -1,0 +1,43 @@
+---
+/**
+ * The outlined brand marks from The Membrane Palette (design-system/brand,
+ * Fraunces 700 WONK=1, never hand-edited), inlined so they follow the theme:
+ * the wordmarks take the text color and the monogram keeps its registers
+ * (terracotta d, teal c) through the action tokens, which retheme in dark mode.
+ */
+import compact from '../../design-system/brand/idcesares-logo-compact-primary.svg?raw';
+import wordmark from '../../design-system/brand/idcesares-logo-wordmark-primary.svg?raw';
+import monogram from '../../design-system/brand/idcesares-logo-monogram-primary.svg?raw';
+
+interface Props {
+	variant?: 'compact' | 'wordmark' | 'monogram';
+	class?: string;
+}
+
+const { variant = 'compact', class: className } = Astro.props;
+const sources = { compact, wordmark, monogram };
+
+// Decorative inside a labelled link: drop the SVG's own role/title, theme the fills.
+const svg = sources[variant]
+	.replace(/\srole="img"\s+aria-label="[^"]*"/, ' aria-hidden="true" focusable="false"')
+	.replace(/<title>[^<]*<\/title>\s*/, '')
+	.replace('fill="#1A1B1F"', 'fill="currentColor"')
+	// var() is only reliable in CSS, not in SVG presentation attributes.
+	.replace('fill="#B35530"', 'style="fill: var(--color-action-primary)"')
+	.replace('fill="#1B756D"', 'style="fill: var(--color-action-secondary)"')
+	.replace('<svg ', `<svg class="brand-mark${className ? ` ${className}` : ''}" data-variant="${variant}" `);
+---
+
+<Fragment set:html={svg} />
+
+<style>
+	:global(.brand-mark) {
+		display: block;
+		width: auto;
+		height: 1.5rem;
+	}
+
+	:global(.brand-mark[data-variant='monogram']) {
+		height: 2rem;
+	}
+</style>

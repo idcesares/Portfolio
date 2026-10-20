@@ -17,7 +17,7 @@ Além do conteúdo editorial, o repositório também documenta:
 - instruções para agentes e copilots alinhadas com a arquitetura atual;
 - pipelines de validação com `astro check`, build e auditoria de dependências.
 
-A análise atual e as prioridades do site estão em [docs/site-review.md](./docs/site-review.md).
+O estado atual e as prioridades do site estão em [docs/roadmap.md](./docs/roadmap.md).
 
 ## Estado Atual do Repositório
 
@@ -121,7 +121,15 @@ Esse índice alimenta a experiência client-side com Fuse.js e é entregue com c
 
 ### Design system
 
-O site usa o **Membrane Palette**, com tokens semânticos em [`design-system/tokens/design-tokens.css`](./design-system/tokens/design-tokens.css), base layer em [`design-system/tokens/base.css`](./design-system/tokens/base.css) e documentação em:
+O site é uma execução do **[Membrane Palette](https://github.com/idcesares/The-Membrane-Palette)** v2.2.0. A distribuição da biblioteca fica em [`design-system/`](./design-system/) (versão e commit em `membrane.lock.json`) e é atualizada com `pnpm sync:membrane`:
+
+- `membrane.css`: fontes auto-hospedadas com fallbacks métricos, tokens, base e os componentes `mp-*`, importado por `src/styles/global.css` como camada global única;
+- `components/membrane.js`: comportamentos (dialog da busca, toasts);
+- `tokens/membrane-tailwind.css`: tema Tailwind v4 só com utilitários da marca;
+- `components/manifest.json`: catálogo de componentes, usado também por `pnpm check:membrane`;
+- `brand/`: marcas outline usadas no cabeçalho, rodapé e favicon.
+
+Documentação:
 
 - [`design-system/DESIGN-SYSTEM.md`](./design-system/DESIGN-SYSTEM.md)
 - [`design-system/BRAND-VOICE.md`](./design-system/BRAND-VOICE.md)
@@ -174,10 +182,10 @@ Portfolio/
 
 ### Pré-requisitos
 
-- **Node.js** `>=22.12.0 <25`
+- **Node.js** `>=24.0.0 <25`
 - **pnpm** `>=10 <11`
 
-Use a versão fixada em `packageManager` (`pnpm@10.33.0`). Se o `pnpm` global for de outra versão, execute `corepack pnpm install` e `corepack pnpm check`. O `pnpm-workspace.yaml` delimita este repositório para evitar que um workspace ancestral controle o lockfile e a auditoria. Docker e CI usam a mesma versão de pnpm.
+Use a versão fixada em `packageManager` (`pnpm@10.34.6`). Se o `pnpm` global for de outra versão, execute `corepack pnpm install` e `corepack pnpm check`. O `pnpm-workspace.yaml` delimita este repositório para evitar que um workspace ancestral controle o lockfile e a auditoria. Docker e CI usam a mesma versão de pnpm.
 
 Instalação e uso:
 
@@ -324,7 +332,7 @@ Regras importantes:
 O workflow em [`.github/workflows/ci.yml`](./.github/workflows/ci.yml) executa:
 
 - `pnpm install --frozen-lockfile`
-- `pnpm run audit` com `continue-on-error`
+- `pnpm run audit` (gate obrigatório para high/critical)
 - `pnpm astro check`
 - `pnpm build`
 

@@ -1,49 +1,28 @@
 ---
-import CallToAction from './CallToAction.astro';
 import Icon from './Icon.astro';
 ---
 
-<aside>
-	<h2>Vamos cocriar soluções humanas e tecnológicas?</h2>
-	<CallToAction href="/contact/">
-		Abrir contato
-		<Icon icon="paper-plane-tilt" size="1.2em" />
-	</CallToAction>
+<!-- The signature call to action, on the membrane gradient wash. -->
+<aside class="mp-section contact-cta" aria-labelledby="contact-cta-title">
+	<div class="mp-container mp-cluster" data-justify="between" data-gap="8">
+		<h2 class="type-display" id="contact-cta-title">Vamos cocriar soluções humanas e tecnológicas?</h2>
+		<a class="mp-button" data-size="lg" href="/contact/">
+			Abrir contato
+			<Icon icon="send" />
+		</a>
+	</div>
 </aside>
 
 <style>
-	aside {
-		display: flex;
-		flex-direction: column;
-		align-items: center;
-		gap: var(--space-12);
-		border-top: 1px solid var(--color-border-default);
-		border-bottom: 1px solid var(--color-border-default);
-		padding: var(--space-20) var(--space-6);
+	.contact-cta {
+		margin-block-start: var(--space-24);
+		border-block: var(--border-default);
 		background:
 			var(--gradient-warmth),
-			color-mix(in oklab, var(--color-bg-primary) 90%, transparent);
-		box-shadow: var(--shadow-sm);
+			var(--color-bg-secondary);
 	}
 
-	h2 {
-		font-size: var(--text-h2);
-		text-align: center;
-		max-width: 15ch;
-		letter-spacing: var(--tracking-heading);
-	}
-
-	@media (min-width: 50em) {
-		aside {
-			padding: var(--space-32);
-			flex-direction: row;
-			flex-wrap: wrap;
-			justify-content: space-between;
-		}
-
-		h2 {
-			font-size: var(--text-display);
-			text-align: left;
-		}
+	.contact-cta h2 {
+		max-width: 16ch;
 	}
 </style>

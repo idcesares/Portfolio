@@ -1,7 +1,7 @@
 ---
 import type { DevProject } from '../data/dev-projects';
-import { categoryLabels, statusLabels, statusColors } from '../data/dev-projects';
-import Icon from './Icon.astro';
+import { categoryLabels, statusLabels, statusTones } from '../data/dev-projects';
+import Icon, { type IconName } from './Icon.astro';
 
 interface Props {
 	project: DevProject;
@@ -9,475 +9,137 @@ interface Props {
 }
 
 const { project, variant = 'default' } = Astro.props;
+const featured = variant === 'featured';
 
-const description =
-	variant === 'featured' && project.longDescription
-		? project.longDescription
-		: project.description;
-
-const statusLabel = statusLabels[project.status];
-const statusColor = statusColors[project.status];
-const categoryLabel = categoryLabels[project.category];
-const maxTags = variant === 'featured' ? project.techStack.length : 4;
+const description = featured && project.longDescription ? project.longDescription : project.description;
+const maxTags = featured ? project.techStack.length : 4;
 const visibleTech = project.techStack.slice(0, maxTags);
 const remainingCount = project.techStack.length - maxTags;
 
-const placeholderIcons = {
-	product: 'rocket-launch',
+const placeholderIcons: Record<DevProject['category'], IconName> = {
+	product: 'rocket',
 	system: 'code',
 	research: 'book-open',
 	education: 'pencil-line',
-	experiment: 'terminal-window',
-} as const;
-
-const placeholderIcon = placeholderIcons[project.category];
-
-const colorMap: Record<string, { bg: string; border: string; text: string }> = {
-	teal:       { bg: 'var(--color-teal-10)', border: 'var(--color-teal-20)', text: 'var(--color-teal)' },
-	terracotta: { bg: 'var(--color-terracotta-10)', border: 'var(--color-terracotta-20)', text: 'var(--color-terracotta)' },
-	amber:      { bg: 'var(--color-amber-10)', border: 'rgba(212, 154, 58, 0.25)', text: 'var(--color-amber)' },
-	sage:       { bg: 'var(--color-sage-10)', border: 'rgba(90, 138, 110, 0.25)', text: 'var(--color-sage)' },
-	burgundy:   { bg: 'var(--color-burgundy-10)', border: 'rgba(122, 51, 69, 0.25)', text: 'var(--color-burgundy)' },
+	experiment: 'square-terminal',
 };
 ---
 
+<!-- Membrane card. Products and systems are the digital register (teal accent);
+     research and education stay in the human register (terracotta). -->
 <article
 	id={`project-${project.id}`}
-	style="scroll-margin-top: var(--space-24);"
-	class:list={['dev-card', variant]}
+	class="mp-card dev-card"
+	data-variant={featured ? 'featured' : undefined}
+	data-tone={project.category === 'research' || project.category === 'education' ? undefined : 'digital'}
 	data-category={project.category}
-	data-animate="fade-up"
+	data-animate
 >
-	<div class="card-image">
-		{project.img ? (
-			<img
-				src={project.img}
-				alt={project.imgAlt || ''}
-				loading="lazy"
-				decoding="async"
-			/>
-		) : (
-			<div class="img-placeholder" aria-hidden="true">
-				<Icon icon={placeholderIcon} size="3rem" />
-			</div>
-		)}
+	<div class="mp-card__media">
+		{
+			project.img ? (
+				<img src={project.img} alt={project.imgAlt || ''} width="800" height="450" loading="lazy" decoding="async" />
+			) : (
+				<div class="dev-card__placeholder" aria-hidden="true">
+					<Icon icon={placeholderIcons[project.category]} size="xl" />
+				</div>
+			)
+		}
 	</div>
 
-	<div class="card-body">
-		<div class="card-meta">
-			<div class="card-meta-main">
-				<span class="status" style={`--status-color: ${statusColor}`}>
-					<span class="status-dot" aria-hidden="true"></span>
-					{statusLabel}
-				</span>
-				<span class="meta-separator" aria-hidden="true">/</span>
-				<span class="category">{categoryLabel}</span>
-			</div>
-			<span class="year">{project.year}</span>
+	<div class="dev-card__content mp-stack" data-gap="3">
+		<div class="mp-cluster" data-justify="between" data-gap="2">
+			<p class="mp-card__overline">{categoryLabels[project.category]} · {project.year}</p>
+			<span class="mp-badge" data-variant="dot" data-tone={statusTones[project.status]}>{statusLabels[project.status]}</span>
 		</div>
 
-		<h3 class="card-title">{project.title}</h3>
-		<p class="card-description">{description}</p>
+		<h3 class="mp-card__title">{project.title}</h3>
+		<p class="mp-card__body">{description}</p>
 
-		<div class="tech-stack">
-			{visibleTech.map((tech) => {
-				const c = colorMap[tech.color] || colorMap.teal;
-				return (
-					<span
-						class="tech-pill"
-						style={`--pill-bg: ${c.bg}; --pill-border: ${c.border}; --pill-text: ${c.text};`}
-					>
-						{tech.name}
-					</span>
-				);
-			})}
-			{remainingCount > 0 && (
-				<span class="tech-pill tech-more">+{remainingCount}</span>
-			)}
-		</div>
+		<ul class="mp-cluster dev-card__tech" data-gap="2" aria-label="Tecnologias">
+			{visibleTech.map((tech) => <li class="mp-tag">{tech.name}</li>)}
+			{remainingCount > 0 && <li class="mp-tag" aria-label={`Mais ${remainingCount}`}>+{remainingCount}</li>}
+		</ul>
 
-		{project.availability && (
-			<p class="availability">
-				<Icon icon="terminal-window" size="1em" />
-				{project.availability}
-			</p>
-		)}
+		{
+			project.availability && (
+				<div class="mp-alert dev-card__availability">
+					<Icon icon="square-terminal" class="mp-alert__icon" />
+					<div class="mp-alert__content">
+						<p>{project.availability}</p>
+					</div>
+				</div>
+			)
+		}
 
-		<div class="card-actions">
-			{project.demoUrl && (
-				<a
-					href={project.demoUrl}
-					class="action-btn action-primary"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Icon icon="globe" size="1.1em" />
-					{project.primaryActionLabel || 'Abrir projeto'}
-					<Icon icon="arrow-square-out" size="0.9em" />
-				</a>
-			)}
-			{project.repoUrl && (
-				<a
-					href={project.repoUrl}
-					class="action-btn action-ghost"
-					target="_blank"
-					rel="noopener noreferrer"
-				>
-					<Icon icon="github-logo" size="1.1em" />
-					{project.repoActionLabel || 'Ver no GitHub'}
-				</a>
-			)}
+		<div class="mp-card__footer mp-cluster" data-gap="2">
+			{
+				project.demoUrl && (
+					<a class="mp-button" data-size="sm" href={project.demoUrl} target="_blank" rel="noopener noreferrer">
+						<Icon icon="globe" />
+						{project.primaryActionLabel || 'Abrir projeto'}
+						<Icon icon="external-link" />
+					</a>
+				)
+			}
+			{
+				project.repoUrl && (
+					<a class="mp-button" data-variant="ghost" data-size="sm" href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+						<Icon icon="github" />
+						{project.repoActionLabel || 'Ver no GitHub'}
+					</a>
+				)
+			}
 		</div>
 	</div>
 </article>
 
 <style>
-	/* ========================================
-	   Base Card Styles
-	   ======================================== */
-
 	.dev-card {
-		background: color-mix(in oklab, var(--color-bg-primary) 88%, transparent);
-		border: 1px solid var(--color-border-default);
-		border-radius: var(--radius-xl);
-		overflow: hidden;
-		box-shadow: var(--shadow-sm);
-		transition:
-			transform var(--transition-default),
-			box-shadow var(--transition-default),
-			border-color var(--duration-normal) var(--ease-out);
-	}
-
-	.dev-card:hover {
-		transform: translateY(-4px);
-		box-shadow: var(--shadow-md);
-		border-color: var(--color-border-emphasis);
-	}
-
-	/* ========================================
-	   Default Variant (vertical card)
-	   ======================================== */
-
-	.dev-card.default {
-		display: flex;
-		flex-direction: column;
-	}
-
-	.dev-card.default .card-image {
-		aspect-ratio: 16 / 7;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.dev-card.default .card-image img {
-		width: 100%;
+		scroll-margin-top: var(--space-24);
 		height: 100%;
-		object-fit: cover;
-		filter: var(--photo-warmth);
-		transition: transform var(--transition-slow);
 	}
 
-	.dev-card.default:hover .card-image img {
-		transform: scale(1.03);
-	}
-
-	.dev-card.default .card-body {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-3);
-		padding: var(--space-6);
+	.dev-card__content {
 		flex: 1;
 	}
 
-	/* ========================================
-	   Featured Variant (horizontal hero card)
-	   ======================================== */
-
-	.dev-card.featured {
+	.dev-card__placeholder {
 		display: grid;
-		grid-template-columns: 1fr;
-	}
-
-	.dev-card.featured .card-image {
-		aspect-ratio: 16 / 9;
-		overflow: hidden;
-		position: relative;
-	}
-
-	.dev-card.featured .card-image img {
-		width: 100%;
+		place-items: center;
 		height: 100%;
-		object-fit: cover;
-		filter: var(--photo-warmth);
-		transition: transform var(--transition-slow);
+		background: var(--gradient-membrane);
+		color: var(--color-text-on-accent);
 	}
 
-	.dev-card.featured:hover .card-image img {
-		transform: scale(1.02);
+	.dev-card__tech {
+		margin: 0;
+		padding: 0;
+		list-style: none;
 	}
 
-	.dev-card.featured .card-body {
-		display: flex;
-		flex-direction: column;
-		gap: var(--space-4);
-		padding: var(--space-8);
+	.dev-card__availability {
+		font-size: var(--text-small);
 	}
 
-	.dev-card.featured .card-title {
-		font-size: var(--text-h1);
-	}
-
-	.dev-card.featured .card-description {
-		font-size: var(--text-body-lg);
-		-webkit-line-clamp: unset;
-	}
-
-	@media (min-width: 50em) {
-		.dev-card.featured {
-			grid-template-columns: 1fr 1fr;
+	/* Featured: media beside the text on wide screens. */
+	@media (min-width: 60em) {
+		.dev-card[data-variant='featured'] {
+			display: grid;
+			grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);
+			column-gap: var(--space-10);
+			align-items: stretch;
 		}
 
-		.dev-card.featured .card-image {
+		.dev-card[data-variant='featured'] .mp-card__media {
 			aspect-ratio: auto;
-			min-height: 320px;
+			min-height: 100%;
+			margin: calc(-1 * var(--mp-card-padding)) 0 calc(-1 * var(--mp-card-padding)) calc(-1 * var(--mp-card-padding));
+			border-radius: calc(var(--radius-lg) - var(--border-width-thin)) 0 0 calc(var(--radius-lg) - var(--border-width-thin));
 		}
 
-		.dev-card.featured .card-body {
-			padding: var(--space-10);
-			justify-content: center;
+		.dev-card[data-variant='featured'] .mp-card__title {
+			font-size: var(--text-h2);
 		}
-
-		.dev-card.featured .card-title {
-			font-size: var(--text-display);
-		}
-	}
-
-	/* ========================================
-	   Image Placeholder (gradient + icon)
-	   ======================================== */
-
-	.img-placeholder {
-		width: 100%;
-		height: 100%;
-		display: flex;
-		align-items: center;
-		justify-content: center;
-		background:
-			radial-gradient(circle at 28% 25%, var(--color-terracotta-20), transparent 45%),
-			var(--gradient-membrane);
-		color: var(--color-text-on-accent);
-		opacity: var(--opacity-heavy);
-	}
-
-	.dev-card[data-category='research'] .img-placeholder {
-		background:
-			radial-gradient(circle at 28% 25%, var(--color-burgundy-10), transparent 48%),
-			linear-gradient(135deg, var(--color-teal), var(--color-burgundy));
-	}
-
-	.dev-card[data-category='education'] .img-placeholder {
-		background:
-			radial-gradient(circle at 28% 25%, var(--color-amber-10), transparent 48%),
-			linear-gradient(135deg, var(--color-sage), var(--color-teal));
-	}
-
-	.dev-card[data-category='experiment'] .img-placeholder {
-		background:
-			radial-gradient(circle at 28% 25%, var(--color-terracotta-20), transparent 48%),
-			linear-gradient(135deg, var(--color-burgundy), var(--color-terracotta));
-	}
-
-	/* ========================================
-	   Card Meta (status + year)
-	   ======================================== */
-
-	.card-meta {
-		display: flex;
-		align-items: center;
-		justify-content: space-between;
-		gap: var(--space-3);
-	}
-
-	.card-meta-main {
-		display: flex;
-		align-items: center;
-		flex-wrap: wrap;
-		gap: var(--space-2);
-	}
-
-	.status {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-2);
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--status-color);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-label);
-	}
-
-	.status-dot {
-		width: 8px;
-		height: 8px;
-		border-radius: var(--radius-full);
-		background: var(--status-color);
-		box-shadow: 0 0 6px var(--status-color);
-	}
-
-	.meta-separator,
-	.category {
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--color-text-tertiary);
-		text-transform: uppercase;
-		letter-spacing: var(--tracking-label);
-	}
-
-	.meta-separator {
-		opacity: var(--opacity-medium);
-	}
-
-	.year {
-		font-size: var(--text-xs);
-		color: var(--color-text-tertiary);
-		font-weight: var(--weight-regular);
-		font-family: var(--font-mono);
-	}
-
-	/* ========================================
-	   Title & Description
-	   ======================================== */
-
-	.card-title {
-		font-size: var(--text-h3);
-		font-family: var(--font-serif);
-		color: var(--color-text-primary);
-		letter-spacing: var(--tracking-heading);
-		line-height: var(--leading-heading);
-		margin: 0;
-	}
-
-	.card-description {
-		font-size: var(--text-body);
-		color: var(--color-text-secondary);
-		line-height: var(--leading-body);
-		margin: 0;
-		text-wrap: pretty;
-	}
-
-	/* ========================================
-	   Tech Stack Pills
-	   ======================================== */
-
-	.tech-stack {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-2);
-		margin-top: var(--space-1);
-	}
-
-	.tech-pill {
-		display: inline-flex;
-		align-items: center;
-		padding: var(--space-1) var(--space-3);
-		font-size: var(--text-xs);
-		font-weight: var(--weight-medium);
-		color: var(--pill-text);
-		background: var(--pill-bg);
-		border: 1px solid var(--pill-border);
-		border-radius: var(--radius-full);
-		white-space: nowrap;
-		letter-spacing: var(--tracking-small);
-	}
-
-	.tech-more {
-		--pill-bg: var(--color-bg-secondary);
-		--pill-border: var(--color-border-default);
-		--pill-text: var(--color-text-tertiary);
-	}
-
-	.availability {
-		display: flex;
-		align-items: flex-start;
-		gap: var(--space-2);
-		margin: var(--space-1) 0 0;
-		padding: var(--space-3) var(--space-4);
-		border-left: 2px solid var(--color-amber);
-		background: var(--color-amber-10);
-		border-radius: 0 var(--radius-sm) var(--radius-sm) 0;
-		color: var(--color-text-secondary);
-		font-size: var(--text-small);
-		line-height: var(--leading-body);
-	}
-
-	.availability :global(svg) {
-		flex: 0 0 auto;
-		margin-top: 0.2em;
-		color: var(--color-amber);
-	}
-
-	/* ========================================
-	   Action Buttons
-	   ======================================== */
-
-	.card-actions {
-		display: flex;
-		flex-wrap: wrap;
-		gap: var(--space-3);
-		margin-top: auto;
-		padding-top: var(--space-3);
-	}
-
-	.action-btn {
-		display: inline-flex;
-		align-items: center;
-		gap: var(--space-2);
-		padding: var(--space-2) var(--space-4);
-		border-radius: var(--radius-full);
-		font-size: var(--text-small);
-		font-weight: var(--weight-medium);
-		text-decoration: none;
-		transition:
-			transform var(--transition-fast),
-			background-color var(--transition-default),
-			box-shadow var(--transition-default);
-		min-height: 44px;
-		white-space: nowrap;
-	}
-
-	.action-primary {
-		background: var(--color-action-primary);
-		color: var(--color-text-on-accent);
-		border: 1px solid var(--color-terracotta-dark);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.action-primary:hover {
-		background: color-mix(in oklab, var(--color-action-primary) 90%, var(--color-text-primary));
-		transform: translateY(-1px);
-		box-shadow: var(--shadow-md), var(--shadow-glow-warm);
-	}
-
-	.action-primary:focus-visible {
-		outline: var(--focus-ring);
-		outline-offset: var(--focus-ring-offset);
-	}
-
-	.action-ghost {
-		background: color-mix(in oklab, var(--color-bg-primary) 80%, transparent);
-		color: var(--color-text-secondary);
-		border: 1px solid var(--color-border-default);
-		box-shadow: var(--shadow-sm);
-	}
-
-	.action-ghost:hover {
-		color: var(--color-text-primary);
-		border-color: var(--color-border-emphasis);
-		transform: translateY(-1px);
-	}
-
-	.action-ghost:focus-visible {
-		outline: var(--focus-ring);
-		outline-offset: var(--focus-ring-offset);
 	}
 </style>
