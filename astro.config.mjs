@@ -23,6 +23,24 @@ const membraneCodeTheme = createCssVariablesTheme({
   fontStyle: true,
 });
 
+// Keep the official library serving/build hooks, but start its browser runtime
+// only when CookieConsent authorizes Analytics. No worker is needed beforehand.
+function partytownAfterConsent() {
+  const integration = partytown({ config: { forward: ['dataLayer.push'] } });
+  const setup = integration.hooks['astro:config:setup'];
+  integration.hooks['astro:config:setup'] = (options) => setup({
+    ...options,
+    injectScript(stage, code) {
+      if (stage === 'head-inline') {
+        options.injectScript(stage, `window.addEventListener('portfolio:analytics-consent', () => {${code}\n}, { once: true });`);
+      } else {
+        options.injectScript(stage, code);
+      }
+    },
+  });
+  return integration;
+}
+
 // Read `updatedDate` straight from content frontmatter so the sitemap can advertise
 // per-page lastmod without depending on the astro:content virtual module at config time.
 function readUpdatedDates(collection) {
@@ -147,11 +165,7 @@ export default defineConfig({
       const lastmod = sitemapLastmod.get(pathname);
       return lastmod ? { ...item, lastmod: lastmod.toISOString() } : item;
     },
-  }), partytown({
-    config: {
-      forward: ["dataLayer.push"]
-    }
-  }), mdx()],
+  }), partytownAfterConsent(), mdx()],
 
   markdown: {
     syntaxHighlight: false,
