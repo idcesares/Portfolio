@@ -77,7 +77,7 @@ docker compose up -d
 - pnpm >= 10 <11 (package manager obrigatório)
 - TypeScript strict mode habilitado
 
-Use `pnpm@10.34.6`, fixado em `packageManager` e no Dockerfile. Se necessário, use `corepack pnpm` para evitar conflitos com o pnpm global. Mantenha o `pnpm-workspace.yaml` local: ele isola instalações e auditorias de workspaces ancestrais. `@astrojs/check` e TypeScript são dependências de desenvolvimento explícitas.
+Use `pnpm@10.34.7`, fixado em `packageManager` e no Dockerfile. Se necessário, use `corepack pnpm` para evitar conflitos com o pnpm global. Mantenha o `pnpm-workspace.yaml` local: ele isola instalações e auditorias de workspaces ancestrais. `@astrojs/check` e TypeScript são dependências de desenvolvimento explícitas.
 
 **Variáveis de Ambiente** (opcional):
 - Não há secrets críticos (analytics são públicos)

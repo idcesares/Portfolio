@@ -8,7 +8,7 @@ FROM node:24-alpine AS base
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
 RUN --mount=type=secret,id=proxy_ca \
     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
-    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.6 --activate
+    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.7 --activate
 
 # Set working directory
 WORKDIR /app
@@ -55,7 +55,7 @@ FROM node:24-alpine AS production
 # Install pnpm (pinned for reproducibility — must match packageManager in package.json)
 RUN --mount=type=secret,id=proxy_ca \
     if [ -f /run/secrets/proxy_ca ]; then export NODE_EXTRA_CA_CERTS=/run/secrets/proxy_ca; fi; \
-    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.6 --activate
+    corepack enable && NODE_USE_ENV_PROXY=1 corepack prepare pnpm@10.34.7 --activate
 
 WORKDIR /app
 
