@@ -115,7 +115,11 @@ export default defineConfig({
         png: { compressionLevel: 9 },
       },
     },
-    // Authorize remote image domains for optimization
+    // Hosts the image optimizer may fetch. These are the remote covers in
+    // content (YouTube thumbs, Spotify art, Senac PE, the Pantanal figure).
+    // GitHub serves that figure from github.com, then redirects to
+    // raw.githubusercontent.com, and Astro checks every hop. A protocol-only
+    // pattern would allow any HTTPS host.
     domains: [
       'i.ytimg.com',
       'i3.ytimg.com',
@@ -125,8 +129,6 @@ export default defineConfig({
       'raw.githubusercontent.com',
       'www.pe.senac.br',
     ],
-    // Allow any HTTPS remote images as fallback
-    remotePatterns: [{ protocol: 'https' }],
   },
 
   build: {
