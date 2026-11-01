@@ -7,7 +7,8 @@ settings:
 overrides:
   ajv: ^8.17.1
   lodash: ^4.17.23
-  minimatch: ^10.2.1
+  glob: '>=14.0.2'
+  minimatch: '>=11.0.1'
   tar: '>=7.5.11'
   yaml: ^2.9.0
   undici: '>=8.12.2'
@@ -42,8 +43,8 @@ importers:
         specifier: ^11.0.17
         version: 11.0.17(astro@7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(react@19.2.7)(rollup@4.62.2)
       '@lucide/astro':
-        specifier: ^1.63.0
-        version: 1.63.0(astro@7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+        specifier: ^1.66.0
+        version: 1.66.0(astro@7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
       '@tailwindcss/vite':
         specifier: ^4.3.3
         version: 4.3.3(vite@8.3.5(@types/node@25.0.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
@@ -754,6 +755,9 @@ packages:
     resolution: {integrity: sha512-wgm9Ehl2jpeqP3zw/7mo3kRHFp5MEDhqAdwy1fTGkHAwnkGOVsgpvQhL8B5n1qlb01jV3n/bI0ZfZp5lWA1k4w==}
     engines: {node: '>=18.0.0'}
 
+  '@isaacs/nonrecursive-glob-match@1.0.3':
+    resolution: {integrity: sha512-SI7kyKHq4XXDRozw+r9GlRZkia1ZkFrpLW98r2IC2Bpr8YkFGE3fvjzmxCG0x78A++69HmDNrDvSMYBZmHGpKA==}
+
   '@jridgewell/gen-mapping@0.3.13':
     resolution: {integrity: sha512-2kkt/7niJ6MgEPxF0bYdQ6etZaA+fQvDcLKckhy1yIQOzaoKjBBjSj63/aLVjYE3qhRt5dvM+uUyfCg6UKCBbA==}
 
@@ -770,8 +774,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lucide/astro@1.63.0':
-    resolution: {integrity: sha512-u/edquBZ8WqGE3yEh/DMoLZ7/jgKxBcKcGb//DYkm6/6ZTzYXwuAwhKWLCx5R5iyJN6nJBxLhOh3kmyWqe6/qw==}
+  '@lucide/astro@1.66.0':
+    resolution: {integrity: sha512-e6HoP1W2PQm8HSQfWyo0jz4fl8rAgzbNk/to0dlMy0jpwwwmsZ8NxeX3KU8TcpISa0BL02pV9WdbjzGIsMT6LQ==}
     peerDependencies:
       astro: ^4 || ^5 || ^6 || ^7
 
@@ -1925,8 +1929,8 @@ packages:
   github-slugger@2.0.0:
     resolution: {integrity: sha512-IaOQ9puYtjrkq7Y0Ygl9KDZnrf/aiUJYUpVf89y8kyaxbRG7Y1SrX/jaumrv81vc61+kiMempujsM3Yw7w5qcw==}
 
-  glob@13.0.6:
-    resolution: {integrity: sha512-Wjlyrolmm8uDpm/ogGyXZXb1Z+Ca2B8NbJwqBVg0axK9GbBeoS7yGV6vjXnYdGm6X53iehEuxxbyiKp8QmN4Vw==}
+  glob@14.0.3:
+    resolution: {integrity: sha512-A1vjIwC3qpdCso45Iw127gnp7sPhqgY8lUQhDrArIs+GbmfaaVPFuoyy7WyLT9EPZCRZ7j7aLdwUhQmHWesEow==}
     engines: {node: 18 || 20 || >=22}
 
   graceful-fs@4.2.11:
@@ -2430,8 +2434,8 @@ packages:
     resolution: {integrity: sha512-OqbOk5oEQeAZ8WXWydlu9HJjz9WVdEIvamMCcXmuqUYjTknH/sqsWvhQ3vgwKFRR1HpjvNBKQ37nbJgYzGqGcg==}
     engines: {node: '>=6'}
 
-  minimatch@10.2.6:
-    resolution: {integrity: sha512-vpLQEs+VLCr1nU0BXS07maYoFwlDAH0gngQuuttxIwutDFEMHq2blX+8vpgxDdK3J1PwjCJiep77OitTZ4Ll1A==}
+  minimatch@11.0.3:
+    resolution: {integrity: sha512-iny/40PEGkNJQ5/Pv6z3nm6FbRAby32GeZRjCUJk2WnNDbgPSTcdI+DDvLqsgBdD4cD5sMtMheqPPnehCCa8Nw==}
     engines: {node: 18 || 20 || >=22}
 
   minipass@7.1.3:
@@ -2568,8 +2572,8 @@ packages:
     resolution: {integrity: sha512-ojmeN0qd+y0jszEtoY48r0Peq5dwMEkIlCOu6Q5f41lfkswXuKtYrhgoTpLnyIcHm24Uhqx+5Tqm2InSwLhE6Q==}
     engines: {node: '>=8'}
 
-  path-scurry@2.0.2:
-    resolution: {integrity: sha512-3O/iVVsJAPsOnpwWIeD+d6z/7PmqApyQePUtCndjatj/9I5LylHvt5qluFaBT3I5h3r1ejfR056c+FCv+NnNXg==}
+  path-scurry@3.0.0:
+    resolution: {integrity: sha512-1pTbQqH1wIwMi/eleQ5leFTTCkzFsPcgXNjwOA8YGGW/W4/kHT3dssE7Z6NH+zuqNLOzOB0uaD61yl7cAcVhgg==}
     engines: {node: 18 || 20 || >=22}
 
   path-to-regexp@6.1.0:
@@ -3911,6 +3915,8 @@ snapshots:
     dependencies:
       minipass: 7.1.3
 
+  '@isaacs/nonrecursive-glob-match@1.0.3': {}
+
   '@jridgewell/gen-mapping@0.3.13':
     dependencies:
       '@jridgewell/sourcemap-codec': 1.6.0
@@ -3930,7 +3936,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@lucide/astro@1.63.0(astro@7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
+  '@lucide/astro@1.66.0(astro@7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
       astro: 7.4.4(@astrojs/markdown-remark@7.3.5)(@types/node@25.0.3)(@vercel/functions@3.9.11)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
 
@@ -4377,7 +4383,7 @@ snapshots:
       async-sema: 3.1.1
       bindings: 1.5.0
       estree-walker: 2.0.2
-      glob: 13.0.6
+      glob: 14.0.3
       graceful-fs: 4.2.11
       node-gyp-build: 4.8.4
       picomatch: 4.0.7
@@ -4978,11 +4984,11 @@ snapshots:
 
   github-slugger@2.0.0: {}
 
-  glob@13.0.6:
+  glob@14.0.3:
     dependencies:
-      minimatch: 10.2.6
+      minimatch: 11.0.3
       minipass: 7.1.3
-      path-scurry: 2.0.2
+      path-scurry: 3.0.0
 
   graceful-fs@4.2.11: {}
 
@@ -5797,8 +5803,9 @@ snapshots:
 
   mimic-fn@2.1.0: {}
 
-  minimatch@10.2.6:
+  minimatch@11.0.3:
     dependencies:
+      '@isaacs/nonrecursive-glob-match': 1.0.3
       brace-expansion: 5.0.12
 
   minipass@7.1.3: {}
@@ -5921,7 +5928,7 @@ snapshots:
 
   path-key@3.1.1: {}
 
-  path-scurry@2.0.2:
+  path-scurry@3.0.0:
     dependencies:
       lru-cache: 11.5.3
       minipass: 7.1.3

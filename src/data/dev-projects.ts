@@ -376,6 +376,43 @@ export const devProjects: DevProject[] = [
 		year: 2026,
 	},
 	{
+		id: 'claude-portable',
+		title: 'Claude Portable',
+		description:
+			'Configuração do Claude Code que acompanha você entre máquinas: instruções, agentes, skills e memória por projeto, versionadas em Git e sem credenciais.',
+		longDescription:
+			'O diretório de configuração do Claude Code vira uma árvore Git. Um .gitignore em lista de permissão rastreia só o que foi escrito à mão (instruções, configurações, agentes, skills, memória por projeto). A sincronização roda no início e no fim de cada sessão e faz varredura de segredos antes do commit. Credenciais, sessões e caches nunca entram. Numa máquina nova, um script de bootstrap restaura a configuração e registra os servidores MCP.',
+		techStack: [
+			{ name: 'Git' },
+			{ name: 'PowerShell' },
+			{ name: 'Claude Code' },
+			{ name: 'MCP' },
+		],
+		availability: 'Repositório privado, de uso pessoal.',
+		status: 'development',
+		category: 'system',
+		year: 2026,
+	},
+	{
+		id: 'codex-portable',
+		title: 'Codex Portable',
+		description:
+			'Uma fonte única para a configuração do Codex em vários PCs com Windows: modelos, autonomia, instruções e três papéis de agente, com atualização no login e reversão.',
+		longDescription:
+			'Pacote instalador que mescla as preferências compartilhadas na configuração de cada PC e preserva o que é local. Um contrato versionado, legível por máquina e com JSON Schema, declara o que o pacote controla. A branch stable só avança depois que a CI no Windows passa. Os PCs atualizam por fast-forward ao entrar no Windows e param diante de edição local conflitante. Há backup e rollback. Funciona com Python 3.11+ e sem dependências pip.',
+		techStack: [
+			{ name: 'Python' },
+			{ name: 'PowerShell' },
+			{ name: 'TOML' },
+			{ name: 'JSON Schema' },
+			{ name: 'Git' },
+		],
+		availability: 'Repositório privado, de uso pessoal.',
+		status: 'development',
+		category: 'system',
+		year: 2026,
+	},
+	{
 		id: 'remove-ai-writing-signs',
 		title: 'Remove AI Writing Signs',
 		description:

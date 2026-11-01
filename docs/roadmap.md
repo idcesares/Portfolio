@@ -1,6 +1,6 @@
 # Roadmap
 
-Atualizado em 19 de outubro de 2026. Site: https://www.dcesares.dev/.
+Atualizado em 1 de novembro de 2026. Site: https://www.dcesares.dev/.
 
 Este é o documento único de estado e prioridades. Ele substitui a análise de 2 de outubro (`site-review.md`), que descrevia a fase anterior (pré-2.2): correção de acessibilidade, desempenho e curadoria. A base agora é a Membrane Palette 2.2.0 e a fase é outra: consolidar a base nova, medir o que ela entrega e abrir o site para parcerias internacionais.
 
@@ -11,7 +11,7 @@ Este é o documento único de estado e prioridades. Ele substitui a análise de 
 - **Propósito e público:** apresentar a atuação para educadores, pesquisadores e parceiros, com três caminhos claros: conhecer a pessoa, explorar a produção, entrar em contato.
 - **Áreas:** Home e Sobre, Trabalhos, Blog, Dev, Tech Signal (79 fontes, 62 feeds, OPML), Contato.
 - **Qualidade:** testes de navegador com axe em todas as páginas (claro e escuro), overflow mobile, teclado, busca, tema, fontes e consentimento. Consentimento de Analytics revogável no rodapé; a recusa impede o carregamento do Google Analytics.
-- **Dependências:** Node 24 LTS, Astro 7, auditoria sem vulnerabilidades conhecidas (avaliação de 10 de outubro em `docs/dependency-assessment-2026-10-10.md`).
+- **Dependências:** Node 24 LTS, Astro 7.4, `pnpm audit:full` sem vulnerabilidades conhecidas. Em 1 de novembro, os overrides de `glob` (>=14.0.2) e `minimatch` (>=11.0.1) fecharam dois avisos moderados vindos de `@astrojs/vercel > @vercel/nft`; o `glob` 14 é só ESM e o nft o carrega com `require()`, o que funciona no Node 22.12+ e no 24. Quando o `@vercel/nft` publicar uma versão com `glob` corrigido, os overrides podem sair. Avaliação anterior em `docs/dependency-assessment-2026-10-10.md`. Adiados: TypeScript 7 (o `@astrojs/check` ainda não suporta) e markdown-it 15.
 
 ## Prioridades
 
@@ -64,7 +64,7 @@ São resultados de laboratório, com rede e CPU simuladas. Não representam Core
 - Feeds do NYT (`rss.nytimes.com/.../Technology.xml`) e do ChinAI (`chinai.substack.com/feed`): HTTP 200, XML RSS com 20 itens cada. Os cadastros ficam como estão. A data de curadoria do Tech Signal não foi alterada, porque a conferência cobriu só esses dois feeds.
 - Suíte de navegador completa (60 testes, inclusive axe nos dois temas) aprovada, com o novo teste de carregamento da listagem de Trabalhos.
 
-- A Palette 2.2.0 está fixada no commit `0bdbc24` da `master` (`design-system/membrane.lock.json`). O repo da Palette ainda não tem tag; quando `v2.2.0` existir, rodar `pnpm sync:membrane --ref v2.2.0` para trocar o commit pela tag.
+- A Palette 2.2.0 está fixada no commit `7a67fd1` da `master` (`design-system/membrane.lock.json`), um commit só de documentação e `manifest.json` depois da tag `v2.2.0` (que aponta para `0bdbc24`, o pin anterior). Para trocar o commit pela tag quando houver um release que inclua `7a67fd1`, rodar `pnpm sync:membrane --ref <tag>`.
 
 ## Regras que não mudam
 
