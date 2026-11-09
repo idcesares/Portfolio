@@ -39,7 +39,7 @@
     "sanitize-html": "^2.18.1",
     "sharp": "^0.35.5",
     "shiki": "^4.5.0",
-    "tailwindcss": "^4.3.3"
+    "tailwindcss": "^4.3.4"
   },
   "engines": {
     "node": ">=24.0.0 <25",
