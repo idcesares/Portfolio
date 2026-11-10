@@ -173,11 +173,6 @@ Envie uma foto e veja quem está feliz por estar ali. Demonstração com TensorF
 
 [Extrator de Emoções](https://brendansudol.github.io/faces/)
 
-### Blob Opera
-Arraste quatro blobs coloridos para cima e para baixo e vire regente de uma ópera cantada por IA, treinada com vozes de cantores reais.
-
-[Blob Opera](https://artsandculture.google.com/experiment/blob-opera)
-
 ### Doodle Guide
 Faça um rabisco e receba, na hora, um comentário da IA em áudio e imagem: ela desenha uma versão melhorada do seu traço e dá dicas de como evoluir.
 

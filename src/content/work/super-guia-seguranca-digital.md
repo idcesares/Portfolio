@@ -49,7 +49,6 @@ Minha palestra teve como objetivo **ampliar a compreensão** desses riscos e opo
   [https://unesdoc.unesco.org/ark:/48223/pf0000374356/PDF/374356por.pdf.multi](https://unesdoc.unesco.org/ark:/48223/pf0000374356/PDF/374356por.pdf.multi)
 * **Relatório TIC Kids Online Brasil 2024 — CETIC.br**
   [https://cetic.br/media/analises/tic\_kids\_online\_brasil\_2024\_principais\_resultados.pdf](https://cetic.br/media/analises/tic_kids_online_brasil_2024_principais_resultados.pdf)
-* [Google Seja Incrível na Internet (Be Internet Awesome)](https://beinternetawesome.withgoogle.com/pt-br)
 * [Internet Segura](https://internetsegura.br/)
 * [UNICEF — Proteção de crianças contra violência online](https://www.unicef.org/protection/violence-against-children-online)
 * [Childnet — Parents & Carers](https://www.childnet.com/parents-and-carers/)
