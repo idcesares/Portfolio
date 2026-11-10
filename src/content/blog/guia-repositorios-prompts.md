@@ -46,8 +46,6 @@ Esses sites oferecem coleções de prompts, muitas vezes de graça ou com opçõ
 
 * 🌊 [**FlowGPT**](https://flowgpt.com/): Uma enorme comunidade para compartilhar e descobrir prompts de ChatGPT. Você pode até testar os prompts diretamente no site. Tem foco em roleplay com IA, mas também cobre áreas como programação, marketing e escrita acadêmica. Oferece muito conteúdo gratuito.  
 * 🎨 [**PromptHero**](https://prompthero.com/): O paraíso para quem busca prompts para gerar arte com IA (Midjourney, Stable Diffusion, DALL-E). Está expandindo para prompts de texto também. A navegação é visual e intuitiva. Possui um plano gratuito generoso.  
-* ✍️ [**Chatsonic Prompt Library**](https://writesonic.com/chatsonic-prompt-marketplace): Integrado à plataforma Writesonic/Chatsonic (similar ao ChatGPT), este é um "marketplace" gratuito. Oferece prompts selecionados e recompensa usuários que contribuem com bons prompts. Ótimo para marketing, redes sociais e criação de conteúdo.
-
 ### **3\. Comunidades Online e Fóruns**
 
 São espaços dinâmicos onde usuários compartilham, discutem e refinam prompts colaborativamente. A qualidade pode variar, mas são excelentes para encontrar técnicas inovadoras.
