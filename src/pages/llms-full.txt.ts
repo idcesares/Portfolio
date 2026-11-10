@@ -77,13 +77,13 @@ ${devProjects.map(project => `- [${project.title}](${baseUrl}/dev/#project-${pro
 ## FAQ (Perguntas Frequentes)
 
 **P: Qual é a formação acadêmica de Isaac D'Césares?**
-**R:** Mestrando em Computação pela UFRJ, especializações em Educação Inovadora (Stanford), Innovation Leadership (The Hebrew University of Jerusalem) e Transformação Digital (Fundação Dom Cabral), além de formação em Ciência de Dados pela FGV. Certificações como Educador Inovador Google, Microsoft Innovative Educator e Instrutor CISCO.
+**R:** Mestrando em Ciência da Computação no PPGI/UFRJ. Também tem formações pela Universidade de Stanford (Educação Inovadora), The Hebrew University of Jerusalem (Innovation Leadership), Fundação Dom Cabral (Transformação Digital) e FGV (Ciência de Dados), além de certificações como Educador Inovador Google, Microsoft Innovative Educator e Instrutor CISCO.
 
 **P: Qual é o foco de pesquisa atual?**
-**R:** Tecnologias Emergentes (Inteligência Artificial e Blockchain) com foco em arquiteturas que conectam Ciência de Dados a impacto socioeconômico verificável, na UFRJ.
+**R:** Tecnologias emergentes, como inteligência artificial e blockchain, com foco em arquiteturas que conectam ciência de dados a impacto socioeconômico verificável, no PPGI/UFRJ.
 
 **P: Qual o papel profissional atual?**
-**R:** Coordenador de Tecnologias Educacionais no Departamento Nacional do Sesc, liderando projetos estratégicos que alcançam diretamente cerca de 80 mil estudantes em todo o Brasil.
+**R:** Coordenador de Tecnologias Educacionais, Departamento Nacional do Sesc.
 
 **P: Quais são as principais áreas de atuação?**
 **R:** IA aplicada à educação, blockchain educacional, cultura digital, transformação digital e design de experiências de aprendizagem.

@@ -3,13 +3,14 @@ import type { CollectionEntry } from 'astro:content';
 export const SITE_NAME = "Isaac D'Césares";
 export const SITE_TITLE = "Isaac D'Césares: pesquisa, educação e tecnologia";
 export const SITE_DESCRIPTION =
-  'Traduzo IA, blockchain e sistemas emergentes em prática educacional. Pesquisador, educador e construtor entre o humano e o digital.';
+  'Traduzo IA, blockchain e sistemas emergentes em prática educacional. Pesquisador, educador e desenvolvedor entre o humano e o digital.';
 export const SITE_LANGUAGE = 'pt-BR';
 export const SITE_LOCALE = 'pt_BR';
 
 export const AUTHOR_NAME = SITE_NAME;
-export const AUTHOR_JOB_TITLE = 'Coordenador de Tecnologia Educacional';
-export const AUTHOR_ORG = 'Sesc Nacional';
+export const AUTHOR_JOB_TITLE =
+  'Coordenador de Tecnologias Educacionais, Departamento Nacional do Sesc';
+export const AUTHOR_ORG = 'Departamento Nacional do Sesc';
 export const AUTHOR_PROFILE_PATH = '/about/';
 export const AUTHOR_EMAIL = 'isaac.dcesares@gmail.com';
 
@@ -52,13 +53,6 @@ export const getSiteStructuredData = (site: URL) => [
       '@type': 'Organization',
       name: AUTHOR_ORG,
     },
-    alumniOf: [
-      { '@type': 'CollegeOrUniversity', name: 'Universidade Federal do Rio de Janeiro (UFRJ)' },
-      { '@type': 'CollegeOrUniversity', name: 'Stanford University' },
-      { '@type': 'CollegeOrUniversity', name: 'The Hebrew University of Jerusalem' },
-      { '@type': 'CollegeOrUniversity', name: 'Fundação Dom Cabral' },
-      { '@type': 'CollegeOrUniversity', name: 'Fundação Getulio Vargas (FGV)' },
-    ],
     knowsAbout: [
       'Inteligência Artificial na Educação',
       'Blockchain Educacional',

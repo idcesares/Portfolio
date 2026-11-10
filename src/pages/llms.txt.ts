@@ -26,7 +26,7 @@ export const GET: APIRoute = async ({ site }) => {
 
   const body = `# Isaac D'Césares Portfolio
 
-> Portfólio profissional de Isaac D'Césares, Coordenador de Tecnologia Educacional do Sesc Nacional e mestrando em Computação pela UFRJ. Foco em pesquisa, desenvolvimento e aplicações de IA na educação.
+> Portfólio profissional de Isaac D'Césares, Coordenador de Tecnologias Educacionais, Departamento Nacional do Sesc, e mestrando em Ciência da Computação no PPGI/UFRJ. Foco em pesquisa, desenvolvimento e aplicações de IA na educação.
 
 Base URL: ${baseUrl}
 Idiomas: Português (pt-BR), termos técnicos em inglês

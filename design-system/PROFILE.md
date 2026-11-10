@@ -1,7 +1,7 @@
 # Isaac D'Césares — Profile
 
 > **Verbal System v2 · factual authority**  
-> **Last reviewed:** 2026-10-14
+> **Last reviewed:** 2026-11-10
 
 `PROFILE.md` answers one question: **what is currently true about Isaac?**
 
@@ -10,10 +10,10 @@ It is intentionally small, factual and dated. Use [`VOICE.md`](VOICE.md) for wri
 ## Current public profile
 
 - **Name:** Isaac D'Césares
-- **Current role (pt-BR):** Coordenador de Tecnologias Educacionais no Departamento Nacional do Sesc
-- **Current role (English):** Educational Technology Coordinator at Sesc's National Department
-- **UFRJ public wording (pt-BR):** pesquisador (mestrando)
-- **UFRJ public wording (English):** researcher and master's candidate at UFRJ
+- **Current role (pt-BR):** Coordenador de Tecnologias Educacionais, Departamento Nacional do Sesc
+- **Current role (English):** Educational Technology Coordinator, Sesc National Department
+- **UFRJ public wording (pt-BR):** mestrando em Ciência da Computação no PPGI/UFRJ
+- **UFRJ public wording (English):** master's student in Computer Science at PPGI/UFRJ
 - **Public identity:** researcher · educator · developer
 - **Identidade pública:** pesquisador · educador · desenvolvedor
 
@@ -51,7 +51,8 @@ If a fact is not established here or by a specific factual project source, **omi
 The following must not be inferred from older copy or examples:
 
 - Isaac's current role is not a director-level title unless this file is explicitly updated to say so.
-- His UFRJ wording denotes an ongoing master's path; it must not be converted into a completed master's degree.
+- His UFRJ wording denotes an ongoing master's in Computer Science at PPGI/UFRJ. It must not be converted into a completed master's degree.
+- No headcount, reach figure or years-of-practice metric is established here. Omit those claims.
 - No number of years of AI specialization should be invented from adjacent experience.
 - Fictional examples in the design system are not portfolio cases.
 
@@ -61,10 +62,10 @@ These are factual building blocks, not mandatory scripts.
 
 ### Short, pt-BR
 
-Isaac D'Césares é pesquisador (mestrando) na UFRJ, educador e desenvolvedor. Atua como Coordenador de Tecnologias Educacionais no Departamento Nacional do Sesc, trabalhando na interseção entre educação, tecnologia, inteligência artificial, transformação digital e desenvolvimento de software.
+Isaac D'Césares é pesquisador, educador e desenvolvedor, mestrando em Ciência da Computação no PPGI/UFRJ. Atua como Coordenador de Tecnologias Educacionais, Departamento Nacional do Sesc, na interseção entre educação, tecnologia, inteligência artificial, transformação digital e desenvolvimento de software.
 
 ### Short, English
 
-Isaac D'Césares is a researcher and master's candidate at UFRJ, educator, and developer. He works as Educational Technology Coordinator at Sesc's National Department across education technology, AI, digital transformation, and software development.
+Isaac D'Césares is a researcher, educator and developer, and a master's student in Computer Science at PPGI/UFRJ. He works as Educational Technology Coordinator, Sesc National Department, across education technology, AI, digital transformation and software development.
 
 These bios may be shortened or adapted to context, but new factual claims must not be added by inference.
