@@ -27,7 +27,7 @@
     "@astrojs/vercel": "^11.0.17",
     "@lucide/astro": "^1.66.0",
     "@tailwindcss/vite": "^4.3.3",
-    "@vercel/speed-insights": "^2.0.0",
+    "@vercel/speed-insights": "^2.1.0",
     "astro": "^7.4.4",
     "astro-embed": "^0.14.0",
     "astro-seo": "^1.2.0",
