@@ -35,7 +35,7 @@
     "markdown-it": "^14.3.3",
     "mdast-util-to-string": "^4.0.0",
     "reading-time": "^1.5.0",
-    "rehype-pretty-code": "^0.14.5",
+    "rehype-pretty-code": "^0.14.6",
     "sanitize-html": "^2.18.1",
     "sharp": "^0.35.5",
     "shiki": "^4.5.0",
