@@ -35,8 +35,37 @@ export type SignalKind =
 	| 'primaria'
 	| 'descoberta';
 
+/**
+ * Em qual momento da rotina de leitura a fonte entra. Só as fontes que formam
+ * a rotina carregam o campo; as demais ficam de fora de propósito.
+ */
+export type SignalRoutine = 'manha' | 'semana' | 'fundo';
+
+/**
+ * Vocabulário curado de temas, complementar às categorias (que já cobrem IA,
+ * dev, negócios, segurança e educação em bloco). Serve de filtro e de etiqueta
+ * clicável nos cards. Cada fonte leva de 1 a 3 temas, só onde o encaixe é real;
+ * as etiquetas livres de `topics` continuam valendo para a busca.
+ */
+export type SignalThemeId =
+	| 'ensino-superior'
+	| 'edtech'
+	| 'ia-educacao'
+	| 'modelos'
+	| 'eng-ia'
+	| 'ia-sociedade'
+	| 'dados'
+	| 'regulacao'
+	| 'privacidade'
+	| 'plataformas'
+	| 'infra'
+	| 'arquitetura'
+	| 'carreira'
+	| 'mercado'
+	| 'blockchain';
+
 export type SignalAccess = 'aberto' | 'assinatura';
-export type SignalCadence = 'Diária' | 'Semanal' | 'Mensal' | 'Anual';
+export type SignalCadence = 'Diária' | 'Semanal' | 'Quinzenal' | 'Mensal' | 'Trimestral' | 'Anual';
 export type SignalRegion = 'Brasil' | 'LATAM' | 'Global';
 
 export interface SignalSource {
@@ -62,6 +91,17 @@ export interface SignalSource {
 	feed?: string;
 	/** Marca as fontes que recompensam leitura longa, não escaneio. */
 	deep?: boolean;
+	/**
+	 * Data (AAAA-MM-DD) em que alguém viu a fonte publicando de fato. Só faz sentido
+	 * para fonte sem `feed`, que não tem como ser conferida por requisição. Preencha
+	 * só com evidência (item datado recente ou consulta em andamento): o
+	 * `pnpm check:feeds` lista as que faltam ou passam de 90 dias.
+	 */
+	verifiedAt?: string;
+	/** Momento da rotina de leitura em que a fonte entra (ver ROUTINES). */
+	routine?: SignalRoutine;
+	/** Temas do vocabulário curado (ver THEMES), de 1 a 3. Ausente quando nenhum encaixa. */
+	themes?: SignalThemeId[];
 	topics: string[];
 }
 
@@ -98,6 +138,66 @@ export const TIER_DESC: Record<SignalTier, string> = {
 	3: 'Situacional, para quando o assunto aparece',
 };
 
+export interface SignalRoutineMeta {
+	id: SignalRoutine;
+	when: string;
+	title: string;
+	desc: string;
+	/** Cor da marca: 1 = registro humano, 2 = digital, 'warm' = acento âmbar. */
+	tick: 1 | 2 | 'warm';
+}
+
+/** A estratégia de leitura sugerida. Os nomes das fontes vêm do campo `routine`. */
+export const ROUTINES: SignalRoutineMeta[] = [
+	{
+		id: 'manha',
+		when: 'Varredura da manhã · 15 min',
+		title: 'Ficar em dia',
+		desc: 'Cobre a maior parte do que importa, com pouca repetição entre eles.',
+		tick: 1,
+	},
+	{
+		id: 'semana',
+		when: 'Síntese semanal · domingo',
+		title: 'Pensar estratégia',
+		desc: 'A camada que a notícia diária não alcança.',
+		tick: 'warm',
+	},
+	{
+		id: 'fundo',
+		when: 'Sob demanda · quando pesa',
+		title: 'Ir fundo',
+		desc: 'Para quando a manchete não basta.',
+		tick: 2,
+	},
+];
+
+export interface SignalTheme {
+	id: SignalThemeId;
+	label: string;
+}
+
+/** Ordem de apresentação: da educação (o que a lista cobre por dentro) para fora. */
+export const THEMES: SignalTheme[] = [
+	{ id: 'ensino-superior', label: 'Ensino superior' },
+	{ id: 'edtech', label: 'Tecnologia educacional' },
+	{ id: 'ia-educacao', label: 'IA na educação' },
+	{ id: 'modelos', label: 'Modelos e laboratórios' },
+	{ id: 'eng-ia', label: 'Engenharia com IA' },
+	{ id: 'ia-sociedade', label: 'IA e sociedade' },
+	{ id: 'dados', label: 'Dados e pesquisa' },
+	{ id: 'regulacao', label: 'Regulação e governança' },
+	{ id: 'privacidade', label: 'Privacidade e vigilância' },
+	{ id: 'plataformas', label: 'Plataformas e desinformação' },
+	{ id: 'infra', label: 'Infraestrutura e telecom' },
+	{ id: 'arquitetura', label: 'Arquitetura e nuvem' },
+	{ id: 'carreira', label: 'Carreira e comunidade' },
+	{ id: 'mercado', label: 'Mercado e startups' },
+	{ id: 'blockchain', label: 'Blockchain e cripto' },
+];
+
+export const THEME_NAME = Object.fromEntries(THEMES.map((theme) => [theme.id, theme.label])) as Record<SignalThemeId, string>;
+
 export const CATEGORIES: SignalCategory[] = [
 	{ id: 'todas', label: 'Todas' },
 	{ id: 'brasil', label: 'Brasil' },
@@ -124,6 +224,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://tecnoblog.net/feed/',
 		region: 'Brasil',
+		routine: 'manha',
+		themes: ['infra'],
 		topics: ['Consumo', 'Telecom'],
 	},
 	{
@@ -138,6 +240,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://manualdousuario.net/feed/',
 		region: 'Brasil',
 		deep: true,
+		routine: 'semana',
 		topics: ['Crítica', 'Independente'],
 	},
 	{
@@ -149,9 +252,10 @@ export const SOURCES: SignalSource[] = [
 		desc: 'Jornalismo independente sobre plataformas, moderação de conteúdo, desinformação e direitos digitais no Brasil. Reportagem com dados próprios sobre o que acontece dentro das redes, terreno que a imprensa generalista quase não pisa.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://nucleo.jor.br/feed/',
+		feed: 'https://nucleo.jor.br/rss/',
 		region: 'Brasil',
 		deep: true,
+		themes: ['plataformas'],
 		topics: ['Plataformas', 'Desinformação'],
 	},
 	{
@@ -166,6 +270,8 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://www.jota.info/feed',
 		region: 'Brasil',
 		deep: true,
+		routine: 'fundo',
+		themes: ['regulacao'],
 		topics: ['Regulação', 'LGPD'],
 	},
 	{
@@ -179,6 +285,9 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		routine: 'fundo',
+		verifiedAt: '2026-11-09',
+		themes: ['dados', 'edtech'],
 		topics: ['Dados', 'Inclusão digital'],
 	},
 	{
@@ -192,6 +301,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://www.tabnews.com.br/recentes/rss',
 		region: 'Brasil',
+		themes: ['carreira'],
 		topics: ['Comunidade', 'Carreira'],
 	},
 	{
@@ -203,8 +313,9 @@ export const SOURCES: SignalSource[] = [
 		desc: 'Negócios e capital com apuração própria, incluindo cobertura recorrente de venture capital e tecnologia no Brasil. Serve para entender quem está financiando o quê, e por quê.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://braziljournal.com/feed/',
+		feed: 'https://braziljournal.com/feed',
 		region: 'Brasil',
+		themes: ['mercado'],
 		topics: ['Negócios', 'VC'],
 	},
 	{
@@ -219,6 +330,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://internetlab.org.br/pt/feed/',
 		region: 'Brasil',
 		deep: true,
+		themes: ['privacidade', 'regulacao'],
 		topics: ['Pesquisa', 'Direitos digitais'],
 	},
 	{
@@ -228,17 +340,18 @@ export const SOURCES: SignalSource[] = [
 		kind: 'pesquisa',
 		cats: ['brasil', 'politica'],
 		desc: 'Associação de pesquisa e ensino em proteção de dados. Referência para acompanhar aplicação da LGPD, decisão da ANPD e o debate brasileiro sobre governança de IA, com posição própria e transparente.',
-		cadence: 'Mensal',
+		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://www.dataprivacybr.org/feed/',
 		region: 'Brasil',
 		deep: true,
+		themes: ['privacidade', 'regulacao'],
 		topics: ['LGPD', 'Privacidade'],
 	},
 	{
 		name: 'Porvir',
 		url: 'https://porvir.org',
-		tier: 2,
+		tier: 1,
 		kind: 'jornalismo',
 		cats: ['brasil', 'educacao'],
 		desc: 'Jornalismo e pesquisa sobre inovação em educação no Brasil. Cobre política pública, prática de sala de aula e tecnologia educacional sem o deslumbre automático com ferramenta nova.',
@@ -246,6 +359,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://porvir.org/feed/',
 		region: 'Brasil',
+		themes: ['edtech'],
 		topics: ['Educação', 'Inovação'],
 	},
 	{
@@ -254,11 +368,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 3,
 		kind: 'jornalismo',
 		cats: ['brasil', 'dev'],
-		desc: 'Podcast de tecnologia da Alura, no ar há quase uma década. Conversas sobre arquitetura, carreira e mercado com quem trabalha no contexto brasileiro, não no do Vale do Silício.',
+		desc: 'Podcast de tecnologia da Alura, com mais de 500 episódios. Conversas sobre arquitetura, carreira e mercado com quem trabalha no contexto brasileiro, não no do Vale do Silício.',
 		cadence: 'Semanal',
 		access: 'aberto',
-		feed: 'https://hipsters.tech/feed/',
+		feed: 'https://www.hipsters.tech/feed/',
 		region: 'Brasil',
+		themes: ['carreira'],
 		topics: ['Podcast', 'Carreira'],
 	},
 	{
@@ -272,6 +387,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		themes: ['regulacao'],
 		topics: ['Governança', 'Pesquisa'],
 	},
 	{
@@ -285,6 +401,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		themes: ['modelos'],
 		topics: ['Pesquisa', 'PLN'],
 	},
 	{
@@ -297,20 +414,8 @@ export const SOURCES: SignalSource[] = [
 		cadence: 'Semanal',
 		access: 'aberto',
 		region: 'Brasil',
+		themes: ['ensino-superior'],
 		topics: ['Ensino superior', 'Docência'],
-	},
-	{
-		name: 'Bloomberg Línea',
-		url: 'https://www.bloomberglinea.com.br',
-		tier: 3,
-		kind: 'jornalismo',
-		cats: ['brasil', 'negocios'],
-		desc: 'Braço latino-americano da Bloomberg, em português. Negócios, mercado e tecnologia com recorte regional, útil para enxergar o Brasil dentro da América Latina em vez de isolado.',
-		cadence: 'Diária',
-		access: 'aberto',
-		feed: 'https://www.bloomberglinea.com.br/arc/outboundfeeds/rss/?outputType=xml',
-		region: 'LATAM',
-		topics: ['LATAM', 'Mercado'],
 	},
 
 	/* ─────────────── Tecnologia geral ─────────────── */
@@ -325,6 +430,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://news.ycombinator.com/rss',
 		region: 'Global',
+		routine: 'manha',
+		themes: ['carreira'],
 		topics: ['Comunidade', 'Dev'],
 	},
 	{
@@ -338,6 +445,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://techcrunch.com/feed/',
 		region: 'Global',
+		themes: ['mercado'],
 		topics: ['Startups', 'VC'],
 	},
 	{
@@ -351,6 +459,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://www.theverge.com/rss/index.xml',
 		region: 'Global',
+		routine: 'manha',
 		topics: ['Consumo', 'Política'],
 	},
 	{
@@ -365,6 +474,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://arstechnica.com/feed/',
 		region: 'Global',
 		deep: true,
+		routine: 'fundo',
 		topics: ['Ciência', 'Direito'],
 	},
 	{
@@ -373,12 +483,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'jornalismo',
 		cats: ['geral'],
-		desc: 'Tecnologia como cultura e como poder. Investigação de fôlego longo, cobertura de IA com gente dentro e a melhor escrita sobre o que a tecnologia significa para a sociedade.',
+		desc: 'Tecnologia como cultura e como poder. Investigação de fôlego longo, cobertura de IA com gente dentro e texto sobre o que a tecnologia significa para a sociedade, não só sobre o produto.',
 		cadence: 'Diária',
 		access: 'assinatura',
 		feed: 'https://www.wired.com/feed/rss',
 		region: 'Global',
 		deep: true,
+		themes: ['ia-sociedade'],
 		topics: ['Cultura', 'IA'],
 	},
 	{
@@ -387,11 +498,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'jornalismo',
 		cats: ['geral', 'negocios'],
-		desc: 'A camada de negócio embaixo da camada de tecnologia. Fusões e aquisições, viradas de mercado, resultado de big tech e apuração corporativa exclusiva. A melhor inteligência financeira sobre o setor.',
+		desc: 'A camada de negócio embaixo da camada de tecnologia. Fusões e aquisições, viradas de mercado, resultado de big tech e apuração corporativa exclusiva. É onde se lê o setor pelo lado financeiro.',
 		cadence: 'Diária',
 		access: 'assinatura',
-		feed: 'https://feeds.bloomberg.com/technology/news.rss',
+		feed: 'https://www.bloomberg.com/feeds/technology/news.rss',
 		region: 'Global',
+		themes: ['mercado'],
 		topics: ['Finanças', 'M&A'],
 	},
 	{
@@ -400,12 +512,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['geral', 'politica'],
-		desc: 'Veículo investigativo de propriedade dos próprios jornalistas, fundado por ex-integrantes da Motherboard. Publica sobre hacking, vigilância, IA e abuso de plataforma em terreno que ninguém mais toca. Independência de verdade, premiada pela EFF.',
+		desc: 'Veículo investigativo de propriedade dos próprios jornalistas, fundado por ex-integrantes da Motherboard. Publica sobre hacking, vigilância, IA e abuso de plataforma em terreno que poucos veículos cobrem. Independência de verdade, premiada pela EFF.',
 		cadence: 'Diária',
 		access: 'aberto',
 		feed: 'https://www.404media.co/rss/',
 		region: 'Global',
 		deep: true,
+		themes: ['privacidade', 'plataformas'],
 		topics: ['Investigação', 'Privacidade'],
 	},
 
@@ -416,12 +529,14 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'jornalismo',
 		cats: ['ia'],
-		desc: 'Onde a pesquisa de laboratório encontra a consequência no mundo. Indispensável em IA, biotecnologia e clima, explicado sem sacrificar precisão. A lista anual das dez tecnologias de ruptura funciona como âncora de calendário.',
+		desc: 'Onde a pesquisa de laboratório encontra a consequência no mundo. Cobre IA, biotecnologia e clima, explicado sem sacrificar precisão. A lista anual das dez tecnologias de ruptura funciona como âncora de calendário.',
 		cadence: 'Semanal',
 		access: 'assinatura',
 		feed: 'https://www.technologyreview.com/feed/',
 		region: 'Global',
 		deep: true,
+		routine: 'fundo',
+		themes: ['modelos'],
 		topics: ['IA', 'Pesquisa'],
 	},
 	{
@@ -435,20 +550,9 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Global',
 		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['dados', 'modelos'],
 		topics: ['Artigos', 'Pesquisa'],
-	},
-	{
-		name: 'The Decoder',
-		url: 'https://the-decoder.com',
-		tier: 2,
-		kind: 'jornalismo',
-		cats: ['ia'],
-		desc: 'Publicação dedicada a IA, cobrindo lançamento de modelo, pesquisa e adoção corporativa com clareza incomum. Mais rigorosa que a média e menos sujeita a ciclo de euforia. Subestimada.',
-		cadence: 'Diária',
-		access: 'aberto',
-		feed: 'https://the-decoder.com/feed/',
-		region: 'Global',
-		topics: ['Modelos', 'Corporativo'],
 	},
 	{
 		name: 'AI as Normal Technology',
@@ -457,11 +561,12 @@ export const SOURCES: SignalSource[] = [
 		kind: 'analise',
 		cats: ['ia'],
 		desc: 'A newsletter cética e rigorosa de Narayanan e Kapoor, antes chamada AI Snake Oil. Trata IA como tecnologia normal e separa substância de propaganda. Sinal crítico para contexto institucional e de pesquisa.',
-		cadence: 'Semanal',
+		cadence: 'Quinzenal',
 		access: 'aberto',
 		feed: 'https://www.normaltech.ai/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['ia-sociedade'],
 		topics: ['Ética em IA', 'Crítica'],
 	},
 	{
@@ -473,8 +578,9 @@ export const SOURCES: SignalSource[] = [
 		desc: 'A publicação de referência da comunidade de engenharia de IA, tocada pelo swyx. AINews diário mais texto longo semanal. Trata IA como disciplina de engenharia, com o vocabulário de quem coloca em produção.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://www.latent.space/feed',
+		feed: 'https://latent.space/feed',
 		region: 'Global',
+		themes: ['eng-ia'],
 		topics: ['Eng. de IA', 'Podcast'],
 	},
 
@@ -490,6 +596,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://thenewstack.io/feed/',
 		region: 'Global',
+		themes: ['arquitetura'],
 		topics: ['Cloud', 'DevOps'],
 	},
 	{
@@ -499,10 +606,11 @@ export const SOURCES: SignalSource[] = [
 		kind: 'primaria',
 		cats: ['dev'],
 		desc: 'Novidades do Copilot, recursos de plataforma, dados de código aberto e textos de engenharia de quem opera o maior host de código do mundo. Necessário para acompanhar desenvolvimento assistido por IA.',
-		cadence: 'Semanal',
+		cadence: 'Diária',
 		access: 'aberto',
 		feed: 'https://github.blog/feed/',
 		region: 'Global',
+		themes: ['eng-ia'],
 		topics: ['Copilot', 'Open source'],
 	},
 	{
@@ -517,6 +625,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://feed.infoq.com/',
 		region: 'Global',
 		deep: true,
+		themes: ['arquitetura'],
 		topics: ['Arquitetura', 'Engenharia'],
 	},
 	{
@@ -543,6 +652,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://stackoverflow.blog/feed/',
 		region: 'Global',
+		themes: ['carreira'],
 		topics: ['Cultura dev', 'Pesquisas'],
 	},
 	{
@@ -556,6 +666,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://changelog.com/feed',
 		region: 'Global',
+		themes: ['carreira'],
 		topics: ['Podcast', 'Open source'],
 	},
 	{
@@ -570,6 +681,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://spectrum.ieee.org/feeds/feed.rss',
 		region: 'Global',
 		deep: true,
+		themes: ['infra'],
 		topics: ['Robótica', 'Semicondutores'],
 	},
 
@@ -580,12 +692,14 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'analise',
 		cats: ['negocios', 'newsletter'],
-		desc: 'A análise de estratégia de negócio em tecnologia do Ben Thompson é a melhor do campo. Ensaio semanal aberto mais atualizações diárias pagas. A Teoria da Agregação e os frameworks dele viraram vocabulário obrigatório.',
+		desc: 'A análise de estratégia de negócio em tecnologia do Ben Thompson é a referência do campo. Ensaio semanal aberto mais atualizações diárias pagas. A Teoria da Agregação e os frameworks dele viraram vocabulário comum no setor.',
 		cadence: 'Diária',
 		access: 'assinatura',
 		feed: 'https://stratechery.com/feed/',
 		region: 'Global',
 		deep: true,
+		routine: 'semana',
+		themes: ['mercado'],
 		topics: ['Estratégia', 'Análise'],
 	},
 	{
@@ -594,12 +708,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['negocios'],
-		desc: 'A melhor apuração original do Vale do Silício, sem concorrente próximo. Publica histórias grandes semanas antes de todo mundo. É paga, e se você trabalha com estratégia o contexto se paga.',
+		desc: 'Apuração original do Vale do Silício. Muitas vezes publica histórias grandes antes do resto da imprensa. É paga, e se você trabalha com estratégia o contexto se paga.',
 		cadence: 'Diária',
 		access: 'assinatura',
 		feed: 'https://www.theinformation.com/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['mercado'],
 		topics: ['Furos', 'Estratégia'],
 	},
 	{
@@ -608,11 +723,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['negocios', 'newsletter'],
-		desc: 'A reportagem de dentro do Casey Newton sobre plataformas sociais, cultura de big tech e moderação de conteúdo. A melhor rede de fontes nessa editoria, quase sempre à frente da imprensa tradicional.',
+		desc: 'A reportagem de dentro do Casey Newton sobre plataformas sociais, cultura de big tech e moderação de conteúdo. Rede de fontes própria nessa editoria, que costuma pôr o texto à frente da imprensa tradicional.',
 		cadence: 'Semanal',
 		access: 'assinatura',
 		feed: 'https://www.platformer.news/rss/',
 		region: 'Global',
+		themes: ['plataformas'],
 		topics: ['Plataformas', 'Redes sociais'],
 	},
 
@@ -623,12 +739,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'jornalismo',
 		cats: ['politica', 'geral'],
-		desc: 'A história global da tecnologia fora da bolha do Vale do Silício. América Latina, África, Sudeste Asiático, Índia. Excepcional em mostrar como a tecnologia aterrissa onde vive a maior parte da humanidade, o Brasil incluído.',
+		desc: 'A história global da tecnologia fora da bolha do Vale do Silício. América Latina, África, Sudeste Asiático, Índia. Mostra como a tecnologia aterrissa onde vive a maior parte da humanidade, o Brasil incluído.',
 		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://restofworld.org/feed/latest/',
 		region: 'Global',
 		deep: true,
+		routine: 'fundo',
 		topics: ['Sul Global', 'LATAM'],
 	},
 	{
@@ -640,8 +757,10 @@ export const SOURCES: SignalSource[] = [
 		desc: 'Jornalismo independente e apartidário sobre política, governança e regulação de tecnologia. A porta de entrada para entender regulação de IA, antitruste e a camada regulatória que a maioria dos veículos cobre mal.',
 		cadence: 'Semanal',
 		access: 'aberto',
+		feed: 'https://www.techpolicy.press/rss/feed.xml',
 		region: 'Global',
 		deep: true,
+		themes: ['regulacao'],
 		topics: ['Regulação', 'Governança'],
 	},
 	{
@@ -650,12 +769,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['politica', 'geral'],
-		desc: 'Investigação, perfil e profundidade editorial. O melhor em ética de IA, pauta regulatória e a dimensão humana da tecnologia. A reportagem investigativa sobre as grandes empresas é de primeira linha.',
+		desc: 'Investigação, perfil e profundidade editorial. Cobertura forte em ética de IA, pauta regulatória e dimensão humana da tecnologia, com reportagem investigativa sobre as grandes empresas.',
 		cadence: 'Diária',
 		access: 'assinatura',
 		feed: 'https://rss.nytimes.com/services/xml/rss/nyt/Technology.xml',
 		region: 'Global',
 		deep: true,
+		themes: ['ia-sociedade'],
 		topics: ['Investigação', 'Ética em IA'],
 	},
 
@@ -666,11 +786,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 1,
 		kind: 'descoberta',
 		cats: ['newsletter', 'ia', 'dev'],
-		desc: 'Newsletter diária e gratuita cobrindo tecnologia, IA, ciência e desenvolvimento em cinco minutos. Eficiência absurda. Tem edições especializadas: TLDR AI, TLDR DevOps, TLDR Security, entre outras.',
+		desc: 'Newsletter diária e gratuita cobrindo tecnologia, IA, ciência e desenvolvimento em cinco minutos. Tem edições especializadas: TLDR AI, TLDR DevOps, TLDR Security, entre outras.',
 		cadence: 'Diária',
 		access: 'aberto',
 		feed: 'https://tldr.tech/api/rss/tech',
 		region: 'Global',
+		routine: 'manha',
 		topics: ['IA', 'Dev'],
 	},
 	{
@@ -685,6 +806,8 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://www.exponentialview.co/feed',
 		region: 'Global',
 		deep: true,
+		routine: 'semana',
+		themes: ['ia-sociedade'],
 		topics: ['Política', 'Macro'],
 	},
 	{
@@ -693,12 +816,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'analise',
 		cats: ['newsletter', 'negocios'],
-		desc: 'Visão macro e estratégica sobre tecnologia, IA e mídia. Os ensaios e o deck anual são leitura de referência sobre para onde a indústria caminha. A newsletter é gratuita e vale cada segundo.',
-		cadence: 'Semanal',
+		desc: 'Visão macro e estratégica sobre tecnologia, IA e mídia. Os ensaios e o deck anual são leitura de referência sobre para onde a indústria caminha. A newsletter é gratuita.',
+		cadence: 'Mensal',
 		access: 'aberto',
 		feed: 'https://www.ben-evans.com/benedictevans?format=rss',
 		region: 'Global',
 		deep: true,
+		themes: ['mercado'],
 		topics: ['Estratégia', 'Macro'],
 	},
 	{
@@ -707,10 +831,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 3,
 		kind: 'analise',
 		cats: ['newsletter', 'ia'],
-		desc: 'O compilado semanal do Andrew Ng. A única newsletter generalista de IA com credibilidade real de prática em aprendizado de máquina no nível editorial. Prioriza substância técnica sobre anúncio de produto.',
+		desc: 'O compilado semanal do Andrew Ng. Newsletter generalista de IA escrita com a credibilidade de quem pratica aprendizado de máquina. Prioriza substância técnica sobre anúncio de produto.',
 		cadence: 'Semanal',
 		access: 'aberto',
 		region: 'Global',
+		verifiedAt: '2026-11-09',
+		themes: ['modelos'],
 		topics: ['ML', 'Pesquisa'],
 	},
 	{
@@ -720,11 +846,12 @@ export const SOURCES: SignalSource[] = [
 		kind: 'analise',
 		cats: ['newsletter', 'ia', 'educacao'],
 		desc: 'O Substack do Ethan Mollick sobre IA e suas implicações para trabalho, educação e sociedade. Professor de Wharton trazendo rigor empírico para o que a IA muda no que as pessoas fazem. Central para quem trabalha com educação.',
-		cadence: 'Semanal',
+		cadence: 'Quinzenal',
 		access: 'aberto',
 		feed: 'https://www.oneusefulthing.org/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['ia-educacao'],
 		topics: ['IA', 'Trabalho'],
 	},
 	{
@@ -739,6 +866,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://jack-clark.net/feed/',
 		region: 'Global',
 		deep: true,
+		themes: ['modelos'],
 		topics: ['Pesquisa', 'Política'],
 	},
 
@@ -753,6 +881,7 @@ export const SOURCES: SignalSource[] = [
 		cadence: 'Diária',
 		access: 'aberto',
 		region: 'Global',
+		themes: ['infra'],
 		topics: ['Agência', 'Semicondutores'],
 	},
 	{
@@ -779,6 +908,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://www.theregister.com/headlines.atom',
 		region: 'Global',
+		themes: ['arquitetura'],
 		topics: ['Enterprise', 'Cloud'],
 	},
 	{
@@ -792,6 +922,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'assinatura',
 		region: 'Global',
 		deep: true,
+		themes: ['infra'],
 		topics: ['Infra de IA', 'GPUs'],
 	},
 	{
@@ -806,6 +937,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://simonwillison.net/atom/everything/',
 		region: 'Global',
 		deep: true,
+		themes: ['eng-ia'],
 		topics: ['LLMs', 'Ferramentas'],
 	},
 
@@ -829,7 +961,7 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['seguranca'],
-		desc: 'Brian Krebs faz investigação de fôlego sobre crime cibernético, seguindo dinheiro e pessoa em vez de indicador técnico. Uma reportagem por semana, cada uma com apuração que ninguém mais teve paciência de fazer.',
+		desc: 'Brian Krebs faz investigação de fôlego sobre crime cibernético, seguindo dinheiro e pessoa em vez de indicador técnico. Poucas reportagens por semana, cada uma com apuração que poucos veículos têm paciência de fazer.',
 		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://krebsonsecurity.com/feed/',
@@ -846,7 +978,7 @@ export const SOURCES: SignalSource[] = [
 		desc: 'Redação mantida pela Recorded Future, com foco em ameaça de origem estatal, espionagem e política de segurança cibernética. Vale ler sabendo de onde vem o financiamento, que é declarado abertamente.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://therecord.media/feed/',
+		feed: 'https://therecord.media/feed',
 		region: 'Global',
 		topics: ['Estado-nação', 'Política'],
 	},
@@ -862,6 +994,8 @@ export const SOURCES: SignalSource[] = [
 		cadence: 'Semanal',
 		access: 'aberto',
 		region: 'Global',
+		verifiedAt: '2026-11-09',
+		themes: ['modelos'],
 		topics: ['Modelos', 'Segurança de IA'],
 	},
 	{
@@ -871,24 +1005,26 @@ export const SOURCES: SignalSource[] = [
 		kind: 'primaria',
 		cats: ['ia'],
 		desc: 'Lançamento, mudança de API e nota de política pública direto da fonte. Útil exatamente por ser parcial: mostra como a empresa escolhe enquadrar o que faz, e o enquadramento costuma ser a notícia.',
-		cadence: 'Semanal',
+		cadence: 'Diária',
 		access: 'aberto',
 		feed: 'https://openai.com/news/rss.xml',
 		region: 'Global',
+		themes: ['modelos'],
 		topics: ['Modelos', 'API'],
 	},
 	{
 		name: 'Google DeepMind',
-		url: 'https://deepmind.google/discover/blog/',
+		url: 'https://deepmind.google/blog/',
 		tier: 3,
 		kind: 'primaria',
 		cats: ['ia'],
 		desc: 'Publicação de pesquisa do laboratório, com peso maior em ciência aplicada, biologia e matemática do que em produto. Cadência mais lenta e densidade técnica mais alta que a dos concorrentes.',
-		cadence: 'Mensal',
+		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://deepmind.google/blog/rss.xml',
 		region: 'Global',
 		deep: true,
+		themes: ['modelos'],
 		topics: ['Pesquisa', 'Ciência'],
 	},
 
@@ -904,6 +1040,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://www.mobiletime.com.br/feed/',
 		region: 'Brasil',
+		themes: ['infra'],
 		topics: ['Mobile', 'Mensageria'],
 	},
 	{
@@ -912,11 +1049,12 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'jornalismo',
 		cats: ['brasil', 'politica', 'negocios'],
-		desc: 'A intersecção entre governo, telecomunicações e tecnologia corporativa no Brasil. Acompanha licitação pública, política de infraestrutura e decisão de agência com continuidade que quase ninguém mantém.',
+		desc: 'A intersecção entre governo, telecomunicações e tecnologia corporativa no Brasil. Acompanha licitação pública, política de infraestrutura e decisão de agência com continuidade.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://www.convergenciadigital.com.br/rss/',
+		feed: 'https://convergenciadigital.com.br/feed/',
 		region: 'Brasil',
+		themes: ['infra', 'regulacao'],
 		topics: ['Governo', 'Telecom'],
 	},
 	{
@@ -928,8 +1066,9 @@ export const SOURCES: SignalSource[] = [
 		desc: 'Telecomunicações e regulação com nível de detalhe de quem cobre a pauta há anos. Espectro, satélite, fibra, banda larga e as decisões que definem quem tem internet no Brasil e a que preço.',
 		cadence: 'Diária',
 		access: 'aberto',
-		feed: 'https://www.telesintese.com.br/feed/',
+		feed: 'https://telesintese.com.br/feed/',
 		region: 'Brasil',
+		themes: ['infra', 'regulacao'],
 		topics: ['Telecom', 'Regulação'],
 	},
 
@@ -945,6 +1084,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['regulacao', 'privacidade'],
 		topics: ['LGPD', 'Sanções'],
 	},
 	{
@@ -957,6 +1098,7 @@ export const SOURCES: SignalSource[] = [
 		cadence: 'Mensal',
 		access: 'aberto',
 		region: 'Brasil',
+		themes: ['infra', 'regulacao'],
 		topics: ['Telecom', 'Espectro'],
 	},
 	{
@@ -970,6 +1112,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['regulacao', 'mercado'],
 		topics: ['Concorrência', 'Big tech'],
 	},
 	{
@@ -983,6 +1127,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		themes: ['regulacao', 'mercado'],
 		topics: ['Pix', 'Fintech'],
 	},
 	{
@@ -991,10 +1136,11 @@ export const SOURCES: SignalSource[] = [
 		tier: 3,
 		kind: 'primaria',
 		cats: ['brasil', 'politica'],
-		desc: 'O ministério publica a política brasileira de inteligência artificial, os programas de semicondutores e o orçamento de ciência e tecnologia. Fonte obrigatória para saber o que o país declarou que vai fazer, antes de discutir se fez.',
+		desc: 'O ministério publica a política brasileira de inteligência artificial, os programas de semicondutores e o orçamento de ciência e tecnologia. Fonte primária para saber o que o país declarou que vai fazer, antes de discutir se fez.',
 		cadence: 'Mensal',
 		access: 'aberto',
 		region: 'Brasil',
+		themes: ['regulacao'],
 		topics: ['Política de IA', 'Ciência'],
 	},
 	{
@@ -1008,6 +1154,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		feed: 'https://mittechreview.com.br/feed/',
+		themes: ['ia-sociedade'],
 		topics: ['IA', 'Sociedade'],
 	},
 	/* ─────────────── Revisão de outubro de 2026: Brasil, LATAM e Sul Global ─────────────── */
@@ -1023,6 +1170,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://www.aosfatos.org/noticias/feed/',
 		region: 'Brasil',
 		deep: true,
+		themes: ['plataformas'],
 		topics: ['Desinformação', 'Checagem'],
 	},
 	{
@@ -1037,6 +1185,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://revistapesquisa.fapesp.br/feed/',
 		region: 'Brasil',
 		deep: true,
+		themes: ['dados', 'ensino-superior'],
 		topics: ['Ciência', 'Universidade'],
 	},
 	{
@@ -1050,6 +1199,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'Brasil',
 		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['privacidade', 'ia-sociedade'],
 		topics: ['Gênero', 'Vigilância'],
 	},
 	{
@@ -1063,6 +1214,8 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		region: 'LATAM',
 		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['privacidade', 'regulacao'],
 		topics: ['LATAM', 'Direitos digitais'],
 	},
 	{
@@ -1076,6 +1229,7 @@ export const SOURCES: SignalSource[] = [
 		access: 'aberto',
 		feed: 'https://techcabal.com/feed/',
 		region: 'Global',
+		themes: ['mercado'],
 		topics: ['África', 'Fintech'],
 	},
 	{
@@ -1090,6 +1244,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://chinai.substack.com/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['regulacao'],
 		topics: ['China', 'Política de IA'],
 	},
 	{
@@ -1104,6 +1259,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://algorithmwatch.org/en/feed/',
 		region: 'Global',
 		deep: true,
+		themes: ['regulacao', 'ia-sociedade'],
 		topics: ['AI Act', 'Auditoria'],
 	},
 	{
@@ -1113,11 +1269,12 @@ export const SOURCES: SignalSource[] = [
 		kind: 'pesquisa',
 		cats: ['seguranca', 'politica'],
 		desc: 'Laboratório da Universidade de Toronto que investiga spyware, censura e vigilância digital com análise técnica forense. Seus relatórios costumam ser a origem das reportagens sobre espionagem comercial, incluindo casos com alvos brasileiros.',
-		cadence: 'Mensal',
+		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://citizenlab.ca/feed/',
 		region: 'Global',
 		deep: true,
+		themes: ['privacidade'],
 		topics: ['Spyware', 'Vigilância'],
 	},
 
@@ -1128,12 +1285,13 @@ export const SOURCES: SignalSource[] = [
 		tier: 2,
 		kind: 'analise',
 		cats: ['dev', 'newsletter'],
-		desc: 'Gergely Orosz escreve sobre como big tech e startup realmente trabalham: contratação, carreira, organização de time e o efeito da IA no ofício de quem programa. Parte aberta, parte paga, com dado de mercado que quase ninguém mais levanta.',
+		desc: 'Gergely Orosz escreve sobre como big tech e startup realmente trabalham: contratação, carreira, organização de time e o efeito da IA no ofício de quem programa. Parte aberta, parte paga, com dado de mercado que poucos veículos levantam.',
 		cadence: 'Semanal',
 		access: 'aberto',
 		feed: 'https://newsletter.pragmaticengineer.com/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['carreira'],
 		topics: ['Carreira', 'Engenharia'],
 	},
 	{
@@ -1148,6 +1306,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://martinfowler.com/feed.atom',
 		region: 'Global',
 		deep: true,
+		themes: ['arquitetura'],
 		topics: ['Arquitetura', 'Refatoração'],
 	},
 	{
@@ -1162,6 +1321,7 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://www.interconnects.ai/feed',
 		region: 'Global',
 		deep: true,
+		themes: ['modelos'],
 		topics: ['Modelos abertos', 'Treinamento'],
 	},
 	{
@@ -1189,13 +1349,238 @@ export const SOURCES: SignalSource[] = [
 		feed: 'https://hechingerreport.org/feed/',
 		region: 'Global',
 		deep: true,
+		themes: ['edtech'],
 		topics: ['Educação', 'Evidência'],
+	},
+
+	/* ─────────────── Revisão de novembro de 2026: ensino superior, tecnologia educacional, IA com dado e ciência feita no Brasil ─────────────── */
+	{
+		name: 'Inside Higher Ed',
+		url: 'https://www.insidehighered.com',
+		tier: 1,
+		kind: 'jornalismo',
+		cats: ['educacao'],
+		desc: 'Jornalismo diário sobre ensino superior nos Estados Unidos: política pública, financiamento, docência, tecnologia e a gestão das instituições. O contexto é americano e precisa ser descontado, mas a pauta de IA, ensino a distância e avaliação aparece ali com apuração, e serve de comparação para o debate brasileiro.',
+		cadence: 'Diária',
+		access: 'aberto',
+		feed: 'https://www.insidehighered.com/rss.xml',
+		region: 'Global',
+		themes: ['ensino-superior'],
+		topics: ['Ensino superior', 'Política'],
+	},
+	{
+		name: 'EdSurge',
+		url: 'https://www.edsurge.com',
+		tier: 1,
+		kind: 'jornalismo',
+		cats: ['educacao'],
+		desc: 'Redação sem fins lucrativos dedicada a ensino e aprendizagem. Cobre ferramentas, política pública e prática de sala de aula, com publicação quase diária. Serve para ver o que a indústria de tecnologia educacional está vendendo e o que professores relatam depois de usar.',
+		cadence: 'Diária',
+		access: 'aberto',
+		feed: 'https://www.edsurge.com/articles_rss',
+		region: 'Global',
+		themes: ['edtech'],
+		topics: ['EdTech', 'Sala de aula'],
+	},
+	{
+		name: 'Education Next',
+		url: 'https://www.educationnext.org',
+		tier: 3,
+		kind: 'analise',
+		cats: ['educacao', 'politica'],
+		desc: 'Periódico de opinião e pesquisa sobre política educacional. Mistura artigo com evidência e texto com tese à mostra, então vale ler sabendo qual dos dois está na frente. Bom para ver como a discussão de política educacional é argumentada com dado, ainda que num contexto americano.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://www.educationnext.org/feed/',
+		region: 'Global',
+		deep: true,
+		themes: ['edtech', 'regulacao'],
+		topics: ['Política educacional', 'Pesquisa'],
+	},
+	{
+		name: 'Rhetorica',
+		url: 'https://marcwatkins.substack.com',
+		tier: 3,
+		kind: 'analise',
+		cats: ['educacao', 'ia', 'newsletter'],
+		desc: 'Marc Watkins forma professores em letramento em IA na Universidade do Mississippi e escreve sobre o que a IA muda no ensino, na escrita e na cultura. Texto de quem trabalha com docentes, mais perto da prática de sala de aula do que da pesquisa.',
+		cadence: 'Quinzenal',
+		access: 'aberto',
+		feed: 'https://marcwatkins.substack.com/feed',
+		region: 'Global',
+		themes: ['ia-educacao', 'ensino-superior'],
+		topics: ['IA e docência', 'Ensino superior'],
+	},
+	{
+		name: 'Epoch AI',
+		url: 'https://epoch.ai',
+		tier: 2,
+		kind: 'pesquisa',
+		cats: ['ia'],
+		desc: 'Instituto de pesquisa que acompanha a trajetória da IA com dados. Mantém um banco de modelos de aprendizado de máquina desde 1950 e publica análise sobre computação, tendência e impacto. É parceiro de dados do AI Index, de Stanford, e serve para conferir número de IA que circula sem fonte.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://epoch.ai/atom.xml',
+		region: 'Global',
+		deep: true,
+		themes: ['dados', 'modelos'],
+		topics: ['Dados de IA', 'Computação'],
+	},
+	{
+		name: 'Understanding AI',
+		url: 'https://www.understandingai.org',
+		tier: 2,
+		kind: 'analise',
+		cats: ['ia', 'newsletter'],
+		desc: 'Timothy B. Lee e Kai Williams explicam como a IA funciona e o que ela muda no mundo, com foco em mecanismo e consequência. Complementa o Latent Space: menos vocabulário de quem põe em produção, mais explicação para quem precisa entender para decidir.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://www.understandingai.org/feed',
+		region: 'Global',
+		deep: true,
+		themes: ['modelos'],
+		topics: ['Explicação', 'Modelos'],
+	},
+	{
+		name: 'Agência Bori',
+		url: 'https://abori.com.br',
+		tier: 3,
+		kind: 'jornalismo',
+		cats: ['brasil', 'educacao'],
+		desc: 'Agência de divulgação científica criada em 2020 que apresenta pesquisas inéditas de instituições brasileiras a jornalistas, com cada texto organizado em cinco perguntas sobre o estudo. Porta de entrada para a ciência feita no país em linguagem de reportagem, sem precisar abrir o artigo.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://abori.com.br/feed/',
+		region: 'Brasil',
+		themes: ['dados'],
+		topics: ['Divulgação científica', 'Pesquisa'],
+	},
+	{
+		name: 'INEP',
+		url: 'https://www.gov.br/inep/',
+		tier: 3,
+		kind: 'primaria',
+		cats: ['brasil', 'educacao', 'politica'],
+		desc: 'O instituto que produz o Censo da Educação Superior e as demais estatísticas oficiais da educação brasileira. É onde se confere matrícula, curso, modalidade e evolução do setor antes de aceitar o número de um relatório de mercado. Os dados saem em ciclos anuais, e o painel estatístico permite consultar sem depender de resumo.',
+		cadence: 'Mensal',
+		access: 'aberto',
+		region: 'Brasil',
+		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['dados', 'ensino-superior'],
+		topics: ['Censo', 'Estatística'],
+	},
+
+	/* ─────────────── Blockchain e edtech brasileira, só o que tem sinal ─────────────── */
+	{
+		name: 'Citation Needed',
+		url: 'https://www.citationneeded.news',
+		tier: 2,
+		kind: 'analise',
+		cats: ['politica', 'newsletter'],
+		desc: 'Molly White escreve sobre cripto, tecnologia e política com checagem e sem torcida. Serve de contraponto ao ruído do setor: mede a promessa contra a evidência, inclusive o dinheiro que o setor injeta em eleição.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://www.citationneeded.news/rss/',
+		region: 'Global',
+		deep: true,
+		themes: ['blockchain'],
+		topics: ['Cripto', 'Crítica'],
+	},
+	{
+		name: 'Ethereum Foundation',
+		url: 'https://blog.ethereum.org',
+		tier: 3,
+		kind: 'primaria',
+		cats: ['dev'],
+		desc: 'O blog da fundação que apoia o desenvolvimento do Ethereum: atualização de protocolo, propostas técnicas (EIPs), pesquisa e uso em infraestrutura pública. Fonte primária e parcial, lida como posição de quem constrói, não como análise. Mostra o que está de fato sendo implementado, longe do preço.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://blog.ethereum.org/en/feed.xml',
+		region: 'Global',
+		deep: true,
+		themes: ['blockchain', 'arquitetura'],
+		topics: ['Protocolo', 'Pesquisa'],
+	},
+	{
+		name: 'BIS',
+		url: 'https://www.bis.org',
+		tier: 3,
+		kind: 'pesquisa',
+		cats: ['negocios', 'politica'],
+		desc: 'O Banco de Compensações Internacionais, que pertence a bancos centrais, publica pesquisa sobre moeda, pagamentos e tokenização. É de onde sai boa parte do raciocínio regulatório sobre moeda digital de banco central e liquidação. Parte do volume é macroeconomia geral, então vale ler o título antes do texto.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		region: 'Global',
+		deep: true,
+		verifiedAt: '2026-11-09',
+		themes: ['blockchain', 'regulacao'],
+		topics: ['Moeda digital', 'Pagamentos'],
+	},
+	{
+		name: 'CIEB',
+		url: 'https://cieb.net.br',
+		tier: 2,
+		kind: 'pesquisa',
+		cats: ['brasil', 'educacao'],
+		desc: 'Organização sem fins lucrativos dedicada ao uso de tecnologia para melhorar a aprendizagem em larga escala nas redes públicas de ensino. Publica notas técnicas, matrizes de referência (como a de competências digitais de professores) e estudos voltados a quem gere rede. O ritmo é de poucas publicações por ano, e vale mais pelo conteúdo que pela frequência.',
+		cadence: 'Trimestral',
+		access: 'aberto',
+		region: 'Brasil',
+		deep: true,
+		themes: ['edtech'],
+		topics: ['Políticas de EdTech', 'Redes públicas'],
+	},
+
+	/* ─────────────── IA na educação e educação internacional com dado ─────────────── */
+	{
+		name: 'OECD Education and Skills Today',
+		url: 'https://oecdedutoday.com',
+		tier: 3,
+		kind: 'pesquisa',
+		cats: ['educacao', 'politica'],
+		desc: 'O blog de educação da OCDE traz análise a partir dos dados do PISA e de outras pesquisas da organização, inclusive sobre IA generativa e aprendizagem. Junta política educacional e evidência na própria fonte dos números, com a ressalva de que é a posição da instituição.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://oecdedutoday.com/feed/',
+		region: 'Global',
+		deep: true,
+		themes: ['ia-educacao', 'dados'],
+		topics: ['PISA', 'Política educacional'],
+	},
+	{
+		name: 'AI, academia, and the Future',
+		url: 'https://aiandacademia.substack.com',
+		tier: 3,
+		kind: 'analise',
+		cats: ['educacao', 'ia', 'newsletter'],
+		desc: 'Bryan Alexander, futurista do ensino superior, escreve sobre para onde a IA pode levar universidades e faculdades. Leitura de prazo mais longo: menos o que saiu esta semana, mais o que muda na instituição nos próximos anos.',
+		cadence: 'Quinzenal',
+		access: 'aberto',
+		feed: 'https://aiandacademia.substack.com/feed',
+		region: 'Global',
+		deep: true,
+		themes: ['ia-educacao', 'ensino-superior'],
+		topics: ['Futuros', 'Universidade'],
 	},
 ];
 
-/** Data da última revisão da curadoria. Alimenta o rodapé e o structured data. */
-export const CURATED_AT = '2026-10-01';
-export const CURATED_LABEL = 'outubro de 2026';
+/**
+ * Data da última revisão da curadoria (AAAA-MM-DD). É a única data a manter:
+ * alimenta o structured data, o OPML, o aviso do check:feeds e o rótulo abaixo.
+ */
+export const CURATED_AT = '2026-11-09';
+
+/** "novembro de 2026", calculado de CURATED_AT para os dois nunca divergirem. */
+export const CURATED_LABEL = new Intl.DateTimeFormat('pt-BR', {
+	month: 'long',
+	year: 'numeric',
+	timeZone: 'UTC',
+}).format(new Date(`${CURATED_AT}T00:00:00Z`));
+
+export function countByTheme(id: SignalThemeId): number {
+	return SOURCES.filter((source) => source.themes?.includes(id)).length;
+}
 
 export function countByCategory(id: SignalCategory['id']): number {
 	return id === 'todas'
