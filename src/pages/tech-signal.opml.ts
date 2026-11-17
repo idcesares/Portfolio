@@ -7,25 +7,10 @@ import {
 	type SignalCategoryId,
 	type SignalSource,
 } from '../data/tech-signal-sources';
+import { buildOpml, type OpmlItem } from '../utils/opml';
 import { AUTHOR_NAME } from '../utils/seo';
 
 export const prerender = true;
-
-const escapeXml = (value: string) =>
-	value.replace(/[&<>"']/g, (char) => {
-		switch (char) {
-			case '&':
-				return '&amp;';
-			case '<':
-				return '&lt;';
-			case '>':
-				return '&gt;';
-			case '"':
-				return '&quot;';
-			default:
-				return '&apos;';
-		}
-	});
 
 /**
  * Só entram fontes com feed conferido por requisição real. Parte da
@@ -44,52 +29,32 @@ const CATEGORY_LABEL = new Map<SignalCategoryId, string>(
 	])
 );
 
-const outline = (source: SignalSource & { feed: string }) => {
-	const attrs = [
-		['type', 'rss'],
-		['text', source.name],
-		['title', source.name],
-		['xmlUrl', source.feed],
-		['htmlUrl', source.url],
-		['description', `${KIND_NAME[source.kind]} · ${source.cadence} · ${source.region}`],
-	];
-	return `      <outline ${attrs
-		.map(([key, value]) => `${key}="${escapeXml(value)}"`)
-		.join(' ')}/>`;
-};
+const toItem = (source: SignalSource & { feed: string }): OpmlItem => ({
+	name: source.name,
+	xmlUrl: source.feed,
+	htmlUrl: source.url,
+	description: `${KIND_NAME[source.kind]} · ${source.cadence} · ${source.region}`,
+});
 
 export const GET: APIRoute = ({ site }) => {
 	const baseUrl = site ?? new URL('https://dcesares.dev');
 	const pageUrl = new URL('/tech-signal/', baseUrl).toString();
 
-	const groups = [...CATEGORY_LABEL.keys()]
-		.map((id) => ({
-			label: CATEGORY_LABEL.get(id) as string,
-			items: withFeed
-				.filter((source) => source.cats[0] === id)
-				.sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name, 'pt-BR')),
-		}))
-		.filter((group) => group.items.length > 0);
+	const folders = [...CATEGORY_LABEL.keys()].map((id) => ({
+		label: CATEGORY_LABEL.get(id) as string,
+		items: withFeed
+			.filter((source) => source.cats[0] === id)
+			.sort((a, b) => a.tier - b.tier || a.name.localeCompare(b.name, 'pt-BR'))
+			.map(toItem),
+	}));
 
-	const body = `<?xml version="1.0" encoding="UTF-8"?>
-<opml version="2.0">
-  <head>
-    <title>Tech Signal Stack</title>
-    <ownerName>${escapeXml(AUTHOR_NAME)}</ownerName>
-    <ownerId>${escapeXml(pageUrl)}</ownerId>
-    <dateModified>${new Date(`${CURATED_AT}T00:00:00Z`).toUTCString()}</dateModified>
-  </head>
-  <body>
-${groups
-	.map(
-		(group) => `    <outline text="${escapeXml(group.label)}" title="${escapeXml(group.label)}">
-${group.items.map(outline).join('\n')}
-    </outline>`
-	)
-	.join('\n')}
-  </body>
-</opml>
-`;
+	const body = buildOpml({
+		title: 'Tech Signal Stack',
+		ownerName: AUTHOR_NAME,
+		ownerId: pageUrl,
+		modified: new Date(`${CURATED_AT}T00:00:00Z`),
+		folders,
+	});
 
 	return new Response(body, {
 		status: 200,

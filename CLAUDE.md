@@ -67,7 +67,9 @@ pnpm build:preview        # Build Node standalone em dist-preview/
 pnpm preview              # Servir o build Node local
 pnpm check                # Gate pré-commit (astro check + assets + check:membrane + build)
 pnpm check:membrane       # Conformidade com a Membrane (manifest + tokens)
-pnpm test:browser         # Playwright: axe em todas as páginas (claro/escuro), overflow mobile, teclado, busca, tema, fontes, consentimento
+pnpm test:browser         # Playwright: axe em todas as páginas (claro/escuro), overflow mobile, teclado, busca, tema, fontes, consentimento, Tech Signal
+pnpm test:unit            # node:test nos scripts (tests/unit/), sem rede
+pnpm check:feeds          # Tech Signal: requisição real em cada feed (200, é feed, tem itens, não está parado). Usa rede, sob demanda, fora do `check`
 pnpm sync:membrane        # Atualiza design-system/ a partir da Membrane Palette
 pnpm audit                # Dependências high+critical
 ```
@@ -129,3 +131,17 @@ Convenções: TS strict, sem `any`. Commits em inglês (`feat:`, `fix:`, `docs:`
 ## 7. Decisões de produto
 
 Todas com Isaac (`isaac.dcesares@gmail.com`). Silêncio pra decidir sozinho é pior que fricção pra alinhar.
+
+---
+
+## 8. Tech Signal (curadoria)
+
+A lista vive em `src/data/tech-signal-sources.ts`; a página e o OPML só a consomem. Uma revisão segue esta ordem:
+
+1. `pnpm check:feeds` confere cada feed por requisição (responde 200, é feed, tem itens, não está parado) e lista as fontes sem feed cujo `verifiedAt` falta ou passou de 90 dias.
+2. Fonte nova entra com feed vivo e cadência **medida** (itens em 30 e 90 dias), ou sem `feed` e com `verifiedAt` preenchido só com evidência datada. Nunca preencher data de enfeite.
+3. O rótulo de cadência segue a frequência medida, não a impressão (`Quinzenal` e `Trimestral` existem para isso).
+4. `tier` mede a leitura recorrente do Isaac. Tier, corte de fonte e texto de card são decisão dele: Claude propõe com evidência, não decide.
+5. Ao fechar a revisão, atualize `CURATED_AT`. O rótulo "mês de ano" do cabeçalho e do rodapé é derivado dele.
+6. `pnpm test:unit` valida os dados sem rede: nomes únicos, valores válidos, temas usados, regras de voz do §1.
+

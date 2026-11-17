@@ -37,6 +37,9 @@ jobs:
       - name: Membrane conformance
         run: pnpm run check:membrane
 
+      - name: Unit tests (scripts, curation data, SEO facts)
+        run: pnpm run test:unit
+
       - name: Install browser for regression tests
         run: pnpm exec playwright install --with-deps chromium
 

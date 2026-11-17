@@ -10,16 +10,21 @@ import {
   SITE_NAME,
   SOCIAL_LINKS,
 } from '../utils/seo';
+import { fold } from '../utils/fold';
 import {
   CATEGORIES,
   CURATED_AT,
   CURATED_LABEL,
   KIND_DESC,
   KIND_NAME,
+  ROUTINES,
   SOURCES,
   TIER_DESC,
+  THEME_NAME,
+  THEMES,
   TIER_NAME,
   countByCategory,
+  countByTheme,
   type SignalKind,
   type SignalSource,
 } from '../data/tech-signal-sources';
@@ -33,7 +38,6 @@ const canonicalPath = '/tech-signal/';
 const baseUrl = Astro.site ?? Astro.url;
 const pageUrl = new URL(canonicalPath, baseUrl);
 const siteUrl = new URL('/', baseUrl);
-const image = '/favicon.svg';
 
 // Ordenação canônica: tier primeiro, depois alfabética. Como os cards são
 // renderizados no servidor, o DOM já sai na ordem certa e o filtro do cliente
@@ -57,6 +61,13 @@ const primaryCount = SOURCES.filter(
   (source) => source.kind === 'primaria' || source.kind === 'pesquisa'
 ).length;
 const feedCount = SOURCES.filter((source) => source.feed).length;
+
+// Estratégia de leitura derivada dos dados: o texto nunca cita uma fonte que
+// saiu da lista, e cada bloco sabe quantas fontes tem.
+const routines = ROUTINES.map((routine) => {
+  const members = orderedSources.filter((source) => source.routine === routine.id);
+  return { ...routine, names: members.map((source) => source.name).join(', '), count: members.length };
+});
 
 const structuredData = {
   '@context': 'https://schema.org',
@@ -124,12 +135,17 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
 <MainHead
   title={title}
   description={description}
-  image={image}
-  imageAlt="Ícone de Isaac D'Césares usado como prévia social do Tech Signal Stack"
+  imageAlt="Retrato de Isaac D'Césares"
   structuredData={structuredData}
 />
 <link rel="alternate" hreflang="pt-BR" href={pageUrl.toString()}>
 <link rel="alternate" hreflang="x-default" href={pageUrl.toString()}>
+<script is:inline>
+  // Sem JS a grade já está completa e legível, em ordem de prioridade. Com JS, o
+  // cliente embaralha depois do parse; marcar "pending" antes da primeira pintura
+  // evita que o usuário veja a ordem do servidor trocar de lugar.
+  document.documentElement.dataset.signal = 'pending';
+</script>
 <style is:global>
 /* Page-specific layout only; everything else comes from the Membrane
    component library loaded by MainHead (global.css → membrane.css). */
@@ -162,13 +178,29 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
   background-color: color-mix(in srgb, var(--color-bg-secondary) 88%, transparent);
   backdrop-filter: blur(var(--blur-backdrop));
 }
-.signal-search { position: relative; flex: 1 1 16rem; }
-.signal-search .mp-input { padding-inline-end: var(--space-12); border-radius: var(--radius-full); }
+.signal-search { position: relative; flex: 1 1 0; min-width: 0; }
+.signal-search .mp-input { border-radius: var(--radius-full); }
+/* O espaço do "×" só é reservado quando ele aparece (há texto digitado). */
+.signal-search:has(.signal-search__clear:not([hidden])) .mp-input { padding-inline-end: var(--space-12); }
 .signal-search__clear { position: absolute; inset-block: 0; inset-inline-end: var(--space-1); margin-block: auto; }
 .filter-row { flex-wrap: nowrap; overflow-x: auto; scrollbar-width: none; padding-block: var(--space-1); }
 .filter-row .mp-tag { min-height: var(--size-touch-target); }
-.filter-row .mp-tag[aria-pressed='true'] { --mp-tag-bg: var(--color-action-primary); --mp-tag-fg: var(--color-text-on-accent); }
+.filter-row .mp-tag[aria-pressed='true'],
+.theme-row .mp-tag[aria-pressed='true'],
+.card-theme[aria-pressed='true'] { --mp-tag-bg: var(--color-action-primary); --mp-tag-fg: var(--color-text-on-accent); }
+.theme-row .mp-tag { min-height: var(--size-touch-target); }
+.theme-row { flex: 1 1 28rem; }
+.theme-label { padding-block-start: var(--space-3); }
 .pill-count { font-family: var(--font-mono); }
+/* Em tela larga a fileira cabe sem rolar se as pílulas ficarem mais juntas;
+   no celular o respiro maior fica, porque lá ela rola de qualquer jeito. */
+@media (min-width: 64em) {
+  .mp-cluster.filter-row[data-gap] { --mp-gap: var(--space-1); }
+}
+/* Sinaliza que a fileira de categorias rola: o lado com mais conteúdo esmaece. */
+.filter-row[data-overflow='end'] { mask-image: linear-gradient(to right, var(--color-text-primary) calc(100% - var(--space-8)), transparent); }
+.filter-row[data-overflow='start'] { mask-image: linear-gradient(to right, transparent, var(--color-text-primary) var(--space-8)); }
+.filter-row[data-overflow='both'] { mask-image: linear-gradient(to right, transparent, var(--color-text-primary) var(--space-8), var(--color-text-primary) calc(100% - var(--space-8)), transparent); }
 
 .signal-main { padding-block: var(--space-10) var(--space-24); }
 .result-meta { scroll-margin-top: calc(var(--space-32) + var(--space-8)); }
@@ -183,10 +215,72 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
 .tier-tick[data-tier='warm'] { background-color: var(--color-warning); }
 
 .seg { padding: var(--space-1); border: var(--border-default); border-radius: var(--radius-full); background-color: var(--color-bg-secondary); }
+
+/* Filtros secundários no celular: com JS, o painel vai para uma gaveta aberta pelo
+   botão da barra fixa (o script move o painel entre a página e a gaveta). Sem JS
+   (sem data-signal) o botão não aparece e o painel fica inline, aberto. */
+.filters-open { display: none; position: relative; }
+.filters-open .mp-badge { position: absolute; inset-block-start: calc(var(--space-1) * -1); inset-inline-end: calc(var(--space-1) * -1); }
+
+.filters-sheet {
+  inset-block: auto 0; inset-inline: 0; margin: 0;
+  width: 100%; max-width: 100%; max-height: 88dvh; padding: 0;
+  border: 0; border-start-start-radius: var(--radius-xl); border-start-end-radius: var(--radius-xl);
+  background-color: var(--color-bg-primary); color: var(--color-text-primary);
+  box-shadow: var(--shadow-lg); overflow: hidden;
+}
+.filters-sheet[open] { display: flex; flex-direction: column; }
+.filters-sheet::backdrop { background-color: color-mix(in srgb, var(--color-text-primary) 45%, transparent); }
+.filters-sheet__head { display: flex; align-items: center; justify-content: space-between; gap: var(--space-3); padding: var(--space-3) var(--space-4) var(--space-3) var(--space-5); border-block-end: var(--border-default); }
+.filters-sheet__body { flex: 1; overflow-y: auto; overscroll-behavior: contain; padding: var(--space-5); }
+.filters-sheet__foot { display: flex; gap: var(--space-3); padding: var(--space-3) var(--space-5); border-block-start: var(--border-default); background-color: var(--color-bg-secondary); }
+.filters-sheet__foot .mp-button { flex: 1 1 0; min-width: 0; padding-inline: var(--space-3); }
+.filters-sheet__foot .mp-button:last-child { flex-grow: 1.6; }
+html:has(.filters-sheet[open]) { overflow: hidden; }
+@media (prefers-reduced-motion: no-preference) {
+  .filters-sheet[open] { animation: signal-sheet-in var(--duration-normal) var(--ease-out); }
+}
+@keyframes signal-sheet-in { from { translate: 0 100%; } }
+
+@media (width < 48em) {
+  [data-signal] .filters-open { display: inline-flex; }
+  .seg { border-radius: var(--radius-lg); }
+
+  /* Hero mais baixo: a lista é o que se veio ver. */
+  .signal-header { padding-block: var(--space-10) var(--space-8); }
+
+  /* Estratégia de leitura e sorteio viram fileiras que deslizam. Empilhados,
+     eles empurravam a lista para ~2.700px do topo. A coluna seguinte aparece
+     pela metade para mostrar que há mais. */
+  .strategy .mp-grid, .picks .signal-grid {
+    grid-template-columns: none; grid-auto-flow: column; grid-auto-columns: min(82%, 22rem);
+    overflow-x: auto; scroll-snap-type: x mandatory; overscroll-behavior-x: contain; scrollbar-width: none;
+    padding-block-end: var(--space-1);
+  }
+  .strategy .mp-grid > *, .picks .signal-grid > * { scroll-snap-align: start; }
+
+  /* Alvos de toque de 44px (o botão sm do Membrane tem menos). */
+  .routine-btn, #exportOpml, #picksReroll, .filters-sheet .mp-button[data-size='sm'] { --mp-button-height: var(--size-touch-target); }
+}
+
+/* Etiquetas dos cards são pequenas de propósito; a área de toque não. */
+.signal-card button.card-tier, .signal-card button.card-theme { position: relative; }
+.signal-card button.card-tier::after, .signal-card button.card-theme::after {
+  content: ''; position: absolute; inset-inline: calc(var(--space-1) * -1);
+  inset-block-start: 50%; block-size: var(--size-touch-target); translate: 0 -50%;
+}
 @media (prefers-reduced-motion: no-preference) {
   .order-btn[data-spin] svg { animation: signal-spin var(--duration-slow) var(--ease-out); }
 }
 @keyframes signal-spin { to { rotate: 1turn; } }
+
+/* Grade e sorteio ficam invisíveis (mas ocupam o lugar) até o script embaralhar.
+   Se o script não rodar, a animação de 0s revela tudo depois de ~1,8s. */
+[data-signal='pending'] :is(#grid, #picks) {
+  visibility: hidden;
+  animation: signal-reveal 0s calc(var(--duration-slower) * 3) forwards;
+}
+@keyframes signal-reveal { to { visibility: visible; } }
 
 .signal-grid { --mp-grid-min: 18rem; --mp-gap: var(--space-4); }
 .signal-card { --mp-card-padding: var(--space-5); border-inline-start: var(--border-width-thick) solid var(--mp-card-accent); }
@@ -195,8 +289,8 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
 .card-url { margin: 0; color: var(--color-text-tertiary); font-family: var(--font-mono); font-size: var(--text-xs); overflow-wrap: anywhere; }
 .signal-card .mp-card__body { font-size: var(--text-small); flex: 1; }
 .signal-card .mp-card__footer { gap: var(--space-2); }
-.card-tier { cursor: pointer; }
-.picks .card-tier { cursor: default; }
+.card-tier, .card-theme { cursor: pointer; }
+.picks .card-tier, .picks .card-theme { cursor: default; }
 .signal-card mark { padding-inline: 0.15em; border-radius: var(--radius-sm); background-color: var(--color-digital-bg); color: var(--color-digital-text); }
 
 .method { gap: var(--space-6); }
@@ -223,7 +317,7 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
       <dl class="mp-cluster signal-header__stats" data-gap="8">
         <div class="mp-stat"><dt class="mp-stat__label">fontes</dt><dd class="mp-stat__value">{orderedSources.length}</dd></div>
         <div class="mp-stat"><dt class="mp-stat__label">do Brasil</dt><dd class="mp-stat__value">{brazilianCount}</dd></div>
-        <div class="mp-stat"><dt class="mp-stat__label">primárias</dt><dd class="mp-stat__value">{primaryCount}</dd></div>
+        <div class="mp-stat"><dt class="mp-stat__label">primárias e pesquisa</dt><dd class="mp-stat__value">{primaryCount}</dd></div>
       </dl>
     </div>
   </div>
@@ -235,11 +329,24 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
     <div class="mp-cluster" data-gap="2">
       <div class="signal-search">
         <label class="mp-visually-hidden" for="search">Buscar fontes</label>
-        <input type="search" id="search" class="mp-input" placeholder="Buscar por fonte, tema ou nome…" autocomplete="off" aria-keyshortcuts="/">
+        <input type="search" id="search" class="mp-input" placeholder="Buscar fontes…" autocomplete="off" aria-keyshortcuts="/">
         <button type="button" class="mp-button signal-search__clear" id="searchClear" data-variant="ghost" data-size="sm" data-icon-only aria-label="Limpar busca" hidden>
           <Icon icon="x" size="sm" />
         </button>
       </div>
+      <button
+        type="button"
+        class="mp-button filters-open"
+        id="filtersToggle"
+        data-variant="secondary"
+        data-icon-only
+        aria-haspopup="dialog"
+        aria-controls="filtersSheet"
+        aria-label="Filtros"
+      >
+        <Icon icon="sliders-horizontal" />
+        <span class="mp-badge" id="filtersCount" data-tone="human" hidden></span>
+      </button>
       <ThemeToggle />
     </div>
     <div class="mp-cluster filter-row" id="filterRow" role="group" aria-label="Filtrar por categoria" data-gap="2">
@@ -260,21 +367,23 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
 <main id="main" tabindex="-1" class="mp-container mp-stack signal-main" data-gap="10">
   <section class="mp-card strategy" aria-label="Estratégia de leitura sugerida">
     <div class="mp-grid" data-min="sm">
-    <div class="mp-stack strat-item" data-gap="1">
-      <span class="type-label mp-text" data-tone="subtle">Varredura da manhã · 15 min</span>
-      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="1" aria-hidden="true"></span>Ficar em dia</span>
-      <p class="mp-text type-small" data-tone="muted">Hacker News, TLDR, Tecnoblog, The Verge. Cobre a maior parte do que importa, com pouca repetição entre eles.</p>
-    </div>
-    <div class="mp-stack strat-item" data-gap="1">
-      <span class="type-label mp-text" data-tone="subtle">Síntese semanal · domingo</span>
-      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="warm" aria-hidden="true"></span>Pensar estratégia</span>
-      <p class="mp-text type-small" data-tone="muted">Stratechery, Benedict Evans, Exponential View, Manual do Usuário. A camada que a notícia diária não alcança.</p>
-    </div>
-    <div class="mp-stack strat-item" data-gap="1">
-      <span class="type-label mp-text" data-tone="subtle">Sob demanda · quando pesa</span>
-      <span class="type-h4 strat-title"><span class="tier-tick" data-tier="2" aria-hidden="true"></span>Ir fundo</span>
-      <p class="mp-text type-small" data-tone="muted">Ars Technica, MIT Tech Review, Cetic.br, JOTA, Rest of World. Para quando a manchete não basta.</p>
-    </div>
+      {routines.map((routine) => (
+        <div class="mp-stack strat-item" data-gap="1">
+          <span class="type-label mp-text" data-tone="subtle">{routine.when}</span>
+          <span class="type-h4 strat-title"><span class="tier-tick" data-tier={routine.tick} aria-hidden="true"></span>{routine.title}</span>
+          <p class="mp-text type-small" data-tone="muted">{routine.names}. {routine.desc}</p>
+          <button
+            type="button"
+            class="mp-button routine-btn"
+            data-variant="secondary"
+            data-size="sm"
+            data-routine={routine.id}
+            data-label={routine.title}
+            aria-pressed="false"
+            hidden
+          >Mostrar só estas {routine.count} fontes</button>
+        </div>
+      ))}
     </div>
   </section>
 
@@ -291,39 +400,62 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
     <div class="mp-grid signal-grid" id="picksGrid"></div>
   </section>
 
-  <div class="mp-stack result-meta" data-gap="4">
+  <div class="mp-stack result-meta" id="resultMeta" data-gap="4">
     <div class="mp-cluster" data-align="baseline" data-gap="3">
       <h2 class="type-h3" id="resultTitle">Todas as fontes</h2>
       <span class="mp-text type-small" data-tone="subtle" id="resultCount" role="status" aria-live="polite"></span>
+      <button
+        type="button"
+        class="mp-button"
+        data-variant="secondary"
+        data-size="sm"
+        id="exportOpml"
+        data-owner={AUTHOR_NAME}
+        data-owner-id={pageUrl.toString()}
+        data-modified={CURATED_AT}
+        hidden
+      ><span id="exportLabel">Baixar OPML deste recorte</span></button>
     </div>
-    <div class="mp-cluster seg-control" data-gap="2">
-      <span class="type-label mp-text" data-tone="subtle">Natureza</span>
-      <div class="mp-cluster seg" data-gap="1" id="kindSeg" role="group" aria-label="Filtrar por natureza da fonte">
-        <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind="todas" aria-pressed="true">Todas</button>
-        {kindCounts.map((item) => (
-          <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind={item.kind} aria-pressed="false" title={item.title}>
-            {item.label} <span class="mp-badge">{item.count}</span>
+    <div class="mp-stack filters-panel" id="filtersPanel" data-gap="4">
+      <div class="mp-cluster seg-control" data-gap="2">
+        <span class="type-label mp-text" data-tone="subtle">Natureza</span>
+        <div class="mp-cluster seg" data-gap="1" id="kindSeg" role="group" aria-label="Filtrar por natureza da fonte">
+          <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind="todas" aria-pressed="true">Todas</button>
+          {kindCounts.map((item) => (
+            <button type="button" class="mp-button kind-btn" data-variant="ghost" data-size="sm" data-kind={item.kind} aria-pressed="false" title={item.title}>
+              {item.label} <span class="mp-badge">{item.count}</span>
+            </button>
+          ))}
+        </div>
+      </div>
+      <div class="mp-cluster seg-control" data-gap="2" id="orderControl" hidden>
+        <span class="type-label mp-text" data-tone="subtle">Ordem</span>
+        <div class="mp-cluster seg" data-gap="1" id="orderSeg" role="group" aria-label="Ordem das fontes">
+          <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="shuffle" aria-pressed="true" title="Muda a cada visita. Clique de novo para embaralhar outra vez.">
+            <svg class="mp-icon" data-size="sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
+            Embaralhada
           </button>
-        ))}
+          <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="tier" aria-pressed="false" title="Essencial primeiro, depois ordem alfabética">Por prioridade</button>
+        </div>
       </div>
-    </div>
-    <div class="mp-cluster seg-control" data-gap="2" id="orderControl" hidden>
-      <span class="type-label mp-text" data-tone="subtle">Ordem</span>
-      <div class="mp-cluster seg" data-gap="1" id="orderSeg" role="group" aria-label="Ordem das fontes">
-        <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="shuffle" aria-pressed="true" title="Muda a cada visita. Clique de novo para embaralhar outra vez.">
-          <svg class="mp-icon" data-size="sm" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a9 9 0 1 1-3-6.7"/><polyline points="21 3 21 9 15 9"/></svg>
-          Embaralhada
-        </button>
-        <button type="button" class="mp-button order-btn" data-variant="ghost" data-size="sm" data-order="tier" aria-pressed="false" title="Essencial primeiro, depois ordem alfabética">Por prioridade</button>
+      <div class="mp-cluster seg-control" data-gap="2">
+        <span class="type-label mp-text" data-tone="subtle">Prioridade</span>
+        <div class="mp-cluster seg" data-gap="1" id="tierSeg" role="group" aria-label="Filtrar por prioridade">
+          <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="todas" aria-pressed="true">Todas</button>
+          <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="1" aria-pressed="false" title={TIER_DESC[1]}><span class="tier-tick" data-tier="1" aria-hidden="true"></span>{TIER_NAME[1]}</button>
+          <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="2" aria-pressed="false" title={TIER_DESC[2]}><span class="tier-tick" data-tier="2" aria-hidden="true"></span>{TIER_NAME[2]}</button>
+          <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="3" aria-pressed="false" title={TIER_DESC[3]}><span class="tier-tick" data-tier="3" aria-hidden="true"></span>{TIER_NAME[3]}</button>
+        </div>
       </div>
-    </div>
-    <div class="mp-cluster seg-control" data-gap="2">
-      <span class="type-label mp-text" data-tone="subtle">Prioridade</span>
-      <div class="mp-cluster seg" data-gap="1" id="tierSeg" role="group" aria-label="Filtrar por prioridade">
-        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="todas" aria-pressed="true">Todas</button>
-        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="1" aria-pressed="false" title={TIER_DESC[1]}><span class="tier-tick" data-tier="1" aria-hidden="true"></span>{TIER_NAME[1]}</button>
-        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="2" aria-pressed="false" title={TIER_DESC[2]}><span class="tier-tick" data-tier="2" aria-hidden="true"></span>{TIER_NAME[2]}</button>
-        <button type="button" class="mp-button tier-btn" data-variant="ghost" data-size="sm" data-tier="3" aria-pressed="false" title={TIER_DESC[3]}><span class="tier-tick" data-tier="3" aria-hidden="true"></span>{TIER_NAME[3]}</button>
+      <div class="mp-cluster seg-control" data-gap="2" data-align="start">
+        <span class="type-label mp-text theme-label" data-tone="subtle">Tema</span>
+        <div class="mp-cluster theme-row" id="themeRow" role="group" aria-label="Filtrar por tema" data-gap="2">
+          {THEMES.map((theme) => (
+            <button type="button" class="mp-tag theme-pill" data-theme={theme.id} aria-pressed="false">
+              {theme.label} <span class="pill-count">{countByTheme(theme.id)}</span>
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   </div>
@@ -337,7 +469,11 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
         data-cats={source.cats.join(' ')}
         data-kind={source.kind}
         data-order={index}
-        data-haystack={[source.name, source.desc, source.topics.join(' '), source.region, KIND_NAME[source.kind], source.url].join(' ').toLowerCase()}
+        data-feed={source.feed}
+        data-routine={source.routine}
+        data-themes={(source.themes ?? []).join(' ') || undefined}
+        data-meta={`${KIND_NAME[source.kind]} · ${source.cadence} · ${source.region}`}
+        data-haystack={fold([source.name, source.desc, source.topics.join(' '), (source.themes ?? []).map((id) => THEME_NAME[id]).join(' '), source.region, KIND_NAME[source.kind], source.url].join(' '))}
       >
         <div class="mp-cluster" data-justify="between" data-gap="2">
           <button
@@ -362,7 +498,17 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
           <span class="mp-badge" data-tone="human">{source.cadence}</span>
           {source.deep && <span class="mp-badge" data-tone="digital">Aprofundado</span>}
           {source.region !== 'Global' && <span class="mp-badge" data-tone="success">{source.region}</span>}
-          {source.topics.map((topic) => <span class="mp-tag">{topic}</span>)}
+          {source.themes?.length
+            ? source.themes.map((id) => (
+                <button
+                  type="button"
+                  class="mp-tag card-theme"
+                  data-theme={id}
+                  aria-pressed="false"
+                  title={`Tema: ${THEME_NAME[id]}. Clique para filtrar.`}
+                >{THEME_NAME[id]}</button>
+              ))
+            : source.topics.map((topic) => <span class="mp-tag">{topic}</span>)}
         </div>
       </article>
     ))}
@@ -385,6 +531,7 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
     <p>A prioridade não mede qualidade, mede frequência de uso. Essencial é o que eu leio de forma recorrente. Forte é excelente, e o peso depende do papel de quem lê. Situacional é o que eu procuro quando o assunto aparece. Um veículo excelente pode ser situacional, e isso não é demérito: a ANPD e o Cetic.br publicam algumas vezes por ano, e quando publicam valem mais que um mês de notícia.</p>
     <p>A camada brasileira de reguladores e institutos é a parte que uma curadoria de tecnologia quase nunca tem. ANPD, Anatel, CADE, Banco Central e MCTI publicam o documento original dias antes de a imprensa interpretá-lo, e a interpretação erra com frequência. Junto com Cetic.br, InternetLab e Data Privacy Brasil, é onde se descobre o que de fato está sendo decidido sobre tecnologia no país.</p>
     <p>Ficaram de fora, de propósito, os portais brasileiros de alto volume e baixa apuração. Num agregador com pontuação dá para incluir e reduzir o peso deles; numa lista curada, incluir o que se pretende ignorar contradiz a promessa da lista. Pelo mesmo motivo, a revisão de outubro tirou três fontes: duas cujo próprio texto já admitia mais anúncio que apuração, e uma que repetia a pauta de outra da lista. Entraram treze, a maioria para cobrir o que faltava fora do eixo Estados Unidos e Europa Ocidental: América Latina, África, China e a pesquisa brasileira em ciência e direitos digitais.</p>
+    <p>A revisão de novembro tirou duas fontes e acrescentou catorze. As duas que saíram não tinham parado de publicar: a frequência real de cada feed foi medida e nenhum estava parado. Saíram por sobreposição, porque repetiam a pauta de outras que continuam na lista. Os catorze que entraram cobrem o que a lista tinha pior: ensino superior, tecnologia educacional, IA na educação, IA medida com dado, a ciência feita no Brasil e blockchain, este só no que tem lastro, com pesquisa e checagem no lugar de cotação. Também foram corrigidos os rótulos de cadência de algumas fontes, que publicam mais ou menos do que o cadastro afirmava, e a lista ganhou a cadência quinzenal.</p>
     <p>A ordem dos cards muda a cada visita, de propósito. Uma lista fixa ensina a ler sempre as mesmas cinco fontes do topo, e o objetivo aqui é o contrário: esbarrar com algo que eu ainda não li. O sorteio de cima evita o núcleo essencial e a ordem por prioridade continua a um clique de distância.</p>
     <p>A curadoria é revisada periodicamente e cada revisão corta, não só acrescenta. Se você acha que falta alguma, ou que alguma aqui não merece mais o lugar, me escreve. Vamos cocriar?</p>
 
@@ -409,248 +556,22 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
   </div>
 </footer>
 
-<script is:inline>
-/* ═══════════════════════════════════════════════
-   Os cards já vêm renderizados do servidor. Este script só filtra,
-   busca e destaca. Sem JS a página continua completa e legível.
-═══════════════════════════════════════════════ */
-const grid        = document.getElementById('grid');
-const filterRow   = document.getElementById('filterRow');
-const searchInput = document.getElementById('search');
-const searchClear = document.getElementById('searchClear');
-const emptyState  = document.getElementById('empty');
-const resultTitle = document.getElementById('resultTitle');
-const resultCount = document.getElementById('resultCount');
-const tierSeg     = document.getElementById('tierSeg');
-const kindSeg     = document.getElementById('kindSeg');
-const orderSeg    = document.getElementById('orderSeg');
-const orderCtl    = document.getElementById('orderControl');
-const picks       = document.getElementById('picks');
-const picksGrid   = document.getElementById('picksGrid');
-const cards       = Array.from(grid.querySelectorAll('.signal-card'));
+<dialog class="filters-sheet" id="filtersSheet" aria-labelledby="filtersSheetTitle">
+  <div class="filters-sheet__head">
+    <h2 class="type-h4" id="filtersSheetTitle">Filtros</h2>
+    <button type="button" class="mp-button" id="filtersClose" data-variant="ghost" data-icon-only aria-label="Fechar filtros">
+      <Icon icon="x" />
+    </button>
+  </div>
+  <div class="filters-sheet__body" id="filtersSheetBody"></div>
+  <div class="filters-sheet__foot">
+    <button type="button" class="mp-button" id="filtersClear" data-variant="secondary" aria-label="Limpar filtros">Limpar</button>
+    <button type="button" class="mp-button" id="filtersApply"><span id="filtersApplyLabel">Ver as fontes</span></button>
+  </div>
+</dialog>
 
-const CATEGORY_LABELS = {};
-filterRow.querySelectorAll('.filter-pill').forEach(pill => {
-  CATEGORY_LABELS[pill.dataset.filter] = pill.textContent.replace(/\s*\d+\s*$/, '').trim();
-});
-const TIER_NAME = { 1: 'Essencial', 2: 'Forte', 3: 'Situacional' };
-
-let activeFilter = 'todas';
-let activeTier   = 'todas';
-let activeKind   = 'todas';
-let searchTerm   = '';
-
-const KIND_LABELS = {};
-kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
-  KIND_LABELS[btn.dataset.kind] = btn.textContent.replace(/\s*\d+\s*$/, '').trim();
-});
-
-const escapeHTML = s => s.replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-
-function highlight(text, term) {
-  const safe = escapeHTML(text);
-  if (!term) return safe;
-  const re = new RegExp('(' + term.replace(/[.*+?^${}()|[\]\\]/g, '\\$&') + ')', 'gi');
-  return safe.replace(re, '<mark>$1</mark>');
-}
-
-function paintHighlights(card, term) {
-  const title = card.querySelector('.card-title');
-  const desc  = card.querySelector('.card-desc');
-  const link  = title.querySelector('.card-link');
-  link.innerHTML = highlight(title.dataset.original, term)
-    + '<span class="mp-visually-hidden"> (abre em uma nova aba)</span>';
-  desc.innerHTML = highlight(desc.dataset.original, term);
-}
-
-function render() {
-  const term = searchTerm.trim().toLowerCase();
-  let visible = 0;
-
-  cards.forEach(card => {
-    const matchesCat  = activeFilter === 'todas' || card.dataset.cats.split(' ').includes(activeFilter);
-    const matchesTier = activeTier === 'todas' || card.dataset.tier === activeTier;
-    const matchesKind = activeKind === 'todas' || card.dataset.kind === activeKind;
-    const matchesTerm = !term || card.dataset.haystack.includes(term);
-    const show = matchesCat && matchesTier && matchesKind && matchesTerm;
-
-    card.hidden = !show;
-    if (show) {
-      visible++;
-      paintHighlights(card, term);
-    }
-  });
-
-  let title = activeFilter === 'todas' ? 'Todas as fontes' : CATEGORY_LABELS[activeFilter];
-  if (activeKind !== 'todas') title += ' · ' + KIND_LABELS[activeKind];
-  if (activeTier !== 'todas') title += ' · ' + TIER_NAME[activeTier];
-  resultTitle.textContent = title;
-  resultCount.textContent = visible === 1 ? '1 fonte' : visible + ' fontes';
-
-  const isEmpty = visible === 0;
-  emptyState.hidden = !isEmpty;
-  grid.hidden = isEmpty;
-}
-
-function setCategory(id) {
-  activeFilter = id;
-  filterRow.querySelectorAll('.filter-pill').forEach(pill => {
-    const on = pill.dataset.filter === id;
-    pill.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  render();
-}
-
-function setKind(kind) {
-  activeKind = kind;
-  kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
-    const on = btn.dataset.kind === kind;
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  render();
-}
-
-function setTier(tier) {
-  activeTier = tier;
-  tierSeg.querySelectorAll('.tier-btn').forEach(btn => {
-    const on = btn.dataset.tier === tier;
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  render();
-}
-
-filterRow.querySelectorAll('.filter-pill').forEach(pill => {
-  pill.addEventListener('click', () => setCategory(pill.dataset.filter));
-});
-
-tierSeg.querySelectorAll('.tier-btn').forEach(btn => {
-  btn.addEventListener('click', () => setTier(btn.dataset.tier));
-});
-
-kindSeg.querySelectorAll('.kind-btn').forEach(btn => {
-  btn.addEventListener('click', () => setKind(btn.dataset.kind));
-});
-
-// Selo de prioridade dentro do card também filtra. Clicar de novo no ativo limpa.
-grid.addEventListener('click', e => {
-  const badge = e.target.closest('.card-tier');
-  if (!badge) return;
-  setTier(activeTier === badge.dataset.tier ? 'todas' : badge.dataset.tier);
-  document.querySelector('.result-meta').scrollIntoView({ block: 'start' });
-});
-
-let searchTimer;
-searchInput.addEventListener('input', e => {
-  searchTerm = e.target.value;
-  searchClear.hidden = searchTerm.length === 0;
-  clearTimeout(searchTimer);
-  searchTimer = setTimeout(render, 120);
-});
-searchClear.addEventListener('click', () => {
-  searchTerm = '';
-  searchInput.value = '';
-  searchClear.hidden = true;
-  searchInput.focus();
-  render();
-});
-searchInput.addEventListener('keydown', e => { if (e.key === 'Escape') searchClear.click(); });
-
-document.getElementById('emptyReset').addEventListener('click', () => {
-  searchTerm = '';
-  searchInput.value = '';
-  searchClear.hidden = true;
-  setCategory('todas');
-  setKind('todas');
-  setTier('todas');
-});
-
-// Atalho: "/" foca a busca.
-document.addEventListener('keydown', e => {
-  if (e.key === '/' && !e.target.closest('input, textarea, select, [contenteditable]')) {
-    e.preventDefault();
-    searchInput.focus();
-  }
-});
-
-/* ═══════════ EMBARALHAR ═══════════
-   O HTML sai ordenado por prioridade (sem JS, é isso que se vê). No cliente,
-   cada visita sorteia uma ordem nova e três fontes fora do núcleo essencial.
-═══════════════════════════════ */
-function randomInt(max) {
-  const buf = new Uint32Array(1);
-  crypto.getRandomValues(buf);
-  return buf[0] % max;
-}
-
-function shuffled(list) {
-  const out = list.slice();
-  for (let i = out.length - 1; i > 0; i--) {
-    const j = randomInt(i + 1);
-    [out[i], out[j]] = [out[j], out[i]];
-  }
-  return out;
-}
-
-function placeCards(ordered) {
-  grid.append(...ordered);
-}
-
-function setOrder(order, reshuffle) {
-  orderSeg.querySelectorAll('.order-btn').forEach(btn => {
-    const on = btn.dataset.order === order;
-    btn.setAttribute('aria-pressed', on ? 'true' : 'false');
-  });
-  if (order === 'tier') {
-    placeCards(cards.slice().sort((a, b) => a.dataset.order - b.dataset.order));
-  } else if (reshuffle) {
-    placeCards(shuffled(cards));
-  }
-}
-
-const isBrazil = card => card.dataset.cats.split(' ').includes('brasil');
-
-function pickFresh() {
-  const pool = cards.filter(card => card.dataset.tier !== '1');
-  const local = shuffled(pool.filter(isBrazil));
-  const world = shuffled(pool.filter(card => !isBrazil(card)));
-  const chosen = [local[0], world[0]];
-  const rest = shuffled(pool.filter(card => !chosen.includes(card)));
-  chosen.push(rest[0]);
-
-  picksGrid.replaceChildren(...shuffled(chosen).map((card) => {
-    const copy = card.cloneNode(true);
-    copy.hidden = false;
-    copy.removeAttribute('data-order');
-    const badge = copy.querySelector('.card-tier');
-    const label = document.createElement('span');
-    label.className = badge.className;
-    label.dataset.tier = badge.dataset.tier;
-    if (badge.dataset.tone) label.dataset.tone = badge.dataset.tone;
-    label.innerHTML = badge.innerHTML;
-    badge.replaceWith(label);
-    return copy;
-  }));
-  picks.hidden = false;
-}
-
-orderCtl.hidden = false;
-orderSeg.querySelectorAll('.order-btn').forEach(btn => {
-  btn.addEventListener('click', () => {
-    const order = btn.dataset.order;
-    if (order === 'shuffle') {
-      btn.removeAttribute('data-spin');
-      void btn.offsetWidth;
-      btn.setAttribute('data-spin', '');
-    }
-    setOrder(order, true);
-  });
-});
-document.getElementById('picksReroll').addEventListener('click', pickFresh);
-
-setOrder('shuffle', true);
-pickFresh();
-
-render();
+<script>
+  import '../scripts/tech-signal';
 </script>
 </body>
 </html>
