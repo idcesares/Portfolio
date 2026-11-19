@@ -16,6 +16,8 @@ This design system is the **visual and interactive authority** for the Isaac D'C
 
 **The test for visual output:** Is the chosen register meaningful for the content? When human and digital concerns meet, does the interface hold them coherently? Is it warm without being casual and precise without being cold? For factual and verbal output, use the authority hierarchy above rather than inferring from visual principles.
 
+**For complete compositions:** Start at [Composing with Membrane](docs/composition/README.md) for intent routes, register selection, format guidance and rendered references. [Creative latitude](docs/composition/creative-latitude.md) separates fixed principles from adaptable layout and density defaults. Inspect finished output with the [visual rubric](docs/composition/rubric.md).
+
 ---
 
 ## 1. Design Principles
@@ -386,6 +388,8 @@ In practice, use the layout primitives (`.mp-container`, `.mp-stack`, `.mp-clust
 
 Custom properties can't be used inside `@media`, so breakpoints are emitted as comments only — they document the values to type into media queries. Components prefer intrinsic layout (`auto-fit` grids, wrapping clusters) and container queries over viewport breakpoints.
 
+`npm run build:components` rejects any `@media` width that is not one of these four steps, in component CSS, `examples/*.css`, example pages and the showcase (px or rem; `48rem` = `768px`). Prefer range syntax — `@media (width < 48rem)` — so neighbouring queries never overlap at the boundary pixel. Container queries are exempt: they measure the component's own box, so their thresholds belong to the component.
+
 ### 4.5 Z-Index Scale
 
 | Token | Value | Usage |
@@ -505,7 +509,7 @@ No framework, no build step for consumers; `tokens/base.css` (inside `membrane.c
 
 1. Create `components/<name>/<name>.css` and `components/<name>/README.md` (frontmatter `name`, `category`, `status`, `summary`; an `## Examples` section with `### Title` + ` ```html ` blocks; `<!-- GENERATED:API -->` markers), and add `<name>` to `ORDER` in `scripts/build-components.mjs`.
 2. Run `npm run build:components`. It **fails** if the CSS uses a raw color, an unknown or deprecated token, a Tier 1 primitive, or a custom property not named `--mp-*` — and if any README example uses a class, attribute or value the CSS doesn't implement, duplicates an `id`, or has an icon-only button without `aria-label`. It also fails if a class or `data-*` value the CSS implements is **never demonstrated** in an example — that is what guarantees the showcase renders every option. Token scales and runtime-only state can be exempted with an `exempt:` frontmatter line.
-3. If the component needs a new color pairing, add a semantic token and a `GATE` entry in `scripts/build-tokens.mjs` so its contrast is verified in both modes.
+3. Route every color the component paints through a `--mp-<name>-*` knob on its root, and list each pair that carries information in `COMPONENT_GATE` in `scripts/build-components.mjs` (4.5 for text, 3.0 for meaningful graphics). The build measures each pair in light and dark, for the defaults and for every tone, variant or state rule that reassigns a knob, over the page and card surfaces. A brand-new semantic pairing also gets a `GATE` entry in `scripts/build-tokens.mjs`.
 
 ## 7. Imagery & Illustration
 
@@ -528,13 +532,14 @@ Derived from the profile photo's qualities:
 
 ### 7.2 Illustration Style
 
-Inspired by Anthropic's hand-crafted doodle aesthetic, adapted for Isaac's brand:
+The [visual language](docs/visual-language/README.md) combines organic gesture with precise structure: curves and routes, loose planes and open frames, observations and annotations. The [working specimen](examples/visual-language.html) demonstrates a website opening, presentation cover, teaching card and arrangements.
 
-- **Line quality:** Organic, slightly imperfect. Not geometric perfection. Single-weight line (2px) in `--color-neutral-700` or `--color-terracotta`.
-- **Fill:** Minimal. When used, a single flat fill from the brand palette at reduced opacity.
-- **Subject matter:** Abstract representations of translation, connection, bridges, neural patterns, growth/branching structures.
-- **Complexity:** Simple enough to reproduce at small sizes. No more than 2 colors per illustration.
-- **Usage:** Section dividers, empty states, loading states, background textures at very low opacity.
+- **Line quality:** Deliberate organic traces alongside aligned structural routes and supporting rules. Keep a coherent stroke hierarchy; simplify at small sizes. Interface icons retain their separate §7.3 contract.
+- **Color and fill:** Start with human/digital semantic text colors and neutral linework/surfaces, using the register washes for restrained fills. A larger explanatory scene may add semantic colors when meaning requires them. Do not use palette primitives in authored page CSS.
+- **Subject matter:** Observation, interpretation, connection, revision and the relationship between an experience and its representation. A literal membrane is optional; a drawing should serve its subject.
+- **Complexity:** Match detail to purpose and viewing size. Simple pictograms need immediate recognition; editorial illustrations and explanatory scenes may retain necessary detail, labels and qualifications.
+- **Usage:** Give focal artwork space in openings and covers; connect illustrations to text in teaching and editorial material. Use supporting fields in separate strips or cropped margins. Meaningful diagrams retain readable labels and text equivalents; decorative texture carries no evidence.
+- **Assets:** [Six original constructions](brand/visuals/catalog.json) ship as self-contained light/dark SVGs under `brand/visuals/`, generated by `scripts/render-visual-assets.mjs` from semantic tokens. Select variants for the actual surface. The original brand marks remain unchanged.
 
 ### 7.3 Iconography
 
@@ -814,7 +819,7 @@ Minimum clear space around any brand mark = the height of the lowercase `d` in t
 - Content slides: Cream background, charcoal text, generous margins.
 - Code slides: Dark code block styling with syntax highlighting.
 - Section dividers: Full-bleed terracotta or teal with cream text.
-- Never more than 30 words per slide. Let the typography and spacing work.
+- For calm slides accompanying a speaker, start with no more than 30 words per slide. Technical/evidence canvases and stand-alone decks may need more words to preserve method, provenance or qualifications; retain a clear first read and readable type, then inspect the full-size export. See [formats and density](docs/composition/README.md#formats-and-density).
 
 ### 11.3 Email & Documents
 
@@ -928,6 +933,8 @@ Primitives are immutable in both modes. **Never redefine a primitive inside a th
 All text must meet **WCAG AA minimum** (4.5:1 for body text, 3:1 for large text and UI components). Target **AAA** (7:1 / 4.5:1) where possible.
 
 > **Enforcement:** `npm run build:tokens` verifies every pair below in both light and dark mode before writing CSS output, and aborts if any pair regresses. v2.1 extended the gate from 20 pairs to cover hover fills, status and register washes (over page and card surfaces), inverse and elevated surfaces, form-control boundaries (1.4.11), chart series and every code syntax color.
+>
+> A second gate in `npm run build:components` measures the pairs each component actually paints through its `--mp-*` knobs (`COMPONENT_GATE`), per tone/variant/state and over each backdrop. It is what caught the success-tone progress bar (2.9:1 on its track) and the warning alert icon (2.1:1) when it was introduced. Decorative accent stripes that repeat the title and icon are not gated.
 
 Every pair below is verified by the build in both modes; a translucent background (a `-bg` tint) is composited over `--color-bg-primary` first. This table is generated by `npm run build:tokens` — edit the `GATE` list in `scripts/build-tokens.mjs`, not this table.
 
@@ -1152,7 +1159,7 @@ The components carry the visual brand; the words carry the voice. Interface copy
 
 | Element | Rule | Do | Don't |
 |---|---|---|---|
-| Buttons | A verb for what happens, ≤ 3 words. Name the concrete action; campaign language is exceptional. | "Save draft", "Start workshop" | "OK", "Submit", "Click here" |
+| Buttons | A concise verb phrase that names the action. Use enough words for clarity in the reader’s language; campaign language is exceptional. | "Save draft", "Start workshop" | "OK", "Submit", "Click here" |
 | Links | Say where they go; make sense out of context. | "Read the case study" | "Learn more", "here" |
 | Errors | What happened → why (if known) → how to fix. No blame, no codes alone. | "Handles can't contain spaces — try 'idcesares'." | "Invalid input", "Error 422" |
 | Empty states | What this place is for → why it's empty → one next action. | "Your reading list starts here…" | "No data", "Nothing to see here 🙃" |
@@ -1165,22 +1172,34 @@ Avoid hype, credential inflation and abstraction without a referent in UI copy. 
 ### 16.2 Localization (pt-BR and beyond)
 
 - **Set `lang`.** `<html lang="en">` or `lang="pt-BR"`; mark inline phrases in the other language: `<span lang="pt-BR">Vamos cocriar?</span>` so screen readers switch pronunciation.
-- **Budget for expansion.** Portuguese runs 20–30% longer than English. Components wrap or reflow by design (clusters wrap, grids auto-fit, navbars scroll); buttons do not wrap, so keep their labels short in every language.
+- **Budget for expansion.** Portuguese runs 20–30% longer than English. Components wrap or reflow by design (clusters wrap, grids auto-fit, navbars scroll); keep action labels concise and let longer labels wrap locally when needed; verify the result at enlarged text sizes.
 - **Format with `Intl`, never by hand.** Numbers, dates and percentages differ: `3,214` / `3.214`, `6.2%` / `6,2%`, `2 October 2026` / `2 de outubro de 2026`. Use `Intl.NumberFormat(locale)` and `Intl.DateTimeFormat(locale)`; put machine-readable dates in `<time datetime>`.
 - **Right-to-left is supported.** Components use logical properties (`margin-inline`, `inset-inline-start`, `border-inline-start`) and `membrane.js` mirrors tab arrow keys under `dir="rtl"`.
 - **Fonts cover Latin Extended** (Fraunces, Instrument Sans and JetBrains Mono all include Portuguese diacritics). Other scripts fall back to the system stack.
 
-### 16.3 Page patterns
+### 16.3 Complete task patterns
 
-Full pages built only from the library live in `examples/` and are linted on every build exactly like component examples (no invented classes or values):
+Use [experience patterns](docs/patterns/README.md) for forms, review/edit, loading, cancellation, empty/no-results/partial availability and recovery. The [resource explorer](examples/resource-explorer.html) and [form journey](examples/form-journey.html) demonstrate these behaviors in English and pt-BR with explicit local sample boundaries. [Accessibility evidence](docs/accessibility/README.md) records automated coverage separately from outstanding manual screen-reader and usability checks. A stable API is not a claim of tested usability. Optional AI interactions are guidance rather than an AI service.
+
+### 16.4 Page patterns
+
+Full pages composed from the library live in `examples/` and are linted on every build exactly like component examples (no invented `mp-*` classes or attribute values). The composition references use local `composition-*` classes for page geometry and diagrams, with semantic-token styling in `examples/composition.css` and the task-specific stylesheets. All `examples/*.css` stylesheets pass the library's color/token guard; local `--composition-*` and `--mp-*` custom properties must be declared in their file. The showcase's Compositions section exposes six references through theme-aware previews, intended uses and source links:
 
 | Pattern | File | Shows |
 |---|---|---|
 | Starter | `examples/starter.html` | Landing page: navbar, hero, cards, form, themed footer |
 | Article | `examples/article.html` | Long-form essay: breadcrumb, byline, prose, pull quote, related cards |
 | Dashboard | `examples/dashboard.html` | Product UI: stats, chart, steps, tabs, table, empty state, menu, toast |
+| Workshop | [`examples/workshop.html`](examples/workshop.html) | Human opening, ordered learning journey and preparation; illustrative workshop |
+| Research explainer | [`examples/research-explainer.html`](examples/research-explainer.html) | Human/membrane/digital relationship diagram, proposed method and limitation; no study or findings |
+| Presentation | [`examples/presentation.html`](examples/presentation.html) | Six-canvas argument, responsive reading view and six landscape print pages; illustrative content |
+| Resource explorer | [`examples/resource-explorer.html`](examples/resource-explorer.html) | Bilingual search/filter, adaptive list/detail, loading/cancel and state recovery; local illustrative catalog |
+| Form journey | [`examples/form-journey.html`](examples/form-journey.html) | Bilingual validation, retained answers, review/edit and local failure/retry/confirmation |
+| Visual language | [`examples/visual-language.html`](examples/visual-language.html) | Organic/structural artwork, website opening, presentation cover, teaching card and SVG downloads |
 
 Start new pages by copying the closest pattern.
+
+For complete pieces, use the [composition guide](docs/composition/README.md) and [rendered previews](docs/composition/README.md#inspect-before-handing-over), then review with the [visual rubric](docs/composition/rubric.md). The source HTML is the live reference; preview PNGs are manual renders, regenerated with `npm run render:composition` after a visual change. Example content must not be treated as factual biography, an actual event or empirical evidence.
 
 ---
 
