@@ -64,7 +64,7 @@ const fetchpriority = priority ? 'high' : undefined;
 	}
 
 	/* Compact (and the list view): text first, a small square thumbnail aside. */
-	@media (min-width: 35em) {
+	@media (width >= 40rem) {
 		:global(.card-list[data-view='list']) .content-preview .mp-card,
 		.content-preview[data-variant='compact'] .mp-card {
 			display: grid;

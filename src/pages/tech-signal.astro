@@ -194,7 +194,7 @@ const tierTone = (tier: SignalSource['tier']) => (tier === 1 ? 'human' : tier ==
 .pill-count { font-family: var(--font-mono); }
 /* Em tela larga a fileira cabe sem rolar se as pílulas ficarem mais juntas;
    no celular o respiro maior fica, porque lá ela rola de qualquer jeito. */
-@media (min-width: 64em) {
+@media (width >= 64rem) {
   .mp-cluster.filter-row[data-gap] { --mp-gap: var(--space-1); }
 }
 /* Sinaliza que a fileira de categorias rola: o lado com mais conteúdo esmaece. */
@@ -242,7 +242,7 @@ html:has(.filters-sheet[open]) { overflow: hidden; }
 }
 @keyframes signal-sheet-in { from { translate: 0 100%; } }
 
-@media (width < 48em) {
+@media (width < 48rem) {
   [data-signal] .filters-open { display: inline-flex; }
   .seg { border-radius: var(--radius-lg); }
 

@@ -123,7 +123,7 @@ const placeholderIcons: Record<DevProject['category'], IconName> = {
 	}
 
 	/* Featured: media beside the text on wide screens. */
-	@media (min-width: 60em) {
+	@media (width >= 64rem) {
 		.dev-card[data-variant='featured'] {
 			display: grid;
 			grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr);

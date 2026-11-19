@@ -74,7 +74,7 @@ const featuredProjects = devProjects.filter((project) => project.featured).slice
 				width={480}
 				height={600}
 				widths={[360, 480, 720, 960]}
-				sizes="(min-width: 60em) 480px, 100vw"
+				sizes="(min-width: 64em) 480px, 100vw"
 			/>
 		</section>
 
@@ -161,7 +161,7 @@ const featuredProjects = devProjects.filter((project) => project.featured).slice
 		filter: var(--photo-warmth);
 	}
 
-	@media (min-width: 60em) {
+	@media (width >= 64rem) {
 		.home-hero {
 			grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 			gap: var(--space-16);
