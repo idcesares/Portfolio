@@ -45,8 +45,8 @@ importers:
         specifier: ^11.0.22
         version: 11.0.22(astro@7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))(react@19.2.7)(rollup@4.62.2)
       '@lucide/astro':
-        specifier: ^1.74.0
-        version: 1.74.0(astro@7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
+        specifier: ^1.77.0
+        version: 1.77.0(astro@7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
       '@tailwindcss/vite':
         specifier: ^4.3.5
         version: 4.3.5(vite@8.3.8(@types/node@26.6.6)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
@@ -785,8 +785,8 @@ packages:
   '@jridgewell/trace-mapping@0.3.31':
     resolution: {integrity: sha512-zzNR+SdQSDJzc8joaeP8QQoCQr8NuYx2dIIytl1QeBEZHJ9uW6hebsrYgbz8hJwUQao3TWCMtmfV8Nu1twOLAw==}
 
-  '@lucide/astro@1.74.0':
-    resolution: {integrity: sha512-FkaIh74Gmst7ogy7XqY6qoHIrVs/Z0imrdvmmShvJmg+R83PSwUZrI9M7jl2yMwPFH5KqhygA10B9w2MkOoz0g==}
+  '@lucide/astro@1.77.0':
+    resolution: {integrity: sha512-X3M0FSfN863QNPxNzR1JbY8xe9sMQLYzmN+z3LC7UUHkwh3qZtODECnx5cv++ZnRNH0NIaZlNx8ofnblZyiuLg==}
     peerDependencies:
       astro: ^4 || ^5 || ^6 || ^7
 
@@ -3794,7 +3794,7 @@ snapshots:
       '@jridgewell/resolve-uri': 3.1.2
       '@jridgewell/sourcemap-codec': 1.6.0
 
-  '@lucide/astro@1.74.0(astro@7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
+  '@lucide/astro@1.77.0(astro@7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))':
     dependencies:
       astro: 7.4.12(@astrojs/markdown-remark@7.3.9)(@types/node@26.6.6)(@vercel/functions@3.11.3)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1)
 
