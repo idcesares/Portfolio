@@ -982,6 +982,20 @@ export const SOURCES: SignalSource[] = [
 		region: 'Global',
 		topics: ['Estado-nação', 'Política'],
 	},
+	{
+		name: 'Google Project Zero',
+		url: 'https://projectzero.google',
+		tier: 3,
+		kind: 'pesquisa',
+		cats: ['seguranca', 'dev'],
+		desc: 'A equipe de pesquisa de vulnerabilidades do Google publica aqui a análise técnica completa das falhas que encontra, com cadeia de exploração, prazo de divulgação e a resposta de cada fabricante. Poucos textos por mês, cada um com o detalhe que a notícia sobre a falha costuma cortar. Também é onde aparecem os testes do Google com IA caçando bugs, como o BigSleep, e vale ler lembrando que parte dos alvos são produtos da própria casa.',
+		cadence: 'Mensal',
+		access: 'aberto',
+		feed: 'https://projectzero.google/feed.xml',
+		region: 'Global',
+		deep: true,
+		topics: ['Vulnerabilidades', 'Exploração'],
+	},
 
 	/* ─────────────── Fontes primárias globais ─────────────── */
 	{
@@ -1427,6 +1441,21 @@ export const SOURCES: SignalSource[] = [
 		topics: ['Dados de IA', 'Computação'],
 	},
 	{
+		name: 'METR',
+		url: 'https://metr.org',
+		tier: 2,
+		kind: 'pesquisa',
+		cats: ['ia'],
+		desc: 'Organização sem fins lucrativos que mede o que modelos e agentes de IA conseguem fazer sozinhos, em tarefas longas de engenharia e pesquisa. Publica método, dados e avaliações independentes dos relatórios de risco dos próprios laboratórios, como os da Anthropic e da OpenAI. Serve para conferir com número a autonomia que um anúncio de modelo promete.',
+		cadence: 'Semanal',
+		access: 'aberto',
+		feed: 'https://metr.org/feed.xml',
+		region: 'Global',
+		deep: true,
+		themes: ['modelos', 'dados'],
+		topics: ['Avaliação de IA', 'Agentes'],
+	},
+	{
 		name: 'Understanding AI',
 		url: 'https://www.understandingai.org',
 		tier: 2,
@@ -1569,7 +1598,7 @@ export const SOURCES: SignalSource[] = [
  * Data da última revisão da curadoria (AAAA-MM-DD). É a única data a manter:
  * alimenta o structured data, o OPML, o aviso do check:feeds e o rótulo abaixo.
  */
-export const CURATED_AT = '2026-11-09';
+export const CURATED_AT = '2026-11-24';
 
 /** "novembro de 2026", calculado de CURATED_AT para os dois nunca divergirem. */
 export const CURATED_LABEL = new Intl.DateTimeFormat('pt-BR', {
