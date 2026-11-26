@@ -117,9 +117,7 @@ export default defineConfig({
     },
     // Hosts the image optimizer may fetch. These are the remote covers in
     // content (YouTube thumbs, Spotify art, Senac PE, the Pantanal figure).
-    // GitHub serves that figure from github.com, then redirects to
-    // raw.githubusercontent.com, and Astro checks every hop. A protocol-only
-    // pattern would allow any HTTPS host.
+    // The Pantanal figure uses the raw GitHub URL directly.
     domains: [
       'i.ytimg.com',
       'i3.ytimg.com',

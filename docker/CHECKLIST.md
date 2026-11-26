@@ -217,7 +217,7 @@ docker compose exec portfolio-dev sh
 pwd                 # Deve mostrar /app
 ls -la              # Deve mostrar arquivos do projeto
 node --version      # Deve mostrar v18.x
-pnpm --version      # Deve mostrar 10.34.7
+pnpm --version      # Deve mostrar 10.34.9
 exit                # Sair do shell
 ```
 
