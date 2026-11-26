@@ -15,6 +15,7 @@ const projects = (await getCollection('work', ({ data }) => !data.draft)).sort(
 	(a, b) => b.data.updatedDate.valueOf() - a.data.updatedDate.valueOf()
 );
 const tags = tagsByFrequency(projects);
+const themes = await getCollection('themes');
 ---
 
 <BaseLayout
@@ -26,7 +27,11 @@ const tags = tagsByFrequency(projects);
 			title="Meus trabalhos"
 			tagline="O rastro de entregas, projetos e programas. Filtre por tema pra achar o que interessa."
 			align="start"
-		/>
+		>
+			{themes.map(({ id, data }) => (
+				<a class="mp-link" data-variant="standalone" href={`/temas/${id}/`}>Explorar {data.title}</a>
+			))}
+		</Hero>
 		<section aria-labelledby="listing-title" data-animate>
 			<h2 id="listing-title" class="mp-visually-hidden">Todos os trabalhos</h2>
 			<FilterBar variant="work" tags={tags} />

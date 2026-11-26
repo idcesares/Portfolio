@@ -6,9 +6,10 @@ import Icon, { type IconName } from './Icon.astro';
 interface Props {
 	project: DevProject;
 	variant?: 'featured' | 'default';
+	themeLinks?: Array<{ href: string; title: string }>;
 }
 
-const { project, variant = 'default' } = Astro.props;
+const { project, variant = 'default', themeLinks = [] } = Astro.props;
 const featured = variant === 'featured';
 
 const description = featured && project.longDescription ? project.longDescription : project.description;
@@ -90,6 +91,9 @@ const placeholderIcons: Record<DevProject['category'], IconName> = {
 					</a>
 				)
 			}
+			{themeLinks.map(({ href, title }) => (
+				<a class="mp-button" data-variant="ghost" data-size="sm" href={href}>Explorar {title}</a>
+			))}
 		</div>
 	</div>
 </article>

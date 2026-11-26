@@ -1,5 +1,5 @@
 import { glob } from 'astro/loaders';
-import { defineCollection } from 'astro:content';
+import { defineCollection, reference } from 'astro:content';
 import type { SchemaContext } from 'astro:content';
 import { z } from 'astro/zod';
 
@@ -42,5 +42,14 @@ export const collections = {
 	blog: defineCollection({
 		loader: glob({ pattern: '**/[^_]*.{md,mdx}', base: "./src/content/blog" }),
 		schema: entrySchema,
+	}),
+	themes: defineCollection({
+		loader: glob({ pattern: '*.yaml', base: './src/content/themes' }),
+		schema: z.object({
+			title: z.string(),
+			description: z.string(),
+			work: z.array(reference('work')).min(1),
+			project: z.string(),
+		}),
 	}),
 };

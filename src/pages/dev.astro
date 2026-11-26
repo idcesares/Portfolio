@@ -1,6 +1,7 @@
 ---
 export const prerender = true;
 
+import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import Hero from '../components/Hero.astro';
 import ContactCTA from '../components/ContactCTA.astro';
@@ -9,6 +10,11 @@ import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
 import SectionHeader from '../components/SectionHeader.astro';
 import { devProjects, projectCategories } from '../data/dev-projects';
+
+const themes = await getCollection('themes');
+const themeLinksFor = (projectId: string) => themes
+	.filter(({ data }) => data.project === projectId)
+	.map(({ id, data }) => ({ href: `/temas/${id}/`, title: data.title }));
 
 const featured = devProjects.filter((project) => project.featured);
 const groups = projectCategories
@@ -85,7 +91,7 @@ const coreTechnologies = [...technologyFrequency.entries()]
 				/>
 				<div class="mp-grid featured-grid" data-gap="6">
 					{featured.map((project, index) => (
-						<DevProjectCard project={project} variant={index === 0 ? 'featured' : 'default'} />
+						<DevProjectCard project={project} variant={index === 0 ? 'featured' : 'default'} themeLinks={themeLinksFor(project.id)} />
 					))}
 				</div>
 			</section>
@@ -100,7 +106,7 @@ const coreTechnologies = [...technologyFrequency.entries()]
 					lede={meta.description}
 				/>
 				<div class="mp-grid" data-min="lg" data-gap="6">
-					{projects.map((project) => <DevProjectCard project={project} />)}
+					{projects.map((project) => <DevProjectCard project={project} themeLinks={themeLinksFor(project.id)} />)}
 				</div>
 			</section>
 		))}

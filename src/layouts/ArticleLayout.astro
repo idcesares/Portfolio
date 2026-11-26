@@ -4,7 +4,7 @@
  * cover image and the Markdown body in .mp-prose (the Membrane long-form
  * component). Code blocks inside it come from rehype-membrane-code.mjs.
  */
-import type { CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import BaseLayout from './BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import ContentDateMeta from '../components/ContentDateMeta.astro';
@@ -20,6 +20,9 @@ interface Props {
 
 const { entry, minutesRead, structuredData } = Astro.props;
 const { data, collection } = entry;
+const themes = collection === 'work'
+	? await getCollection('themes', ({ data }) => data.work.some(({ id }) => id === entry.id))
+	: [];
 const section = collection === 'blog' ? { name: 'Blog', path: '/blog/', og: 'Blog' } : { name: 'Trabalhos', path: '/work/', og: 'Work' };
 const site = Astro.site ?? new URL('https://www.dcesares.dev');
 
@@ -70,6 +73,15 @@ const article = {
 		<article class="mp-prose article__body">
 			<slot />
 		</article>
+
+		{themes.length > 0 && (
+			<aside class="mp-stack article__themes" data-gap="3" aria-labelledby="article-themes-title">
+				<h2 class="type-h3" id="article-themes-title">Explore o tema</h2>
+				{themes.map(({ id, data }) => (
+					<a class="mp-link" data-variant="standalone" href={`/temas/${id}/`}>{data.title}</a>
+				))}
+			</aside>
+		)}
 	</main>
 
 	<ContactCTA />
@@ -85,6 +97,7 @@ const article = {
 	/* One reading column for header, cover and body (≈70 characters of body-lg). */
 	.article__header,
 	.article__body,
+	.article__themes,
 	.article :global(.content-image) {
 		width: 100%;
 		max-width: var(--container-md);
