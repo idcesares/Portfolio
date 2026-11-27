@@ -1,0 +1,114 @@
+---
+const fields = [
+	{
+		id: 'turma',
+		label: 'Turma',
+		options: ['5º ano do Ensino Fundamental', '9º ano do Ensino Fundamental', '1ª série do Ensino Médio'],
+	},
+	{
+		id: 'objetivo',
+		label: 'Objetivo',
+		options: ['Distinguir fato de opinião', 'Comparar a credibilidade de duas fontes', 'Explicar diferenças entre versões de um fato'],
+	},
+	{
+		id: 'recursos',
+		label: 'Recursos disponíveis',
+		options: ['Dois textos impressos e quadro', 'Um celular por grupo e internet', 'Projetor e computador do professor'],
+	},
+];
+---
+
+<section class="mp-card mp-stack lesson-prompt" data-gap="5" aria-labelledby="lesson-prompt-title">
+	<div class="mp-stack" data-gap="2">
+		<h2 class="type-h2" id="lesson-prompt-title">Como o contexto muda um pedido à IA</h2>
+		<p class="mp-text" data-tone="muted" data-measure>
+			Um exemplo de como detalhar o pedido de um plano de aula sobre leitura crítica de notícias.
+		</p>
+	</div>
+	<div class="lesson-prompt__layout">
+		<fieldset class="mp-fieldset lesson-prompt__controls" hidden>
+			<legend class="mp-fieldset__legend type-h3">Escolha o contexto</legend>
+			<div class="mp-stack" data-gap="3">
+				{fields.map(({ id, label, options }) => (
+					<div class="mp-field">
+						<label class="mp-field__label" for={`lesson-${id}`}>{label}</label>
+						<select class="mp-input" id={`lesson-${id}`} name={id}>
+							{options.map((option) => <option>{option}</option>)}
+						</select>
+					</div>
+				))}
+			</div>
+		</fieldset>
+
+		<div class="mp-surface mp-stack lesson-prompt__example" data-tone="elevated" data-gap="3">
+			<h3 class="type-h3">Instrução para a IA</h3>
+			<p>Esboce uma aula de 50 minutos sobre leitura crítica de notícias.</p>
+			<dl class="mp-stack lesson-prompt__details" data-gap="2">
+				{fields.map(({ id, label, options }) => (
+					<div>
+						<dt class="type-label">{label}</dt>
+						<dd data-prompt-part={id}>{options[0]}</dd>
+					</div>
+				))}
+			</dl>
+			<p>Proponha uma abertura, uma atividade e uma forma de verificar se a turma atingiu o objetivo.</p>
+		</div>
+	</div>
+	<p class="mp-visually-hidden" role="status" data-prompt-status></p>
+</section>
+
+<script>
+	const demo = document.querySelector('.lesson-prompt');
+	const controls = demo?.querySelector<HTMLFieldSetElement>('.lesson-prompt__controls');
+	const status = demo?.querySelector('[data-prompt-status]');
+
+	if (controls && status) {
+		const choices = controls.querySelectorAll('select');
+		for (const choice of choices) {
+			const part = demo?.querySelector(`[data-prompt-part="${choice.name}"]`);
+			if (!part) continue;
+
+			part.textContent = choice.value;
+			choice.addEventListener('change', () => {
+				part.textContent = choice.value;
+				status.textContent = `Instrução atualizada com “${choice.value}”.`;
+			});
+		}
+		controls.hidden = false;
+	}
+</script>
+
+<style>
+	.lesson-prompt {
+		--mp-card-padding: var(--space-5);
+		gap: var(--mp-gap);
+	}
+
+	.lesson-prompt__layout {
+		display: grid;
+		gap: var(--space-5);
+	}
+
+	.lesson-prompt__controls[hidden] {
+		display: none;
+	}
+
+	.lesson-prompt__example {
+		padding: var(--space-4);
+		border-radius: var(--radius-md);
+	}
+
+	.lesson-prompt__details dd {
+		margin-inline-start: 0;
+	}
+
+	@media (width >= 48rem) {
+		.lesson-prompt {
+			--mp-card-padding: var(--space-8);
+		}
+
+		.lesson-prompt__layout:has(.lesson-prompt__controls:not([hidden])) {
+			grid-template-columns: minmax(0, 1fr) minmax(0, 1.5fr);
+		}
+	}
+</style>

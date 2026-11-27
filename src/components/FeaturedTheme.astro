@@ -1,0 +1,89 @@
+---
+import { Image } from 'astro:assets';
+import type { CollectionEntry } from 'astro:content';
+import { getThemeCover, getThemeWork } from '../utils/theme-content';
+import Icon from './Icon.astro';
+
+interface Props {
+	theme: CollectionEntry<'themes'>;
+}
+
+const { theme } = Astro.props;
+const cover = getThemeCover(await getThemeWork(theme));
+---
+
+<section class="mp-card theme-feature" data-variant="featured" aria-labelledby="featured-theme-title">
+	<div class="mp-stack theme-feature__copy" data-gap="4">
+		<p class="mp-card__overline">{theme.data.title}</p>
+		<h2 class="type-h1" id="featured-theme-title">Onde a IA ajuda no planejamento de aulas?</h2>
+		<p class="mp-text" data-tone="muted" data-measure>
+			Da conversa no Congresso da Rede Sesc de Educação ao Prof. GPT, uma ferramenta para escrever prompts com objetivos e contexto de sala de aula.
+		</p>
+		<div class="mp-cluster" data-gap="4">
+			<a class="mp-button" data-variant="secondary" href={`/temas/${theme.id}/`}>
+				Explorar o tema <Icon icon="arrow-right" />
+			</a>
+			<a class="mp-link" href="/temas/">Ver todos os temas</a>
+		</div>
+	</div>
+	{cover && (
+		<div class="mp-card__media theme-feature__media">
+			<Image
+				src={cover.src}
+				alt={cover.alt}
+				width={960}
+				widths={[360, 480, 640, 960, 1280]}
+				sizes="(min-width: 80em) 680px, (min-width: 48em) 52vw, (min-width: 40em) 90vw, calc(100vw - 3rem)"
+				loading="lazy"
+				decoding="async"
+			/>
+		</div>
+	)}
+</section>
+
+<style>
+	.theme-feature {
+		--mp-card-padding: 0;
+		--mp-card-bg: var(--color-bg-elevated);
+		display: grid;
+		gap: 0;
+		overflow: hidden;
+	}
+
+	.theme-feature__copy {
+		padding: var(--space-6);
+		align-self: center;
+	}
+
+	.theme-feature__copy h2 {
+		text-wrap: balance;
+	}
+
+	.theme-feature__media {
+		grid-row: 1;
+		margin: 0;
+		border-radius: 0;
+	}
+
+	@media (width >= 48rem) {
+		.theme-feature:has(.theme-feature__media) {
+			grid-template-columns: minmax(0, 7fr) minmax(0, 9fr);
+		}
+
+		.theme-feature__copy {
+			padding: var(--space-8);
+		}
+
+		.theme-feature__media {
+			grid-column: 2;
+			aspect-ratio: auto;
+			min-height: 100%;
+		}
+	}
+
+	@media (width >= 64rem) {
+		.theme-feature__copy {
+			padding: var(--space-10);
+		}
+	}
+</style>

@@ -1,13 +1,14 @@
 ---
-import { getCollection, getEntries, type CollectionEntry } from 'astro:content';
+import { getCollection, type CollectionEntry } from 'astro:content';
 import ContentPreview from '../../components/ContentPreview.astro';
 import GridEnhanced from '../../components/GridEnhanced.astro';
 import Hero from '../../components/Hero.astro';
 import Icon from '../../components/Icon.astro';
+import LessonPromptDemo from '../../components/LessonPromptDemo.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { devProjects } from '../../data/dev-projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { resolveImageSrc } from '../../utils/seo';
+import { getThemeCover, getThemeWork } from '../../utils/theme-content';
 
 interface Props {
 	theme: CollectionEntry<'themes'>;
@@ -21,18 +22,20 @@ export async function getStaticPaths() {
 }
 
 const { theme } = Astro.props;
-const { title, description, work, project: projectId } = theme.data;
-const entries = (await getEntries(work)).filter((entry) => entry && !entry.data.draft);
+const { title, description, project: projectId } = theme.data;
+const entries = await getThemeWork(theme);
 const project = devProjects.find(({ id }) => id === projectId);
 if (!project?.demoUrl) {
 	throw new Error(`Theme ${theme.id} needs a published project URL for ${projectId}.`);
 }
-const cover = entries.find(({ data }) => typeof data.img !== 'string')?.data;
+const cover = getThemeCover(entries);
 ---
 
-<BaseLayout title={title} description={description} image={cover && resolveImageSrc(cover.img)} imageAlt={cover?.img_alt}>
+<BaseLayout title={title} description={description} image={cover?.src.src} imageAlt={cover?.alt}>
 	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="12">
-		<Hero title={title} tagline={description} align="start" />
+		<Hero title={title} tagline={description} align="start">
+			<a class="mp-link" href="/temas/">Ver todos os temas</a>
+		</Hero>
 
 		{entries.length > 0 && (
 			<section class="mp-stack" data-gap="5" aria-labelledby="theme-work-title">
@@ -42,6 +45,7 @@ const cover = entries.find(({ data }) => typeof data.img !== 'string')?.data;
 				</GridEnhanced>
 			</section>
 		)}
+		{theme.id === 'ia-na-educacao' && <LessonPromptDemo />}
 
 		<section class="mp-card" data-variant="featured" data-tone="digital" aria-labelledby="theme-project-title">
 			<h2 class="type-h3 theme-project-title" id="theme-project-title">{project.title}</h2>

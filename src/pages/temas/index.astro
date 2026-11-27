@@ -1,0 +1,54 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection } from 'astro:content';
+import GridEnhanced from '../../components/GridEnhanced.astro';
+import Hero from '../../components/Hero.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getThemeCover, getThemeWork } from '../../utils/theme-content';
+
+export const prerender = true;
+
+const title = 'Temas';
+const description = 'Pesquisa, formação de educadores e ferramentas para experimentar, reunidas por tema.';
+const themes = (await getCollection('themes')).sort((a, b) => a.data.title.localeCompare(b.data.title, 'pt-BR'));
+const cards = await Promise.all(themes.map(async (theme) => ({
+	theme,
+	cover: getThemeCover(await getThemeWork(theme)),
+})));
+---
+
+<BaseLayout title={title} description={description}>
+	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="8">
+		<Hero title={title} tagline={description} align="start" />
+		<GridEnhanced variant="compact">
+			{cards.map(({ theme, cover }) => (
+				<li class="theme-index-item">
+					<article class="mp-card">
+						{cover && (
+							<div class="mp-card__media">
+								<Image
+									src={cover.src}
+									alt={cover.alt}
+									width={600}
+									widths={[360, 480, 600, 960, 1200]}
+									sizes="(min-width: 80em) 584px, (min-width: 40em) 45vw, calc(100vw - 3rem)"
+									loading="lazy"
+									decoding="async"
+								/>
+							</div>
+						)}
+						<h2 class="mp-card__title"><a class="mp-card__link" href={`/temas/${theme.id}/`}>{theme.data.title}</a></h2>
+						<p class="mp-card__body">{theme.data.description}</p>
+					</article>
+				</li>
+			))}
+		</GridEnhanced>
+	</main>
+</BaseLayout>
+
+<style>
+	.theme-index-item {
+		display: grid;
+		min-width: 0;
+	}
+</style>
