@@ -8,7 +8,6 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 import ContactCTA from '../components/ContactCTA.astro';
 import DevProjectCard from '../components/DevProjectCard.astro';
 import GridEnhanced from '../components/GridEnhanced.astro';
-import Hero from '../components/Hero.astro';
 import Icon from '../components/Icon.astro';
 import Pill from '../components/Pill.astro';
 import PortfolioPreviewEnhanced from '../components/PortfolioPreviewEnhanced.astro';
@@ -47,35 +46,39 @@ const featuredProjects = devProjects.filter((project) => project.featured).slice
 <BaseLayout structuredData={structuredData}>
 	<main id="main-content" tabindex="-1" class="mp-container mp-stack home" data-gap="16">
 		<section class="home-hero mp-section" data-size="sm" aria-label="Apresentação">
-			<Hero
-				title="Isaac D'Césares"
-				tagline="Traduzo tecnologias emergentes em experiências que ressignificam como pessoas e instituições aprendem."
-				align="start"
-			>
+			<div class="mp-stack home-hero__intro" data-gap="4">
+				<h1 class="type-display home-hero__name">Isaac D'Césares</h1>
+				<p class="mp-text type-body-lg home-hero__lede" data-tone="muted" data-measure>
+					Traduzo tecnologias emergentes em experiências que ressignificam como pessoas e instituições aprendem.
+				</p>
 				<ul class="mp-cluster home-hero__roles" data-gap="2" aria-label="Três dimensões">
 					<li><Pill tone="human"><Icon icon="book-open" /> Pesquisador</Pill></li>
 					<li><Pill tone="learning"><Icon icon="university" /> Educador</Pill></li>
 					<li><Pill tone="digital"><Icon icon="square-terminal" /> Desenvolvedor</Pill></li>
 				</ul>
-				<div class="mp-cluster" data-gap="3">
+				<div class="mp-cluster home-hero__actions" data-gap="3">
 					<a class="mp-button" data-size="lg" href="/dev/">
-						O que venho construindo
+						Ver projetos
 						<Icon icon="arrow-right" />
 					</a>
-					<a class="mp-button" data-variant="secondary" data-size="lg" href="/about/">Quem sou e como penso</a>
+					<a class="mp-button" data-variant="secondary" data-size="lg" href="/about/">Sobre mim</a>
 				</div>
-			</Hero>
-			<Image
-				class="home-hero__portrait"
-				alt="Isaac D'Césares, retrato de perfil"
-				src={Portrait}
-				loading="eager"
-				fetchpriority="high"
-				width={480}
-				height={600}
-				widths={[360, 480, 720, 960]}
-				sizes="(min-width: 64em) 480px, 100vw"
-			/>
+			</div>
+			<div class="home-hero__frame">
+				<div class="home-hero__crop">
+					<Image
+						class="home-hero__portrait"
+						alt="Retrato de Isaac D'Césares"
+						src={Portrait}
+						loading="eager"
+						fetchpriority="high"
+						width={480}
+						height={600}
+						widths={[240, 360, 480, 720, 960]}
+						sizes="(min-width: 80em) 456px, (min-width: 48em) 36vw, clamp(5.5rem, 26vw, 8rem)"
+					/>
+				</div>
+			</div>
 		</section>
 
 		<Skills />
@@ -140,8 +143,13 @@ const featuredProjects = devProjects.filter((project) => project.featured).slice
 <style>
 	.home-hero {
 		display: grid;
+		grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 		gap: var(--space-10);
 		align-items: center;
+	}
+
+	.home-hero__name {
+		text-wrap: balance;
 	}
 
 	.home-hero__roles {
@@ -150,25 +158,85 @@ const featuredProjects = devProjects.filter((project) => project.featured).slice
 		list-style: none;
 	}
 
-	.home-hero__portrait {
+	.home-hero__frame {
 		width: 100%;
 		max-width: 30rem;
+		justify-self: end;
+		border-radius: var(--photo-border-radius);
+		box-shadow: var(--photo-shadow);
+	}
+
+	.home-hero__crop {
+		overflow: hidden;
+		border-radius: inherit;
+	}
+
+	.home-hero__portrait {
+		display: block;
+		width: 100%;
+		height: auto;
 		aspect-ratio: 4 / 5;
 		object-fit: cover;
 		object-position: top;
-		border-radius: var(--photo-border-radius);
-		box-shadow: var(--photo-shadow);
 		filter: var(--photo-warmth);
 	}
 
 	@media (width >= 64rem) {
 		.home-hero {
-			grid-template-columns: minmax(0, 3fr) minmax(0, 2fr);
 			gap: var(--space-16);
+		}
+	}
+
+	@media (width < 48rem) {
+		.home {
+			--mp-gap: var(--space-10);
+		}
+
+		.home-hero {
+			grid-template-columns: minmax(0, 1fr) clamp(5.5rem, 26vw, 8rem);
+			grid-template-areas:
+				'name portrait'
+				'lede lede'
+				'roles roles'
+				'actions actions';
+			gap: var(--space-4);
+			padding-block: var(--space-6) 0;
+		}
+
+		.home-hero__intro {
+			display: contents;
+		}
+
+		.home-hero__name {
+			grid-area: name;
+			font-size: clamp(var(--text-h1), 9vw, var(--text-display));
+			overflow-wrap: anywhere;
+		}
+
+		.home-hero__lede { grid-area: lede; }
+		.home-hero__roles { grid-area: roles; }
+		.home-hero__actions {
+			grid-area: actions;
+			--mp-gap: var(--space-2);
+		}
+
+		.home-hero__actions .mp-button {
+			--mp-button-height: var(--size-control-md);
+			--mp-button-padding: var(--space-3);
+			--mp-button-font-size: var(--text-body);
+		}
+
+		.home-hero__frame {
+			grid-area: portrait;
+			padding: 0 var(--space-1) var(--space-1) 0;
+			border-radius: 50% 50% var(--radius-lg) var(--radius-lg) / 42% 42% var(--radius-lg) var(--radius-lg);
+			background: var(--gradient-membrane);
 		}
 
 		.home-hero__portrait {
-			justify-self: end;
+			aspect-ratio: 1;
+			transform: scale(1.5);
+			transform-origin: 50% 20%;
 		}
 	}
 
