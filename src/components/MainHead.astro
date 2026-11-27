@@ -6,18 +6,20 @@ import { SEO } from 'astro-seo';
 import {
   AUTHOR_NAME,
   DEFAULT_OG_IMAGE,
+  SOCIAL_IMAGE_HEIGHT,
+  SOCIAL_IMAGE_WIDTH,
   SITE_DESCRIPTION,
   SITE_LOCALE,
   SITE_NAME,
   SITE_TITLE,
+  type SocialImage,
 } from '../utils/seo';
 
 interface Props {
   /** Page-specific title. Rendered as "{title} | Isaac D'Césares". Omit to use the site default title. */
   title?: string | undefined;
   description?: string | undefined;
-  image?: string | undefined;
-  imageAlt?: string | undefined;
+  image?: SocialImage | undefined;
   locale?: string | undefined;
   ogType?: 'website' | 'article';
   article?: {
@@ -35,7 +37,6 @@ const {
   title,
   description = SITE_DESCRIPTION,
   image = DEFAULT_OG_IMAGE,
-  imageAlt,
   locale = SITE_LOCALE,
   ogType = 'website',
   article,
@@ -46,8 +47,7 @@ const displayTitle = title ? `${title} | ${SITE_NAME}` : SITE_TITLE;
 
 const baseUrl = Astro.site ?? Astro.url;
 const canonicalUrl = new URL(Astro.url.pathname, baseUrl).toString();
-const ogImage = new URL(image, baseUrl).toString();
-const resolvedImageAlt = imageAlt || displayTitle;
+const ogImage = new URL(image.src, baseUrl).toString();
 const structuredItems = structuredData
   ? Array.isArray(structuredData)
     ? structuredData
@@ -67,7 +67,10 @@ const openGraph = {
     locale,
   },
   image: {
-    alt: resolvedImageAlt,
+    alt: image.alt,
+    type: image.type,
+    width: SOCIAL_IMAGE_WIDTH,
+    height: SOCIAL_IMAGE_HEIGHT,
   },
   ...(article ? { article } : {}),
 };
@@ -77,7 +80,7 @@ const twitter = {
   title: displayTitle,
   description,
   image: ogImage,
-  imageAlt: resolvedImageAlt,
+  imageAlt: image.alt,
 };
 ---
 

@@ -10,7 +10,8 @@ import ContactCTA from '../components/ContactCTA.astro';
 import ContentDateMeta from '../components/ContentDateMeta.astro';
 import ContentImage from '../components/ContentImage.astro';
 import Icon from '../components/Icon.astro';
-import { AUTHOR_PROFILE_PATH, resolveImageSrc } from '../utils/seo';
+import { AUTHOR_PROFILE_PATH } from '../utils/seo';
+import { getArticleSocialImage } from '../utils/social-image';
 
 interface Props {
 	entry: CollectionEntry<'blog'> | CollectionEntry<'work'>;
@@ -19,6 +20,7 @@ interface Props {
 }
 
 const { entry, minutesRead, structuredData } = Astro.props;
+const socialImage = await getArticleSocialImage(entry);
 const { data, collection } = entry;
 const themes = collection === 'work'
 	? await getCollection('themes', ({ data }) => data.work.some(({ id }) => id === entry.id))
@@ -38,8 +40,7 @@ const article = {
 <BaseLayout
 	title={data.title}
 	description={data.description}
-	image={resolveImageSrc(data.img)}
-	imageAlt={data.img_alt}
+	image={socialImage}
 	ogType="article"
 	article={article}
 	structuredData={structuredData}

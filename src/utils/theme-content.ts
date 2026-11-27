@@ -8,7 +8,7 @@ export function getThemeCover(work: CollectionEntry<'work'>[]) {
 	for (const entry of work) {
 		const { data } = entry;
 		if (typeof data.img !== 'string') {
-			return { src: data.img, alt: data.img_alt ?? '' };
+			return { entry, src: data.img, alt: data.img_alt ?? '' };
 		}
 	}
 }

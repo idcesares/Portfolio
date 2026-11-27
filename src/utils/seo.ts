@@ -21,7 +21,19 @@ export const SOCIAL_LINKS = {
   twitter: 'https://twitter.com/idcesares',
 };
 
-export const DEFAULT_OG_IMAGE = '/assets/og-default.png';
+export interface SocialImage {
+  src: string;
+  alt: string;
+  type: 'image/png' | 'image/jpeg';
+}
+
+export const SOCIAL_IMAGE_WIDTH = 1200;
+export const SOCIAL_IMAGE_HEIGHT = 630;
+export const DEFAULT_OG_IMAGE: SocialImage = {
+  src: '/assets/og-default.png',
+  alt: "Retrato de Isaac D'Césares ao ar livre",
+  type: 'image/png',
+};
 
 const getSiteHref = (site: URL) => site.href;
 export const getPersonId = (site: URL) => new URL('/about/#person', site).toString();

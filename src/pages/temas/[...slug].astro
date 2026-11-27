@@ -8,6 +8,7 @@ import LessonPromptDemo from '../../components/LessonPromptDemo.astro';
 import SectionHeader from '../../components/SectionHeader.astro';
 import { devProjects } from '../../data/dev-projects';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { getArticleSocialImage } from '../../utils/social-image';
 import { getThemeCover, getThemeWork } from '../../utils/theme-content';
 
 interface Props {
@@ -29,9 +30,10 @@ if (!project?.demoUrl) {
 	throw new Error(`Theme ${theme.id} needs a published project URL for ${projectId}.`);
 }
 const cover = getThemeCover(entries);
+const socialImage = cover && await getArticleSocialImage(cover.entry);
 ---
 
-<BaseLayout title={title} description={description} image={cover?.src.src} imageAlt={cover?.alt}>
+<BaseLayout title={title} description={description} image={socialImage}>
 	<main id="main-content" tabindex="-1" class="mp-container mp-section mp-stack" data-gap="12">
 		<Hero title={title} tagline={description} align="start">
 			<a class="mp-link" href="/temas/">Ver todos os temas</a>
