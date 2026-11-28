@@ -94,6 +94,25 @@ test('theme toggle follows the OS until pressed, then persists the choice', asyn
   await expect(html).toHaveAttribute('data-theme', 'light');
 });
 
+test('project artwork follows the theme and real covers take precedence', async ({ page }) => {
+  await page.emulateMedia({ colorScheme: 'dark' });
+  await open(page, '/dev/');
+
+  const research = page.locator('#project-greenrisk .mp-card__media');
+  const product = page.locator('#project-fetchpath .mp-card__media');
+  await expect(research).toHaveAttribute('aria-hidden', 'true');
+  await expect(research).toHaveCSS('background-image', /field-notes-dark\.svg/);
+  await expect(product).toHaveCSS('background-image', /passage-dark\.svg/);
+
+  await page.getByRole('button', { name: 'Tema escuro', exact: true }).click();
+  await expect(research).toHaveCSS('background-image', /field-notes-light\.svg/);
+  await expect(product).toHaveCSS('background-image', /passage-light\.svg/);
+
+  const cover = page.locator('#project-membrane-design-system .mp-card__media');
+  await expect(cover).toHaveCSS('background-image', 'none');
+  await expect(cover.locator('img')).toHaveAttribute('src', '/assets/blog_imgs/membrane-palette.webp');
+});
+
 test('search opens with "/", closes with Escape and returns focus', async ({ page }) => {
   await open(page, '/blog/');
   const dialog = page.getByRole('dialog', { name: 'Busca' });

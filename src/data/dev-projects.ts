@@ -16,6 +16,8 @@ export type DevProjectStatus =
 	| 'reference'
 	| 'archived';
 
+export type DevProjectArtwork = 'passage' | 'confluence' | 'field-notes' | 'learning-loop';
+
 export interface DevProject {
 	id: string;
 	title: string;
@@ -23,6 +25,7 @@ export interface DevProject {
 	longDescription?: string;
 	img?: string;
 	imgAlt?: string;
+	artwork?: DevProjectArtwork;
 	techStack: TechItem[];
 	demoUrl?: string;
 	repoUrl?: string;
@@ -80,6 +83,14 @@ export const categoryLabels: Record<DevProjectCategory, string> = {
 	research: 'Pesquisa',
 	education: 'Educação',
 	experiment: 'Experimento',
+};
+
+export const categoryArtwork: Record<DevProjectCategory, DevProjectArtwork> = {
+	product: 'passage',
+	system: 'confluence',
+	research: 'field-notes',
+	education: 'learning-loop',
+	experiment: 'learning-loop',
 };
 
 export const statusLabels: Record<DevProjectStatus, string> = {
@@ -155,6 +166,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'padline',
 		title: 'Padline',
+		artwork: 'confluence',
 		description:
 			'Um pad colaborativo em tempo real no qual a própria URL já é o espaço de escrita. Sem conta, sem onboarding, sem cerimônia.',
 		longDescription:
@@ -259,6 +271,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'tech-signal-stack',
 		title: 'Tech Signal Stack',
+		artwork: 'confluence',
 		description:
 			'Curadoria navegável de fontes sobre tecnologia, IA, engenharia, negócios, política e educação — com espaço real para quem apura no Brasil.',
 		techStack: [
@@ -276,6 +289,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'aprendizagemcriativa-rio',
 		title: 'aprendizagemcriativa.rio',
+		artwork: 'confluence',
 		description:
 			'Casa digital do Núcleo Rio da Rede Brasileira de Aprendizagem Criativa, organizada para leitura, memória da comunidade e descoberta de recursos.',
 		techStack: [
@@ -293,6 +307,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'prof-gpt',
 		title: 'Prof. GPT',
+		artwork: 'learning-loop',
 		description:
 			'Construtor de prompts pedagógicos para cocriar planos de aula com contexto, inclusão, BNCC e critérios claros de saída.',
 		techStack: [
@@ -327,6 +342,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'qr-code-analyzer',
 		title: 'QR Code Analyzer',
+		artwork: 'field-notes',
 		description:
 			'Leitor de QR Code para imagem, colagem ou câmera, criado como uma experiência curta de utilidade imediata.',
 		techStack: [
@@ -343,6 +359,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'predictive-mnemonic-ecology',
 		title: 'Predictive Mnemonic Ecology',
+		artwork: 'learning-loop',
 		description:
 			'Memória local-first para agentes: lembra contexto útil, lida com contradições, respeita orçamento de tokens e explica por que recuperou cada registro.',
 		techStack: [
@@ -378,6 +395,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'claude-portable',
 		title: 'Claude Portable',
+		artwork: 'passage',
 		description:
 			'Configuração do Claude Code que acompanha você entre máquinas: instruções, agentes, skills e memória por projeto, versionadas em Git e sem credenciais.',
 		longDescription:
@@ -396,6 +414,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'codex-portable',
 		title: 'Codex Portable',
+		artwork: 'passage',
 		description:
 			'Uma fonte única para a configuração do Codex em vários PCs com Windows: modelos, autonomia, instruções e três papéis de agente, com atualização no login e reversão.',
 		longDescription:
@@ -415,6 +434,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'remove-ai-writing-signs',
 		title: 'Remove AI Writing Signs',
+		artwork: 'field-notes',
 		description:
 			'Método de edição reconstrutiva para textos em inglês: desmonta padrões previsíveis de texto gerado por IA antes de reconstruir voz, ritmo e especificidade.',
 		techStack: [
@@ -448,6 +468,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'sparql-ipfs',
 		title: 'SPARQL + IPFS',
+		artwork: 'confluence',
 		description:
 			'Série de provas de conceito sobre consultas semânticas em dados distribuídos, reunindo SPARQL, Comunica, Next.js e IPFS.',
 		techStack: [
@@ -497,6 +518,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'arduino-iot-ia',
 		title: 'Arduino, IoT e IA',
+		artwork: 'passage',
 		description:
 			'Prova de conceito em que protótipos conectados percebem contexto e reagem usando Arduino, sensores, serviços de nuvem e bots.',
 		techStack: [
@@ -530,6 +552,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'data-science-mini-projects',
 		title: 'Data Science Mini Projects',
+		artwork: 'field-notes',
 		description:
 			'Coleção de pequenos estudos com datasets, visualizações e algoritmos — um registro do aprendizado pela investigação dos dados.',
 		techStack: [
@@ -546,6 +569,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'queimadas-pantanal',
 		title: 'Queimadas no Pantanal',
+		artwork: 'field-notes',
 		description:
 			'Análise exploratória de uma década de queimadas no Pantanal, transformando séries ambientais em uma narrativa visual verificável.',
 		techStack: [
@@ -562,6 +586,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'disposable-pods',
 		title: 'Disposable Pods',
+		artwork: 'confluence',
 		description:
 			'Salas temporárias para compartilhar textos, links e arquivos sem conta; o conteúdo desaparece quando a sala esvazia ou após 24 horas.',
 		techStack: [
@@ -578,6 +603,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'sistema-de-sorteio',
 		title: 'Sistema de Sorteio Eletrônico',
+		artwork: 'passage',
 		description:
 			'Sorteio web reproduzível para distribuir vagas, com semente opcional, primeira chamada, lista de espera e saída pronta para conferência.',
 		techStack: [
@@ -611,6 +637,7 @@ export const devProjects: DevProject[] = [
 	{
 		id: 'isaac-or-not-isaac',
 		title: 'Isaac or Not Isaac',
+		artwork: 'field-notes',
 		description:
 			'Um classificador no navegador que responde à pergunta científica definitiva: a pessoa diante da câmera é Isaac ou não?',
 		techStack: [
