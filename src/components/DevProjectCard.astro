@@ -1,7 +1,7 @@
 ---
 import type { DevProject } from '../data/dev-projects';
-import { categoryLabels, statusLabels, statusTones } from '../data/dev-projects';
-import Icon, { type IconName } from './Icon.astro';
+import { categoryArtwork, categoryLabels, statusLabels, statusTones } from '../data/dev-projects';
+import Icon from './Icon.astro';
 
 interface Props {
 	project: DevProject;
@@ -17,13 +17,8 @@ const maxTags = featured ? project.techStack.length : 4;
 const visibleTech = project.techStack.slice(0, maxTags);
 const remainingCount = project.techStack.length - maxTags;
 
-const placeholderIcons: Record<DevProject['category'], IconName> = {
-	product: 'rocket',
-	system: 'code',
-	research: 'book-open',
-	education: 'pencil-line',
-	experiment: 'square-terminal',
-};
+// Original Membrane SVGs from the revision pinned in design-system/membrane.lock.json.
+const artworkPath = `/assets/membrane-visuals/${project.artwork ?? categoryArtwork[project.category]}`;
 ---
 
 <!-- Membrane card. Products and systems are the digital register (teal accent);
@@ -36,17 +31,17 @@ const placeholderIcons: Record<DevProject['category'], IconName> = {
 	data-category={project.category}
 	data-animate
 >
-	<div class="mp-card__media">
-		{
-			project.img ? (
-				<img src={project.img} alt={project.imgAlt || ''} width="800" height="450" loading="lazy" decoding="async" />
-			) : (
-				<div class="dev-card__placeholder" aria-hidden="true">
-					<Icon icon={placeholderIcons[project.category]} size="xl" />
-				</div>
-			)
-		}
-	</div>
+	{project.img ? (
+		<div class="mp-card__media">
+			<img src={project.img} alt={project.imgAlt || ''} width="800" height="450" loading="lazy" decoding="async" />
+		</div>
+	) : (
+		<div
+			class="mp-card__media dev-card__artwork"
+			aria-hidden="true"
+			style={`--artwork-light: url("${artworkPath}-light.svg"); --artwork-dark: url("${artworkPath}-dark.svg")`}
+		></div>
+	)}
 
 	<div class="dev-card__content mp-stack" data-gap="3">
 		<div class="mp-cluster" data-justify="between" data-gap="2">
@@ -108,12 +103,18 @@ const placeholderIcons: Record<DevProject['category'], IconName> = {
 		flex: 1;
 	}
 
-	.dev-card__placeholder {
-		display: grid;
-		place-items: center;
-		height: 100%;
-		background: var(--gradient-membrane);
-		color: var(--color-text-on-accent);
+	.dev-card__artwork {
+		background: var(--color-bg-primary) var(--artwork-light) center / cover no-repeat;
+	}
+
+	:global(html[data-theme='dark']) .dev-card__artwork {
+		background-image: var(--artwork-dark);
+	}
+
+	@media (prefers-color-scheme: dark) {
+		:global(html:not([data-theme])) .dev-card__artwork {
+			background-image: var(--artwork-dark);
+		}
 	}
 
 	.dev-card__tech {
@@ -140,6 +141,10 @@ const placeholderIcons: Record<DevProject['category'], IconName> = {
 			min-height: 100%;
 			margin: calc(-1 * var(--mp-card-padding)) 0 calc(-1 * var(--mp-card-padding)) calc(-1 * var(--mp-card-padding));
 			border-radius: calc(var(--radius-lg) - var(--border-width-thin)) 0 0 calc(var(--radius-lg) - var(--border-width-thin));
+		}
+
+		.dev-card[data-variant='featured'] .dev-card__artwork {
+			background-size: contain;
 		}
 
 		.dev-card[data-variant='featured'] .mp-card__title {
